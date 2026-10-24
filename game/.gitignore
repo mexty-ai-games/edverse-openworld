@@ -1,0 +1,4 @@
+node_modules/
+dist/
+dev/public/
+dev/props.local.json

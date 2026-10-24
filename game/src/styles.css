@@ -1,0 +1,12 @@
+body {
+  margin: 0px;
+}
+
+#root, #app {
+  height: 100vh;
+}
+
+/* Hidden class for soft delete functionality */
+.hidden {
+  display: none !important;
+}

@@ -1,0 +1,794 @@
+{
+ "ui": {
+  "title": {
+   "en": "Idea Grove",
+   "fr": "Le Bosquet des idées"
+  },
+  "tagline": {
+   "en": "The heart of EdVerse OpenWorld. Every lantern on the big tree is an idea a kid shared.",
+   "fr": "Le cœur d'EdVerse OpenWorld. Chaque lanterne du grand arbre est une idée partagée par un enfant."
+  },
+  "loading": {
+   "en": "The grove is growing…",
+   "fr": "Le bosquet pousse…"
+  },
+  "chooseLook": {
+   "en": "Choose your explorer",
+   "fr": "Choisis ton explorateur"
+  },
+  "yourName": {
+   "en": "Your explorer name",
+   "fr": "Ton nom d'explorateur"
+  },
+  "newName": {
+   "en": "New name",
+   "fr": "Autre nom"
+  },
+  "enter": {
+   "en": "Enter the grove",
+   "fr": "Entrer dans le bosquet"
+  },
+  "howToKeys": {
+   "en": "Walk with the arrow keys or WASD. Press E to look at things.",
+   "fr": "Marche avec les flèches ou ZQSD. Appuie sur E pour regarder."
+  },
+  "howToTouch": {
+   "en": "Move with the round stick, or tap the ground. Tap lanterns, stalls and the telescope.",
+   "fr": "Déplace-toi avec le rond, ou touche le sol. Touche les lanternes, les stands et le télescope."
+  },
+  "ideaBy": {
+   "en": "Idea by {nickname}",
+   "fr": "Idée de {nickname}"
+  },
+  "livesIn": {
+   "en": "Lives in: {place}",
+   "fr": "Se trouve : {place}"
+  },
+  "builtOn": {
+   "en": "Built on {date}",
+   "fr": "Construite le {date}"
+  },
+  "lanternCount": {
+   "en": "{n} idea lanterns",
+   "fr": "{n} lanternes d'idées"
+  },
+  "noLanterns": {
+   "en": "This lantern is waiting for a new idea. Share yours in EdVerse, and it could light up here!",
+   "fr": "Cette lanterne attend une nouvelle idée. Partage la tienne dans EdVerse : elle pourrait s'allumer ici !"
+  },
+  "readLantern": {
+   "en": "Read the lantern",
+   "fr": "Lire la lanterne"
+  },
+  "look": {
+   "en": "Look",
+   "fr": "Regarder"
+  },
+  "comingSoon": {
+   "en": "Coming soon",
+   "fr": "Bientôt"
+  },
+  "comingSoonText": {
+   "en": "Kids are dreaming up this place right now. It will open when it is built!",
+   "fr": "Des enfants imaginent cet endroit en ce moment. Il ouvrira quand il sera construit !"
+  },
+  "youWillLearn": {
+   "en": "You will learn:",
+   "fr": "Tu vas apprendre :"
+  },
+  "close": {
+   "en": "Close",
+   "fr": "Fermer"
+  },
+  "telescope": {
+   "en": "Star telescope",
+   "fr": "Télescope des étoiles"
+  },
+  "useTelescope": {
+   "en": "Look at the stars",
+   "fr": "Regarder les étoiles"
+  },
+  "skyTitle": {
+   "en": "Star telescope",
+   "fr": "Télescope des étoiles"
+  },
+  "skyFind": {
+   "en": "Find: {name}",
+   "fr": "Trouve : {name}"
+  },
+  "skyTapHint": {
+   "en": "Tap one star of the shape.",
+   "fr": "Touche une étoile du dessin."
+  },
+  "skyTryAgain": {
+   "en": "Not this one. Look for the shape again!",
+   "fr": "Pas celle-ci. Cherche encore la forme !"
+  },
+  "skyFound": {
+   "en": "You found it!",
+   "fr": "Tu l'as trouvée !"
+  },
+  "skyNext": {
+   "en": "Next",
+   "fr": "Suivant"
+  },
+  "skyShowMe": {
+   "en": "Show me",
+   "fr": "Montre-moi"
+  },
+  "skyDone": {
+   "en": "Well done! You found 3 real constellations.",
+   "fr": "Bravo ! Tu as trouvé 3 vraies constellations."
+  },
+  "skyAgain": {
+   "en": "Play again",
+   "fr": "Rejouer"
+  },
+  "skyProgress": {
+   "en": "{n}/{total} constellations",
+   "fr": "{n}/{total} constellations"
+  },
+  "say": {
+   "en": "Say something",
+   "fr": "Dire quelque chose"
+  },
+  "settings": {
+   "en": "Settings",
+   "fr": "Réglages"
+  },
+  "quality": {
+   "en": "Picture",
+   "fr": "Image"
+  },
+  "qualityAuto": {
+   "en": "Auto",
+   "fr": "Auto"
+  },
+  "qualityLow": {
+   "en": "Fast",
+   "fr": "Rapide"
+  },
+  "qualityMedium": {
+   "en": "Nice",
+   "fr": "Belle"
+  },
+  "qualityHigh": {
+   "en": "Best",
+   "fr": "Superbe"
+  },
+  "sound": {
+   "en": "Sound",
+   "fr": "Son"
+  },
+  "on": {
+   "en": "On",
+   "fr": "Oui"
+  },
+  "off": {
+   "en": "Off",
+   "fr": "Non"
+  },
+  "changeExplorer": {
+   "en": "Change explorer",
+   "fr": "Changer d'explorateur"
+  },
+  "explorersHere": {
+   "en": "{n} explorers here",
+   "fr": "{n} explorateurs ici"
+  },
+  "aloneHere": {
+   "en": "Just you here",
+   "fr": "Tu es seul ici"
+  },
+  "roomNote": {
+   "en": "You meet explorers of your age.",
+   "fr": "Tu rencontres des explorateurs de ton âge."
+  },
+  "hidePlayer": {
+   "en": "Hide",
+   "fr": "Cacher"
+  },
+  "showPlayer": {
+   "en": "Show",
+   "fr": "Montrer"
+  },
+  "paused": {
+   "en": "Paused",
+   "fr": "En pause"
+  },
+  "lookLabel": {
+   "en": "Look",
+   "fr": "Regarder"
+  },
+  "loadError": {
+   "en": "The grove could not open this time. Let's try again!",
+   "fr": "Le bosquet n'a pas pu s'ouvrir cette fois. On réessaie !"
+  },
+  "retry": {
+   "en": "Try again",
+   "fr": "Réessayer"
+  }
+ },
+ "lanterns": [
+  {
+   "nickname": "Brave Otter 42",
+   "title": {
+    "en": "A star telescope to find real constellations",
+    "fr": "Un télescope pour trouver de vraies constellations"
+   },
+   "where": "idea-grove",
+   "shippedAt": "2026-10-24"
+  },
+  {
+   "nickname": "Gentle Panda 08",
+   "title": {
+    "en": "Wildflowers all around the big tree",
+    "fr": "Des fleurs sauvages tout autour du grand arbre"
+   },
+   "where": "idea-grove",
+   "shippedAt": "2026-10-22"
+  },
+  {
+   "nickname": "Swift Heron 63",
+   "title": {
+    "en": "Saying hello with a wave",
+    "fr": "Dire bonjour en faisant coucou"
+   },
+   "where": "anywhere",
+   "shippedAt": "2026-10-21"
+  }
+ ],
+ "districts": [
+  {
+   "id": "biome-frontier",
+   "name": {
+    "en": "Biome Frontier",
+    "fr": "La Frontière des biomes"
+   },
+   "teaser": {
+    "en": "Forests, beaches and reefs full of living things to discover.",
+    "fr": "Des forêts, des plages et des récifs pleins d'êtres vivants à découvrir."
+   },
+   "learns": {
+    "en": "science and geography: plants, animals and where they live.",
+    "fr": "les sciences et la géographie : les plantes, les animaux et leurs milieux."
+   },
+   "imageUrl": "https://content.mext.app/uploads/742bab29-d5ed-4458-9911-5c2c9ae774de.png",
+   "imageAlt": {
+    "en": "A bright coast with forest, sea and sky",
+    "fr": "Une côte lumineuse avec forêt, mer et ciel"
+   }
+  },
+  {
+   "id": "chrono-quarter",
+   "name": {
+    "en": "Chrono Quarter",
+    "fr": "Le Quartier Chrono"
+   },
+   "teaser": {
+    "en": "Streets where every corner is a different time in history.",
+    "fr": "Des rues où chaque coin est une époque de l'histoire."
+   },
+   "learns": {
+    "en": "history: how people lived, built and invented long ago.",
+    "fr": "l'histoire : comment on vivait, construisait et inventait autrefois."
+   },
+   "imageUrl": "https://content.mext.app/uploads/a47b88b7-f930-4c09-96e5-d1ffeec56d33.png",
+   "imageAlt": {
+    "en": "Old streets at dusk with buildings from many times",
+    "fr": "Des rues anciennes au crépuscule, avec des bâtiments de plusieurs époques"
+   }
+  },
+  {
+   "id": "skyharbor",
+   "name": {
+    "en": "Skyharbor",
+    "fr": "Port-Céleste"
+   },
+   "teaser": {
+    "en": "A night harbour of airships, planets and glowing machines.",
+    "fr": "Un port de nuit avec des dirigeables, des planètes et des machines lumineuses."
+   },
+   "learns": {
+    "en": "space, engineering and coding.",
+    "fr": "l'espace, l'ingénierie et le code."
+   },
+   "imageUrl": "https://content.mext.app/uploads/679b2158-b1c4-483a-a031-b915b270fc09.png",
+   "imageAlt": {
+    "en": "A glowing harbour in the night sky",
+    "fr": "Un port lumineux dans le ciel de nuit"
+   }
+  }
+ ],
+ "districtNames": [
+  {
+   "id": "idea-grove",
+   "name": {
+    "en": "Idea Grove",
+    "fr": "Le Bosquet des idées"
+   }
+  },
+  {
+   "id": "biome-frontier",
+   "name": {
+    "en": "Biome Frontier",
+    "fr": "La Frontière des biomes"
+   }
+  },
+  {
+   "id": "chrono-quarter",
+   "name": {
+    "en": "Chrono Quarter",
+    "fr": "Le Quartier Chrono"
+   }
+  },
+  {
+   "id": "skyharbor",
+   "name": {
+    "en": "Skyharbor",
+    "fr": "Port-Céleste"
+   }
+  },
+  {
+   "id": "anywhere",
+   "name": {
+    "en": "Everywhere in the world",
+    "fr": "Partout dans le monde"
+   }
+  }
+ ],
+ "constellations": [
+  {
+   "id": "big-dipper",
+   "name": {
+    "en": "the Big Dipper",
+    "fr": "la Grande Casserole"
+   },
+   "hint": {
+    "en": "Look for a big spoon of 7 stars: a box and a long handle.",
+    "fr": "Cherche une grande cuillère de 7 étoiles : une boîte et un long manche."
+   },
+   "fact": {
+    "en": "The Big Dipper is part of the Great Bear. Its two end stars point to the North Star.",
+    "fr": "La Grande Casserole fait partie de la Grande Ourse. Ses deux étoiles du bout montrent l'étoile Polaire."
+   },
+   "stars": [
+    {
+     "x": 38.8,
+     "y": 17.5,
+     "size": 1.7
+    },
+    {
+     "x": 39.2,
+     "y": 24.9,
+     "size": 1.45
+    },
+    {
+     "x": 29.1,
+     "y": 28.6,
+     "size": 1.4
+    },
+    {
+     "x": 24.9,
+     "y": 24.0,
+     "size": 0.95
+    },
+    {
+     "x": 17.4,
+     "y": 25.5,
+     "size": 1.7
+    },
+    {
+     "x": 11.6,
+     "y": 26.9,
+     "size": 1.5
+    },
+    {
+     "x": 7.0,
+     "y": 34.6,
+     "size": 1.65
+    }
+   ],
+   "lines": [
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     3,
+     0
+    ],
+    [
+     3,
+     4
+    ],
+    [
+     4,
+     5
+    ],
+    [
+     5,
+     6
+    ]
+   ]
+  },
+  {
+   "id": "orion",
+   "name": {
+    "en": "Orion the Hunter",
+    "fr": "Orion le chasseur"
+   },
+   "hint": {
+    "en": "Look for 3 stars in a row: that is his belt.",
+    "fr": "Cherche 3 étoiles alignées : c'est sa ceinture."
+   },
+   "fact": {
+    "en": "Orion's belt is 3 stars in a row. The red star Betelgeuse is his shoulder.",
+    "fr": "La ceinture d'Orion, ce sont 3 étoiles alignées. L'étoile rouge Bételgeuse est son épaule."
+   },
+   "stars": [
+    {
+     "x": 64.7,
+     "y": 27.3,
+     "size": 2.35
+    },
+    {
+     "x": 76.0,
+     "y": 28.9,
+     "size": 1.8
+    },
+    {
+     "x": 70.2,
+     "y": 41.4,
+     "size": 1.7
+    },
+    {
+     "x": 71.8,
+     "y": 40.3,
+     "size": 1.75
+    },
+    {
+     "x": 73.4,
+     "y": 38.9,
+     "size": 1.5
+    },
+    {
+     "x": 67.5,
+     "y": 53.0,
+     "size": 1.55
+    },
+    {
+     "x": 80.0,
+     "y": 50.8,
+     "size": 2.55
+    },
+    {
+     "x": 72.3,
+     "y": 23.5,
+     "size": 0.9
+    }
+   ],
+   "lines": [
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     4
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     3,
+     4
+    ],
+    [
+     2,
+     5
+    ],
+    [
+     4,
+     6
+    ]
+   ]
+  },
+  {
+   "id": "cassiopeia",
+   "name": {
+    "en": "Cassiopeia",
+    "fr": "Cassiopée"
+   },
+   "hint": {
+    "en": "Look for a W made of 5 stars.",
+    "fr": "Cherche un W fait de 5 étoiles."
+   },
+   "fact": {
+    "en": "Cassiopeia looks like a W. It is on the other side of the North Star from the Big Dipper.",
+    "fr": "Cassiopée ressemble à un W. Elle est de l'autre côté de l'étoile Polaire, en face de la Grande Casserole."
+   },
+   "stars": [
+    {
+     "x": 52.8,
+     "y": 75.8,
+     "size": 1.45
+    },
+    {
+     "x": 45.1,
+     "y": 80.9,
+     "size": 1.5
+    },
+    {
+     "x": 41.1,
+     "y": 72.7,
+     "size": 1.5
+    },
+    {
+     "x": 34.0,
+     "y": 73.7,
+     "size": 1.25
+    },
+    {
+     "x": 27.0,
+     "y": 66.9,
+     "size": 0.9
+    }
+   ],
+   "lines": [
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     3,
+     4
+    ]
+   ]
+  }
+ ],
+ "phrases": [
+  {
+   "id": "hello",
+   "icon": "😊",
+   "text": {
+    "en": "Hello!",
+    "fr": "Salut !"
+   },
+   "anim": "wave"
+  },
+  {
+   "id": "look",
+   "icon": "👀",
+   "text": {
+    "en": "Look!",
+    "fr": "Regarde !"
+   },
+   "anim": "none"
+  },
+  {
+   "id": "follow",
+   "icon": "👣",
+   "text": {
+    "en": "Follow me!",
+    "fr": "Suis-moi !"
+   },
+   "anim": "none"
+  },
+  {
+   "id": "thanks",
+   "icon": "💛",
+   "text": {
+    "en": "Thank you!",
+    "fr": "Merci !"
+   },
+   "anim": "none"
+  },
+  {
+   "id": "great-idea",
+   "icon": "💡",
+   "text": {
+    "en": "Great idea!",
+    "fr": "Super idée !"
+   },
+   "anim": "cheer"
+  },
+  {
+   "id": "lets-build",
+   "icon": "🔨",
+   "text": {
+    "en": "Let's build!",
+    "fr": "On construit !"
+   },
+   "anim": "none"
+  },
+  {
+   "id": "wave",
+   "icon": "👋",
+   "text": {
+    "en": "Wave",
+    "fr": "Coucou"
+   },
+   "anim": "wave"
+  },
+  {
+   "id": "cheer",
+   "icon": "🎉",
+   "text": {
+    "en": "Hooray!",
+    "fr": "Hourra !"
+   },
+   "anim": "cheer"
+  }
+ ],
+ "avatars": [
+  {
+   "id": "sunny",
+   "skin": "#f1c7a5",
+   "hair": "#5a3825",
+   "shirt": "#f08a3c",
+   "pants": "#3f5f8f",
+   "shoes": "#7a4a2a",
+   "bag": "#5c9b4a"
+  },
+  {
+   "id": "lagoon",
+   "skin": "#8d5a3b",
+   "hair": "#1f1410",
+   "shirt": "#3fa7a0",
+   "pants": "#c9a66b",
+   "shoes": "#2f3a56",
+   "bag": "#e76f51"
+  },
+  {
+   "id": "violet",
+   "skin": "#d9a27c",
+   "hair": "#c46a2b",
+   "shirt": "#8e6cc9",
+   "pants": "#2d4a3e",
+   "shoes": "#e0b04a",
+   "bag": "#f2a541"
+  },
+  {
+   "id": "honey",
+   "skin": "#5e3a26",
+   "hair": "#2a1b14",
+   "shirt": "#e9c46a",
+   "pants": "#264653",
+   "shoes": "#b23a48",
+   "bag": "#4a90c2"
+  },
+  {
+   "id": "fern",
+   "skin": "#f6d7bf",
+   "hair": "#e8c872",
+   "shirt": "#5aa469",
+   "pants": "#6b4f3a",
+   "shoes": "#3d5a80",
+   "bag": "#c8553d"
+  },
+  {
+   "id": "berry",
+   "skin": "#b67b56",
+   "hair": "#3b2a1e",
+   "shirt": "#d1495b",
+   "pants": "#3a6ea5",
+   "shoes": "#f4f1de",
+   "bag": "#8ab17d"
+  }
+ ],
+ "nicknameAdjectives": [
+  "Brave",
+  "Curious",
+  "Gentle",
+  "Swift",
+  "Clever",
+  "Happy",
+  "Sunny",
+  "Bright",
+  "Kind",
+  "Bold",
+  "Calm",
+  "Cheerful",
+  "Cosy",
+  "Daring",
+  "Eager",
+  "Friendly",
+  "Jolly",
+  "Lucky",
+  "Merry",
+  "Nimble",
+  "Patient",
+  "Playful",
+  "Quiet",
+  "Quick",
+  "Sparkly",
+  "Spotted",
+  "Starry",
+  "Steady",
+  "Witty",
+  "Wise"
+ ],
+ "nicknameAnimals": [
+  "Otter",
+  "Fox",
+  "Panda",
+  "Heron",
+  "Owl",
+  "Hedgehog",
+  "Turtle",
+  "Badger",
+  "Koala",
+  "Lynx",
+  "Dolphin",
+  "Penguin",
+  "Rabbit",
+  "Squirrel",
+  "Beaver",
+  "Llama",
+  "Gecko",
+  "Puffin",
+  "Seal",
+  "Sparrow",
+  "Wombat",
+  "Zebra",
+  "Moose",
+  "Robin",
+  "Tiger",
+  "Whale",
+  "Kiwi",
+  "Lemur",
+  "Yak",
+  "Bee"
+ ],
+ "models": {
+  "tree": "https://future-api.mexty.ai/api/files/p/6adc90f8f7668f50f94007a6",
+  "forestTree": "https://future-api.mexty.ai/api/files/p/6adc9121f7668f50f94007c2",
+  "lantern": "https://future-api.mexty.ai/api/files/p/6adc9123f7668f50f94007ce",
+  "plaza": "https://future-api.mexty.ai/api/files/p/6adc9124f7668f50f94007da",
+  "stallBiome": "https://future-api.mexty.ai/api/files/p/6adc9126f7668f50f94007e6",
+  "stallChrono": "https://future-api.mexty.ai/api/files/p/6adc913bf7668f50f94007fe",
+  "stallSky": "https://future-api.mexty.ai/api/files/p/6adc913df7668f50f940080a",
+  "telescope": "https://future-api.mexty.ai/api/files/p/6adc913ef7668f50f9400818",
+  "boulders": "https://future-api.mexty.ai/api/files/p/6adc9140f7668f50f9400825",
+  "fern": "https://future-api.mexty.ai/api/files/p/6adc9142f7668f50f9400831",
+  "flowers": "https://future-api.mexty.ai/api/files/p/6adc9143f7668f50f940083d",
+  "grassTuft": "https://future-api.mexty.ai/api/files/p/6adc9156f7668f50f9400855",
+  "avatar": "https://future-api.mexty.ai/api/files/p/6adc9158f7668f50f9400861"
+ },
+ "textures": {
+  "grass": "https://future-api.mexty.ai/api/files/p/6adc915af7668f50f940086d",
+  "dirt": "https://future-api.mexty.ai/api/files/p/6adc915bf7668f50f9400879"
+ },
+ "sounds": {
+  "ambience": "https://future-api.mexty.ai/api/files/p/6adc916df7668f50f94008a6",
+  "chime": "https://future-api.mexty.ai/api/files/p/6adc916ff7668f50f94008b2",
+  "pop": "https://future-api.mexty.ai/api/files/p/6adc9171f7668f50f94008be",
+  "success": "https://future-api.mexty.ai/api/files/p/6adc9172f7668f50f94008ca"
+ }
+}
