@@ -1,0 +1,167 @@
+/* Chrono Quarter: Time Detective overlay (builds on the hub's parchment cards and buttons in game.css) */
+
+/* era signs floating over the stands, the Time Dial and the gate (drei <Html>) */
+.cq-sign {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  background: rgba(248, 236, 210, 0.92);
+  color: #4a2c17;
+  border: 3px solid #b9874c;
+  border-radius: 999px;
+  padding: 3px 12px 3px 6px;
+  font: 800 14px ui-rounded, "SF Pro Rounded", "Nunito", system-ui, sans-serif;
+  box-shadow: 0 4px 10px rgba(40, 20, 5, 0.35);
+  transform: translateY(-50%);
+}
+.cq-sign-icon { font-size: 20px; }
+.cq-sign-gate { padding: 3px 12px; }
+
+/* the case chip (top centre) and what you carry */
+.cq-case {
+  position: absolute;
+  top: calc(max(10px, env(safe-area-inset-top)) + 46px);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  z-index: 9;
+  pointer-events: none;
+  max-width: calc(100vw - 24px);
+}
+.cq-case > * { pointer-events: auto; }
+.cq-case-chip {
+  font: inherit;
+  font-weight: 800;
+  font-size: clamp(14px, 2vmin, 17px);
+  color: #4a2c17;
+  background: rgba(248, 236, 210, 0.95);
+  border: 3px solid #b9874c;
+  border-radius: 999px;
+  min-height: 44px;
+  padding: 6px 14px;
+  cursor: pointer;
+  box-shadow: 0 3px 0 #b9874c, 0 6px 12px rgba(40, 20, 5, 0.3);
+  white-space: nowrap;
+}
+.cq-go-dial { background: #ffe2a6; animation: cq-glow 1.6s ease-in-out infinite; }
+@keyframes cq-glow { 0%, 100% { box-shadow: 0 3px 0 #b9874c, 0 0 0 0 rgba(255, 196, 90, 0.7); } 50% { box-shadow: 0 3px 0 #b9874c, 0 0 0 8px rgba(255, 196, 90, 0); } }
+.cq-carry {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(240, 150, 47, 0.95);
+  color: #fff;
+  border: 3px solid #b5601a;
+  border-radius: 999px;
+  padding: 4px 14px 4px 6px;
+  font-weight: 800;
+  font-size: clamp(14px, 2vmin, 17px);
+  text-shadow: 0 1px 0 rgba(120, 50, 0, 0.45);
+  max-width: 52vw;
+  overflow: hidden;
+  animation: ow-pop 0.25s ease-out;
+}
+.cq-carry-icon { font-size: 24px; }
+.cq-carry-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.cq-toast {
+  position: absolute;
+  left: 50%;
+  bottom: calc(max(18px, env(safe-area-inset-bottom)) + 96px);
+  transform: translateX(-50%);
+  width: min(520px, calc(100vw - 32px));
+  background: rgba(40, 25, 10, 0.82);
+  color: #fff3d6;
+  font-weight: 800;
+  font-size: clamp(15px, 2.3vmin, 18px);
+  padding: 12px 18px;
+  border-radius: 16px;
+  text-align: center;
+  z-index: 9;
+  animation: ow-pop 0.25s ease-out;
+}
+
+/* cards */
+.cq-modal { z-index: 16; }
+.cq-card { width: min(500px, 100%); }
+.cq-kicker { font-weight: 900; color: #7a5638; font-size: clamp(15px, 2.3vmin, 19px); margin: 4px 0; }
+.cq-big-icon { font-size: clamp(56px, 11vmin, 84px); line-height: 1.1; filter: drop-shadow(0 4px 10px rgba(255, 170, 60, 0.55)); }
+.cq-wobble { animation: cq-wobble 0.6s ease-in-out; }
+@keyframes cq-wobble { 0%, 100% { transform: rotate(0); } 25% { transform: rotate(-10deg); } 75% { transform: rotate(10deg); } }
+.cq-clue { background: #fff7e6; border: 2px dashed #d9b682; border-radius: 14px; padding: 8px 12px; }
+.cq-hint { background: #fff1c9; border: 3px solid #f0962f; border-radius: 14px; padding: 8px 12px; }
+.cq-era-head {
+  margin: -4px -4px 8px;
+  color: #fff;
+  font-weight: 900;
+  font-size: clamp(16px, 2.4vmin, 20px);
+  border-radius: 14px;
+  padding: 8px 12px;
+  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.25);
+}
+.cq-era-strip { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin: 6px 0; }
+.cq-era-dot { width: 46px; height: 46px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 26px; border: 3px solid #fff4dc; box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25); }
+.cq-era-chip { border: 3px solid; border-radius: 999px; padding: 3px 10px; font-weight: 800; background: #fffaf0; font-size: clamp(13px, 1.9vmin, 15px); }
+.cq-mode { margin: 10px 0 0; }
+
+/* the Time Dial */
+.cq-timeline { display: flex; align-items: center; gap: 6px; justify-content: center; margin: 8px 0; flex-wrap: nowrap; }
+.cq-tl-end { font-size: clamp(11px, 1.7vmin, 13px); font-weight: 900; color: #7a5638; writing-mode: horizontal-tb; max-width: 54px; line-height: 1.1; }
+.cq-slot {
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 64px;
+  border: 3px dashed #c99a5e;
+  border-radius: 14px;
+  background: #fff7e6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 800;
+  font-size: clamp(11px, 1.7vmin, 14px);
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.3);
+  padding: 4px;
+  text-align: center;
+}
+.cq-slot.full { border-style: solid; border-color: #fff4dc; animation: ow-pop 0.25s ease-out; }
+.cq-slot-icon { font-size: 26px; }
+.cq-slot-q { color: #c99a5e; font-size: 26px; text-shadow: none; }
+.cq-era-buttons { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-top: 6px; }
+.cq-era-btn {
+  font: inherit;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  min-height: 112px;
+  padding: 8px 4px;
+  border: 4px solid;
+  border-radius: 18px;
+  background: #fffaf0;
+  color: #4a2c17;
+  cursor: pointer;
+  box-shadow: 0 4px 0 rgba(120, 80, 30, 0.35);
+}
+.cq-era-btn:active { transform: translateY(3px); box-shadow: 0 1px 0 rgba(120, 80, 30, 0.35); }
+.cq-era-btn.used { opacity: 0.35; }
+.cq-era-btn:focus-visible { outline: 4px solid #3b82f6; outline-offset: 2px; }
+.cq-era-btn-icon { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28px; }
+.cq-era-btn-name { font-weight: 900; font-size: clamp(13px, 2vmin, 16px); line-height: 1.1; }
+.cq-era-btn-period { font-weight: 700; font-size: clamp(12px, 1.8vmin, 14px); color: #7a5638; }
+
+.cq-stars { font-size: 30px; display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
+.cq-file { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; text-align: left; }
+.cq-file-item { display: flex; align-items: center; gap: 6px; background: #fff7e6; border: 2px solid #e2c592; border-radius: 12px; padding: 6px 8px; font-weight: 800; font-size: clamp(13px, 1.9vmin, 15px); }
+.cq-file-item.home { background: #e8f6dc; border-color: #8cc663; }
+.cq-file-icon { font-size: 22px; }
+.cq-file-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+@media (max-width: 420px) {
+  .cq-era-btn { min-height: 100px; }
+  .cq-file { grid-template-columns: 1fr; }
+}

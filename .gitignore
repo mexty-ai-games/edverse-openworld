@@ -4,3 +4,7 @@ game/dev/public/
 game/dev/props.local.json
 *.blend
 *.blend1
+__pycache__/
+assets/blender/*/build/
+*.glb
+*.blend
