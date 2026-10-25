@@ -91,6 +91,68 @@ export const ARENA_PIECES: ArenaPiece[] = [
 /** Where the explorer stands to watch an event (east of the tracks, facing the arena). */
 export const ARENA_WATCH = { x: -7.4, z: 8.6 };
 
+// ------------------------------------------------------------------ phase 3: together
+/** A placed piece: position, facing (radians about Y) and scale. */
+export interface Spot3 {
+  x: number;
+  z: number;
+  ry: number;
+  s: number;
+}
+
+/** The community garden, north-east of the Idea Tree: bed 0 is the Keeper's (always in flower), beds 1-3 are everyone's. */
+export const GARDEN_BEDS: Spot3[] = [
+  { x: 9.0, z: -10.6, ry: facing(9.0, -10.6), s: 1.15 },
+  { x: 11.9, z: -9.0, ry: facing(11.9, -9.0), s: 1.15 },
+  { x: 12.4, z: -12.3, ry: facing(12.4, -12.3), s: 1.15 },
+  { x: 9.6, z: -13.9, ry: facing(9.6, -13.9), s: 1.15 },
+];
+/** The garden's seed stand (packets on a plinth) and the watering can beside it. */
+export const SEED_STAND = { x: 7.6, z: -12.6, ry: facing(7.6, -12.6) };
+export const GARDEN_CENTRE = { x: 10.7, z: -11.4 };
+
+/** The Explorers' Museum, north-west of the Idea Tree, its doorway facing the plaza. */
+export const MUSEUM = { x: -11.7, z: -11.2, ry: facing(-11.7, -11.2), s: 0.72 };
+
+/** The BioBlitz banner and its progress totem, at the plaza's north-east edge. */
+export const BLITZ_BANNER = { x: 6.4, z: -5.4, ry: facing(6.4, -5.4) };
+export const BLITZ_TOTEM = { x: 4.3, z: -4.5, ry: facing(4.3, -4.5) };
+
+/** Ground cover keeps off the museum's floor, the garden beds and the BioBlitz pieces. */
+export function keepClear(x: number, z: number, pad = 0): boolean {
+  if (Math.abs(x - MUSEUM.x) < 7 && Math.abs(z - MUSEUM.z) < 7) {
+    const m = museumLocal(x, z);
+    if (Math.abs(m.lx) < 6.4 + pad / MUSEUM.s && m.lz > -4.4 - pad / MUSEUM.s && m.lz < 4.6) return true;
+    if (m.lx > -6.0 && m.lx < 1.8 && m.lz >= 4.6 && m.lz < 8.0) return true;
+  }
+  for (const b of GARDEN_BEDS) if (Math.hypot(x - b.x, z - b.z) < 1.25 * b.s + pad) return true;
+  if (Math.hypot(x - SEED_STAND.x, z - SEED_STAND.z) < 1.0 + pad) return true;
+  if (Math.hypot(x - BLITZ_TOTEM.x, z - BLITZ_TOTEM.z) < 0.8 + pad) return true;
+  return false;
+}
+
+/** Museum-local (x, z) to the world. */
+export function museumPoint(lx: number, lz: number) {
+  return local(MUSEUM.x, MUSEUM.z, MUSEUM.ry, lx * MUSEUM.s, lz * MUSEUM.s);
+}
+/** World (x, z) to museum-local metres (unscaled model units). */
+export function museumLocal(x: number, z: number) {
+  const dx = x - MUSEUM.x;
+  const dz = z - MUSEUM.z;
+  const c = Math.cos(MUSEUM.ry);
+  const s = Math.sin(MUSEUM.ry);
+  return { lx: (dx * c - dz * s) / MUSEUM.s, lz: (dx * s + dz * c) / MUSEUM.s };
+}
+/** The museum's walls (model units): back wall, two side walls, the front wall either side of the doorway. */
+export const MUSEUM_WALLS: [number, number, number, number][] = [
+  [-6.0, -4.0, 6.0, -4.0],
+  [-6.0, -4.0, -6.0, 3.9],
+  [6.0, -4.0, 6.0, 3.9],
+  [-6.0, 3.9, -1.5, 3.9],
+  [1.5, 3.9, 6.0, 3.9],
+];
+export const MUSEUM_FLOOR = 0.44;
+
 export const BOULDERS: Placed[] = [
   { variant: 1, x: -15.5, z: -8.5, s: 1.3, ry: 0.3 },
   { variant: 0, x: -17.6, z: 2.4, s: 1.0, ry: 1.2 },
@@ -151,12 +213,27 @@ export function colliders(): Circle[] {
   out.push({ x: KEEPER.x, z: KEEPER.z, r: 0.45 });
   for (const p of [...MEADOW.lavender, ...MEADOW.milkweed]) out.push({ x: p.x, z: p.z, r: 0.35 * p.s });
   for (const p of ARENA_PIECES) for (const [lx, lz, r] of p.solid) out.push({ ...local(p.x, p.z, p.ry, lx, lz), r });
+  for (const b of GARDEN_BEDS) for (const lx of [-0.5, 0, 0.5]) out.push({ ...local(b.x, b.z, b.ry, lx * b.s, 0), r: 0.5 * b.s });
+  out.push({ x: SEED_STAND.x, z: SEED_STAND.z, r: 0.45 });
+  out.push({ x: BLITZ_TOTEM.x, z: BLITZ_TOTEM.z, r: 0.5 });
+  for (const lx of [-1.5, 1.5]) out.push({ ...local(BLITZ_BANNER.x, BLITZ_BANNER.z, BLITZ_BANNER.ry, lx, 0), r: 0.25 });
+  // the museum's walls: a row of small circles along each one
+  for (const [ax, az, bx, bz] of MUSEUM_WALLS) {
+    const n = Math.max(1, Math.ceil((Math.hypot(bx - ax, bz - az) * MUSEUM.s) / 0.35));
+    for (let i = 0; i <= n; i++) out.push({ ...museumPoint(ax + ((bx - ax) * i) / n, az + ((bz - az) * i) / n), r: 0.22 });
+  }
   for (const b of BOULDERS) out.push({ x: b.x, z: b.z, r: (b.variant === 1 ? 1.3 : b.variant === 0 ? 1.0 : 0.7) * b.s * 0.95 });
   return out;
 }
 
 /** Ground height under a point: the plaza is a low stone platform. */
 export function groundY(x: number, z: number): number {
+  // inside the Explorers' Museum: its floor (and the ramp up to the doorway)
+  if (Math.abs(x - MUSEUM.x) < 7 && Math.abs(z - MUSEUM.z) < 7) {
+    const m = museumLocal(x, z);
+    if (Math.abs(m.lx) < 6.1 && m.lz > -4.1 && m.lz < 4.0) return MUSEUM_FLOOR * MUSEUM.s;
+    if (Math.abs(m.lx) < 1.6 && m.lz >= 4.0 && m.lz < 7.2) return MUSEUM_FLOOR * MUSEUM.s * (1 - (m.lz - 4.0) / 3.2);
+  }
   const r = Math.hypot(x, z);
   if (r < PLAZA_R) return PLAZA_TOP;
   if (r < PLAZA_R + 0.7) return PLAZA_TOP * (1 - (r - PLAZA_R) / 0.7);

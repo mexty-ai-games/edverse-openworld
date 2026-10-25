@@ -196,9 +196,11 @@ export function Expedition({ exp, quests, t, game, zone, phase, young, blocked, 
     (ev: QuestEvent) => {
       const st = useExp.getState();
       if (!st.loaded) return;
+      // finds are heard by the rest of the world too (phase 3: the BioBlitz, team-up finds, the pollinator chart)
+      if (/^(photo|observe|identify|release)$/.test(ev.kind)) window.dispatchEvent(new CustomEvent("ow-find", { detail: ev }));
       const out = applyEvent(quests, st.save, ev);
       if (out.progressed) handle(out);
-      else if (/^(measure|weigh|release)$/.test(ev.kind) && !ahead.current.some((e) => e.kind === ev.kind && e.id === ev.id)) ahead.current = ahead.current.concat(ev).slice(-30);
+      else if (/^(measure|weigh|release|plant|water|pollinate|museum|sticker|coop|bioblitz|help)$/.test(ev.kind) && !ahead.current.some((e) => e.kind === ev.kind && e.id === ev.id)) ahead.current = ahead.current.concat(ev).slice(-30);
     },
     [quests, handle],
   );

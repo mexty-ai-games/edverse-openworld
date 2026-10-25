@@ -33,6 +33,11 @@ export interface Peer {
   phrase: string | null;
   phraseAt: number;
   seen: number;
+  /** Phase 3: the tool held out for a team-up find (lantern | jar | ""), and that find's id. */
+  hold?: string;
+  holdC?: string;
+  /** A beginner (few Field Guide pages): others may show them a creature. */
+  nb?: boolean;
 }
 
 export interface Me {
@@ -45,7 +50,13 @@ export interface Me {
   emoteAt: number;
   phrase: string | null;
   phraseAt: number;
+  /** Phase 3: the tool held out for a team-up find (lantern | jar | ""), and that find's id. */
+  hold: string;
+  holdC: string;
 }
+
+/** A preset action message between explorers (never text): BioBlitz state, team-up thanks, show a beginner. */
+export type ActMsg = { t: string; [k: string]: unknown };
 
 /** A living creature in the active zone, as the Field Camera and the hand lens see it (written by its scene every frame). */
 export interface LiveCreature {
@@ -108,6 +119,13 @@ export interface Game {
   say(phraseId: string, anim: string): void;
   /** Set by the presence layer to broadcast what the explorer says. */
   onSay: ((phraseId: string, anim: string) => void) | null;
+  /** This explorer is a beginner (sent with the presence state). */
+  newbie: boolean;
+  /** Set by the presence layer: sends a preset action message to the room / sends the state now. */
+  act: ((m: ActMsg) => void) | null;
+  pushState: (() => void) | null;
+  /** Receivers of the room's action messages (validated by the presence layer). */
+  onAct: ((m: ActMsg, from: Peer) => void)[];
 }
 
 export const PHRASE_SECONDS = 4.5;
@@ -118,7 +136,7 @@ export function createGame(): Game {
     paused: false,
     avatar: 0,
     nickname: "",
-    me: { x: SPAWN.x, y: SPAWN.y, z: SPAWN.z, ry: SPAWN.ry, moving: false, emote: "", emoteAt: 0, phrase: null, phraseAt: 0 },
+    me: { x: SPAWN.x, y: SPAWN.y, z: SPAWN.z, ry: SPAWN.ry, moving: false, emote: "", emoteAt: 0, phrase: null, phraseAt: 0, hold: "", holdC: "" },
     input: { x: 0, z: 0 },
     peers: new Map(),
     hidden: new Set(),
@@ -132,6 +150,10 @@ export function createGame(): Game {
     tiptoe: false,
     peerVersion: 0,
     onSay: null,
+    newbie: false,
+    act: null,
+    pushState: null,
+    onAct: [],
     emote(kind: string) {
       g.me.emote = kind;
       g.me.emoteAt = performance.now();

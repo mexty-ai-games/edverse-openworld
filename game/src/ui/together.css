@@ -1,0 +1,215 @@
+/* Phase 3 "Together": garden bed card, museum display card, BioBlitz card and chip, team-up panel, badge card.
+   The Swarm-Legends family: warm parchment cards, bold rounded type, big touch targets. */
+
+.tg-modal { z-index: 30; }
+.tg-card {
+  position: relative;
+  width: min(620px, calc(100vw - 24px));
+  max-height: min(88vh, 760px);
+  overflow-y: auto;
+  padding: 16px 18px 18px;
+  animation: ow-pop 0.25s ease-out;
+}
+.tg-x { position: absolute; top: 10px; right: 10px; z-index: 2; }
+.tg-head { display: flex; align-items: center; gap: 12px; margin: 0 52px 10px 0; }
+.tg-head h2 { margin: 0; font-size: clamp(20px, 3.2vmin, 26px); font-weight: 900; line-height: 1.1; }
+.tg-head-icon {
+  flex: none;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  background: radial-gradient(circle at 40% 35%, #fff4d8, #e9c98a);
+  border: 3px solid var(--edge);
+}
+.tg-sub { font-weight: 800; color: var(--ink-soft); font-size: clamp(13px, 1.9vmin, 15px); }
+.tg-lead { font-weight: 800; font-size: clamp(15px, 2.3vmin, 18px); margin: 6px 0 10px; line-height: 1.3; }
+.tg-label { font-weight: 900; margin: 12px 0 6px; font-size: clamp(14px, 2.1vmin, 17px); }
+.tg-note { font-weight: 700; color: var(--ink-soft); font-size: clamp(13px, 1.9vmin, 15px); margin: 6px 0; }
+.tg-fact { font-weight: 700; font-size: clamp(14px, 2.1vmin, 17px); margin: 8px 0 2px; line-height: 1.3; }
+.tg-name { font-weight: 900; font-size: clamp(15px, 2.2vmin, 18px); }
+.tg-center { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.tg-center h2 { margin: 6px 0 2px; font-size: clamp(20px, 3.2vmin, 26px); font-weight: 900; }
+.tg-big { font-size: 64px; line-height: 1.1; }
+.tg-row { display: flex; align-items: center; gap: 10px; }
+.tg-grow { flex: 1; min-width: 0; }
+.tg-pic { width: 52px; height: 52px; object-fit: contain; flex: none; }
+.tg-pic.dim { filter: saturate(0.4) brightness(0.95); opacity: 0.8; }
+.tg-emoji { display: inline-flex; align-items: center; justify-content: center; font-size: 34px; }
+
+/* a raised bed: 3 x 2 planting spots, seen from the path */
+.tg-bed {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  padding: 10px;
+  border-radius: 16px;
+  background: linear-gradient(180deg, #7a5233, #5e3d22);
+  border: 4px solid #8e6236;
+  box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.35);
+}
+.tg-plot {
+  min-height: 84px;
+  border-radius: 12px;
+  border: 3px dashed rgba(255, 236, 200, 0.55);
+  background: rgba(70, 42, 20, 0.55);
+  color: #fff3d6;
+  font-weight: 900;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  padding: 4px;
+}
+.tg-plot.full { border-style: solid; border-color: rgba(255, 236, 200, 0.35); background: rgba(90, 60, 30, 0.6); }
+.tg-plot.mine { border-color: #ffd25a; }
+.tg-plot.on { outline: 4px solid #ffd25a; outline-offset: 1px; }
+.tg-plot-empty { font-size: 32px; opacity: 0.85; }
+.tg-plot-stage { font-size: clamp(11px, 1.7vmin, 13px); text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6); }
+.tg-seed-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.tg-seed {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 60px;
+  padding: 6px 8px;
+  border-radius: 14px;
+  border: 3px solid var(--edge);
+  background: #fffaf0;
+  font-weight: 900;
+  font-size: clamp(13px, 1.9vmin, 15px);
+  cursor: pointer;
+  text-align: left;
+}
+.tg-seed .tg-pic { width: 42px; height: 42px; }
+.tg-seed:active { transform: translateY(2px); }
+.tg-plot-info { margin-top: 10px; padding: 10px; border-radius: 14px; background: rgba(255, 250, 235, 0.8); border: 2px solid #e0c48c; }
+.tg-water { flex: none; }
+.tg-visitors { display: flex; flex-wrap: wrap; gap: 8px; }
+.tg-visitor { display: flex; align-items: center; gap: 6px; padding: 4px 10px 4px 4px; border-radius: 999px; background: #f3e4c0; font-weight: 900; font-size: 14px; }
+.tg-visitor .ex-pic, .tg-visitor img { width: 36px; height: 36px; }
+.tg-visitor.seen { background: #d9efc0; }
+.tg-chart { margin-top: 6px; }
+.tg-chart-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 4px 0; border-bottom: 1px dashed #d8bf8a; }
+.tg-chart-plant { display: flex; align-items: center; gap: 6px; font-weight: 900; }
+.tg-chart-plant .tg-pic { width: 34px; height: 34px; }
+.tg-chart-cells { display: flex; gap: 6px; }
+.tg-cell {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  border: 2px solid #d3b06e;
+  background: #f7ebcf;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  color: #a68548;
+  font-size: 20px;
+}
+.tg-cell.seen { background: #d9efc0; border-color: #6aa84f; color: inherit; font-size: 24px; }
+
+/* the museum */
+.tg-photos { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 8px; }
+.tg-photo .ex-pic, .tg-photo img { width: 72px; height: 72px; }
+.tg-photo { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 8px; border-radius: 14px; background: #fffaf0; border: 3px solid #e0c48c; text-align: center; }
+.tg-stars { color: #d39500; font-size: 20px; letter-spacing: 1px; text-shadow: 0 1px 0 #6a3c10; }
+.tg-choose { margin-top: 10px; }
+.tg-pick-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(86px, 1fr)); gap: 8px; }
+.tg-pick { position: relative; display: flex; flex-direction: column; align-items: center; padding: 6px; border-radius: 12px; border: 3px solid #e0c48c; background: #fffaf0; cursor: pointer; min-height: 86px; }
+.tg-pick.on { border-color: #6aa84f; background: #e3f3d2; }
+.tg-onshow { font-size: 11px; font-weight: 900; color: #3f7a2b; }
+.tg-stickers { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; }
+.tg-sticker {
+  position: relative;
+  aspect-ratio: 1;
+  min-height: 52px;
+  border-radius: 14px;
+  border: 3px solid var(--edge);
+  background: #fffaf0;
+  cursor: pointer;
+  padding: 4px;
+}
+.tg-sticker img { width: 100%; height: 100%; object-fit: contain; }
+.tg-sticker.on { background: #ffe39a; border-color: var(--go-dark); }
+.tg-sticker:disabled { cursor: default; opacity: 0.95; }
+.tg-count { position: absolute; right: -6px; top: -6px; min-width: 24px; height: 24px; border-radius: 12px; background: #c0392b; color: #fff; font-weight: 900; font-size: 13px; display: flex; align-items: center; justify-content: center; padding: 0 5px; border: 2px solid #fff; }
+
+/* BioBlitz */
+.tg-meter { position: relative; height: 34px; border-radius: 17px; background: #ead7ad; border: 3px solid var(--edge); overflow: hidden; }
+.tg-meter i { position: absolute; left: 0; top: 0; bottom: 0; background: linear-gradient(90deg, #7fc35a, #3f9a3a); transition: width 0.6s ease; }
+.tg-meter span { position: relative; display: block; text-align: center; line-height: 28px; font-weight: 900; }
+.tg-clock-big { text-align: center; font-weight: 900; font-size: 22px; margin: 6px 0; }
+.tg-found { display: flex; flex-wrap: wrap; gap: 4px; font-size: 26px; margin: 4px 0; justify-content: center; }
+.tg-fact-box { margin-top: 12px; padding: 10px 12px; border-radius: 14px; background: rgba(255, 250, 235, 0.85); border: 2px solid #e0c48c; }
+.tg-blitz-chip, .tg-offer {
+  position: absolute;
+  z-index: 12;
+  left: 50%;
+  transform: translateX(-50%);
+  top: calc(max(10px, env(safe-area-inset-top)) + 4px);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 3px solid #3f9a3a;
+  background: linear-gradient(180deg, #f2ffe4, #d6f0bd);
+  font-weight: 900;
+  font-size: clamp(14px, 2.1vmin, 17px);
+  box-shadow: 0 4px 12px rgba(30, 60, 10, 0.3);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.tg-offer { top: auto; bottom: calc(max(12px, env(safe-area-inset-bottom)) + 96px); border-color: #e0a43c; background: linear-gradient(180deg, #fff6df, #f6e3b8); animation: ow-pop 0.3s ease-out; }
+.tg-clock { padding-left: 8px; border-left: 2px solid rgba(63, 154, 58, 0.4); }
+
+/* team-up panel */
+.tg-coop {
+  position: absolute;
+  z-index: 11;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: calc(max(12px, env(safe-area-inset-bottom)) + 92px);
+  width: min(560px, calc(100vw - 24px));
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 10px;
+  align-items: center;
+  padding: 10px 12px;
+  animation: ow-pop 0.3s ease-out;
+}
+.tg-coop-icons { display: flex; align-items: center; gap: 2px; font-size: 30px; }
+.tg-plus { font-size: 18px; font-weight: 900; color: var(--ink-soft); }
+.tg-coop-title { font-weight: 900; font-size: clamp(14px, 2.1vmin, 17px); }
+.tg-coop-text { font-weight: 700; font-size: clamp(13px, 1.9vmin, 15px); line-height: 1.25; }
+.tg-coop-status { font-weight: 900; font-size: clamp(13px, 1.9vmin, 15px); margin-top: 2px; color: #3f6b2a; }
+.tg-hold.on { background: #ffd98a; }
+.tg-helper-tag { background: #f3d7a8; color: #5a3416; }
+.tg-show {
+  position: absolute;
+  z-index: 40;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: calc(max(12px, env(safe-area-inset-bottom)) + 6px);
+  box-shadow: 0 6px 18px rgba(40, 20, 5, 0.45);
+  animation: ow-pop 0.3s ease-out;
+  white-space: nowrap;
+}
+.tg-badge-view { width: 180px; height: 180px; }
+@media (max-width: 520px) {
+  .tg-coop { grid-template-columns: auto 1fr; bottom: calc(max(12px, env(safe-area-inset-bottom)) + 150px); }
+  .tg-coop .tg-hold { grid-column: 1 / 3; }
+  .tg-seed-row { grid-template-columns: repeat(2, 1fr); }
+  .tg-stickers { grid-template-columns: repeat(3, 1fr); }
+  .tg-cell { width: 34px; height: 34px; font-size: 17px; }
+  .tg-chart-plant .tg-pic { width: 28px; height: 28px; }
+  .tg-offer { bottom: calc(max(12px, env(safe-area-inset-bottom)) + 160px); }
+}
+.tg-badges { display: flex; flex-wrap: wrap; gap: 6px; }
+.tg-badge { padding: 4px 10px; border-radius: 999px; background: #f3e4c0; border: 2px solid #d3b06e; font-weight: 900; font-size: 14px; }

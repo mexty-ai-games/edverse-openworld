@@ -14,6 +14,8 @@ import type { CardState } from "../ui/Cards";
 import type { ZoneModule } from "../zones/registry";
 import { wind } from "./assets";
 import { GroveExpedition } from "./Expedition3D";
+import { GroveTogether, TogetherAll } from "./Together3D";
+import { defaultTogether } from "../together/content";
 import { defaultExpedition } from "../expedition/content";
 import { HeldNet } from "./HeldNet";
 import { BugGamesArena } from "./BugGames3D";
@@ -129,6 +131,9 @@ export function GameCanvas({ props, game, settings, paused, zone, onZoneReady, o
               <GroveExpedition props={props} exp={props.expedition || defaultExpedition} game={game} />
             </Suspense>
             <Suspense fallback={null}>
+              <GroveTogether tp={props.together || defaultTogether} exp={props.expedition || defaultExpedition} game={game} t={t} />
+            </Suspense>
+            <Suspense fallback={null}>
               <BugGamesArena games={props.bugGames || defaultBugGames} exp={props.expedition || defaultExpedition} game={game} t={t} />
             </Suspense>
             <Loaded onLoaded={onZoneReady} />
@@ -142,6 +147,7 @@ export function GameCanvas({ props, game, settings, paused, zone, onZoneReady, o
           </ZoneGuard>
         )}
         <Players props={props} game={game} layout={zone.layout} onPeerTap={onPeerTap} />
+        <TogetherAll props={props} tp={props.together || defaultTogether} exp={props.expedition || defaultExpedition} game={game} t={t} ground={zone.layout.groundY} />
         <HeldNet url={((props.expedition || defaultExpedition).tools.find((x) => x.id === "net") || { modelUrl: "" }).modelUrl} game={game} />
       </Suspense>
       <AdaptiveDpr active={plan.adaptive && !paused} min={plan.minDpr} dpr={dpr} onChange={setDpr} />

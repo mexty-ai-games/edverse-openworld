@@ -5,7 +5,7 @@ import type { BlockProps } from "../block";
 import type { Game } from "../game/state";
 import type { QualityPlan } from "../settings";
 import type { CardState } from "../ui/Cards";
-import { ARENA, BOULDERS, FOREST, PLAZA_R, STALLS, TELESCOPE, TREE, colliders, stallPoint } from "../game/layout";
+import { ARENA, BOULDERS, FOREST, GARDEN_CENTRE, PLAZA_R, STALLS, TELESCOPE, TREE, colliders, keepClear, museumPoint, stallPoint } from "../game/layout";
 import { addWind, glowTexture, useModel, useTiles, wind } from "./assets";
 
 // ------------------------------------------------------------------ helpers
@@ -36,6 +36,11 @@ const PATHS: [number, number, number, number, number][] = (() => {
   }
   out.push([0, PLAZA_R + 1.0, 0.6, 14, 1.1], [0.6, 14, -1.5, 24, 1.1]);
   out.push([0, -PLAZA_R, TREE.x, TREE.z + 3.5, 1.2]);
+  // phase 3: trodden paths to the Explorers' Museum and to the community garden
+  for (const end of [museumPoint(0, 6.4), { x: GARDEN_CENTRE.x - 1.6, z: GARDEN_CENTRE.z + 1.4 }]) {
+    const a = Math.atan2(end.x, end.z);
+    out.push([Math.sin(a) * (PLAZA_R + 0.4), Math.cos(a) * (PLAZA_R + 0.4), end.x, end.z, 0.9]);
+  }
   return out;
 })();
 
@@ -329,6 +334,7 @@ function Foliage({ props, plan }: { props: BlockProps; plan: QualityPlan }) {
     const r = Math.hypot(x, z);
     if (r < PLAZA_R + 0.9 || r > 34) return false;
     if (pathMask(x, z) > 0.3) return false;
+    if (keepClear(x, z, pad)) return false;
     for (const c of solid) if (Math.hypot(x - c.x, z - c.z) < c.r + pad) return false;
     return true;
   };

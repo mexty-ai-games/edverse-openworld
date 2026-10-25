@@ -24,8 +24,16 @@ const root = path.resolve(here, "..", "..");
     if (e && e.key === "plant:milkweed:flowering") p2["plant:milkweed"] = e.url;
     if (e && e.key === "plant:lavender:flowering") p2["plant:lavender"] = e.url;
   }
+  // phase 3: the garden kit, plants, pollinators, the museum, stickers, the BioBlitz banner and totem, badges; the lantern
+  const p3 = {};
+  for (const e of rd(path.join(root, "assets/manifest.phase345.json"))) {
+    if (!e || !e.key || !e.url || e.phase !== 3) continue;
+    p3[e.key] = e.url;
+    if (e.iconUrl) p3[e.key + ":icon"] = e.iconUrl;
+  }
+  for (const e of rd(path.join(root, "assets/manifest.phase2.json"))) if (e && (e.key === "tool:lantern" || e.key === "tool:lantern:icon")) p3[e.key] = e.url;
   const vb = {};
-  for (const v of vo) if (/^ow-voice-(keeper|fact)-/.test(v.id)) vb[v.id] = v.url;
+  for (const v of vo) if (/^ow-voice-(keeper|fact)-/.test(v.id) && (v.tags || []).indexOf("phase3") < 0) vb[v.id] = v.url;
   const row = (o) => Object.keys(o).sort().map((k) => "  " + JSON.stringify(k) + ": " + JSON.stringify(o[k]) + ",").join("\n");
   const ts = [
     "// GENERATED from assets/manifest.expedition.json and assets/manifest.voice.json (dev/export_expedition.mjs) - do not edit.",
@@ -35,9 +43,18 @@ const root = path.resolve(here, "..", "..");
     "export const EXP_VOICE: Record<string, string> = {", row(vb), "};", "",
     "/** Phase 2 assets by manifest key (assets/manifest.phase2.json; plant:milkweed / plant:lavender from manifest.phase345.json). */",
     "export const P2_ASSETS: Record<string, string> = {", row(p2), "};", "",
+
   ].join("\n");
   const tsPath = path.join(here, "../src/expedition/assets.gen.ts");
   if (!fs.existsSync(tsPath) || fs.readFileSync(tsPath, "utf8") !== ts) fs.writeFileSync(tsPath, ts);
+  // phase 3 (together) has its own table, so the expedition's is left as it was
+  const ts3 = [
+    "// GENERATED from assets/manifest.phase345.json (phase 3) and assets/manifest.phase2.json (the lantern) by dev/export_expedition.mjs - do not edit.",
+    "/** Phase 3 assets by manifest key; `<key>:icon` = its picture. */",
+    "export const P3_ASSETS: Record<string, string> = {", row(p3), "};", "",
+  ].join("\n");
+  const ts3Path = path.join(here, "../src/together/assets.gen.ts");
+  if (!fs.existsSync(ts3Path) || fs.readFileSync(ts3Path, "utf8") !== ts3) fs.writeFileSync(ts3Path, ts3);
 }
 // 2) the content, bundled and evaluated
 const load = async (f) => {
@@ -49,6 +66,14 @@ const quests = JSON.parse(JSON.stringify(mod.defaultQuests));
 const expedition = JSON.parse(JSON.stringify(mod.defaultExpedition));
 const bugGames = JSON.parse(JSON.stringify((await load("../src/expedition/bugGames.ts")).defaultBugGames));
 const biomeFrontier = JSON.parse(JSON.stringify((await load("../src/zones/biome-frontier/content.ts")).defaultProps));
+// phase 3: the together props, and its quests, keeper lines, tools and Field Guide pages appended to the expedition's
+const p3 = await load("../src/together/content.ts");
+const together = JSON.parse(JSON.stringify(p3.defaultTogether));
+quests.push(...JSON.parse(JSON.stringify(p3.phase3Quests)));
+expedition.keeper.lines.push(...JSON.parse(JSON.stringify(p3.phase3Lines)));
+expedition.keeper.dialogues.push(...JSON.parse(JSON.stringify(p3.phase3Dialogues)));
+expedition.tools.push(...JSON.parse(JSON.stringify(p3.phase3Tools)));
+expedition.species.push(...JSON.parse(JSON.stringify(p3.pollinators)));
 
 const readJson = (p, d) => (fs.existsSync(p) ? JSON.parse(fs.readFileSync(p, "utf8")) : d);
 const voice = readJson(path.join(root, "assets/manifest.voice.json"), []);
@@ -87,7 +112,7 @@ for (const s of expedition.species) {
 // the Biome Frontier's arrival line now talks about photographing creatures (the card quiz is gone)
 const bf2 = lang("ow-voice-biomeFrontier2");
 const voicePatch = bf2.en && bf2.fr ? { biomeFrontier: bf2 } : null;
-const remote = { quests, expedition, voice: voicePatch, bugGames, biomeFrontier };
+const remote = { quests, expedition, voice: voicePatch, bugGames, biomeFrontier, together };
 fs.writeFileSync(path.join(here, "expedition.props.json"), JSON.stringify(remote, null, 1));
 
 // local copy: library URLs -> /lib/<id>.<ext> when that file is in dev/public/lib (else kept)
@@ -111,6 +136,7 @@ const local = JSON.parse(fs.readFileSync(localPath, "utf8"));
 local.quests = localize(quests);
 local.expedition = localize(expedition);
 local.bugGames = localize(bugGames);
+local.together = localize(together);
 local.biomeFrontier = { ...local.biomeFrontier, ...localize(biomeFrontier), models: { ...local.biomeFrontier.models, ...localize({ digBlock: biomeFrontier.models.digBlock }) }, textures: local.biomeFrontier.textures, sounds: local.biomeFrontier.sounds };
 if (voicePatch) local.voice = { ...(local.voice || {}), ...localize(voicePatch) };
 fs.writeFileSync(localPath, JSON.stringify(local));

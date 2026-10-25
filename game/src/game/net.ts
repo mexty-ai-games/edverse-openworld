@@ -3,7 +3,7 @@
 // Messages travel over Mexty's LiveKit rooms (as the store's multiplayer games do); on a developer's
 // machine two tabs talk through a BroadcastChannel. One room per EdVerse age tile, so explorers more
 // than one tile apart never meet in an open room (here: only the same tile).
-import type { Game, Peer } from "./state";
+import type { ActMsg, Game, Peer } from "./state";
 
 type Msg = { t: string; [k: string]: unknown };
 type Handler = (msg: Msg, from: string) => void;
@@ -17,6 +17,12 @@ interface Transport {
 
 const LOCAL = typeof window !== "undefined" && /^(localhost|127\.0\.0\.1)$/.test(window.location.hostname);
 const TILES = [4, 7, 10, 13, 16];
+
+/** The EdVerse age tile (t0..t4) of a room name, or "" (no age known: the explorer plays alone). */
+export function tileOf(room: string | null): string {
+  const m = room ? /-(t\d)$/.exec(room) : null;
+  return m ? m[1] : "";
+}
 
 /** The open room for a player's ages in one zone (Idea Grove or a district), or null when no age is known (then the explorer plays alone). */
 export function roomForAge(ageMin: number | null, ageMax: number | null, zone = "idea-grove"): string | null {
@@ -128,6 +134,26 @@ const NICK = /^[A-Za-z]{2,14} [A-Za-z]{2,14} \d{2}$/;
 const ID = /^[a-z0-9-]{1,24}$/;
 const r2 = (v: number) => Math.round(v * 100) / 100;
 const MAX_PEERS = 24;
+const HOLDS = ["", "lantern", "jar"];
+
+/** Phase 3 action messages, rebuilt field by field from what is allowed (anything else is dropped). */
+function cleanAct(m: Msg): ActMsg | null {
+  const id = (v: unknown) => (typeof v === "string" && ID.test(v) ? v : null);
+  if (m.t === "bb") {
+    const i = id(m.i);
+    const st = Number(m.s);
+    if (!i || !isFinite(st) || !Array.isArray(m.f)) return null;
+    const f = (m.f as unknown[]).map(id).filter((x): x is string => !!x).slice(0, 60);
+    return { t: "bb", i, s: st, f };
+  }
+  if (m.t === "ty" || m.t === "sh") {
+    const k = id(m.t === "ty" ? m.c : m.sp);
+    const to = String(m.to || "");
+    if (!k || !NICK.test(to)) return null;
+    return m.t === "ty" ? { t: "ty", c: k, to } : { t: "sh", sp: k, to };
+  }
+  return null;
+}
 
 export async function openPresence(room: string, apiUrl: string, game: Game): Promise<Presence> {
   const tr: Transport = LOCAL && !apiUrl ? new LocalTransport(room) : await LiveKitTransport.open(room, apiUrl);
@@ -136,7 +162,13 @@ export async function openPresence(room: string, apiUrl: string, game: Game): Pr
 
   const state = (): Msg => {
     const me = game.me;
-    return { t: "s", n: game.nickname, a: game.avatar, x: r2(me.x), z: r2(me.z), r: r2(me.ry), m: me.moving ? 1 : 0 };
+    const out: Msg = { t: "s", n: game.nickname, a: game.avatar, x: r2(me.x), z: r2(me.z), r: r2(me.ry), m: me.moving ? 1 : 0 };
+    if (me.hold) {
+      out.h = me.hold;
+      out.hc = me.holdC;
+    }
+    if (game.newbie) out.nb = 1;
+    return out;
   };
 
   // ~8 times a second while moving, once a second while still
@@ -152,6 +184,16 @@ export async function openPresence(room: string, apiUrl: string, game: Game): Pr
   }, 125);
 
   game.onSay = (phraseId, anim) => tr.send({ t: "p", p: phraseId, e: anim });
+  game.act = (m) => {
+    const c = cleanAct(m as Msg);
+    if (c) tr.send(c as Msg);
+  };
+  game.pushState = () => {
+    if (game.mode !== "play" || game.paused) return;
+    const me = game.me;
+    tr.send(state());
+    last = { x: me.x, z: me.z, r: me.ry, m: me.moving, e: "", at: performance.now() };
+  };
 
   tr.onMessage((m, from) => {
     const now = performance.now();
@@ -175,6 +217,10 @@ export async function openPresence(room: string, apiUrl: string, game: Game): Pr
       p.tz = Math.max(-40, Math.min(40, z));
       p.tr = Number(m.r) || 0;
       p.moving = !!m.m;
+      const h = String(m.h || "");
+      p.hold = HOLDS.indexOf(h) >= 0 ? h : "";
+      p.holdC = p.hold && typeof m.hc === "string" && ID.test(m.hc) ? m.hc : "";
+      p.nb = !!m.nb;
       p.seen = now;
     } else if (m.t === "p" && p) {
       const id = String(m.p || "");
@@ -187,6 +233,11 @@ export async function openPresence(room: string, apiUrl: string, game: Game): Pr
         p.emoteAt = now;
       }
       p.seen = now;
+    } else if (p) {
+      const a = cleanAct(m);
+      if (!a) return;
+      p.seen = now;
+      for (const h of game.onAct) h(a, p);
     }
   });
   tr.onLeave((id) => {
@@ -209,6 +260,8 @@ export async function openPresence(room: string, apiUrl: string, game: Game): Pr
       window.clearInterval(iv);
       window.clearInterval(prune);
       game.onSay = null;
+      game.act = null;
+      game.pushState = null;
       peers.clear();
       game.peerVersion++;
       tr.close();

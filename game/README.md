@@ -81,6 +81,46 @@ Four more quests after "Look closer" (props `quests[]`, content in `src/expediti
 - The save (`expedition` key) gains `rp` (quests whose complete() was sent) and `bg` (Bug Games rounds, best); old saves migrate:
   a finished first expedition stands on "Catch and release" and gets its tools with the keeper's introduction.
 
+## Phase 3: Together
+
+Two Keeper quests after the Bug Games (props `quests[]`, content in `src/together/content.ts`, props key `together`):
+**A garden for pollinators** (plant, water, photograph a pollinator drinking at a garden flower) and **Explorers together**
+(a photo in the museum, a sticker, a team-up find, a BioBlitz). Logic in `src/game/together.ts` (pure, unit-tested), shared
+rows in `src/game/shared.ts`, 3D in `src/scene/Together3D.tsx`, DOM in `src/ui/Together.tsx`, asset URLs in the generated
+`src/together/assets.gen.ts`. The export script appends phase 3's quests, keeper lines, tools and pollinator pages to the
+`quests` / `expedition` props (the code defaults of phases 1-2 are left as they were). No text between players anywhere:
+explorers act on each other only through presets (hold a tool out, a sticker, "show this creature"), credited by nickname.
+
+- **Community garden** (north-east of the Idea Tree): 4 raised beds x 6 spots. Bed 0 is the Keeper's (lavender, sunflower,
+  clover, always in flower, so the first visitors come to an empty garden); beds 1-3 are everyone's in the age tile. Each
+  explorer has up to 3 plants (a 4th replaces the oldest), which live 72 h: sprout at once, growing after 10 min, flowering
+  after 30 min; each watering (any explorer, once per 10 min each) saves 3 min, up to 3. Pollinators come only to the
+  flowers they really visit (`plants[].visitors`): bumblebee (sunflower, lavender, foxglove, clover, tomato - buzz
+  pollination), honeybee (sunflower, lavender, clover), hoverfly (lavender, clover), hummingbird (foxglove: long tubes),
+  monarch (milkweed: its caterpillars eat nothing else). A photo of a pollinator drinking at a garden flower fills the
+  explorer's "Who visits what?" chart (`progress.answer` per new pair). Gardener badge when a plant of yours flowers.
+- **Pollinators in the Field Guide**: bumblebee, hoverfly (2 wings: a fly!), hummingbird, monarch butterfly - 4-5 sourced facts each.
+- **Explorers' Museum** (north-west): the Keeper's display, yours (choose up to 4 of your best photos - photo *records*, the
+  card is redrawn from the species' picture, stars and behaviour) and up to 10 others of your tile. Visitors leave one of 6
+  preset stickers per display (counts shown on the card and in 3D). Shared collections `ow-museum`, `ow-stickers`.
+- **Team-up finds** (`together.coop`): the firefly in the Biome Frontier needs one explorer holding the red lantern (dim
+  red light: fireflies keep flashing) while another photographs it; the garden's hoverfly can be netted only while another explorer
+  holds the jar open close by (alone, a kind tip says so). Holding is a preset presence state (`h`/`hc` in the state message); the
+  photographer's client sends a preset thanks (`ty`) so both get the find. Solo: after 40 s trying (tool out or the step
+  on; 90 s when other explorers are within 12 m), the Keeper's helper comes and holds it. Team-up badge.
+- **BioBlitz** (banner + totem at the plaza's north-east edge): opt-in, started by anyone at the totem; 15 different
+  species in 10 minutes, together. Every photo / lens look / catch-and-release by any participant counts for all (presence
+  `bb` messages in the zone, and the shared collection `ow-bioblitz` across zones). The clock is shown only to participants.
+  The totem's column fills; at the end everyone gets the team's count, `progress.complete(min(n, 15), 15)` and, at the goal,
+  the BioBlitz team badge. True card: the first BioBlitz (Kenilworth Aquatic Gardens, Washington D.C., 1996).
+- **Show a beginner**: on a complete Field Guide page, with a beginner (fewer than 5 pages) within 6 m and the creature
+  live in the zone, a "Show it to {nickname}" chip under the open page lights the creature up for them (a glow column for 25 s; its Field Guide page gets the "seen" stage).
+  Helper badge.
+- Saved in the cloud-save key `together` (cleaned and bounded, < 4 KB). Shared rows: one per player per collection
+  (`ow-garden`, `ow-museum`, `ow-stickers`, `ow-bioblitz`), ids and numbers only, filtered to the player's age tile; no
+  age known (grown-up account) = only your own. On localhost the same rows live in localStorage, so two tabs share them
+  (`?age=8&blockId=pa` / `pb` for two explorers with separate saves).
+
 ## Props drive everything
 
 Every learner-facing word (`ui`, all `{ en, fr }`), the lanterns, districts, constellations,

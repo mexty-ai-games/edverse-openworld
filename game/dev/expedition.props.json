@@ -271,6 +271,132 @@
      "line": "gamesStep"
     }
    ]
+  },
+  {
+   "id": "grow-garden",
+   "icon": "🌻",
+   "title": {
+    "en": "A garden for pollinators",
+    "fr": "Un jardin pour les pollinisateurs"
+   },
+   "intro": "garden",
+   "done": "gardenDone",
+   "giveAtStart": [
+    "seeds",
+    "can"
+   ],
+   "reward": [],
+   "report": true,
+   "steps": [
+    {
+     "id": "plant-one",
+     "kind": "plant",
+     "target": "any",
+     "count": 1,
+     "zone": "idea-grove",
+     "icon": "🌱",
+     "text": {
+      "en": "Plant a seed in the community garden (north-east of the Idea Tree)",
+      "fr": "Plante une graine dans le jardin partagé (au nord-est de l'Arbre à idées)"
+     },
+     "line": "plantStep"
+    },
+    {
+     "id": "water-one",
+     "kind": "water",
+     "target": "any",
+     "count": 1,
+     "zone": "idea-grove",
+     "icon": "💧",
+     "text": {
+      "en": "Water a plant in the garden",
+      "fr": "Arrose une plante du jardin"
+     },
+     "line": "waterStep"
+    },
+    {
+     "id": "pollinator",
+     "kind": "pollinate",
+     "target": "any",
+     "count": 1,
+     "zone": "idea-grove",
+     "icon": "🐝",
+     "text": {
+      "en": "Photograph a pollinator drinking from a garden flower",
+      "fr": "Photographie un pollinisateur qui boit dans une fleur du jardin"
+     },
+     "line": "pollinateStep"
+    }
+   ]
+  },
+  {
+   "id": "together",
+   "icon": "🤝",
+   "title": {
+    "en": "Explorers together",
+    "fr": "Explorateurs ensemble"
+   },
+   "intro": "together",
+   "done": "allDone3",
+   "giveAtStart": [
+    "lantern"
+   ],
+   "reward": [],
+   "report": true,
+   "steps": [
+    {
+     "id": "museum-photo",
+     "kind": "museum",
+     "target": "any",
+     "count": 1,
+     "zone": "",
+     "icon": "🖼️",
+     "text": {
+      "en": "Put a photo in the Explorers' Museum (north-west of the Idea Tree)",
+      "fr": "Mets une photo au Musée des explorateurs (au nord-ouest de l'Arbre à idées)"
+     },
+     "line": "museumStep"
+    },
+    {
+     "id": "sticker",
+     "kind": "sticker",
+     "target": "any",
+     "count": 1,
+     "zone": "",
+     "icon": "⭐",
+     "text": {
+      "en": "Leave a sticker on a museum display you like",
+      "fr": "Laisse un autocollant sur une vitrine du musée que tu aimes"
+     },
+     "line": "stickerStep"
+    },
+    {
+     "id": "team-up",
+     "kind": "coop",
+     "target": "any",
+     "count": 1,
+     "zone": "",
+     "icon": "🏮",
+     "text": {
+      "en": "Make a team-up find: the firefly by lantern light (Biome Frontier)",
+      "fr": "Fais une découverte en équipe : la luciole à la lumière de la lanterne (Frontière des biomes)"
+     },
+     "line": "coopStep"
+    },
+    {
+     "id": "bioblitz",
+     "kind": "bioblitz",
+     "target": "any",
+     "count": 1,
+     "zone": "",
+     "icon": "🔎",
+     "text": {
+      "en": "Take part in a BioBlitz (the banner by the Idea Tree)",
+      "fr": "Participe à un BioBlitz (la bannière près de l'Arbre à idées)"
+     },
+     "line": "blitzStep"
+    }
+   ]
   }
  ],
  "expedition": {
@@ -1044,6 +1170,162 @@
       "en": "https://future-api.mexty.ai/api/files/p/6ade1400ca61b98af27fc0b5",
       "fr": "https://future-api.mexty.ai/api/files/p/6ade1401ca61b98af27fc0c0"
      }
+    },
+    {
+     "id": "garden1",
+     "anim": "wave",
+     "text": {
+      "en": "Pollinators need flowers! Here are seeds and a watering can for the community garden.",
+      "fr": "Les pollinisateurs ont besoin de fleurs ! Voici des graines et un arrosoir pour le jardin partagé."
+     },
+     "audio": {
+      "en": "https://future-api.mexty.ai/api/files/p/6ade49ca33657d7fcc611f8c",
+      "fr": "https://future-api.mexty.ai/api/files/p/6ade49cb33657d7fcc611f97"
+     }
+    },
+    {
+     "id": "garden2",
+     "anim": "point",
+     "text": {
+      "en": "Everyone plants there together. Plant the right flowers, and the right visitors will come!",
+      "fr": "Tout le monde y plante ensemble. Plante les bonnes fleurs, et les bons visiteurs viendront !"
+     },
+     "audio": {
+      "en": "https://future-api.mexty.ai/api/files/p/6ade49cc33657d7fcc611fa2",
+      "fr": "https://future-api.mexty.ai/api/files/p/6ade49cd33657d7fcc611fad"
+     }
+    },
+    {
+     "id": "plantStep",
+     "anim": "talk",
+     "text": {
+      "en": "The garden is north-east of the Idea Tree. Pick a seed and plant it in a free spot.",
+      "fr": "Le jardin est au nord-est de l'Arbre à idées. Choisis une graine et plante-la dans une place libre."
+     },
+     "audio": {
+      "en": "https://future-api.mexty.ai/api/files/p/6ade49ce33657d7fcc611fb8",
+      "fr": "https://future-api.mexty.ai/api/files/p/6ade49cf33657d7fcc611fc3"
+     }
+    },
+    {
+     "id": "waterStep",
+     "anim": "talk",
+     "text": {
+      "en": "Now water a plant. Water helps it grow a little faster.",
+      "fr": "Maintenant, arrose une plante. L'eau l'aide à pousser un peu plus vite."
+     },
+     "audio": {
+      "en": "https://future-api.mexty.ai/api/files/p/6ade49d033657d7fcc611fce",
+      "fr": "https://future-api.mexty.ai/api/files/p/6ade49d133657d7fcc611fd9"
+     }
+    },
+    {
+     "id": "pollinateStep",
+     "anim": "talk",
+     "text": {
+      "en": "Watch the flowers. Photograph a pollinator while it drinks nectar.",
+      "fr": "Observe les fleurs. Photographie un pollinisateur pendant qu'il boit le nectar."
+     },
+     "audio": {
+      "en": "https://future-api.mexty.ai/api/files/p/6ade49d233657d7fcc611fe4",
+      "fr": "https://future-api.mexty.ai/api/files/p/6ade49d333657d7fcc611fef"
+     }
+    },
+    {
+     "id": "gardenDone",
+     "anim": "wave",
+     "text": {
+      "en": "You saw it: each pollinator has flowers it loves. Come back to see your plant bloom!",
+      "fr": "Tu l'as vu : chaque pollinisateur a ses fleurs préférées. Reviens voir ta plante fleurir !"
+     },
+     "audio": {
+      "en": "https://future-api.mexty.ai/api/files/p/6ade49d433657d7fcc611ffa",
+      "fr": "https://future-api.mexty.ai/api/files/p/6ade49d533657d7fcc612005"
+     }
+    },
+    {
+     "id": "together1",
+     "anim": "wave",
+     "text": {
+      "en": "Explorers are stronger together. Here is a lantern with a soft red light.",
+      "fr": "Les explorateurs sont plus forts ensemble. Voici une lanterne à la douce lumière rouge."
+     },
+     "audio": {
+      "en": "https://future-api.mexty.ai/api/files/p/6ade49d633657d7fcc612010",
+      "fr": "https://future-api.mexty.ai/api/files/p/6ade49d933657d7fcc61201b"
+     }
+    },
+    {
+     "id": "museumStep",
+     "anim": "talk",
+     "text": {
+      "en": "Put your best photo in the Explorers' Museum, north-west of the Idea Tree.",
+      "fr": "Mets ta meilleure photo au Musée des explorateurs, au nord-ouest de l'Arbre à idées."
+     },
+     "audio": {
+      "en": "https://future-api.mexty.ai/api/files/p/6ade49da33657d7fcc612026",
+      "fr": "https://future-api.mexty.ai/api/files/p/6ade49db33657d7fcc612031"
+     }
+    },
+    {
+     "id": "stickerStep",
+     "anim": "talk",
+     "text": {
+      "en": "Visit the displays and leave a sticker on one you like.",
+      "fr": "Visite les vitrines et laisse un autocollant sur celle que tu aimes."
+     },
+     "audio": {
+      "en": "https://future-api.mexty.ai/api/files/p/6ade49dc33657d7fcc61203c",
+      "fr": "https://future-api.mexty.ai/api/files/p/6ade49dd33657d7fcc612047"
+     }
+    },
+    {
+     "id": "coopStep",
+     "anim": "point",
+     "text": {
+      "en": "Some finds need two explorers. In the Biome Frontier, one holds the lantern while the other photographs the firefly.",
+      "fr": "Certaines découvertes demandent deux explorateurs. Dans la Frontière des biomes, l'un tient la lanterne pendant que l'autre photographie la luciole."
+     },
+     "audio": {
+      "en": "https://future-api.mexty.ai/api/files/p/6ade49de33657d7fcc612052",
+      "fr": "https://future-api.mexty.ai/api/files/p/6ade49df33657d7fcc61205d"
+     }
+    },
+    {
+     "id": "blitzStep",
+     "anim": "talk",
+     "text": {
+      "en": "Now join a BioBlitz at the banner: everyone counts species together!",
+      "fr": "Maintenant, participe à un BioBlitz près de la bannière : tout le monde compte les espèces ensemble !"
+     },
+     "audio": {
+      "en": "https://future-api.mexty.ai/api/files/p/6ade49df33657d7fcc612068",
+      "fr": "https://future-api.mexty.ai/api/files/p/6ade49e033657d7fcc612073"
+     }
+    },
+    {
+     "id": "allDone3",
+     "anim": "wave",
+     "text": {
+      "en": "What a team! Real scientists work together, just like you.",
+      "fr": "Quelle équipe ! Les vrais scientifiques travaillent ensemble, comme toi."
+     },
+     "audio": {
+      "en": "https://future-api.mexty.ai/api/files/p/6ade49e133657d7fcc61207e",
+      "fr": "https://future-api.mexty.ai/api/files/p/6ade49e333657d7fcc612089"
+     }
+    },
+    {
+     "id": "helper",
+     "anim": "talk",
+     "text": {
+      "en": "No one to team up with? My helper will hold it for you!",
+      "fr": "Personne pour faire équipe ? Mon assistant va le tenir pour toi !"
+     },
+     "audio": {
+      "en": "https://future-api.mexty.ai/api/files/p/6ade49e433657d7fcc612094",
+      "fr": "https://future-api.mexty.ai/api/files/p/6ade49e533657d7fcc61209f"
+     }
     }
    ],
    "dialogues": [
@@ -1142,6 +1424,33 @@
      "id": "allDone2",
      "lines": [
       "allDone2"
+     ]
+    },
+    {
+     "id": "garden",
+     "lines": [
+      "garden1",
+      "garden2",
+      "plantStep"
+     ]
+    },
+    {
+     "id": "gardenDone",
+     "lines": [
+      "gardenDone"
+     ]
+    },
+    {
+     "id": "together",
+     "lines": [
+      "together1",
+      "museumStep"
+     ]
+    },
+    {
+     "id": "allDone3",
+     "lines": [
+      "allDone3"
      ]
     }
    ]
@@ -1271,6 +1580,48 @@
     "about": {
      "en": "Brush the dust off a fossil gently, so it does not break.",
      "fr": "Enlève doucement la poussière d'un fossile, pour qu'il ne se casse pas."
+    }
+   },
+   {
+    "id": "seeds",
+    "icon": "🌱",
+    "iconUrl": "https://future-api.mexty.ai/api/files/p/6addf99bca61b98af27fa371",
+    "modelUrl": "https://future-api.mexty.ai/api/files/p/6addf955ca61b98af27fa26f",
+    "name": {
+     "en": "Seed packets",
+     "fr": "Sachets de graines"
+    },
+    "about": {
+     "en": "Six kinds of seeds for the community garden. Each flower feeds different visitors.",
+     "fr": "Six sortes de graines pour le jardin partagé. Chaque fleur nourrit des visiteurs différents."
+    }
+   },
+   {
+    "id": "can",
+    "icon": "🚿",
+    "iconUrl": "https://future-api.mexty.ai/api/files/p/6addf9ccca61b98af27fa3b1",
+    "modelUrl": "https://future-api.mexty.ai/api/files/p/6addf957ca61b98af27fa293",
+    "name": {
+     "en": "Watering can",
+     "fr": "Arrosoir"
+    },
+    "about": {
+     "en": "Water a plant and it grows a little faster.",
+     "fr": "Arrose une plante et elle pousse un peu plus vite."
+    }
+   },
+   {
+    "id": "lantern",
+    "icon": "🏮",
+    "iconUrl": "https://future-api.mexty.ai/api/files/p/6addfc8aca61b98af27fabdc",
+    "modelUrl": "https://future-api.mexty.ai/api/files/p/6addfab9ca61b98af27fa763",
+    "name": {
+     "en": "Red lantern",
+     "fr": "Lanterne rouge"
+    },
+    "about": {
+     "en": "A dim red light: fireflies keep flashing, and a friend can take their photo.",
+     "fr": "Une faible lumière rouge : les lucioles continuent de clignoter, et un ami peut les photographier."
     }
    }
   ],
@@ -3720,6 +4071,377 @@
     "silhouetteUrl": "https://future-api.mexty.ai/api/files/p/6addfc0bca61b98af27faa2c",
     "modelUrl": "https://future-api.mexty.ai/api/files/p/6addfadfca61b98af27fa7e5",
     "camoModelUrl": ""
+   },
+   {
+    "id": "bumblebee",
+    "biome": "garden",
+    "icon": "🐝",
+    "name": {
+     "en": "Bumblebee",
+     "fr": "Bourdon"
+    },
+    "group": {
+     "en": "an insect (a bee)",
+     "fr": "un insecte (une abeille)"
+    },
+    "scale": 4,
+    "feed": {
+     "en": "drinking nectar",
+     "fr": "boit du nectar"
+    },
+    "special": {
+     "en": "",
+     "fr": ""
+    },
+    "stages": [
+     1,
+     2,
+     4,
+     8
+    ],
+    "habitat": {
+     "en": "In the community garden: sunflower, lavender, foxglove, clover and tomato flowers",
+     "fr": "Dans le jardin partagé : fleurs de tournesol, lavande, digitale, trèfle et tomate"
+    },
+    "facts": [
+     {
+      "text": {
+       "en": "A bumblebee is big and furry. Its fuzzy coat and warm flight muscles let it fly on cool days when other bees stay home.",
+       "fr": "Le bourdon est gros et poilu. Son manteau de poils et ses muscles de vol chauds lui permettent de voler par temps frais, quand les autres abeilles restent chez elles."
+      },
+      "easy": {
+       "en": "Its fur keeps it warm.",
+       "fr": "Ses poils lui tiennent chaud."
+      },
+      "source": "Bumblebee Conservation Trust, “About bumblebees”"
+     },
+     {
+      "text": {
+       "en": "It carries pollen home in “pollen baskets” on its back legs.",
+       "fr": "Il rapporte le pollen dans des « corbeilles à pollen » sur ses pattes arrière."
+      },
+      "easy": {
+       "en": "It carries pollen on its legs.",
+       "fr": "Il porte du pollen sur ses pattes."
+      },
+      "source": "Bumblebee Conservation Trust, “About bumblebees”"
+     },
+     {
+      "text": {
+       "en": "It is an insect: 6 legs, 4 wings and 3 body parts.",
+       "fr": "C'est un insecte : 6 pattes, 4 ailes et 3 parties du corps."
+      },
+      "easy": {
+       "en": "6 legs, 4 wings: an insect!",
+       "fr": "6 pattes, 4 ailes : un insecte !"
+      },
+      "source": "Encyclopaedia Britannica, “Bumblebee”"
+     },
+     {
+      "text": {
+       "en": "Tomato flowers hold their pollen tight. A bumblebee buzzes its flight muscles to shake it out: “buzz pollination”. Honeybees cannot do this.",
+       "fr": "Les fleurs de tomate gardent leur pollen bien serré. Le bourdon fait vibrer ses muscles de vol pour le faire tomber : c'est la « pollinisation vibratile ». Les abeilles domestiques ne savent pas le faire."
+      },
+      "easy": {
+       "en": "It buzzes the pollen out!",
+       "fr": "Il fait vibrer les fleurs !"
+      },
+      "source": "Xerces Society; Bay Nature, “Buzz pollination”"
+     }
+    ],
+    "lens": [
+     {
+      "feature": "legs",
+      "value": 6
+     },
+     {
+      "feature": "wings",
+      "value": 4
+     }
+    ],
+    "modelUrl": "https://future-api.mexty.ai/api/files/p/6addf920ca61b98af27fa19b",
+    "iconUrl": "https://future-api.mexty.ai/api/files/p/6addfa14ca61b98af27fa557",
+    "silhouetteUrl": ""
+   },
+   {
+    "id": "hoverfly",
+    "biome": "garden",
+    "icon": "🪰",
+    "name": {
+     "en": "Hoverfly",
+     "fr": "Syrphe"
+    },
+    "group": {
+     "en": "an insect (a fly)",
+     "fr": "un insecte (une mouche)"
+    },
+    "scale": 5,
+    "feed": {
+     "en": "drinking nectar",
+     "fr": "boit du nectar"
+    },
+    "special": {
+     "en": "",
+     "fr": ""
+    },
+    "stages": [
+     1,
+     2,
+     4,
+     8,
+     16
+    ],
+    "catchable": true,
+    "habitat": {
+     "en": "In the community garden: lavender and clover flowers",
+     "fr": "Dans le jardin partagé : fleurs de lavande et de trèfle"
+    },
+    "facts": [
+     {
+      "text": {
+       "en": "A hoverfly can hang still in the air like a tiny helicopter, then dart away in a flash.",
+       "fr": "Le syrphe peut rester immobile dans l'air comme un petit hélicoptère, puis filer en un éclair."
+      },
+      "easy": {
+       "en": "It hovers in the air.",
+       "fr": "Il fait du sur-place dans l'air."
+      },
+      "source": "Australian Museum, “Hover flies”"
+     },
+     {
+      "text": {
+       "en": "Its yellow and black stripes copy a wasp's, so birds leave it alone. But a hoverfly cannot sting or bite.",
+       "fr": "Ses rayures jaunes et noires imitent celles d'une guêpe, alors les oiseaux le laissent tranquille. Mais un syrphe ne pique pas et ne mord pas."
+      },
+      "easy": {
+       "en": "It looks like a wasp but cannot sting.",
+       "fr": "Il ressemble à une guêpe mais ne pique pas."
+      },
+      "source": "Royal Horticultural Society, “Hoverflies”"
+     },
+     {
+      "text": {
+       "en": "It is a fly: flies have only 2 wings, while bees and wasps have 4. Count them!",
+       "fr": "C'est une mouche : les mouches n'ont que 2 ailes, les abeilles et les guêpes en ont 4. Compte-les !"
+      },
+      "easy": {
+       "en": "Only 2 wings: a fly!",
+       "fr": "Seulement 2 ailes : une mouche !"
+      },
+      "source": "Encyclopaedia Britannica, “Dipteran”"
+     },
+     {
+      "text": {
+       "en": "Hoverflies drink nectar and carry pollen from flower to flower, like bees do.",
+       "fr": "Les syrphes boivent le nectar et transportent le pollen de fleur en fleur, comme les abeilles."
+      },
+      "easy": {
+       "en": "It helps flowers, like a bee.",
+       "fr": "Il aide les fleurs, comme une abeille."
+      },
+      "source": "Royal Horticultural Society, “Hoverflies”"
+     },
+     {
+      "text": {
+       "en": "Many hoverfly larvae eat aphids, the tiny bugs that suck plants' sap: gardeners are happy to see them.",
+       "fr": "Beaucoup de larves de syrphes mangent des pucerons, les petites bêtes qui sucent la sève des plantes : les jardiniers sont contents de les voir."
+      },
+      "easy": {
+       "en": "Its babies eat aphids.",
+       "fr": "Ses bébés mangent des pucerons."
+      },
+      "source": "Royal Horticultural Society, “Hoverflies”"
+     }
+    ],
+    "lens": [
+     {
+      "feature": "legs",
+      "value": 6
+     },
+     {
+      "feature": "wings",
+      "value": 2
+     }
+    ],
+    "modelUrl": "https://future-api.mexty.ai/api/files/p/6addf922ca61b98af27fa1b3",
+    "iconUrl": "https://future-api.mexty.ai/api/files/p/6addfa15ca61b98af27fa563",
+    "silhouetteUrl": ""
+   },
+   {
+    "id": "hummingbird",
+    "biome": "garden",
+    "icon": "🐦",
+    "name": {
+     "en": "Hummingbird",
+     "fr": "Colibri"
+    },
+    "group": {
+     "en": "a bird",
+     "fr": "un oiseau"
+    },
+    "scale": 2.6,
+    "feed": {
+     "en": "drinking nectar",
+     "fr": "boit du nectar"
+    },
+    "special": {
+     "en": "",
+     "fr": ""
+    },
+    "habitat": {
+     "en": "In the community garden, when the foxgloves flower",
+     "fr": "Dans le jardin partagé, quand les digitales fleurissent"
+    },
+    "facts": [
+     {
+      "text": {
+       "en": "A hummingbird can hover in mid-air and even fly backwards.",
+       "fr": "Le colibri peut faire du sur-place en l'air, et même voler en arrière."
+      },
+      "easy": {
+       "en": "It can fly backwards!",
+       "fr": "Il peut voler en arrière !"
+      },
+      "source": "Encyclopaedia Britannica, “Hummingbird”"
+     },
+     {
+      "text": {
+       "en": "Its wings beat so fast that they hum: some hummingbirds beat them more than 50 times a second.",
+       "fr": "Ses ailes battent si vite qu'elles bourdonnent : certains colibris les battent plus de 50 fois par seconde."
+      },
+      "easy": {
+       "en": "Its wings hum.",
+       "fr": "Ses ailes bourdonnent."
+      },
+      "source": "Encyclopaedia Britannica, “Hummingbird”"
+     },
+     {
+      "text": {
+       "en": "It is a bird: 2 legs, 2 wings, feathers and a beak.",
+       "fr": "C'est un oiseau : 2 pattes, 2 ailes, des plumes et un bec."
+      },
+      "easy": {
+       "en": "It is a tiny bird.",
+       "fr": "C'est un tout petit oiseau."
+      },
+      "source": "Encyclopaedia Britannica, “Bird”"
+     },
+     {
+      "text": {
+       "en": "It looks for long, tube-shaped flowers, often red or pink, and reaches the nectar deep inside with its long beak and tongue.",
+       "fr": "Il cherche des fleurs longues en forme de tube, souvent rouges ou roses, et atteint le nectar tout au fond avec son long bec et sa langue."
+      },
+      "easy": {
+       "en": "It drinks from tube flowers.",
+       "fr": "Il boit dans les fleurs en tube."
+      },
+      "source": "U.S. Forest Service, “Bird pollination”"
+     }
+    ],
+    "lens": [
+     {
+      "feature": "legs",
+      "value": 2
+     },
+     {
+      "feature": "wings",
+      "value": 2
+     }
+    ],
+    "modelUrl": "https://future-api.mexty.ai/api/files/p/6addf923ca61b98af27fa1bf",
+    "iconUrl": "https://future-api.mexty.ai/api/files/p/6addfa38ca61b98af27fa588",
+    "silhouetteUrl": ""
+   },
+   {
+    "id": "monarch",
+    "biome": "garden",
+    "icon": "🦋",
+    "name": {
+     "en": "Monarch butterfly",
+     "fr": "Papillon monarque"
+    },
+    "group": {
+     "en": "an insect (a butterfly)",
+     "fr": "un insecte (un papillon)"
+    },
+    "scale": 2.6,
+    "feed": {
+     "en": "drinking nectar",
+     "fr": "boit du nectar"
+    },
+    "special": {
+     "en": "resting",
+     "fr": "se repose"
+    },
+    "stages": [
+     1,
+     2,
+     4,
+     8
+    ],
+    "habitat": {
+     "en": "In the community garden, when the milkweed flowers",
+     "fr": "Dans le jardin partagé, quand l'asclépiade fleurit"
+    },
+    "facts": [
+     {
+      "text": {
+       "en": "Monarchs from eastern North America fly up to about 4,800 km (3,000 miles) to spend the winter in the mountains of Mexico.",
+       "fr": "Les monarques de l'est de l'Amérique du Nord volent jusqu'à environ 4 800 km pour passer l'hiver dans les montagnes du Mexique."
+      },
+      "easy": {
+       "en": "It flies very far for the winter.",
+       "fr": "Il vole très loin pour l'hiver."
+      },
+      "source": "U.S. Forest Service, “Monarch butterfly migration”"
+     },
+     {
+      "text": {
+       "en": "Its bright orange wings warn birds: it tastes bad, because of the milkweed it ate as a caterpillar.",
+       "fr": "Ses ailes orange vif préviennent les oiseaux : il a mauvais goût, à cause de l'asclépiade mangée quand il était chenille."
+      },
+      "easy": {
+       "en": "Its colours say: do not eat me!",
+       "fr": "Ses couleurs disent : ne me mange pas !"
+      },
+      "source": "Monarch Joint Venture, “Monarch biology”"
+     },
+     {
+      "text": {
+       "en": "It is an insect: 4 wings covered in tiny scales, 2 antennae and 6 legs.",
+       "fr": "C'est un insecte : 4 ailes couvertes de minuscules écailles, 2 antennes et 6 pattes."
+      },
+      "easy": {
+       "en": "4 wings, 2 antennae: an insect!",
+       "fr": "4 ailes, 2 antennes : un insecte !"
+      },
+      "source": "Encyclopaedia Britannica, “Monarch butterfly”"
+     },
+     {
+      "text": {
+       "en": "A mother monarch “tastes” a leaf with her feet to check it is milkweed before she lays an egg on it.",
+       "fr": "Une maman monarque « goûte » une feuille avec ses pattes pour vérifier que c'est de l'asclépiade avant d'y pondre un œuf."
+      },
+      "easy": {
+       "en": "It tastes with its feet!",
+       "fr": "Il goûte avec ses pattes !"
+      },
+      "source": "Monarch Joint Venture, “How monarchs find milkweed”"
+     }
+    ],
+    "lens": [
+     {
+      "feature": "wings",
+      "value": 4
+     },
+     {
+      "feature": "antennae",
+      "value": 2
+     }
+    ],
+    "modelUrl": "https://future-api.mexty.ai/api/files/p/6addf924ca61b98af27fa1cb",
+    "iconUrl": "https://future-api.mexty.ai/api/files/p/6addfa39ca61b98af27fa594",
+    "silhouetteUrl": ""
    }
   ],
   "models": {
@@ -4656,6 +5378,795 @@
   },
   "sounds": {
    "ambience": "https://future-api.mexty.ai/api/files/p/6add3ab8ca61b98af27f69a1"
+  }
+ },
+ "together": {
+  "ui": [
+   {
+    "id": "garden",
+    "text": {
+     "en": "Community garden",
+     "fr": "Jardin partagé"
+    }
+   },
+   {
+    "id": "keeperBed",
+    "text": {
+     "en": "The Keeper's bed: always in flower",
+     "fr": "Le carré du Gardien : toujours en fleurs"
+    }
+   },
+   {
+    "id": "bedHint",
+    "text": {
+     "en": "Everyone in your group plants here. Pick a free spot.",
+     "fr": "Tout ton groupe plante ici. Choisis une place libre."
+    }
+   },
+   {
+    "id": "plant",
+    "text": {
+     "en": "Plant",
+     "fr": "Planter"
+    }
+   },
+   {
+    "id": "pickSeed",
+    "text": {
+     "en": "Which seed?",
+     "fr": "Quelle graine ?"
+    }
+   },
+   {
+    "id": "water",
+    "text": {
+     "en": "Water",
+     "fr": "Arroser"
+    }
+   },
+   {
+    "id": "watered",
+    "text": {
+     "en": "Watered! It will grow a little faster.",
+     "fr": "Arrosée ! Elle poussera un peu plus vite."
+    }
+   },
+   {
+    "id": "wateredSoon",
+    "text": {
+     "en": "Already watered. Come back in a little while.",
+     "fr": "Déjà arrosée. Reviens un peu plus tard."
+    }
+   },
+   {
+    "id": "planted",
+    "text": {
+     "en": "Planted! Watch it grow.",
+     "fr": "Planté ! Regarde-la pousser."
+    }
+   },
+   {
+    "id": "plantedBy",
+    "text": {
+     "en": "Planted by {name}",
+     "fr": "Plantée par {name}"
+    }
+   },
+   {
+    "id": "yourPlant",
+    "text": {
+     "en": "Your plant",
+     "fr": "Ta plante"
+    }
+   },
+   {
+    "id": "sprout",
+    "text": {
+     "en": "Sprout",
+     "fr": "Pousse"
+    }
+   },
+   {
+    "id": "young",
+    "text": {
+     "en": "Growing",
+     "fr": "En croissance"
+    }
+   },
+   {
+    "id": "flowering",
+    "text": {
+     "en": "In flower",
+     "fr": "En fleurs"
+    }
+   },
+   {
+    "id": "plantsLeft",
+    "text": {
+     "en": "You can have {n} plants growing at once.",
+     "fr": "Tu peux avoir {n} plantes qui poussent en même temps."
+    }
+   },
+   {
+    "id": "replaceOldest",
+    "text": {
+     "en": "Your oldest plant makes room for the new one.",
+     "fr": "Ta plus vieille plante laisse la place à la nouvelle."
+    }
+   },
+   {
+    "id": "visitors",
+    "text": {
+     "en": "Who comes to it",
+     "fr": "Qui vient la voir"
+    }
+   },
+   {
+    "id": "noVisitors",
+    "text": {
+     "en": "Next stage in about {n} min",
+     "fr": "Prochaine étape dans environ {n} min"
+    }
+   },
+   {
+    "id": "chart",
+    "text": {
+     "en": "Who visits what?",
+     "fr": "Qui visite quoi ?"
+    }
+   },
+   {
+    "id": "chartHint",
+    "text": {
+     "en": "Photograph a pollinator drinking from a garden flower to fill in the chart.",
+     "fr": "Photographie un pollinisateur qui boit dans une fleur du jardin pour remplir le tableau."
+    }
+   },
+   {
+    "id": "pairFound",
+    "text": {
+     "en": "New in your chart: {who} visits {what}!",
+     "fr": "Nouveau dans ton tableau : {who} visite {what} !"
+    }
+   },
+   {
+    "id": "museum",
+    "text": {
+     "en": "Explorers' Museum",
+     "fr": "Musée des explorateurs"
+    }
+   },
+   {
+    "id": "museumHint",
+    "text": {
+     "en": "Walk up to a display to look at it.",
+     "fr": "Approche-toi d'une vitrine pour la regarder."
+    }
+   },
+   {
+    "id": "display",
+    "text": {
+     "en": "{name}'s photos",
+     "fr": "Les photos de {name}"
+    }
+   },
+   {
+    "id": "yourDisplay",
+    "text": {
+     "en": "Your display",
+     "fr": "Ta vitrine"
+    }
+   },
+   {
+    "id": "keeperDisplay",
+    "text": {
+     "en": "The Grove Keeper's photos",
+     "fr": "Les photos du Gardien du bosquet"
+    }
+   },
+   {
+    "id": "emptyDisplay",
+    "text": {
+     "en": "An empty display, waiting for an explorer.",
+     "fr": "Une vitrine vide, qui attend un explorateur."
+    }
+   },
+   {
+    "id": "choosePhotos",
+    "text": {
+     "en": "Choose your photos",
+     "fr": "Choisis tes photos"
+    }
+   },
+   {
+    "id": "chooseHint",
+    "text": {
+     "en": "Tap up to {n} of your best photos.",
+     "fr": "Touche jusqu'à {n} de tes meilleures photos."
+    }
+   },
+   {
+    "id": "noPhotos",
+    "text": {
+     "en": "Take photos with your Field Camera first.",
+     "fr": "Prends d'abord des photos avec ton appareil."
+    }
+   },
+   {
+    "id": "onShow",
+    "text": {
+     "en": "On show",
+     "fr": "Exposée"
+    }
+   },
+   {
+    "id": "leaveSticker",
+    "text": {
+     "en": "Leave a sticker",
+     "fr": "Laisse un autocollant"
+    }
+   },
+   {
+    "id": "stickerLeft",
+    "text": {
+     "en": "Sticker left! Thank you.",
+     "fr": "Autocollant laissé ! Merci."
+    }
+   },
+   {
+    "id": "stickersGot",
+    "text": {
+     "en": "Stickers from visitors",
+     "fr": "Autocollants des visiteurs"
+    }
+   },
+   {
+    "id": "blitz",
+    "text": {
+     "en": "BioBlitz",
+     "fr": "BioBlitz"
+    }
+   },
+   {
+    "id": "blitzIntro",
+    "text": {
+     "en": "Team up with the explorers here: find {goal} different species together in {min} minutes. Every photo, catch or lens look counts for everyone!",
+     "fr": "Fais équipe avec les explorateurs d'ici : trouvez ensemble {goal} espèces différentes en {min} minutes. Chaque photo, capture ou observation à la loupe compte pour tout le monde !"
+    }
+   },
+   {
+    "id": "blitzIntroEasy",
+    "text": {
+     "en": "Find {goal} creatures together!",
+     "fr": "Trouvez {goal} créatures ensemble !"
+    }
+   },
+   {
+    "id": "blitzStart",
+    "text": {
+     "en": "Start a BioBlitz",
+     "fr": "Lancer un BioBlitz"
+    }
+   },
+   {
+    "id": "blitzJoin",
+    "text": {
+     "en": "Join the BioBlitz",
+     "fr": "Rejoindre le BioBlitz"
+    }
+   },
+   {
+    "id": "blitzOn",
+    "text": {
+     "en": "A BioBlitz is on! Join it at the banner.",
+     "fr": "Un BioBlitz a commencé ! Rejoins-le près de la bannière."
+    }
+   },
+   {
+    "id": "blitzCount",
+    "text": {
+     "en": "{n} of {goal} species",
+     "fr": "{n} espèces sur {goal}"
+    }
+   },
+   {
+    "id": "blitzTeam",
+    "text": {
+     "en": "Team: {n}",
+     "fr": "Équipe : {n}"
+    }
+   },
+   {
+    "id": "blitzNew",
+    "text": {
+     "en": "New species for the team: {name}!",
+     "fr": "Nouvelle espèce pour l'équipe : {name} !"
+    }
+   },
+   {
+    "id": "blitzHow",
+    "text": {
+     "en": "Photograph, catch or look closely at creatures anywhere: the Grove, the garden, the Biome Frontier.",
+     "fr": "Photographie, attrape ou observe à la loupe des créatures partout : le Bosquet, le jardin, la Frontière des biomes."
+    }
+   },
+   {
+    "id": "blitzDone",
+    "text": {
+     "en": "The BioBlitz is over! Your team found {n} species.",
+     "fr": "Le BioBlitz est fini ! Ton équipe a trouvé {n} espèces."
+    }
+   },
+   {
+    "id": "blitzGoalMet",
+    "text": {
+     "en": "You reached the goal together!",
+     "fr": "Vous avez atteint le but ensemble !"
+    }
+   },
+   {
+    "id": "blitzThanks",
+    "text": {
+     "en": "Every find counts. Real BioBlitzes are like that too!",
+     "fr": "Chaque découverte compte. Les vrais BioBlitz, c'est pareil !"
+    }
+   },
+   {
+    "id": "blitzRealFact",
+    "text": {
+     "en": "A real event",
+     "fr": "Un vrai événement"
+    }
+   },
+   {
+    "id": "teamUp",
+    "text": {
+     "en": "Team-up find",
+     "fr": "Découverte en équipe"
+    }
+   },
+   {
+    "id": "teamNeed",
+    "text": {
+     "en": "This find needs two explorers working together: {hold} + {act}.",
+     "fr": "Cette découverte demande deux explorateurs ensemble : {hold} + {act}."
+    }
+   },
+   {
+    "id": "holdIt",
+    "text": {
+     "en": "I hold it",
+     "fr": "Je le tiens"
+    }
+   },
+   {
+    "id": "stopHold",
+    "text": {
+     "en": "Put it away",
+     "fr": "Le ranger"
+    }
+   },
+   {
+    "id": "holding",
+    "text": {
+     "en": "You are holding it. Your friend can go!",
+     "fr": "Tu le tiens. Ton ami peut y aller !"
+    }
+   },
+   {
+    "id": "friendHolding",
+    "text": {
+     "en": "{name} is holding it: go!",
+     "fr": "{name} le tient : vas-y !"
+    }
+   },
+   {
+    "id": "waitFriend",
+    "text": {
+     "en": "Waiting for a friend…",
+     "fr": "On attend un ami…"
+    }
+   },
+   {
+    "id": "helperComing",
+    "text": {
+     "en": "The Keeper's helper is here to hold it for you.",
+     "fr": "L'assistant du Gardien est là pour le tenir pour toi."
+    }
+   },
+   {
+    "id": "needPartner",
+    "text": {
+     "en": "Too quick for one explorer! A friend holding it open helps: {hold}.",
+     "fr": "Trop rapide pour un seul explorateur ! Un ami qui le tient ouvert t'aide : {hold}."
+    }
+   },
+   {
+    "id": "coopDone",
+    "text": {
+     "en": "Found together!",
+     "fr": "Trouvé ensemble !"
+    }
+   },
+   {
+    "id": "coopThanks",
+    "text": {
+     "en": "You helped {name}: you found it together!",
+     "fr": "Tu as aidé {name} : vous l'avez trouvé ensemble !"
+    }
+   },
+   {
+    "id": "showBeginner",
+    "text": {
+     "en": "Show it to {name}",
+     "fr": "Le montrer à {name}"
+    }
+   },
+   {
+    "id": "shownBy",
+    "text": {
+     "en": "{name} is showing you a {what}. Look for the glow!",
+     "fr": "{name} te montre : {what}. Cherche la lueur !"
+    }
+   },
+   {
+    "id": "helped",
+    "text": {
+     "en": "You showed {what} to {name}. Thank you, helper!",
+     "fr": "Tu as montré {what} à {name}. Merci, l'ami !"
+    }
+   },
+   {
+    "id": "badge",
+    "text": {
+     "en": "New badge!",
+     "fr": "Nouveau badge !"
+    }
+   },
+   {
+    "id": "badges",
+    "text": {
+     "en": "Badges",
+     "fr": "Badges"
+    }
+   },
+   {
+    "id": "close",
+    "text": {
+     "en": "Close",
+     "fr": "Fermer"
+    }
+   },
+   {
+    "id": "look",
+    "text": {
+     "en": "Look",
+     "fr": "Regarder"
+    }
+   },
+   {
+    "id": "source",
+    "text": {
+     "en": "Source: {source}",
+     "fr": "Source : {source}"
+    }
+   }
+  ],
+  "rules": {
+   "youngMin": 10,
+   "flowerMin": 30,
+   "waterMin": 3,
+   "waterMax": 3,
+   "plantsEach": 3,
+   "lifeHours": 72,
+   "blitzGoal": 15,
+   "blitzMinutes": 10,
+   "museumEach": 4,
+   "helperAfter": 40,
+   "newcomerPages": 5
+  },
+  "plants": [
+   {
+    "id": "sunflower",
+    "icon": "🌻",
+    "name": {
+     "en": "Sunflower",
+     "fr": "Tournesol"
+    },
+    "modelUrl": "https://future-api.mexty.ai/api/files/p/6addf951ca61b98af27fa23d",
+    "iconUrl": "https://future-api.mexty.ai/api/files/p/6addfa0eca61b98af27fa50f",
+    "visitors": [
+     "bumblebee",
+     "honeybee"
+    ],
+    "fact": {
+     "en": "A sunflower head is made of hundreds of tiny flowers packed together. Each one can become a seed.",
+     "fr": "Une tête de tournesol est faite de centaines de petites fleurs serrées. Chacune peut devenir une graine."
+    },
+    "source": "Encyclopaedia Britannica, “Sunflower”"
+   },
+   {
+    "id": "lavender",
+    "icon": "💜",
+    "name": {
+     "en": "Lavender",
+     "fr": "Lavande"
+    },
+    "modelUrl": "https://future-api.mexty.ai/api/files/p/6addf94fca61b98af27fa21f",
+    "iconUrl": "https://future-api.mexty.ai/api/files/p/6addf9d9ca61b98af27fa441",
+    "visitors": [
+     "bumblebee",
+     "hoverfly",
+     "honeybee"
+    ],
+    "fact": {
+     "en": "Lavender's many small purple flowers are full of nectar: bees and hoverflies visit it all summer.",
+     "fr": "Les nombreuses petites fleurs violettes de la lavande sont pleines de nectar : abeilles et syrphes la visitent tout l'été."
+    },
+    "source": "Royal Horticultural Society, “Plants for pollinators”"
+   },
+   {
+    "id": "foxglove",
+    "icon": "🌸",
+    "name": {
+     "en": "Foxglove",
+     "fr": "Digitale"
+    },
+    "modelUrl": "https://future-api.mexty.ai/api/files/p/6addf94fca61b98af27fa212",
+    "iconUrl": "https://future-api.mexty.ai/api/files/p/6addf9d6ca61b98af27fa41d",
+    "visitors": [
+     "bumblebee",
+     "hummingbird"
+    ],
+    "fact": {
+     "en": "Foxglove flowers are long tubes. Bumblebees crawl right inside, and hummingbirds reach in with their long beaks. (Never eat it: it is poisonous.)",
+     "fr": "Les fleurs de digitale sont de longs tubes. Les bourdons entrent dedans, et les colibris y plongent leur long bec. (Ne la mange jamais : elle est toxique.)"
+    },
+    "source": "U.S. Forest Service, “Bird pollination”; Royal Horticultural Society"
+   },
+   {
+    "id": "clover",
+    "icon": "🍀",
+    "name": {
+     "en": "Clover",
+     "fr": "Trèfle"
+    },
+    "modelUrl": "https://future-api.mexty.ai/api/files/p/6addf926ca61b98af27fa1ef",
+    "iconUrl": "https://future-api.mexty.ai/api/files/p/6addf9d2ca61b98af27fa3f9",
+    "visitors": [
+     "bumblebee",
+     "hoverfly",
+     "honeybee"
+    ],
+    "fact": {
+     "en": "Clover makes the soil richer: tiny bacteria in its roots take nitrogen from the air.",
+     "fr": "Le trèfle enrichit la terre : de minuscules bactéries dans ses racines prennent l'azote de l'air."
+    },
+    "source": "Encyclopaedia Britannica, “Clover”"
+   },
+   {
+    "id": "tomato",
+    "icon": "🍅",
+    "name": {
+     "en": "Tomato",
+     "fr": "Tomate"
+    },
+    "modelUrl": "https://future-api.mexty.ai/api/files/p/6addf952ca61b98af27fa24b",
+    "iconUrl": "https://future-api.mexty.ai/api/files/p/6addfa11ca61b98af27fa533",
+    "visitors": [
+     "bumblebee"
+    ],
+    "fact": {
+     "en": "Tomato flowers give no nectar and hold their pollen tight: only buzzing bees, like bumblebees, can shake it out.",
+     "fr": "Les fleurs de tomate ne donnent pas de nectar et gardent leur pollen bien serré : seules les abeilles qui vibrent, comme les bourdons, peuvent le faire tomber."
+    },
+    "source": "Xerces Society; Bay Nature, “Buzz pollination”"
+   },
+   {
+    "id": "milkweed",
+    "icon": "🌿",
+    "name": {
+     "en": "Milkweed",
+     "fr": "Asclépiade"
+    },
+    "modelUrl": "https://future-api.mexty.ai/api/files/p/6addf950ca61b98af27fa22d",
+    "iconUrl": "https://future-api.mexty.ai/api/files/p/6addfa0aca61b98af27fa4c7",
+    "visitors": [
+     "monarch"
+    ],
+    "fact": {
+     "en": "Monarch caterpillars eat only milkweed. Adult monarchs drink nectar from many flowers, but they lay their eggs only on milkweed.",
+     "fr": "Les chenilles du monarque ne mangent que de l'asclépiade. Les monarques adultes boivent le nectar de beaucoup de fleurs, mais ne pondent que sur l'asclépiade."
+    },
+    "source": "Monarch Joint Venture, “Monarch life cycle”"
+   }
+  ],
+  "keeperBed": [
+   "lavender",
+   "sunflower",
+   "clover",
+   "clover",
+   "sunflower",
+   "lavender"
+  ],
+  "coop": [
+   {
+    "id": "firefly-lantern",
+    "species": "firefly",
+    "zone": "biome-frontier",
+    "hold": "lantern",
+    "act": "camera",
+    "fact": {
+     "en": "Firefly watchers cover their light with red film: fireflies flash to find each other, and bright white light gets in the way.",
+     "fr": "Les observateurs de lucioles couvrent leur lampe d'un filtre rouge : les lucioles clignotent pour se trouver, et une lumière blanche vive les gêne."
+    },
+    "source": "U.S. National Park Service, “Synchronous fireflies”; Xerces Society, “Firefly-friendly lighting”"
+   },
+   {
+    "id": "hoverfly-jar",
+    "species": "hoverfly",
+    "zone": "idea-grove",
+    "hold": "jar",
+    "act": "net",
+    "fact": {
+     "en": "A hoverfly can stop still in mid-air and dart off in a flash: with one explorer on the net and one holding the jar open, it goes gently straight in.",
+     "fr": "Un syrphe peut s'arrêter net en l'air et filer en un éclair : avec un explorateur au filet et un autre qui tient le bocal ouvert, il y entre doucement d'un coup."
+    },
+    "source": "Australian Museum, “Hover flies”"
+   }
+  ],
+  "badges": [
+   {
+    "id": "blitz",
+    "icon": "🍃",
+    "node": "badge_leaf",
+    "name": {
+     "en": "BioBlitz team",
+     "fr": "Équipe BioBlitz"
+    },
+    "about": {
+     "en": "Your team reached the BioBlitz goal together.",
+     "fr": "Ton équipe a atteint le but du BioBlitz ensemble."
+    }
+   },
+   {
+    "id": "teamup",
+    "icon": "☀️",
+    "node": "badge_sun",
+    "name": {
+     "en": "Team-up",
+     "fr": "En équipe"
+    },
+    "about": {
+     "en": "You made a find that needs two explorers.",
+     "fr": "Tu as fait une découverte qui demande deux explorateurs."
+    }
+   },
+   {
+    "id": "gardener",
+    "icon": "💧",
+    "node": "badge_drop",
+    "name": {
+     "en": "Gardener",
+     "fr": "Jardinier"
+    },
+    "about": {
+     "en": "A plant you planted came into flower.",
+     "fr": "Une plante que tu as plantée a fleuri."
+    }
+   },
+   {
+    "id": "helper",
+    "icon": "🌸",
+    "node": "badge_flower",
+    "name": {
+     "en": "Helper",
+     "fr": "Bon guide"
+    },
+    "about": {
+     "en": "You showed a creature to a beginner.",
+     "fr": "Tu as montré une créature à un débutant."
+    }
+   }
+  ],
+  "stickers": [
+   {
+    "id": "wow",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfa43ca61b98af27fa60e",
+    "name": {
+     "en": "Wow!",
+     "fr": "Waouh !"
+    }
+   },
+   {
+    "id": "heart-leaf",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfa3fca61b98af27fa5dc",
+    "name": {
+     "en": "Love it",
+     "fr": "J'adore"
+    }
+   },
+   {
+    "id": "star",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfa42ca61b98af27fa602",
+    "name": {
+     "en": "Star photo",
+     "fr": "Photo étoile"
+    }
+   },
+   {
+    "id": "sparkle",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfa41ca61b98af27fa5f4",
+    "name": {
+     "en": "Amazing",
+     "fr": "Magnifique"
+    }
+   },
+   {
+    "id": "laugh",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfa40ca61b98af27fa5e8",
+    "name": {
+     "en": "Fun!",
+     "fr": "Trop drôle !"
+    }
+   },
+   {
+    "id": "clap",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfa3eca61b98af27fa5d0",
+    "name": {
+     "en": "Well done",
+     "fr": "Bravo"
+    }
+   }
+  ],
+  "keeperPhotos": [
+   {
+    "species": "tree-frog",
+    "behaviour": "feed",
+    "stars": 3
+   },
+   {
+    "species": "honeybee",
+    "behaviour": "feed",
+    "stars": 3
+   },
+   {
+    "species": "toucan",
+    "behaviour": "idle",
+    "stars": 2
+   },
+   {
+    "species": "monarch-caterpillar",
+    "behaviour": "feed",
+    "stars": 2
+   }
+  ],
+  "blitzFact": {
+   "en": "A BioBlitz is a real event: scientists, families and kids team up to find and record as many living things as they can in one place, in a short time. The first was held in 1996 at Kenilworth Aquatic Gardens in Washington, D.C., and found about 1,000 species.",
+   "fr": "Un BioBlitz est un vrai événement : scientifiques, familles et enfants font équipe pour trouver et noter le plus d'êtres vivants possible au même endroit, en peu de temps. Le premier a eu lieu en 1996 aux jardins aquatiques de Kenilworth, à Washington, et a trouvé environ 1 000 espèces."
+  },
+  "blitzFactEasy": {
+   "en": "Real scientists and families count living things together. It's called a BioBlitz!",
+   "fr": "De vrais scientifiques et des familles comptent les êtres vivants ensemble. Ça s'appelle un BioBlitz !"
+  },
+  "blitzSource": "National Geographic Education, “BioBlitz”; Wikipedia, “BioBlitz”",
+  "helperName": {
+   "en": "Keeper's helper",
+   "fr": "Assistant du Gardien"
+  },
+  "models": {
+   "bed": "https://future-api.mexty.ai/api/files/p/6addfd37ca61b98af27fae39",
+   "bedSoil": "https://future-api.mexty.ai/api/files/p/6addfd38ca61b98af27fae45",
+   "can": "https://future-api.mexty.ai/api/files/p/6addf957ca61b98af27fa293",
+   "packets": "https://future-api.mexty.ai/api/files/p/6addf955ca61b98af27fa26f",
+   "museum": "https://future-api.mexty.ai/api/files/p/6addfd3aca61b98af27fae5d",
+   "frame": "https://future-api.mexty.ai/api/files/p/6addf926ca61b98af27fa1e3",
+   "plinth": "https://future-api.mexty.ai/api/files/p/6addf953ca61b98af27fa257",
+   "stickerBoard": "https://future-api.mexty.ai/api/files/p/6addfd3bca61b98af27fae75",
+   "banner": "https://future-api.mexty.ai/api/files/p/6addfd39ca61b98af27fae51",
+   "totem": "https://future-api.mexty.ai/api/files/p/6addfd3aca61b98af27fae69",
+   "badges": "https://future-api.mexty.ai/api/files/p/6addf957ca61b98af27fa287",
+   "lantern": "https://future-api.mexty.ai/api/files/p/6addfab9ca61b98af27fa763"
   }
  }
 }
