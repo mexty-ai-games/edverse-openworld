@@ -1,0 +1,541 @@
+[
+  {
+    "key": "keeper",
+    "name": "Grove Keeper (kind old naturalist, rigged)",
+    "kind": "model",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfc60ca61b98af27faaff",
+    "fileAssetId": "6addfc60ca61b98af27faaff",
+    "catalogueAssetId": "6addfd20ca61b98af27fade0",
+    "clips": [
+      "idle",
+      "wave",
+      "talk",
+      "point"
+    ],
+    "triangles": 12997,
+    "sizeBytes": 1291212,
+    "notes": "Same scale/build as kid_avatar (faces glTF +Z, feet at origin, ~1.72 m to hat top). Bones: root hips spine chest head upper_arm/forearm/hand.L/R thigh/shin.L/R. Tintable materials skin, hair, shirt, vest, pants, boots, hat, bag, scarf (texture x baseColorFactor). point = right arm points forward."
+  },
+  {
+    "key": "keeper:icon",
+    "name": "Grove Keeper portrait icon (256 px, transparent)",
+    "kind": "image",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfcfcca61b98af27fadb8",
+    "fileAssetId": "6addfcfcca61b98af27fadb8",
+    "catalogueAssetId": "6addfd78ca61b98af27fb094",
+    "sizeBytes": 26581
+  },
+  {
+    "key": "species:bighorn",
+    "name": "Desert bighorn sheep (rigged)",
+    "kind": "model",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfb09ca61b98af27fa8a2",
+    "fileAssetId": "6addfb09ca61b98af27fa8a2",
+    "catalogueAssetId": "6addfd20ca61b98af27fadf6",
+    "clips": [
+      "idle",
+      "move",
+      "feed",
+      "special"
+    ],
+    "triangles": 7214,
+    "sizeBytes": 563752,
+    "notes": "move = walk (in place, 32 frames @24fps), feed = graze, special = playful hop."
+  },
+  {
+    "key": "species:bighorn:icon",
+    "name": "bighorn Field Guide picture (256 px, transparent)",
+    "kind": "image",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfc93ca61b98af27fac3c",
+    "fileAssetId": "6addfc93ca61b98af27fac3c",
+    "catalogueAssetId": "6addfd5eca61b98af27fafb3",
+    "sizeBytes": 46375
+  },
+  {
+    "key": "species:bighorn:silhouette",
+    "name": "bighorn silhouette (unknown Field Guide page)",
+    "kind": "image",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfcf6ca61b98af27fad70",
+    "fileAssetId": "6addfcf6ca61b98af27fad70",
+    "catalogueAssetId": "6addfd9aca61b98af27fb14d",
+    "sizeBytes": 6295
+  },
+  {
+    "key": "species:clownfish",
+    "name": "Clownfish (rigged, movement-ready)",
+    "kind": "model",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfb2eca61b98af27fa977",
+    "fileAssetId": "6addfb2eca61b98af27fa977",
+    "catalogueAssetId": "6addfd40ca61b98af27faecd",
+    "clips": [
+      "idle",
+      "move",
+      "feed",
+      "special"
+    ],
+    "triangles": 3652,
+    "sizeBytes": 235384,
+    "notes": "Fish centre 0.2 m above origin; the old anemone is no longer part of the model. move = swim (tail wag), feed = dart and nibble, special = happy spin."
+  },
+  {
+    "key": "species:clownfish:icon",
+    "name": "clownfish Field Guide picture (256 px, transparent)",
+    "kind": "image",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfcb3ca61b98af27facb5",
+    "fileAssetId": "6addfcb3ca61b98af27facb5",
+    "catalogueAssetId": "6addfd75ca61b98af27fb042",
+    "sizeBytes": 48526
+  },
+  {
+    "key": "species:clownfish:silhouette",
+    "name": "clownfish silhouette (unknown Field Guide page)",
+    "kind": "image",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfcf9ca61b98af27fad94",
+    "fileAssetId": "6addfcf9ca61b98af27fad94",
+    "catalogueAssetId": "6addfd9bca61b98af27fb16b",
+    "sizeBytes": 5356
+  },
+  {
+    "key": "species:horned_lizard",
+    "name": "Horned lizard (rigged, movement-ready)",
+    "kind": "model",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfb2bca61b98af27fa95f",
+    "fileAssetId": "6addfb2bca61b98af27fa95f",
+    "catalogueAssetId": "6addfd3fca61b98af27faea5",
+    "clips": [
+      "idle",
+      "move",
+      "feed",
+      "special"
+    ],
+    "triangles": 3332,
+    "sizeBytes": 347148,
+    "notes": "move = scuttle (fast, 16 frames), feed = lick ants, special = bask (flattens and widens toward the sun)."
+  },
+  {
+    "key": "species:horned_lizard:icon",
+    "name": "horned lizard Field Guide picture (256 px, transparent)",
+    "kind": "image",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfc92ca61b98af27fac30",
+    "fileAssetId": "6addfc92ca61b98af27fac30",
+    "catalogueAssetId": "6addfd5dca61b98af27fafa9",
+    "sizeBytes": 36614
+  },
+  {
+    "key": "species:horned_lizard:silhouette",
+    "name": "horned_lizard silhouette (unknown Field Guide page)",
+    "kind": "image",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfcdaca61b98af27fad55",
+    "fileAssetId": "6addfcdaca61b98af27fad55",
+    "catalogueAssetId": "6addfd8cca61b98af27fb102",
+    "sizeBytes": 5298
+  },
+  {
+    "key": "species:morpho",
+    "name": "Blue morpho butterfly (rigged, movement-ready)",
+    "kind": "model",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfb0eca61b98af27fa8dc",
+    "fileAssetId": "6addfb0eca61b98af27fa8dc",
+    "catalogueAssetId": "6addfd22ca61b98af27fae22",
+    "clips": [
+      "idle",
+      "move",
+      "feed",
+      "special"
+    ],
+    "triangles": 3296,
+    "sizeBytes": 206832,
+    "notes": "Rest pose wings open. idle = slow open/close, move = fast flap (lifted), feed = wings closed (brown eyespot undersides), special = glide."
+  },
+  {
+    "key": "species:morpho:icon",
+    "name": "morpho Field Guide picture (256 px, transparent)",
+    "kind": "image",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfc8fca61b98af27fac0c",
+    "fileAssetId": "6addfc8fca61b98af27fac0c",
+    "catalogueAssetId": "6addfd5cca61b98af27faf8b",
+    "sizeBytes": 26917
+  },
+  {
+    "key": "species:morpho:silhouette",
+    "name": "morpho silhouette (unknown Field Guide page)",
+    "kind": "image",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfcd8ca61b98af27fad31",
+    "fileAssetId": "6addfcd8ca61b98af27fad31",
+    "catalogueAssetId": "6addfd8bca61b98af27fb0d8",
+    "sizeBytes": 3865
+  },
+  {
+    "key": "species:octopus",
+    "name": "Common octopus (rigged, colour-change material)",
+    "kind": "model",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfb0aca61b98af27fa8b4",
+    "fileAssetId": "6addfb0aca61b98af27fa8b4",
+    "catalogueAssetId": "6addfd21ca61b98af27fae01",
+    "clips": [
+      "idle",
+      "move",
+      "feed",
+      "special"
+    ],
+    "triangles": 7166,
+    "sizeBytes": 844172,
+    "notes": "Material octopus_skin = near-white painted map x vertex colour x baseColorFactor: set material.color to change colour (default coral 0.95,0.42,0.30). special = tentacle wave hello, move = swim pulse."
+  },
+  {
+    "key": "species:octopus:icon",
+    "name": "octopus Field Guide picture (256 px, transparent)",
+    "kind": "image",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfcb5ca61b98af27faccd",
+    "fileAssetId": "6addfcb5ca61b98af27faccd",
+    "catalogueAssetId": "6addfd76ca61b98af27fb05a",
+    "sizeBytes": 37006
+  },
+  {
+    "key": "species:octopus:silhouette",
+    "name": "octopus silhouette (unknown Field Guide page)",
+    "kind": "image",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfcfbca61b98af27fadac",
+    "fileAssetId": "6addfcfbca61b98af27fadac",
+    "catalogueAssetId": "6addfd9cca61b98af27fb17f",
+    "sizeBytes": 7174
+  },
+  {
+    "key": "species:saguaro",
+    "name": "Saguaro cactus (unchanged biome-frontier model, no animation)",
+    "kind": "model",
+    "url": "https://future-api.mexty.ai/api/files/p/6add3bcfca61b98af27f6aee",
+    "fileAssetId": "6add3bcfca61b98af27f6aee",
+    "catalogueAssetId": "6add3cb9ca61b98af27f6e0c",
+    "triangles": 962,
+    "sizeBytes": 91912,
+    "notes": "Reused from manifest.biome-frontier.json (a plant: no rig)."
+  },
+  {
+    "key": "species:saguaro:icon",
+    "name": "saguaro Field Guide picture (256 px, transparent)",
+    "kind": "image",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfc94ca61b98af27fac48",
+    "fileAssetId": "6addfc94ca61b98af27fac48",
+    "catalogueAssetId": "6addfd5eca61b98af27fafbd",
+    "sizeBytes": 23157
+  },
+  {
+    "key": "species:saguaro:silhouette",
+    "name": "saguaro silhouette (unknown Field Guide page)",
+    "kind": "image",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfcf7ca61b98af27fad7c",
+    "fileAssetId": "6addfcf7ca61b98af27fad7c",
+    "catalogueAssetId": "6addfd9aca61b98af27fb157",
+    "sizeBytes": 4038
+  },
+  {
+    "key": "species:sea_star",
+    "name": "Sea star (rigged, movement-ready)",
+    "kind": "model",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfb2fca61b98af27fa983",
+    "fileAssetId": "6addfb2fca61b98af27fa983",
+    "catalogueAssetId": "6addfd41ca61b98af27faede",
+    "clips": [
+      "idle",
+      "move",
+      "feed",
+      "special"
+    ],
+    "triangles": 4916,
+    "sizeBytes": 483208,
+    "notes": "Five 3-bone arms. move = slow crawl (arm ripple), feed = arms hug up, special = waves one arm."
+  },
+  {
+    "key": "species:sea_star:icon",
+    "name": "sea star Field Guide picture (256 px, transparent)",
+    "kind": "image",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfcb4ca61b98af27facc1",
+    "fileAssetId": "6addfcb4ca61b98af27facc1",
+    "catalogueAssetId": "6addfd75ca61b98af27fb04e",
+    "sizeBytes": 28088
+  },
+  {
+    "key": "species:sea_star:silhouette",
+    "name": "sea_star silhouette (unknown Field Guide page)",
+    "kind": "image",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfcfaca61b98af27fada0",
+    "fileAssetId": "6addfcfaca61b98af27fada0",
+    "catalogueAssetId": "6addfd9cca61b98af27fb175",
+    "sizeBytes": 5731
+  },
+  {
+    "key": "species:sea_turtle",
+    "name": "Green sea turtle (rigged, movement-ready)",
+    "kind": "model",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfc66ca61b98af27fab3b",
+    "fileAssetId": "6addfc66ca61b98af27fab3b",
+    "catalogueAssetId": "6addfd40ca61b98af27faebc",
+    "clips": [
+      "idle",
+      "move",
+      "feed",
+      "special"
+    ],
+    "triangles": 4040,
+    "sizeBytes": 321636,
+    "notes": "move = swim (big front-flipper strokes), idle = hover paddle, feed = nibble, special = gliding roll."
+  },
+  {
+    "key": "species:sea_turtle:icon",
+    "name": "sea turtle Field Guide picture (256 px, transparent)",
+    "kind": "image",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfcb2ca61b98af27faca9",
+    "fileAssetId": "6addfcb2ca61b98af27faca9",
+    "catalogueAssetId": "6addfd5fca61b98af27fafc7",
+    "sizeBytes": 27926
+  },
+  {
+    "key": "species:sea_turtle:silhouette",
+    "name": "sea_turtle silhouette (unknown Field Guide page)",
+    "kind": "image",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfcf8ca61b98af27fad88",
+    "fileAssetId": "6addfcf8ca61b98af27fad88",
+    "catalogueAssetId": "6addfd9bca61b98af27fb161",
+    "sizeBytes": 4613
+  },
+  {
+    "key": "species:sloth",
+    "name": "Two-toed sloth (hanging on its branch, rigged)",
+    "kind": "model",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfb08ca61b98af27fa892",
+    "fileAssetId": "6addfb08ca61b98af27fa892",
+    "catalogueAssetId": "6addfd20ca61b98af27fadeb",
+    "clips": [
+      "idle",
+      "move",
+      "feed",
+      "special"
+    ],
+    "triangles": 7902,
+    "sizeBytes": 942796,
+    "notes": "Origin on the branch (branch along X, sloth hangs below). move = slow hand-over-hand climb, special = slow wave. Branch is part of the mesh (bone root)."
+  },
+  {
+    "key": "species:sloth:icon",
+    "name": "sloth Field Guide picture (256 px, transparent)",
+    "kind": "image",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfc90ca61b98af27fac18",
+    "fileAssetId": "6addfc90ca61b98af27fac18",
+    "catalogueAssetId": "6addfd5dca61b98af27faf95",
+    "sizeBytes": 25853
+  },
+  {
+    "key": "species:sloth:silhouette",
+    "name": "sloth silhouette (unknown Field Guide page)",
+    "kind": "image",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfcd9ca61b98af27fad3d",
+    "fileAssetId": "6addfcd9ca61b98af27fad3d",
+    "catalogueAssetId": "6addfd8bca61b98af27fb0e3",
+    "sizeBytes": 5286
+  },
+  {
+    "key": "species:tortoise",
+    "name": "Desert tortoise (rigged, sturdy legs)",
+    "kind": "model",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfb2aca61b98af27fa953",
+    "fileAssetId": "6addfb2aca61b98af27fa953",
+    "catalogueAssetId": "6addfd23ca61b98af27fae2d",
+    "clips": [
+      "idle",
+      "move",
+      "feed",
+      "special"
+    ],
+    "triangles": 7584,
+    "sizeBytes": 547332,
+    "notes": "Re-made with columnar scaly legs, elephant feet and toenails. move = walk (diagonal gait), feed = munch, special = hide head and legs in shell."
+  },
+  {
+    "key": "species:tortoise:icon",
+    "name": "tortoise Field Guide picture (256 px, transparent)",
+    "kind": "image",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfc91ca61b98af27fac24",
+    "fileAssetId": "6addfc91ca61b98af27fac24",
+    "catalogueAssetId": "6addfd5dca61b98af27faf9f",
+    "sizeBytes": 36918
+  },
+  {
+    "key": "species:tortoise:silhouette",
+    "name": "tortoise silhouette (unknown Field Guide page)",
+    "kind": "image",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfcdaca61b98af27fad49",
+    "fileAssetId": "6addfcdaca61b98af27fad49",
+    "catalogueAssetId": "6addfd8cca61b98af27fb0f8",
+    "sizeBytes": 4469
+  },
+  {
+    "key": "species:toucan",
+    "name": "Keel-billed toucan (rigged, movement-ready)",
+    "kind": "model",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfb0bca61b98af27fa8c4",
+    "fileAssetId": "6addfb0bca61b98af27fa8c4",
+    "catalogueAssetId": "6addfd21ca61b98af27fae0c",
+    "clips": [
+      "idle",
+      "move",
+      "feed",
+      "special"
+    ],
+    "triangles": 4576,
+    "sizeBytes": 315716,
+    "notes": "Replaces the static biome-frontier toucan. move = hop, feed = peck, special = fly (wings flap, legs tucked, lifted 0.3 m). No perch: stands on its feet."
+  },
+  {
+    "key": "species:toucan:icon",
+    "name": "toucan Field Guide picture (256 px, transparent)",
+    "kind": "image",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfc8eca61b98af27fabf4",
+    "fileAssetId": "6addfc8eca61b98af27fabf4",
+    "catalogueAssetId": "6addfd5bca61b98af27faf77",
+    "sizeBytes": 37326
+  },
+  {
+    "key": "species:toucan:silhouette",
+    "name": "toucan silhouette (unknown Field Guide page)",
+    "kind": "image",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfcd6ca61b98af27fad19",
+    "fileAssetId": "6addfcd6ca61b98af27fad19",
+    "catalogueAssetId": "6addfd8aca61b98af27fb0b8",
+    "sizeBytes": 5605
+  },
+  {
+    "key": "species:tree_frog",
+    "name": "Red-eyed tree frog (rigged, movement-ready)",
+    "kind": "model",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfb0cca61b98af27fa8d0",
+    "fileAssetId": "6addfb0cca61b98af27fa8d0",
+    "catalogueAssetId": "6addfd22ca61b98af27fae17",
+    "clips": [
+      "idle",
+      "move",
+      "feed",
+      "special"
+    ],
+    "triangles": 4488,
+    "sizeBytes": 343928,
+    "notes": "idle = breathing throat, move = hop, feed = tongue flick, special = throat-puff call."
+  },
+  {
+    "key": "species:tree_frog:icon",
+    "name": "tree frog Field Guide picture (256 px, transparent)",
+    "kind": "image",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfc8fca61b98af27fac00",
+    "fileAssetId": "6addfc8fca61b98af27fac00",
+    "catalogueAssetId": "6addfd5cca61b98af27faf81",
+    "sizeBytes": 38565
+  },
+  {
+    "key": "species:tree_frog:silhouette",
+    "name": "tree_frog silhouette (unknown Field Guide page)",
+    "kind": "image",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfcd7ca61b98af27fad25",
+    "fileAssetId": "6addfcd7ca61b98af27fad25",
+    "catalogueAssetId": "6addfd8aca61b98af27fb0cb",
+    "sizeBytes": 6491
+  },
+  {
+    "key": "prop:field_camera",
+    "name": "Field Camera (chunky vintage camera with strap)",
+    "kind": "model",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfc63ca61b98af27fab17",
+    "fileAssetId": "6addfc63ca61b98af27fab17",
+    "catalogueAssetId": "6addfd42ca61b98af27faf00",
+    "nodes": [
+      "camera_body",
+      "camera_strap"
+    ],
+    "triangles": 4664,
+    "sizeBytes": 279068,
+    "notes": "~0.17 m wide, lens faces glTF +Z (forward), origin at the bottom. Hide camera_strap when held in a hand."
+  },
+  {
+    "key": "prop:field_guide",
+    "name": "Field Guide notebook (open + closed)",
+    "kind": "model",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfc65ca61b98af27fab2f",
+    "fileAssetId": "6addfc65ca61b98af27fab2f",
+    "catalogueAssetId": "6addfd43ca61b98af27faf16",
+    "nodes": [
+      "guide_closed",
+      "guide_open"
+    ],
+    "triangles": 1260,
+    "sizeBytes": 144312,
+    "notes": "Two nodes at the same origin: show guide_closed OR guide_open. Closed ~0.16 x 0.22 m lying flat; open spread shows painted pages (paper.jpg) with ribbon bookmark."
+  },
+  {
+    "key": "prop:hand_lens",
+    "name": "Hand lens (brass magnifying glass)",
+    "kind": "model",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfc64ca61b98af27fab23",
+    "fileAssetId": "6addfc64ca61b98af27fab23",
+    "catalogueAssetId": "6addfd42ca61b98af27faf0b",
+    "nodes": [
+      "hand_lens"
+    ],
+    "triangles": 1926,
+    "sizeBytes": 252880,
+    "notes": "~0.22 m long, origin at the handle end, glass faces forward; glass material lens_glass is alpha BLEND."
+  },
+  {
+    "key": "prop:spark",
+    "name": "Glowing seed spark (quest collectible)",
+    "kind": "model",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfc61ca61b98af27fab0b",
+    "fileAssetId": "6addfc61ca61b98af27fab0b",
+    "catalogueAssetId": "6addfd41ca61b98af27faef2",
+    "nodes": [
+      "spark_seed",
+      "spark_sprout",
+      "spark_glow"
+    ],
+    "triangles": 2398,
+    "sizeBytes": 141208,
+    "notes": "~0.2 m tall, origin at base. Pulse it in code: scale/opacity node spark_glow (BLEND material spark_glow) and emissiveIntensity of spark_core / spark_vein; add a point light + bloom."
+  },
+  {
+    "key": "icon:camera",
+    "name": "Field Camera icon (256 px, transparent)",
+    "kind": "image",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfcb6ca61b98af27facd9",
+    "fileAssetId": "6addfcb6ca61b98af27facd9",
+    "catalogueAssetId": "6addfd76ca61b98af27fb064",
+    "sizeBytes": 57835
+  },
+  {
+    "key": "icon:guide",
+    "name": "Field Guide icon (256 px, transparent)",
+    "kind": "image",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfcb8ca61b98af27facf1",
+    "fileAssetId": "6addfcb8ca61b98af27facf1",
+    "catalogueAssetId": "6addfd77ca61b98af27fb07c",
+    "sizeBytes": 42409
+  },
+  {
+    "key": "icon:lens",
+    "name": "Hand lens icon (256 px, transparent)",
+    "kind": "image",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfcb7ca61b98af27face5",
+    "fileAssetId": "6addfcb7ca61b98af27face5",
+    "catalogueAssetId": "6addfd77ca61b98af27fb070",
+    "sizeBytes": 32758
+  },
+  {
+    "key": "icon:spark",
+    "name": "Spark seed icon (256 px, transparent)",
+    "kind": "image",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfcb9ca61b98af27facfd",
+    "fileAssetId": "6addfcb9ca61b98af27facfd",
+    "catalogueAssetId": "6addfd77ca61b98af27fb088",
+    "sizeBytes": 32220
+  },
+  {
+    "key": "DONE"
+  }
+]

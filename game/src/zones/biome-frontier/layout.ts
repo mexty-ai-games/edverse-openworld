@@ -365,3 +365,40 @@ export const PALMS: Spot[] = (() => {
   }
   return out;
 })();
+
+/** Where the living creatures of the first expedition live (their homes, perches and favourite spots). */
+export const CREATURES = {
+  /** Perches the toucan flies between: the signpost top, the forest board, a camera trap. */
+  toucanPerches: [
+    { x: SIGNPOST.x, y: 2.3, z: SIGNPOST.z },
+    { x: BOARDS[0].x + 0.1, y: 1.75, z: BOARDS[0].z },
+    { x: CRITTERS.cameraTraps[0].x, y: 1.25, z: CRITTERS.cameraTraps[0].z },
+  ],
+  frog: { x: CRITTERS.frog.x, z: CRITTERS.frog.z },
+  /** Where the morpho lands: leaves (rest) and fallen fruit (drinks). */
+  morphoSpots: [
+    { x: -11, y: 0.9, z: 5 },
+    { x: -13.5, y: 0.08, z: 3.2, fruit: true },
+    { x: -9.0, y: 1.1, z: 1.5 },
+    { x: -12.5, y: 0.08, z: 7.5, fruit: true },
+  ],
+  /** The sloth's branch: it creeps slowly from one end to the other. */
+  sloth: [
+    { x: -14.2, y: 3.4, z: -2.6 },
+    { x: -12.6, y: 3.1, z: -3.4 },
+  ],
+  tortoise: { x: CRITTERS.tortoise.x, z: CRITTERS.tortoise.z },
+  lizard: { x: 13.6, z: -15.6 },
+  /** The sun-warmed rock the horned lizard basks on. */
+  lizardSun: { x: CRITTERS.lizard.x, y: CRITTERS.lizard.y, z: CRITTERS.lizard.z },
+  bighorn: { x: -1.0, z: -18.8 },
+  /** The rock it climbs (its top height). */
+  bighornRock: { x: -1.5, y: 0.9, z: -21.0 },
+  saguaro: CRITTERS.saguaro[0],
+  turtle: CRITTERS.turtle,
+  clownfish: CRITTERS.clownfish,
+  /** A post of the research pier: the sea star creeps up and down it. */
+  seaStar: { x: PIER.x + 11.8, z: PIER.z - 2.0 - 0.14, ry: 0, top: 0.25, bottom: -0.4 },
+  /** The octopus's den among the corals. */
+  octopus: { x: 21.0, z: -1.0 },
+};

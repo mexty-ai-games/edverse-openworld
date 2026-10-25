@@ -1,0 +1,2279 @@
+[
+ {
+  "key": "_about",
+  "ticket": "6addeddaca61b98af27f98ae",
+  "notes": "OpenWorld phases 3-5 assets (original, Blender scripts in assets/blender/phase345). Metres, glTF +Y up, fronts face +Z. Kit .glbs hold several top-level nodes laid out along X: clone the node named in 'nodes' and reset its position. Creatures are real size (see notes for a readable game scale). Catalogue status: pending review."
+ },
+ {
+  "key": "garden:bed",
+  "name": "Raised garden bed (empty)",
+  "kind": "model",
+  "phase": 3,
+  "url": "https://future-api.mexty.ai/api/files/p/6addfd37ca61b98af27fae39",
+  "fileAssetId": "6addfd37ca61b98af27fae39",
+  "catalogueAssetId": "6addfd55ca61b98af27faf36",
+  "sizeBytes": 735044,
+  "nodes": [
+   "bed_empty"
+  ],
+  "triangles": 4120,
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6addfd40ca61b98af27faeb0",
+  "tags": [
+   "garden",
+   "raised-bed",
+   "wood"
+  ],
+  "notes": "1.6 x 0.9 m, rails 0.37 m high."
+ },
+ {
+  "key": "garden:bed:soil",
+  "name": "Raised garden bed with soil",
+  "kind": "model",
+  "phase": 3,
+  "url": "https://future-api.mexty.ai/api/files/p/6addfd38ca61b98af27fae45",
+  "fileAssetId": "6addfd38ca61b98af27fae45",
+  "catalogueAssetId": "6addfd56ca61b98af27faf41",
+  "sizeBytes": 762036,
+  "nodes": [
+   "bed_soil"
+  ],
+  "triangles": 5016,
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6addfd3fca61b98af27fae99",
+  "tags": [
+   "garden",
+   "raised-bed",
+   "soil"
+  ],
+  "notes": "Empties plot_0..plot_5 = planting spots (soil surface y=0.35)."
+ },
+ {
+  "key": "garden:watering-can",
+  "name": "Watering can",
+  "kind": "model",
+  "phase": 3,
+  "url": "https://future-api.mexty.ai/api/files/p/6addf957ca61b98af27fa293",
+  "fileAssetId": "6addf957ca61b98af27fa293",
+  "catalogueAssetId": "6addfa84ca61b98af27fa653",
+  "sizeBytes": 71204,
+  "nodes": [
+   "watering_can"
+  ],
+  "triangles": 1380,
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6addf9ccca61b98af27fa3b1",
+  "tags": [
+   "garden",
+   "watering-can",
+   "tool"
+  ]
+ },
+ {
+  "key": "garden:seed-packet:sunflower",
+  "name": "Seed packet (sunflower)",
+  "kind": "model",
+  "phase": 3,
+  "url": "https://future-api.mexty.ai/api/files/p/6addf955ca61b98af27fa26f",
+  "fileAssetId": "6addf955ca61b98af27fa26f",
+  "catalogueAssetId": "6addfa84ca61b98af27fa65e",
+  "sizeBytes": 148004,
+  "nodes": [
+   "packet_sunflower"
+  ],
+  "triangles": 368,
+  "kitNodes": [
+   "packet_sunflower",
+   "packet_lavender",
+   "packet_foxglove",
+   "packet_clover",
+   "packet_tomato",
+   "packet_milkweed"
+  ],
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6addf99bca61b98af27fa371",
+  "tags": [
+   "garden",
+   "seed-packet",
+   "sunflower"
+  ],
+  "notes": "Kit node; picture-only packet front (no text)."
+ },
+ {
+  "key": "garden:seed-packet:lavender",
+  "name": "Seed packet (lavender)",
+  "kind": "model",
+  "phase": 3,
+  "url": "https://future-api.mexty.ai/api/files/p/6addf955ca61b98af27fa26f",
+  "fileAssetId": "6addf955ca61b98af27fa26f",
+  "catalogueAssetId": "6addfa84ca61b98af27fa65e",
+  "sizeBytes": 148004,
+  "nodes": [
+   "packet_lavender"
+  ],
+  "triangles": 368,
+  "kitNodes": [
+   "packet_sunflower",
+   "packet_lavender",
+   "packet_foxglove",
+   "packet_clover",
+   "packet_tomato",
+   "packet_milkweed"
+  ],
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6addf999ca61b98af27fa359",
+  "tags": [
+   "garden",
+   "seed-packet",
+   "lavender"
+  ],
+  "notes": "Kit node; picture-only packet front (no text)."
+ },
+ {
+  "key": "garden:seed-packet:foxglove",
+  "name": "Seed packet (foxglove)",
+  "kind": "model",
+  "phase": 3,
+  "url": "https://future-api.mexty.ai/api/files/p/6addf955ca61b98af27fa26f",
+  "fileAssetId": "6addf955ca61b98af27fa26f",
+  "catalogueAssetId": "6addfa84ca61b98af27fa65e",
+  "sizeBytes": 148004,
+  "nodes": [
+   "packet_foxglove"
+  ],
+  "triangles": 368,
+  "kitNodes": [
+   "packet_sunflower",
+   "packet_lavender",
+   "packet_foxglove",
+   "packet_clover",
+   "packet_tomato",
+   "packet_milkweed"
+  ],
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6addf998ca61b98af27fa34d",
+  "tags": [
+   "garden",
+   "seed-packet",
+   "foxglove"
+  ],
+  "notes": "Kit node; picture-only packet front (no text)."
+ },
+ {
+  "key": "garden:seed-packet:clover",
+  "name": "Seed packet (clover)",
+  "kind": "model",
+  "phase": 3,
+  "url": "https://future-api.mexty.ai/api/files/p/6addf955ca61b98af27fa26f",
+  "fileAssetId": "6addf955ca61b98af27fa26f",
+  "catalogueAssetId": "6addfa84ca61b98af27fa65e",
+  "sizeBytes": 148004,
+  "nodes": [
+   "packet_clover"
+  ],
+  "triangles": 368,
+  "kitNodes": [
+   "packet_sunflower",
+   "packet_lavender",
+   "packet_foxglove",
+   "packet_clover",
+   "packet_tomato",
+   "packet_milkweed"
+  ],
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6addf997ca61b98af27fa341",
+  "tags": [
+   "garden",
+   "seed-packet",
+   "clover"
+  ],
+  "notes": "Kit node; picture-only packet front (no text)."
+ },
+ {
+  "key": "garden:seed-packet:tomato",
+  "name": "Seed packet (tomato)",
+  "kind": "model",
+  "phase": 3,
+  "url": "https://future-api.mexty.ai/api/files/p/6addf955ca61b98af27fa26f",
+  "fileAssetId": "6addf955ca61b98af27fa26f",
+  "catalogueAssetId": "6addfa84ca61b98af27fa65e",
+  "sizeBytes": 148004,
+  "nodes": [
+   "packet_tomato"
+  ],
+  "triangles": 368,
+  "kitNodes": [
+   "packet_sunflower",
+   "packet_lavender",
+   "packet_foxglove",
+   "packet_clover",
+   "packet_tomato",
+   "packet_milkweed"
+  ],
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6addf9cbca61b98af27fa3a5",
+  "tags": [
+   "garden",
+   "seed-packet",
+   "tomato"
+  ],
+  "notes": "Kit node; picture-only packet front (no text)."
+ },
+ {
+  "key": "garden:seed-packet:milkweed",
+  "name": "Seed packet (milkweed)",
+  "kind": "model",
+  "phase": 3,
+  "url": "https://future-api.mexty.ai/api/files/p/6addf955ca61b98af27fa26f",
+  "fileAssetId": "6addf955ca61b98af27fa26f",
+  "catalogueAssetId": "6addfa84ca61b98af27fa65e",
+  "sizeBytes": 148004,
+  "nodes": [
+   "packet_milkweed"
+  ],
+  "triangles": 368,
+  "kitNodes": [
+   "packet_sunflower",
+   "packet_lavender",
+   "packet_foxglove",
+   "packet_clover",
+   "packet_tomato",
+   "packet_milkweed"
+  ],
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6addf99aca61b98af27fa365",
+  "tags": [
+   "garden",
+   "seed-packet",
+   "milkweed"
+  ],
+  "notes": "Kit node; picture-only packet front (no text)."
+ },
+ {
+  "key": "plant:sunflower:sprout",
+  "name": "Sunflower (sprout)",
+  "kind": "model",
+  "phase": 3,
+  "url": "https://future-api.mexty.ai/api/files/p/6addf951ca61b98af27fa23d",
+  "fileAssetId": "6addf951ca61b98af27fa23d",
+  "catalogueAssetId": "6addfa85ca61b98af27fa669",
+  "sizeBytes": 268788,
+  "nodes": [
+   "sunflower_sprout"
+  ],
+  "triangles": 285,
+  "kitNodes": [
+   "sunflower_sprout",
+   "sunflower_young",
+   "sunflower_flowering"
+  ],
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6addfa0fca61b98af27fa51b",
+  "tags": [
+   "garden",
+   "plant",
+   "sunflower",
+   "sprout"
+  ]
+ },
+ {
+  "key": "plant:sunflower:young",
+  "name": "Sunflower (young)",
+  "kind": "model",
+  "phase": 3,
+  "url": "https://future-api.mexty.ai/api/files/p/6addf951ca61b98af27fa23d",
+  "fileAssetId": "6addf951ca61b98af27fa23d",
+  "catalogueAssetId": "6addfa85ca61b98af27fa669",
+  "sizeBytes": 268788,
+  "nodes": [
+   "sunflower_young"
+  ],
+  "triangles": 1483,
+  "kitNodes": [
+   "sunflower_sprout",
+   "sunflower_young",
+   "sunflower_flowering"
+  ],
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6addfa10ca61b98af27fa527",
+  "tags": [
+   "garden",
+   "plant",
+   "sunflower",
+   "young"
+  ]
+ },
+ {
+  "key": "plant:sunflower:flowering",
+  "name": "Sunflower (flowering)",
+  "kind": "model",
+  "phase": 3,
+  "url": "https://future-api.mexty.ai/api/files/p/6addf951ca61b98af27fa23d",
+  "fileAssetId": "6addf951ca61b98af27fa23d",
+  "catalogueAssetId": "6addfa85ca61b98af27fa669",
+  "sizeBytes": 268788,
+  "nodes": [
+   "sunflower_flowering"
+  ],
+  "triangles": 3014,
+  "kitNodes": [
+   "sunflower_sprout",
+   "sunflower_young",
+   "sunflower_flowering"
+  ],
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6addfa0eca61b98af27fa50f",
+  "tags": [
+   "garden",
+   "plant",
+   "sunflower",
+   "flowering"
+  ],
+  "notes": "Child empty sunflower_visit = where bumblebee feed."
+ },
+ {
+  "key": "plant:lavender:sprout",
+  "name": "Lavender (sprout)",
+  "kind": "model",
+  "phase": 3,
+  "url": "https://future-api.mexty.ai/api/files/p/6addf94fca61b98af27fa21f",
+  "fileAssetId": "6addf94fca61b98af27fa21f",
+  "catalogueAssetId": "6addfa85ca61b98af27fa674",
+  "sizeBytes": 591336,
+  "nodes": [
+   "lavender_sprout"
+  ],
+  "triangles": 277,
+  "kitNodes": [
+   "lavender_sprout",
+   "lavender_young",
+   "lavender_flowering"
+  ],
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6addfa08ca61b98af27fa4a3",
+  "tags": [
+   "garden",
+   "plant",
+   "lavender",
+   "sprout"
+  ]
+ },
+ {
+  "key": "plant:lavender:young",
+  "name": "Lavender (young)",
+  "kind": "model",
+  "phase": 3,
+  "url": "https://future-api.mexty.ai/api/files/p/6addf94fca61b98af27fa21f",
+  "fileAssetId": "6addf94fca61b98af27fa21f",
+  "catalogueAssetId": "6addfa85ca61b98af27fa674",
+  "sizeBytes": 591336,
+  "nodes": [
+   "lavender_young"
+  ],
+  "triangles": 2778,
+  "kitNodes": [
+   "lavender_sprout",
+   "lavender_young",
+   "lavender_flowering"
+  ],
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6addfa09ca61b98af27fa4af",
+  "tags": [
+   "garden",
+   "plant",
+   "lavender",
+   "young"
+  ]
+ },
+ {
+  "key": "plant:lavender:flowering",
+  "name": "Lavender (flowering)",
+  "kind": "model",
+  "phase": 3,
+  "url": "https://future-api.mexty.ai/api/files/p/6addf94fca61b98af27fa21f",
+  "fileAssetId": "6addf94fca61b98af27fa21f",
+  "catalogueAssetId": "6addfa85ca61b98af27fa674",
+  "sizeBytes": 591336,
+  "nodes": [
+   "lavender_flowering"
+  ],
+  "triangles": 11084,
+  "kitNodes": [
+   "lavender_sprout",
+   "lavender_young",
+   "lavender_flowering"
+  ],
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6addf9d9ca61b98af27fa441",
+  "tags": [
+   "garden",
+   "plant",
+   "lavender",
+   "flowering"
+  ],
+  "notes": "Child empty lavender_visit = where bumblebee, hoverfly feed."
+ },
+ {
+  "key": "plant:foxglove:sprout",
+  "name": "Foxglove (sprout)",
+  "kind": "model",
+  "phase": 3,
+  "url": "https://future-api.mexty.ai/api/files/p/6addf94fca61b98af27fa212",
+  "fileAssetId": "6addf94fca61b98af27fa212",
+  "catalogueAssetId": "6addfa85ca61b98af27fa67f",
+  "sizeBytes": 275076,
+  "nodes": [
+   "foxglove_sprout"
+  ],
+  "triangles": 285,
+  "kitNodes": [
+   "foxglove_sprout",
+   "foxglove_young",
+   "foxglove_flowering"
+  ],
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6addf9d7ca61b98af27fa429",
+  "tags": [
+   "garden",
+   "plant",
+   "foxglove",
+   "sprout"
+  ]
+ },
+ {
+  "key": "plant:foxglove:young",
+  "name": "Foxglove (young)",
+  "kind": "model",
+  "phase": 3,
+  "url": "https://future-api.mexty.ai/api/files/p/6addf94fca61b98af27fa212",
+  "fileAssetId": "6addf94fca61b98af27fa212",
+  "catalogueAssetId": "6addfa85ca61b98af27fa67f",
+  "sizeBytes": 275076,
+  "nodes": [
+   "foxglove_young"
+  ],
+  "triangles": 1216,
+  "kitNodes": [
+   "foxglove_sprout",
+   "foxglove_young",
+   "foxglove_flowering"
+  ],
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6addf9d8ca61b98af27fa435",
+  "tags": [
+   "garden",
+   "plant",
+   "foxglove",
+   "young"
+  ]
+ },
+ {
+  "key": "plant:foxglove:flowering",
+  "name": "Foxglove (flowering)",
+  "kind": "model",
+  "phase": 3,
+  "url": "https://future-api.mexty.ai/api/files/p/6addf94fca61b98af27fa212",
+  "fileAssetId": "6addf94fca61b98af27fa212",
+  "catalogueAssetId": "6addfa85ca61b98af27fa67f",
+  "sizeBytes": 275076,
+  "nodes": [
+   "foxglove_flowering"
+  ],
+  "triangles": 5702,
+  "kitNodes": [
+   "foxglove_sprout",
+   "foxglove_young",
+   "foxglove_flowering"
+  ],
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6addf9d6ca61b98af27fa41d",
+  "tags": [
+   "garden",
+   "plant",
+   "foxglove",
+   "flowering"
+  ],
+  "notes": "Child empty foxglove_visit = where bumblebee, hummingbird feed."
+ },
+ {
+  "key": "plant:clover:sprout",
+  "name": "Clover (sprout)",
+  "kind": "model",
+  "phase": 3,
+  "url": "https://future-api.mexty.ai/api/files/p/6addf926ca61b98af27fa1ef",
+  "fileAssetId": "6addf926ca61b98af27fa1ef",
+  "catalogueAssetId": "6addfa86ca61b98af27fa68a",
+  "sizeBytes": 509552,
+  "nodes": [
+   "clover_sprout"
+  ],
+  "triangles": 365,
+  "kitNodes": [
+   "clover_sprout",
+   "clover_young",
+   "clover_flowering"
+  ],
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6addf9d4ca61b98af27fa405",
+  "tags": [
+   "garden",
+   "plant",
+   "clover",
+   "sprout"
+  ]
+ },
+ {
+  "key": "plant:clover:young",
+  "name": "Clover (young)",
+  "kind": "model",
+  "phase": 3,
+  "url": "https://future-api.mexty.ai/api/files/p/6addf926ca61b98af27fa1ef",
+  "fileAssetId": "6addf926ca61b98af27fa1ef",
+  "catalogueAssetId": "6addfa86ca61b98af27fa68a",
+  "sizeBytes": 509552,
+  "nodes": [
+   "clover_young"
+  ],
+  "triangles": 3072,
+  "kitNodes": [
+   "clover_sprout",
+   "clover_young",
+   "clover_flowering"
+  ],
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6addf9d5ca61b98af27fa411",
+  "tags": [
+   "garden",
+   "plant",
+   "clover",
+   "young"
+  ]
+ },
+ {
+  "key": "plant:clover:flowering",
+  "name": "Clover (flowering)",
+  "kind": "model",
+  "phase": 3,
+  "url": "https://future-api.mexty.ai/api/files/p/6addf926ca61b98af27fa1ef",
+  "fileAssetId": "6addf926ca61b98af27fa1ef",
+  "catalogueAssetId": "6addfa86ca61b98af27fa68a",
+  "sizeBytes": 509552,
+  "nodes": [
+   "clover_flowering"
+  ],
+  "triangles": 9596,
+  "kitNodes": [
+   "clover_sprout",
+   "clover_young",
+   "clover_flowering"
+  ],
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6addf9d2ca61b98af27fa3f9",
+  "tags": [
+   "garden",
+   "plant",
+   "clover",
+   "flowering"
+  ],
+  "notes": "Child empty clover_visit = where bumblebee, hoverfly feed."
+ },
+ {
+  "key": "plant:tomato:sprout",
+  "name": "Tomato (sprout)",
+  "kind": "model",
+  "phase": 3,
+  "url": "https://future-api.mexty.ai/api/files/p/6addf952ca61b98af27fa24b",
+  "fileAssetId": "6addf952ca61b98af27fa24b",
+  "catalogueAssetId": "6addfa86ca61b98af27fa695",
+  "sizeBytes": 360148,
+  "nodes": [
+   "tomato_sprout"
+  ],
+  "triangles": 557,
+  "kitNodes": [
+   "tomato_sprout",
+   "tomato_young",
+   "tomato_flowering"
+  ],
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6addfa12ca61b98af27fa53f",
+  "tags": [
+   "garden",
+   "plant",
+   "tomato",
+   "sprout"
+  ]
+ },
+ {
+  "key": "plant:tomato:young",
+  "name": "Tomato (young)",
+  "kind": "model",
+  "phase": 3,
+  "url": "https://future-api.mexty.ai/api/files/p/6addf952ca61b98af27fa24b",
+  "fileAssetId": "6addf952ca61b98af27fa24b",
+  "catalogueAssetId": "6addfa86ca61b98af27fa695",
+  "sizeBytes": 360148,
+  "nodes": [
+   "tomato_young"
+  ],
+  "triangles": 2157,
+  "kitNodes": [
+   "tomato_sprout",
+   "tomato_young",
+   "tomato_flowering"
+  ],
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6addfa13ca61b98af27fa54b",
+  "tags": [
+   "garden",
+   "plant",
+   "tomato",
+   "young"
+  ]
+ },
+ {
+  "key": "plant:tomato:flowering",
+  "name": "Tomato (flowering)",
+  "kind": "model",
+  "phase": 3,
+  "url": "https://future-api.mexty.ai/api/files/p/6addf952ca61b98af27fa24b",
+  "fileAssetId": "6addf952ca61b98af27fa24b",
+  "catalogueAssetId": "6addfa86ca61b98af27fa695",
+  "sizeBytes": 360148,
+  "nodes": [
+   "tomato_flowering"
+  ],
+  "triangles": 6193,
+  "kitNodes": [
+   "tomato_sprout",
+   "tomato_young",
+   "tomato_flowering"
+  ],
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6addfa11ca61b98af27fa533",
+  "tags": [
+   "garden",
+   "plant",
+   "tomato",
+   "flowering"
+  ],
+  "notes": "Child empty tomato_visit = where bumblebee feed."
+ },
+ {
+  "key": "plant:milkweed:sprout",
+  "name": "Milkweed (sprout)",
+  "kind": "model",
+  "phase": 3,
+  "url": "https://future-api.mexty.ai/api/files/p/6addf950ca61b98af27fa22d",
+  "fileAssetId": "6addf950ca61b98af27fa22d",
+  "catalogueAssetId": "6addfa87ca61b98af27fa6a0",
+  "sizeBytes": 396372,
+  "nodes": [
+   "milkweed_sprout"
+  ],
+  "triangles": 285,
+  "kitNodes": [
+   "milkweed_sprout",
+   "milkweed_young",
+   "milkweed_flowering"
+  ],
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6addfa0bca61b98af27fa4df",
+  "tags": [
+   "garden",
+   "plant",
+   "milkweed",
+   "sprout"
+  ]
+ },
+ {
+  "key": "plant:milkweed:young",
+  "name": "Milkweed (young)",
+  "kind": "model",
+  "phase": 3,
+  "url": "https://future-api.mexty.ai/api/files/p/6addf950ca61b98af27fa22d",
+  "fileAssetId": "6addf950ca61b98af27fa22d",
+  "catalogueAssetId": "6addfa87ca61b98af27fa6a0",
+  "sizeBytes": 396372,
+  "nodes": [
+   "milkweed_young"
+  ],
+  "triangles": 949,
+  "kitNodes": [
+   "milkweed_sprout",
+   "milkweed_young",
+   "milkweed_flowering"
+  ],
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6addfa0dca61b98af27fa4f7",
+  "tags": [
+   "garden",
+   "plant",
+   "milkweed",
+   "young"
+  ]
+ },
+ {
+  "key": "plant:milkweed:flowering",
+  "name": "Milkweed (flowering)",
+  "kind": "model",
+  "phase": 3,
+  "url": "https://future-api.mexty.ai/api/files/p/6addf950ca61b98af27fa22d",
+  "fileAssetId": "6addf950ca61b98af27fa22d",
+  "catalogueAssetId": "6addfa87ca61b98af27fa6a0",
+  "sizeBytes": 396372,
+  "nodes": [
+   "milkweed_flowering"
+  ],
+  "triangles": 10303,
+  "kitNodes": [
+   "milkweed_sprout",
+   "milkweed_young",
+   "milkweed_flowering"
+  ],
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6addfa0aca61b98af27fa4c7",
+  "tags": [
+   "garden",
+   "plant",
+   "milkweed",
+   "flowering"
+  ],
+  "notes": "Child empty milkweed_visit = where monarch feed."
+ },
+ {
+  "key": "pollinator:bumblebee",
+  "name": "Bumblebee",
+  "kind": "creature",
+  "phase": 3,
+  "url": "https://future-api.mexty.ai/api/files/p/6addf920ca61b98af27fa19b",
+  "fileAssetId": "6addf920ca61b98af27fa19b",
+  "catalogueAssetId": "6addfa87ca61b98af27fa6ab",
+  "sizeBytes": 191776,
+  "nodes": [
+   "bumblebee_rig"
+  ],
+  "triangles": 2388,
+  "clips": [
+   "idle",
+   "fly",
+   "feed"
+  ],
+  "allClips": [
+   "feed",
+   "fly",
+   "idle"
+  ],
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6addfa14ca61b98af27fa557",
+  "silhouetteUrl": "https://future-api.mexty.ai/api/files/p/6addfa3aca61b98af27fa5a0",
+  "tags": [
+   "pollinator",
+   "bumblebee",
+   "insect",
+   "bee"
+  ],
+  "notes": "Real size (2.5 cm): scale x4 in game. Visits sunflower, lavender, foxglove, clover, tomato."
+ },
+ {
+  "key": "pollinator:hummingbird",
+  "name": "Hummingbird",
+  "kind": "creature",
+  "phase": 3,
+  "url": "https://future-api.mexty.ai/api/files/p/6addf923ca61b98af27fa1bf",
+  "fileAssetId": "6addf923ca61b98af27fa1bf",
+  "catalogueAssetId": "6addfa88ca61b98af27fa6b6",
+  "sizeBytes": 190084,
+  "nodes": [
+   "hummingbird_rig"
+  ],
+  "triangles": 2514,
+  "clips": [
+   "idle",
+   "fly",
+   "feed"
+  ],
+  "allClips": [
+   "feed",
+   "fly",
+   "idle"
+  ],
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6addfa38ca61b98af27fa588",
+  "silhouetteUrl": "https://future-api.mexty.ai/api/files/p/6addfa3cca61b98af27fa5b8",
+  "tags": [
+   "pollinator",
+   "hummingbird",
+   "bird"
+  ],
+  "notes": "Real size (9 cm): scale x2-3. Visits foxglove (tubular flowers)."
+ },
+ {
+  "key": "pollinator:hoverfly",
+  "name": "Hoverfly",
+  "kind": "creature",
+  "phase": 3,
+  "url": "https://future-api.mexty.ai/api/files/p/6addf922ca61b98af27fa1b3",
+  "fileAssetId": "6addf922ca61b98af27fa1b3",
+  "catalogueAssetId": "6addfa89ca61b98af27fa6c1",
+  "sizeBytes": 139200,
+  "nodes": [
+   "hoverfly_rig"
+  ],
+  "triangles": 1874,
+  "clips": [
+   "idle",
+   "fly",
+   "feed"
+  ],
+  "allClips": [
+   "feed",
+   "fly",
+   "idle"
+  ],
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6addfa15ca61b98af27fa563",
+  "silhouetteUrl": "https://future-api.mexty.ai/api/files/p/6addfa3bca61b98af27fa5ac",
+  "tags": [
+   "pollinator",
+   "hoverfly",
+   "insect",
+   "fly"
+  ],
+  "notes": "Real size (1.1 cm): scale x5. Harmless wasp mimic. Visits lavender, clover."
+ },
+ {
+  "key": "pollinator:monarch",
+  "name": "Monarch butterfly",
+  "kind": "creature",
+  "phase": 3,
+  "url": "https://future-api.mexty.ai/api/files/p/6addf924ca61b98af27fa1cb",
+  "fileAssetId": "6addf924ca61b98af27fa1cb",
+  "catalogueAssetId": "6addfab6ca61b98af27fa709",
+  "sizeBytes": 183400,
+  "nodes": [
+   "monarch_rig"
+  ],
+  "triangles": 1430,
+  "clips": [
+   "idle",
+   "fly",
+   "feed",
+   "move",
+   "special"
+  ],
+  "allClips": [
+   "feed",
+   "fly",
+   "idle",
+   "move",
+   "special"
+  ],
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6addfa39ca61b98af27fa594",
+  "silhouetteUrl": "https://future-api.mexty.ai/api/files/p/6addfa3dca61b98af27fa5c4",
+  "tags": [
+   "pollinator",
+   "monarch",
+   "butterfly",
+   "migration"
+  ],
+  "notes": "Real size (10 cm span): scale x2-3. Feeds on milkweed. move = migration flap-glide, special = winter roost."
+ },
+ {
+  "key": "museum:building",
+  "name": "Explorers' Museum (timber and glass gallery)",
+  "kind": "model",
+  "phase": 3,
+  "url": "https://future-api.mexty.ai/api/files/p/6addfd3aca61b98af27fae5d",
+  "fileAssetId": "6addfd3aca61b98af27fae5d",
+  "catalogueAssetId": "6addfd56ca61b98af27faf4c",
+  "sizeBytes": 1755444,
+  "nodes": [
+   "museum_building"
+  ],
+  "triangles": 11650,
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6addfd41ca61b98af27faed2",
+  "tags": [
+   "museum",
+   "building",
+   "gallery",
+   "timber",
+   "glass"
+  ],
+  "notes": "12 x 8 m, floor at y=0.4, open front doorway + ramp. Empties spot_00..spot_11 (display spots, -Z facing in), entrance."
+ },
+ {
+  "key": "museum:frame",
+  "name": "Photo-card frame on a stand",
+  "kind": "model",
+  "phase": 3,
+  "url": "https://future-api.mexty.ai/api/files/p/6addf926ca61b98af27fa1e3",
+  "fileAssetId": "6addf926ca61b98af27fa1e3",
+  "catalogueAssetId": "6addfab7ca61b98af27fa72b",
+  "sizeBytes": 747176,
+  "nodes": [
+   "museum_frame"
+  ],
+  "triangles": 710,
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6addf9cfca61b98af27fa3d5",
+  "tags": [
+   "museum",
+   "frame",
+   "easel",
+   "photo"
+  ],
+  "notes": "Mesh photo_card (0-1 UV) = the card face: draw the photo card texture onto it."
+ },
+ {
+  "key": "museum:case",
+  "name": "Display case",
+  "kind": "model",
+  "phase": 3,
+  "url": "https://future-api.mexty.ai/api/files/p/6addf921ca61b98af27fa1a7",
+  "fileAssetId": "6addf921ca61b98af27fa1a7",
+  "catalogueAssetId": "6addfab8ca61b98af27fa73f",
+  "sizeBytes": 501004,
+  "nodes": [
+   "display_case"
+  ],
+  "triangles": 756,
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6addf9ceca61b98af27fa3c9",
+  "tags": [
+   "museum",
+   "display-case",
+   "glass"
+  ],
+  "notes": "Empty item_slot on the velvet (y=0.97)."
+ },
+ {
+  "key": "museum:plinth",
+  "name": "Display plinth",
+  "kind": "model",
+  "phase": 3,
+  "url": "https://future-api.mexty.ai/api/files/p/6addf953ca61b98af27fa257",
+  "fileAssetId": "6addf953ca61b98af27fa257",
+  "catalogueAssetId": "6addfab8ca61b98af27fa74d",
+  "sizeBytes": 367776,
+  "nodes": [
+   "plinth"
+  ],
+  "triangles": 494,
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6addf9d0ca61b98af27fa3e1",
+  "tags": [
+   "museum",
+   "plinth",
+   "pedestal"
+  ],
+  "notes": "Empty item_slot (y=1.03)."
+ },
+ {
+  "key": "museum:sticker-board",
+  "name": "Sticker board",
+  "kind": "model",
+  "phase": 3,
+  "url": "https://future-api.mexty.ai/api/files/p/6addfd3bca61b98af27fae75",
+  "fileAssetId": "6addfd3bca61b98af27fae75",
+  "catalogueAssetId": "6addfd56ca61b98af27faf57",
+  "sizeBytes": 1099760,
+  "nodes": [
+   "sticker_board"
+  ],
+  "triangles": 1060,
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6addfd42ca61b98af27faef4",
+  "tags": [
+   "museum",
+   "sticker",
+   "board",
+   "cork"
+  ],
+  "notes": "Empty sticker_area: cork centre, 1.1 x 0.62 m usable, board front faces +Z (glTF)."
+ },
+ {
+  "key": "sticker:wow",
+  "name": "Museum sticker: wow",
+  "kind": "image",
+  "phase": 3,
+  "url": "https://future-api.mexty.ai/api/files/p/6addfa43ca61b98af27fa60e",
+  "fileAssetId": "6addfa43ca61b98af27fa60e",
+  "catalogueAssetId": "6addfabaca61b98af27fa792",
+  "sizeBytes": 21554,
+  "width": 128,
+  "height": 128,
+  "tags": [
+   "sticker",
+   "museum",
+   "reaction",
+   "wow"
+  ],
+  "notes": "128 px PNG, transparent."
+ },
+ {
+  "key": "sticker:heart-leaf",
+  "name": "Museum sticker: heart-leaf",
+  "kind": "image",
+  "phase": 3,
+  "url": "https://future-api.mexty.ai/api/files/p/6addfa3fca61b98af27fa5dc",
+  "fileAssetId": "6addfa3fca61b98af27fa5dc",
+  "catalogueAssetId": "6addfabbca61b98af27fa79d",
+  "sizeBytes": 19638,
+  "width": 128,
+  "height": 128,
+  "tags": [
+   "sticker",
+   "museum",
+   "reaction",
+   "heart-leaf"
+  ],
+  "notes": "128 px PNG, transparent."
+ },
+ {
+  "key": "sticker:star",
+  "name": "Museum sticker: star",
+  "kind": "image",
+  "phase": 3,
+  "url": "https://future-api.mexty.ai/api/files/p/6addfa42ca61b98af27fa602",
+  "fileAssetId": "6addfa42ca61b98af27fa602",
+  "catalogueAssetId": "6addfabbca61b98af27fa7a8",
+  "sizeBytes": 17950,
+  "width": 128,
+  "height": 128,
+  "tags": [
+   "sticker",
+   "museum",
+   "reaction",
+   "star"
+  ],
+  "notes": "128 px PNG, transparent."
+ },
+ {
+  "key": "sticker:sparkle",
+  "name": "Museum sticker: sparkle",
+  "kind": "image",
+  "phase": 3,
+  "url": "https://future-api.mexty.ai/api/files/p/6addfa41ca61b98af27fa5f4",
+  "fileAssetId": "6addfa41ca61b98af27fa5f4",
+  "catalogueAssetId": "6addfabcca61b98af27fa7b3",
+  "sizeBytes": 17506,
+  "width": 128,
+  "height": 128,
+  "tags": [
+   "sticker",
+   "museum",
+   "reaction",
+   "sparkle"
+  ],
+  "notes": "128 px PNG, transparent."
+ },
+ {
+  "key": "sticker:laugh",
+  "name": "Museum sticker: laugh",
+  "kind": "image",
+  "phase": 3,
+  "url": "https://future-api.mexty.ai/api/files/p/6addfa40ca61b98af27fa5e8",
+  "fileAssetId": "6addfa40ca61b98af27fa5e8",
+  "catalogueAssetId": "6addfabcca61b98af27fa7be",
+  "sizeBytes": 20667,
+  "width": 128,
+  "height": 128,
+  "tags": [
+   "sticker",
+   "museum",
+   "reaction",
+   "laugh"
+  ],
+  "notes": "128 px PNG, transparent."
+ },
+ {
+  "key": "sticker:clap",
+  "name": "Museum sticker: clap",
+  "kind": "image",
+  "phase": 3,
+  "url": "https://future-api.mexty.ai/api/files/p/6addfa3eca61b98af27fa5d0",
+  "fileAssetId": "6addfa3eca61b98af27fa5d0",
+  "catalogueAssetId": "6addfabdca61b98af27fa7c9",
+  "sizeBytes": 22815,
+  "width": 128,
+  "height": 128,
+  "tags": [
+   "sticker",
+   "museum",
+   "reaction",
+   "clap"
+  ],
+  "notes": "128 px PNG, transparent."
+ },
+ {
+  "key": "bioblitz:banner",
+  "name": "BioBlitz event banner",
+  "kind": "model",
+  "phase": 3,
+  "url": "https://future-api.mexty.ai/api/files/p/6addfd39ca61b98af27fae51",
+  "fileAssetId": "6addfd39ca61b98af27fae51",
+  "catalogueAssetId": "6addfd57ca61b98af27faf62",
+  "sizeBytes": 887656,
+  "nodes": [
+   "bioblitz_banner"
+  ],
+  "triangles": 867,
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6addfd3cca61b98af27fae81",
+  "tags": [
+   "bioblitz",
+   "banner",
+   "event"
+  ],
+  "notes": "Mesh banner_cloth (0-1 UV) can take another texture."
+ },
+ {
+  "key": "bioblitz:totem",
+  "name": "BioBlitz progress totem",
+  "kind": "model",
+  "phase": 3,
+  "url": "https://future-api.mexty.ai/api/files/p/6addfd3aca61b98af27fae69",
+  "fileAssetId": "6addfd3aca61b98af27fae69",
+  "catalogueAssetId": "6addfd57ca61b98af27faf6d",
+  "sizeBytes": 849804,
+  "nodes": [
+   "progress_totem"
+  ],
+  "triangles": 1258,
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6addfd3dca61b98af27fae8d",
+  "tags": [
+   "bioblitz",
+   "totem",
+   "progress",
+   "glow"
+  ],
+  "notes": "Node totem_fill: emissive column, origin at bottom; set scale.y 0..1. Node totem_crown glows at 100%."
+ },
+ {
+  "key": "bioblitz:badge:leaf",
+  "name": "Team badge (green leaf)",
+  "kind": "model",
+  "phase": 3,
+  "url": "https://future-api.mexty.ai/api/files/p/6addf957ca61b98af27fa287",
+  "fileAssetId": "6addf957ca61b98af27fa287",
+  "catalogueAssetId": "6addfabaca61b98af27fa787",
+  "sizeBytes": 85100,
+  "nodes": [
+   "badge_leaf"
+  ],
+  "triangles": 262,
+  "kitNodes": [
+   "badge_leaf",
+   "badge_drop",
+   "badge_sun",
+   "badge_flower"
+  ],
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6addf990ca61b98af27fa2f9",
+  "tags": [
+   "bioblitz",
+   "badge",
+   "team",
+   "green"
+  ],
+  "notes": "Kit node; circle shape, Okabe-Ito colour, icon leaf."
+ },
+ {
+  "key": "bioblitz:badge:drop",
+  "name": "Team badge (sky-blue drop)",
+  "kind": "model",
+  "phase": 3,
+  "url": "https://future-api.mexty.ai/api/files/p/6addf957ca61b98af27fa287",
+  "fileAssetId": "6addf957ca61b98af27fa287",
+  "catalogueAssetId": "6addfabaca61b98af27fa787",
+  "sizeBytes": 85100,
+  "nodes": [
+   "badge_drop"
+  ],
+  "triangles": 262,
+  "kitNodes": [
+   "badge_leaf",
+   "badge_drop",
+   "badge_sun",
+   "badge_flower"
+  ],
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6addf98eca61b98af27fa2e1",
+  "tags": [
+   "bioblitz",
+   "badge",
+   "team",
+   "sky-blue"
+  ],
+  "notes": "Kit node; hexagon shape, Okabe-Ito colour, icon drop."
+ },
+ {
+  "key": "bioblitz:badge:sun",
+  "name": "Team badge (orange sun)",
+  "kind": "model",
+  "phase": 3,
+  "url": "https://future-api.mexty.ai/api/files/p/6addf957ca61b98af27fa287",
+  "fileAssetId": "6addf957ca61b98af27fa287",
+  "catalogueAssetId": "6addfabaca61b98af27fa787",
+  "sizeBytes": 85100,
+  "nodes": [
+   "badge_sun"
+  ],
+  "triangles": 262,
+  "kitNodes": [
+   "badge_leaf",
+   "badge_drop",
+   "badge_sun",
+   "badge_flower"
+  ],
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6addf991ca61b98af27fa305",
+  "tags": [
+   "bioblitz",
+   "badge",
+   "team",
+   "orange"
+  ],
+  "notes": "Kit node; shield shape, Okabe-Ito colour, icon sun."
+ },
+ {
+  "key": "bioblitz:badge:flower",
+  "name": "Team badge (pink-purple flower)",
+  "kind": "model",
+  "phase": 3,
+  "url": "https://future-api.mexty.ai/api/files/p/6addf957ca61b98af27fa287",
+  "fileAssetId": "6addf957ca61b98af27fa287",
+  "catalogueAssetId": "6addfabaca61b98af27fa787",
+  "sizeBytes": 85100,
+  "nodes": [
+   "badge_flower"
+  ],
+  "triangles": 262,
+  "kitNodes": [
+   "badge_leaf",
+   "badge_drop",
+   "badge_sun",
+   "badge_flower"
+  ],
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6addf98fca61b98af27fa2ed",
+  "tags": [
+   "bioblitz",
+   "badge",
+   "team",
+   "pink-purple"
+  ],
+  "notes": "Kit node; scallop shape, Okabe-Ito colour, icon flower."
+ },
+ {
+  "key": "craft:rome:kiln",
+  "name": "Lime kiln",
+  "kind": "model",
+  "phase": 4,
+  "url": "https://future-api.mexty.ai/api/files/p/6addff74ca61b98af27fb552",
+  "fileAssetId": "6addff74ca61b98af27fb552",
+  "catalogueAssetId": "6addffafca61b98af27fb585",
+  "sizeBytes": 907060,
+  "nodes": [
+   "lime_kiln"
+  ],
+  "triangles": 2389,
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6addff38ca61b98af27fb4ca",
+  "tags": [
+   "craft",
+   "rome",
+   "roman-concrete",
+   "kiln",
+   "chrono-quarter"
+  ]
+ },
+ {
+  "key": "craft:rome:trough",
+  "name": "Mixing trough",
+  "kind": "model",
+  "phase": 4,
+  "url": "https://future-api.mexty.ai/api/files/p/6addff77ca61b98af27fb56a",
+  "fileAssetId": "6addff77ca61b98af27fb56a",
+  "catalogueAssetId": "6addffafca61b98af27fb590",
+  "sizeBytes": 442352,
+  "nodes": [
+   "mixing_trough"
+  ],
+  "triangles": 648,
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6addff6eca61b98af27fb4fe",
+  "tags": [
+   "craft",
+   "rome",
+   "roman-concrete",
+   "trough",
+   "chrono-quarter"
+  ]
+ },
+ {
+  "key": "craft:rome:ash",
+  "name": "Volcanic ash pile (pozzolana)",
+  "kind": "model",
+  "phase": 4,
+  "url": "https://future-api.mexty.ai/api/files/p/6addff71ca61b98af27fb52e",
+  "fileAssetId": "6addff71ca61b98af27fb52e",
+  "catalogueAssetId": "6addffb0ca61b98af27fb59b",
+  "sizeBytes": 1114628,
+  "nodes": [
+   "ash_pile"
+  ],
+  "triangles": 1290,
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6addff34ca61b98af27fb49a",
+  "tags": [
+   "craft",
+   "rome",
+   "roman-concrete",
+   "ash",
+   "chrono-quarter"
+  ]
+ },
+ {
+  "key": "craft:rome:bucket",
+  "name": "Water bucket",
+  "kind": "model",
+  "phase": 4,
+  "url": "https://future-api.mexty.ai/api/files/p/6addff73ca61b98af27fb546",
+  "fileAssetId": "6addff73ca61b98af27fb546",
+  "catalogueAssetId": "6addffb0ca61b98af27fb5a6",
+  "sizeBytes": 478928,
+  "nodes": [
+   "water_bucket"
+  ],
+  "triangles": 742,
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6addff36ca61b98af27fb4b2",
+  "tags": [
+   "craft",
+   "rome",
+   "roman-concrete",
+   "bucket",
+   "chrono-quarter"
+  ]
+ },
+ {
+  "key": "craft:rome:mould",
+  "name": "Wooden mould",
+  "kind": "model",
+  "phase": 4,
+  "url": "https://future-api.mexty.ai/api/files/p/6addff75ca61b98af27fb55e",
+  "fileAssetId": "6addff75ca61b98af27fb55e",
+  "catalogueAssetId": "6addffb1ca61b98af27fb5b1",
+  "sizeBytes": 459904,
+  "nodes": [
+   "wooden_mould"
+  ],
+  "triangles": 436,
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6addff6dca61b98af27fb4f2",
+  "tags": [
+   "craft",
+   "rome",
+   "roman-concrete",
+   "mould",
+   "chrono-quarter"
+  ]
+ },
+ {
+  "key": "craft:rome:block",
+  "name": "Roman concrete block",
+  "kind": "model",
+  "phase": 4,
+  "url": "https://future-api.mexty.ai/api/files/p/6addff72ca61b98af27fb53a",
+  "fileAssetId": "6addff72ca61b98af27fb53a",
+  "catalogueAssetId": "6addffb1ca61b98af27fb5bc",
+  "sizeBytes": 49804,
+  "nodes": [
+   "concrete_block"
+  ],
+  "triangles": 540,
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6addff35ca61b98af27fb4a6",
+  "tags": [
+   "craft",
+   "rome",
+   "roman-concrete",
+   "block",
+   "chrono-quarter"
+  ]
+ },
+ {
+  "key": "craft:edo:bark",
+  "name": "Kozo bark bundle",
+  "kind": "model",
+  "phase": 4,
+  "url": "https://future-api.mexty.ai/api/files/p/6addfe8fca61b98af27fb31b",
+  "fileAssetId": "6addfe8fca61b98af27fb31b",
+  "catalogueAssetId": "6addffb2ca61b98af27fb5c7",
+  "sizeBytes": 112300,
+  "nodes": [
+   "kozo_bark_bundle"
+  ],
+  "triangles": 480,
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6addfefdca61b98af27fb3d5",
+  "tags": [
+   "craft",
+   "edo",
+   "washi",
+   "bark",
+   "chrono-quarter"
+  ]
+ },
+ {
+  "key": "craft:edo:pot",
+  "name": "Boiling pot",
+  "kind": "model",
+  "phase": 4,
+  "url": "https://future-api.mexty.ai/api/files/p/6addfe90ca61b98af27fb333",
+  "fileAssetId": "6addfe90ca61b98af27fb333",
+  "catalogueAssetId": "6addffb2ca61b98af27fb5d2",
+  "sizeBytes": 536364,
+  "nodes": [
+   "boiling_pot"
+  ],
+  "triangles": 1558,
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6addff00ca61b98af27fb3f9",
+  "tags": [
+   "craft",
+   "edo",
+   "washi",
+   "pot",
+   "chrono-quarter"
+  ]
+ },
+ {
+  "key": "craft:edo:vat",
+  "name": "Vat with paper pulp",
+  "kind": "model",
+  "phase": 4,
+  "url": "https://future-api.mexty.ai/api/files/p/6addfe93ca61b98af27fb357",
+  "fileAssetId": "6addfe93ca61b98af27fb357",
+  "catalogueAssetId": "6addffb3ca61b98af27fb5dd",
+  "sizeBytes": 474344,
+  "nodes": [
+   "pulp_vat"
+  ],
+  "triangles": 574,
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6addff03ca61b98af27fb41d",
+  "tags": [
+   "craft",
+   "edo",
+   "washi",
+   "vat",
+   "chrono-quarter"
+  ]
+ },
+ {
+  "key": "craft:edo:screen",
+  "name": "Bamboo screen (sugeta)",
+  "kind": "model",
+  "phase": 4,
+  "url": "https://future-api.mexty.ai/api/files/p/6addfe91ca61b98af27fb33f",
+  "fileAssetId": "6addfe91ca61b98af27fb33f",
+  "catalogueAssetId": "6addffb3ca61b98af27fb5e8",
+  "sizeBytes": 536172,
+  "nodes": [
+   "sugeta_screen"
+  ],
+  "triangles": 524,
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6addff01ca61b98af27fb405",
+  "tags": [
+   "craft",
+   "edo",
+   "washi",
+   "screen",
+   "chrono-quarter"
+  ]
+ },
+ {
+  "key": "craft:edo:board",
+  "name": "Drying board",
+  "kind": "model",
+  "phase": 4,
+  "url": "https://future-api.mexty.ai/api/files/p/6addfe90ca61b98af27fb327",
+  "fileAssetId": "6addfe90ca61b98af27fb327",
+  "catalogueAssetId": "6addffb3ca61b98af27fb5f3",
+  "sizeBytes": 466792,
+  "nodes": [
+   "drying_board"
+  ],
+  "triangles": 180,
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6addfefeca61b98af27fb3e1",
+  "tags": [
+   "craft",
+   "edo",
+   "washi",
+   "board",
+   "chrono-quarter"
+  ]
+ },
+ {
+  "key": "craft:edo:sheet",
+  "name": "Washi sheet",
+  "kind": "model",
+  "phase": 4,
+  "url": "https://future-api.mexty.ai/api/files/p/6addfe92ca61b98af27fb34b",
+  "fileAssetId": "6addfe92ca61b98af27fb34b",
+  "catalogueAssetId": "6addffb4ca61b98af27fb5fe",
+  "sizeBytes": 53272,
+  "nodes": [
+   "washi_sheet"
+  ],
+  "triangles": 288,
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6addff02ca61b98af27fb411",
+  "tags": [
+   "craft",
+   "edo",
+   "washi",
+   "sheet",
+   "chrono-quarter"
+  ]
+ },
+ {
+  "key": "craft:maya:pod",
+  "name": "Cacao pod (closed)",
+  "kind": "model",
+  "phase": 4,
+  "url": "https://future-api.mexty.ai/api/files/p/6addff6eca61b98af27fb50a",
+  "fileAssetId": "6addff6eca61b98af27fb50a",
+  "catalogueAssetId": "6addffd0ca61b98af27fb60a",
+  "sizeBytes": 179700,
+  "nodes": [
+   "cacao_pod_closed"
+  ],
+  "triangles": 576,
+  "kitNodes": [
+   "cacao_pod_closed",
+   "cacao_pod_open"
+  ],
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6addff32ca61b98af27fb476",
+  "tags": [
+   "craft",
+   "maya",
+   "cacao",
+   "pod"
+  ]
+ },
+ {
+  "key": "craft:maya:pod-open",
+  "name": "Cacao pod (open, beans)",
+  "kind": "model",
+  "phase": 4,
+  "url": "https://future-api.mexty.ai/api/files/p/6addff6eca61b98af27fb50a",
+  "fileAssetId": "6addff6eca61b98af27fb50a",
+  "catalogueAssetId": "6addffd0ca61b98af27fb60a",
+  "sizeBytes": 179700,
+  "nodes": [
+   "cacao_pod_open"
+  ],
+  "triangles": 4088,
+  "kitNodes": [
+   "cacao_pod_closed",
+   "cacao_pod_open"
+  ],
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6addff31ca61b98af27fb46a",
+  "tags": [
+   "craft",
+   "maya",
+   "cacao",
+   "pod"
+  ]
+ },
+ {
+  "key": "craft:maya:metate",
+  "name": "Metate grinding stone with mano",
+  "kind": "model",
+  "phase": 4,
+  "url": "https://future-api.mexty.ai/api/files/p/6addfe95ca61b98af27fb36f",
+  "fileAssetId": "6addfe95ca61b98af27fb36f",
+  "catalogueAssetId": "6addffd0ca61b98af27fb615",
+  "sizeBytes": 626864,
+  "nodes": [
+   "metate_mano"
+  ],
+  "triangles": 1524,
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6addff30ca61b98af27fb45e",
+  "tags": [
+   "craft",
+   "maya",
+   "cacao",
+   "metate",
+   "chrono-quarter"
+  ]
+ },
+ {
+  "key": "craft:maya:pot",
+  "name": "Clay pot",
+  "kind": "model",
+  "phase": 4,
+  "url": "https://future-api.mexty.ai/api/files/p/6addff6fca61b98af27fb516",
+  "fileAssetId": "6addff6fca61b98af27fb516",
+  "catalogueAssetId": "6addffd0ca61b98af27fb620",
+  "sizeBytes": 121056,
+  "nodes": [
+   "clay_pot"
+  ],
+  "triangles": 1206,
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6addff32ca61b98af27fb482",
+  "tags": [
+   "craft",
+   "maya",
+   "cacao",
+   "pot",
+   "chrono-quarter"
+  ]
+ },
+ {
+  "key": "craft:maya:vessel",
+  "name": "Tall pouring vessel with foam",
+  "kind": "model",
+  "phase": 4,
+  "url": "https://future-api.mexty.ai/api/files/p/6addff70ca61b98af27fb522",
+  "fileAssetId": "6addff70ca61b98af27fb522",
+  "catalogueAssetId": "6addffd1ca61b98af27fb62b",
+  "sizeBytes": 128284,
+  "nodes": [
+   "pouring_vessel"
+  ],
+  "triangles": 1806,
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6addff34ca61b98af27fb48e",
+  "tags": [
+   "craft",
+   "maya",
+   "cacao",
+   "vessel",
+   "chrono-quarter"
+  ]
+ },
+ {
+  "key": "craft:maya:cup",
+  "name": "Frothy cacao cup",
+  "kind": "model",
+  "phase": 4,
+  "url": "https://future-api.mexty.ai/api/files/p/6addfe94ca61b98af27fb363",
+  "fileAssetId": "6addfe94ca61b98af27fb363",
+  "catalogueAssetId": "6addffd1ca61b98af27fb636",
+  "sizeBytes": 99960,
+  "nodes": [
+   "frothy_cup"
+  ],
+  "triangles": 1354,
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6addff2eca61b98af27fb446",
+  "tags": [
+   "craft",
+   "maya",
+   "cacao",
+   "cup",
+   "chrono-quarter"
+  ]
+ },
+ {
+  "key": "craft:rome:display",
+  "name": "Roman concrete block (museum display)",
+  "kind": "model",
+  "phase": 4,
+  "url": "https://future-api.mexty.ai/api/files/p/6addfe8dca61b98af27fb303",
+  "fileAssetId": "6addfe8dca61b98af27fb303",
+  "catalogueAssetId": "6addffd2ca61b98af27fb641",
+  "sizeBytes": 701852,
+  "nodes": [
+   "display_rome_block"
+  ],
+  "triangles": 242,
+  "kitNodes": [
+   "display_rome_block",
+   "display_edo_sheet",
+   "display_maya_cup"
+  ],
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6addff37ca61b98af27fb4be",
+  "tags": [
+   "craft",
+   "museum",
+   "display",
+   "rome"
+  ],
+  "notes": "Kit node: the finished object on a small labelled stand (icon plate, no text)."
+ },
+ {
+  "key": "craft:edo:display",
+  "name": "Washi sheet (museum display)",
+  "kind": "model",
+  "phase": 4,
+  "url": "https://future-api.mexty.ai/api/files/p/6addfe8dca61b98af27fb303",
+  "fileAssetId": "6addfe8dca61b98af27fb303",
+  "catalogueAssetId": "6addffd2ca61b98af27fb641",
+  "sizeBytes": 701852,
+  "nodes": [
+   "display_edo_sheet"
+  ],
+  "triangles": 318,
+  "kitNodes": [
+   "display_rome_block",
+   "display_edo_sheet",
+   "display_maya_cup"
+  ],
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6addfeffca61b98af27fb3ed",
+  "tags": [
+   "craft",
+   "museum",
+   "display",
+   "edo"
+  ],
+  "notes": "Kit node: the finished object on a small labelled stand (icon plate, no text)."
+ },
+ {
+  "key": "craft:maya:display",
+  "name": "Frothy cacao cup (museum display)",
+  "kind": "model",
+  "phase": 4,
+  "url": "https://future-api.mexty.ai/api/files/p/6addfe8dca61b98af27fb303",
+  "fileAssetId": "6addfe8dca61b98af27fb303",
+  "catalogueAssetId": "6addffd2ca61b98af27fb641",
+  "sizeBytes": 701852,
+  "nodes": [
+   "display_maya_cup"
+  ],
+  "triangles": 2064,
+  "kitNodes": [
+   "display_rome_block",
+   "display_edo_sheet",
+   "display_maya_cup"
+  ],
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6addff2fca61b98af27fb452",
+  "tags": [
+   "craft",
+   "museum",
+   "display",
+   "maya"
+  ],
+  "notes": "Kit node: the finished object on a small labelled stand (icon plate, no text)."
+ },
+ {
+  "key": "courier:crate:small",
+  "name": "Parcel crate (small)",
+  "kind": "model",
+  "phase": 4,
+  "url": "https://future-api.mexty.ai/api/files/p/6addfe8bca61b98af27fb2eb",
+  "fileAssetId": "6addfe8bca61b98af27fb2eb",
+  "catalogueAssetId": "6addffd2ca61b98af27fb64c",
+  "sizeBytes": 756600,
+  "nodes": [
+   "crate_small"
+  ],
+  "triangles": 1434,
+  "kitNodes": [
+   "crate_small",
+   "crate_medium",
+   "crate_large"
+  ],
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6addfefbca61b98af27fb3bd",
+  "tags": [
+   "courier",
+   "crate",
+   "parcel",
+   "small",
+   "skyharbor"
+  ],
+  "notes": "Kit node; icon labels only (this-way-up, fragile, parts, seeds)."
+ },
+ {
+  "key": "courier:crate:medium",
+  "name": "Parcel crate (medium)",
+  "kind": "model",
+  "phase": 4,
+  "url": "https://future-api.mexty.ai/api/files/p/6addfe8bca61b98af27fb2eb",
+  "fileAssetId": "6addfe8bca61b98af27fb2eb",
+  "catalogueAssetId": "6addffd2ca61b98af27fb64c",
+  "sizeBytes": 756600,
+  "nodes": [
+   "crate_medium"
+  ],
+  "triangles": 1434,
+  "kitNodes": [
+   "crate_small",
+   "crate_medium",
+   "crate_large"
+  ],
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6addfefaca61b98af27fb3b1",
+  "tags": [
+   "courier",
+   "crate",
+   "parcel",
+   "medium",
+   "skyharbor"
+  ],
+  "notes": "Kit node; icon labels only (this-way-up, fragile, parts, seeds)."
+ },
+ {
+  "key": "courier:crate:large",
+  "name": "Parcel crate (large)",
+  "kind": "model",
+  "phase": 4,
+  "url": "https://future-api.mexty.ai/api/files/p/6addfe8bca61b98af27fb2eb",
+  "fileAssetId": "6addfe8bca61b98af27fb2eb",
+  "catalogueAssetId": "6addffd2ca61b98af27fb64c",
+  "sizeBytes": 756600,
+  "nodes": [
+   "crate_large"
+  ],
+  "triangles": 1434,
+  "kitNodes": [
+   "crate_small",
+   "crate_medium",
+   "crate_large"
+  ],
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6addfef9ca61b98af27fb3a5",
+  "tags": [
+   "courier",
+   "crate",
+   "parcel",
+   "large",
+   "skyharbor"
+  ],
+  "notes": "Kit node; icon labels only (this-way-up, fragile, parts, seeds)."
+ },
+ {
+  "key": "courier:board",
+  "name": "Delivery board",
+  "kind": "model",
+  "phase": 4,
+  "url": "https://future-api.mexty.ai/api/files/p/6addfe8eca61b98af27fb30f",
+  "fileAssetId": "6addfe8eca61b98af27fb30f",
+  "catalogueAssetId": "6addffd3ca61b98af27fb657",
+  "sizeBytes": 495252,
+  "nodes": [
+   "delivery_board"
+  ],
+  "triangles": 980,
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6addfef8ca61b98af27fb399",
+  "tags": [
+   "courier",
+   "board",
+   "delivery",
+   "skyharbor"
+  ],
+  "notes": "Mesh board_face (0-1 UV) can show live jobs."
+ },
+ {
+  "key": "courier:robot2",
+  "name": "Courier robot (second friendly robot)",
+  "kind": "creature",
+  "phase": 4,
+  "url": "https://future-api.mexty.ai/api/files/p/6addfe8cca61b98af27fb2f7",
+  "fileAssetId": "6addfe8cca61b98af27fb2f7",
+  "catalogueAssetId": "6addffd3ca61b98af27fb662",
+  "sizeBytes": 275376,
+  "nodes": [
+   "courier_robot_rig"
+  ],
+  "triangles": 3538,
+  "clips": [
+   "idle",
+   "move",
+   "special"
+  ],
+  "allClips": [
+   "idle",
+   "move",
+   "special"
+  ],
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6addfefcca61b98af27fb3c9",
+  "silhouetteUrl": "https://future-api.mexty.ai/api/files/p/6addff78ca61b98af27fb576",
+  "tags": [
+   "courier",
+   "robot",
+   "skyharbor",
+   "friendly"
+  ],
+  "notes": "Hover-bot with a cargo basket; special = happy delivery spin. Bone basket can carry a crate (child node)."
+ },
+ {
+  "key": "season:monarch",
+  "name": "Monarch migration (autumn)",
+  "kind": "creature",
+  "phase": 5,
+  "url": "https://future-api.mexty.ai/api/files/p/6addf924ca61b98af27fa1cb",
+  "fileAssetId": "6addf924ca61b98af27fa1cb",
+  "catalogueAssetId": "6addfab6ca61b98af27fa709",
+  "sizeBytes": 183400,
+  "nodes": [
+   "monarch_rig"
+  ],
+  "triangles": 1430,
+  "clips": [
+   "idle",
+   "move",
+   "special"
+  ],
+  "allClips": [
+   "feed",
+   "fly",
+   "idle",
+   "move",
+   "special"
+  ],
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6ade02f6ca61b98af27fb7da",
+  "silhouetteUrl": "https://future-api.mexty.ai/api/files/p/6ade02c3ca61b98af27fb72d",
+  "tags": [
+   "season",
+   "autumn",
+   "monarch",
+   "migration"
+  ],
+  "notes": "Same model as pollinator:monarch - instance it for a flock (move = migration glide, special = roost)."
+ },
+ {
+  "key": "season:robin",
+  "name": "European robin (winter)",
+  "kind": "creature",
+  "phase": 5,
+  "url": "https://future-api.mexty.ai/api/files/p/6ade02bfca61b98af27fb6fd",
+  "fileAssetId": "6ade02bfca61b98af27fb6fd",
+  "catalogueAssetId": "6ade0319ca61b98af27fb828",
+  "sizeBytes": 225812,
+  "nodes": [
+   "robin_rig"
+  ],
+  "triangles": 2407,
+  "clips": [
+   "idle",
+   "move",
+   "special"
+  ],
+  "allClips": [
+   "idle",
+   "move",
+   "special"
+  ],
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6ade02f7ca61b98af27fb7e6",
+  "silhouetteUrl": "https://future-api.mexty.ai/api/files/p/6ade02c4ca61b98af27fb739",
+  "tags": [
+   "season",
+   "winter",
+   "robin",
+   "bird"
+  ],
+  "notes": "Real size 14 cm: scale x2. special = singing."
+ },
+ {
+  "key": "season:swallow",
+  "name": "Barn swallow (spring)",
+  "kind": "creature",
+  "phase": 5,
+  "url": "https://future-api.mexty.ai/api/files/p/6ade02c1ca61b98af27fb715",
+  "fileAssetId": "6ade02c1ca61b98af27fb715",
+  "catalogueAssetId": "6ade0319ca61b98af27fb833",
+  "sizeBytes": 166080,
+  "nodes": [
+   "swallow_rig"
+  ],
+  "triangles": 2204,
+  "clips": [
+   "idle",
+   "move",
+   "special"
+  ],
+  "allClips": [
+   "idle",
+   "move",
+   "special"
+  ],
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6ade02faca61b98af27fb816",
+  "silhouetteUrl": "https://future-api.mexty.ai/api/files/p/6ade02c5ca61b98af27fb745",
+  "tags": [
+   "season",
+   "spring",
+   "swallow",
+   "bird",
+   "migration"
+  ],
+  "notes": "Real size 18 cm: scale x2. move = flight loop, special = swoop."
+ },
+ {
+  "key": "season:cicada",
+  "name": "Cicada (summer)",
+  "kind": "creature",
+  "phase": 5,
+  "url": "https://future-api.mexty.ai/api/files/p/6ade02bbca61b98af27fb6cd",
+  "fileAssetId": "6ade02bbca61b98af27fb6cd",
+  "catalogueAssetId": "6ade031aca61b98af27fb83e",
+  "sizeBytes": 142532,
+  "nodes": [
+   "cicada_rig"
+  ],
+  "triangles": 1996,
+  "clips": [
+   "idle",
+   "move",
+   "special"
+  ],
+  "allClips": [
+   "idle",
+   "move",
+   "special"
+  ],
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6ade02f2ca61b98af27fb7aa",
+  "silhouetteUrl": "https://future-api.mexty.ai/api/files/p/6ade02c2ca61b98af27fb721",
+  "tags": [
+   "season",
+   "summer",
+   "cicada",
+   "insect"
+  ],
+  "notes": "Real size 4 cm: scale x3. special = singing (tymbal buzz)."
+ },
+ {
+  "key": "season:leaf-pile:0",
+  "name": "Autumn leaf pile 1",
+  "kind": "model",
+  "phase": 5,
+  "url": "https://future-api.mexty.ai/api/files/p/6ade02bdca61b98af27fb6e5",
+  "fileAssetId": "6ade02bdca61b98af27fb6e5",
+  "catalogueAssetId": "6ade031aca61b98af27fb849",
+  "sizeBytes": 869988,
+  "nodes": [
+   "leaf_pile_0"
+  ],
+  "triangles": 2985,
+  "kitNodes": [
+   "leaf_pile_0",
+   "leaf_pile_1",
+   "leaf_pile_2"
+  ],
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6ade02f3ca61b98af27fb7b6",
+  "tags": [
+   "season",
+   "autumn",
+   "leaves",
+   "set-dressing"
+  ]
+ },
+ {
+  "key": "season:leaf-pile:1",
+  "name": "Autumn leaf pile 2",
+  "kind": "model",
+  "phase": 5,
+  "url": "https://future-api.mexty.ai/api/files/p/6ade02bdca61b98af27fb6e5",
+  "fileAssetId": "6ade02bdca61b98af27fb6e5",
+  "catalogueAssetId": "6ade031aca61b98af27fb849",
+  "sizeBytes": 869988,
+  "nodes": [
+   "leaf_pile_1"
+  ],
+  "triangles": 4626,
+  "kitNodes": [
+   "leaf_pile_0",
+   "leaf_pile_1",
+   "leaf_pile_2"
+  ],
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6ade02f4ca61b98af27fb7c2",
+  "tags": [
+   "season",
+   "autumn",
+   "leaves",
+   "set-dressing"
+  ]
+ },
+ {
+  "key": "season:leaf-pile:2",
+  "name": "Autumn leaf pile 3",
+  "kind": "model",
+  "phase": 5,
+  "url": "https://future-api.mexty.ai/api/files/p/6ade02bdca61b98af27fb6e5",
+  "fileAssetId": "6ade02bdca61b98af27fb6e5",
+  "catalogueAssetId": "6ade031aca61b98af27fb849",
+  "sizeBytes": 869988,
+  "nodes": [
+   "leaf_pile_2"
+  ],
+  "triangles": 6525,
+  "kitNodes": [
+   "leaf_pile_0",
+   "leaf_pile_1",
+   "leaf_pile_2"
+  ],
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6ade02f5ca61b98af27fb7ce",
+  "tags": [
+   "season",
+   "autumn",
+   "leaves",
+   "set-dressing"
+  ]
+ },
+ {
+  "key": "season:snow-cap:small",
+  "name": "Snow cap for rocks (small)",
+  "kind": "model",
+  "phase": 5,
+  "url": "https://future-api.mexty.ai/api/files/p/6ade02c0ca61b98af27fb709",
+  "fileAssetId": "6ade02c0ca61b98af27fb709",
+  "catalogueAssetId": "6ade031aca61b98af27fb854",
+  "sizeBytes": 166284,
+  "nodes": [
+   "snow_cap_small"
+  ],
+  "triangles": 1560,
+  "kitNodes": [
+   "snow_cap_small",
+   "snow_cap_medium",
+   "snow_cap_large"
+  ],
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6ade02faca61b98af27fb80a",
+  "tags": [
+   "season",
+   "winter",
+   "snow",
+   "set-dressing"
+  ],
+  "notes": "Sits on top of a rock: scale to the rock's top."
+ },
+ {
+  "key": "season:snow-cap:medium",
+  "name": "Snow cap for rocks (medium)",
+  "kind": "model",
+  "phase": 5,
+  "url": "https://future-api.mexty.ai/api/files/p/6ade02c0ca61b98af27fb709",
+  "fileAssetId": "6ade02c0ca61b98af27fb709",
+  "catalogueAssetId": "6ade031aca61b98af27fb854",
+  "sizeBytes": 166284,
+  "nodes": [
+   "snow_cap_medium"
+  ],
+  "triangles": 1760,
+  "kitNodes": [
+   "snow_cap_small",
+   "snow_cap_medium",
+   "snow_cap_large"
+  ],
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6ade02f9ca61b98af27fb7fe",
+  "tags": [
+   "season",
+   "winter",
+   "snow",
+   "set-dressing"
+  ],
+  "notes": "Sits on top of a rock: scale to the rock's top."
+ },
+ {
+  "key": "season:snow-cap:large",
+  "name": "Snow cap for rocks (large)",
+  "kind": "model",
+  "phase": 5,
+  "url": "https://future-api.mexty.ai/api/files/p/6ade02c0ca61b98af27fb709",
+  "fileAssetId": "6ade02c0ca61b98af27fb709",
+  "catalogueAssetId": "6ade031aca61b98af27fb854",
+  "sizeBytes": 166284,
+  "nodes": [
+   "snow_cap_large"
+  ],
+  "triangles": 1960,
+  "kitNodes": [
+   "snow_cap_small",
+   "snow_cap_medium",
+   "snow_cap_large"
+  ],
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6ade02f8ca61b98af27fb7f2",
+  "tags": [
+   "season",
+   "winter",
+   "snow",
+   "set-dressing"
+  ],
+  "notes": "Sits on top of a rock: scale to the rock's top."
+ },
+ {
+  "key": "season:blossom:0",
+  "name": "Spring blossom cluster 1",
+  "kind": "model",
+  "phase": 5,
+  "url": "https://future-api.mexty.ai/api/files/p/6ade02bbca61b98af27fb6c1",
+  "fileAssetId": "6ade02bbca61b98af27fb6c1",
+  "catalogueAssetId": "6ade031bca61b98af27fb85f",
+  "sizeBytes": 928044,
+  "nodes": [
+   "blossom_0"
+  ],
+  "triangles": 4455,
+  "kitNodes": [
+   "blossom_0",
+   "blossom_1",
+   "blossom_2"
+  ],
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6ade02efca61b98af27fb786",
+  "tags": [
+   "season",
+   "spring",
+   "blossom",
+   "set-dressing"
+  ],
+  "notes": "Hang on branches; blossom_2 is fallen petals on the ground."
+ },
+ {
+  "key": "season:blossom:1",
+  "name": "Spring blossom cluster 2",
+  "kind": "model",
+  "phase": 5,
+  "url": "https://future-api.mexty.ai/api/files/p/6ade02bbca61b98af27fb6c1",
+  "fileAssetId": "6ade02bbca61b98af27fb6c1",
+  "catalogueAssetId": "6ade031bca61b98af27fb85f",
+  "sizeBytes": 928044,
+  "nodes": [
+   "blossom_1"
+  ],
+  "triangles": 6071,
+  "kitNodes": [
+   "blossom_0",
+   "blossom_1",
+   "blossom_2"
+  ],
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6ade02f0ca61b98af27fb792",
+  "tags": [
+   "season",
+   "spring",
+   "blossom",
+   "set-dressing"
+  ],
+  "notes": "Hang on branches; blossom_2 is fallen petals on the ground."
+ },
+ {
+  "key": "season:blossom:2",
+  "name": "Spring blossom cluster 3",
+  "kind": "model",
+  "phase": 5,
+  "url": "https://future-api.mexty.ai/api/files/p/6ade02bbca61b98af27fb6c1",
+  "fileAssetId": "6ade02bbca61b98af27fb6c1",
+  "catalogueAssetId": "6ade031bca61b98af27fb85f",
+  "sizeBytes": 928044,
+  "nodes": [
+   "blossom_2"
+  ],
+  "triangles": 2376,
+  "kitNodes": [
+   "blossom_0",
+   "blossom_1",
+   "blossom_2"
+  ],
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6ade02f1ca61b98af27fb79e",
+  "tags": [
+   "season",
+   "spring",
+   "blossom",
+   "set-dressing"
+  ],
+  "notes": "Hang on branches; blossom_2 is fallen petals on the ground."
+ },
+ {
+  "key": "photo:board",
+  "name": "Photo challenge board",
+  "kind": "model",
+  "phase": 5,
+  "url": "https://future-api.mexty.ai/api/files/p/6ade02beca61b98af27fb6f1",
+  "fileAssetId": "6ade02beca61b98af27fb6f1",
+  "catalogueAssetId": "6ade031bca61b98af27fb86a",
+  "sizeBytes": 513304,
+  "nodes": [
+   "photo_board"
+  ],
+  "triangles": 1102,
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6ade02c7ca61b98af27fb75d",
+  "tags": [
+   "photo",
+   "challenge",
+   "board",
+   "weekly"
+  ],
+  "notes": "Mesh board_face (0-1 UV) can show this week's theme."
+ },
+ {
+  "key": "expedition:flag",
+  "name": "Class expedition flag post",
+  "kind": "model",
+  "phase": 5,
+  "url": "https://future-api.mexty.ai/api/files/p/6ade02bcca61b98af27fb6d9",
+  "fileAssetId": "6ade02bcca61b98af27fb6d9",
+  "catalogueAssetId": "6ade031cca61b98af27fb875",
+  "sizeBytes": 911252,
+  "nodes": [
+   "flag_cloth_rig"
+  ],
+  "triangles": 937,
+  "clips": [
+   "wave"
+  ],
+  "allClips": [
+   "wave"
+  ],
+  "iconUrl": "https://future-api.mexty.ai/api/files/p/6ade02c6ca61b98af27fb751",
+  "tags": [
+   "class",
+   "expedition",
+   "flag"
+  ],
+  "notes": "Mesh flag_cloth (0-1 UV); clip wave."
+ },
+ {
+  "key": "DONE"
+ }
+]

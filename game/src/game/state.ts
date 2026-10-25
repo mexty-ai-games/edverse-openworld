@@ -1,5 +1,6 @@
 // The live state of the grove, shared by the 3D scene (read every frame) and the HUD (read a few
 // times a second). Plain mutable data: no React re-render per frame.
+import type * as THREE from "three";
 import { SPAWN } from "./layout";
 
 /** Hub kinds ("lantern" | "stall" | "telescope") or a district's own, "<district>:<what>" (handled by its Activity). */
@@ -46,6 +47,20 @@ export interface Me {
   phraseAt: number;
 }
 
+/** A living creature in the active zone, as the Field Camera and the hand lens see it (written by its scene every frame). */
+export interface LiveCreature {
+  key: string;
+  /** Field Guide species id. */
+  species: string;
+  /** The creature's group in the scene: its world position is the centre of its bounding sphere. */
+  obj: THREE.Object3D;
+  /** Centre offset (local, metres) and radius of its bounding sphere. */
+  cy: number;
+  radius: number;
+  /** What it is doing now: idle | move | feed | special | flee | hide */
+  behaviour: string;
+}
+
 export interface Game {
   mode: "start" | "play";
   paused: boolean;
@@ -64,7 +79,23 @@ export interface Game {
    * The follow camera, orbiting the explorer: yaw turns around them (0 = looking north, -Z),
    * pitch tilts between low (0) and high (1), zoom scales the distance. Dragging the scene sets them.
    */
-  cam: { yaw: number; pitch: number; zoom: number };
+  cam: {
+    yaw: number;
+    pitch: number;
+    zoom: number;
+    /** Field of view (degrees): the camera's zoom slider narrows it. */
+    fov: number;
+    /** Field Camera viewfinder: over-the-shoulder view, the explorer tiptoes. */
+    aim: boolean;
+    /** Hand lens close-up: the camera looks at this point from near the explorer. */
+    focus: { x: number; y: number; z: number; d: number } | null;
+  };
+  /** The 3D view, for the Field Camera (projection of creatures) — set by the explorer's camera rig. */
+  view: { camera: THREE.PerspectiveCamera | null; width: number; height: number };
+  /** Creatures of the active zone (the scenes register and remove theirs). */
+  creatures: LiveCreature[];
+  /** The explorer's speed over the last frames (m/s), for shy creatures. */
+  speed: number;
   /** Bumped when peers join or leave, so the scene re-renders its list. */
   peerVersion: number;
   emote(kind: string): void;
@@ -88,7 +119,10 @@ export function createGame(): Game {
     targets: [],
     focus: null,
     walkTo: null,
-    cam: { yaw: 0, pitch: 0.5, zoom: 1 },
+    cam: { yaw: 0, pitch: 0.5, zoom: 1, fov: 50, aim: false, focus: null },
+    view: { camera: null, width: 1, height: 1 },
+    creatures: [],
+    speed: 0,
     peerVersion: 0,
     onSay: null,
     emote(kind: string) {

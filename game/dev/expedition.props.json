@@ -1,0 +1,1826 @@
+{
+ "quests": [
+  {
+   "id": "three-sparks",
+   "icon": "✨",
+   "title": {
+    "en": "Three sparks",
+    "fr": "Trois étincelles"
+   },
+   "intro": "greet",
+   "done": "",
+   "giveAtStart": [],
+   "reward": [
+    "camera",
+    "guide"
+   ],
+   "steps": [
+    {
+     "id": "find-sparks",
+     "kind": "find",
+     "target": "spark",
+     "count": 3,
+     "zone": "idea-grove",
+     "icon": "✨",
+     "text": {
+      "en": "Find the glowing seeds {n}/{count}",
+      "fr": "Trouve les graines qui brillent {n}/{count}"
+     },
+     "line": "sparks"
+    },
+    {
+     "id": "back-to-keeper",
+     "kind": "talk",
+     "target": "keeper",
+     "count": 1,
+     "zone": "idea-grove",
+     "icon": "🧓",
+     "text": {
+      "en": "Go back to the Grove Keeper",
+      "fr": "Retourne voir le Gardien du bosquet"
+     },
+     "line": "back",
+     "dialogue": "sparksDone"
+    }
+   ]
+  },
+  {
+   "id": "first-photo",
+   "icon": "📷",
+   "title": {
+    "en": "Your first photo",
+    "fr": "Ta première photo"
+   },
+   "intro": "frog",
+   "done": "firstPhoto",
+   "giveAtStart": [],
+   "reward": [],
+   "steps": [
+    {
+     "id": "photo-frog",
+     "kind": "photo",
+     "target": "tree-frog",
+     "count": 1,
+     "zone": "",
+     "icon": "🐸",
+     "text": {
+      "en": "Photograph the tree frog on the Biome Frontier stall",
+      "fr": "Photographie la rainette sur l'étal de la Frontière des biomes"
+     },
+     "line": "frog"
+    }
+   ]
+  },
+  {
+   "id": "into-the-frontier",
+   "icon": "🌿",
+   "title": {
+    "en": "Into the Biome Frontier",
+    "fr": "En route pour la Frontière des biomes"
+   },
+   "intro": "frontier",
+   "done": "",
+   "giveAtStart": [],
+   "reward": [],
+   "steps": [
+    {
+     "id": "go-frontier",
+     "kind": "visit",
+     "target": "biome-frontier",
+     "count": 1,
+     "zone": "",
+     "icon": "🚪",
+     "text": {
+      "en": "Walk into the Biome Frontier stall",
+      "fr": "Entre dans l'étal de la Frontière des biomes"
+     },
+     "line": "frontier"
+    },
+    {
+     "id": "photo-three",
+     "kind": "photo",
+     "target": "any",
+     "count": 3,
+     "zone": "biome-frontier",
+     "icon": "📷",
+     "text": {
+      "en": "Photograph 3 different creatures {n}/{count}",
+      "fr": "Photographie 3 créatures différentes {n}/{count}"
+     },
+     "line": "photos3"
+    }
+   ]
+  },
+  {
+   "id": "look-closer",
+   "icon": "🔍",
+   "title": {
+    "en": "Look closer",
+    "fr": "Regarde de plus près"
+   },
+   "intro": "lens",
+   "done": "allDone",
+   "giveAtStart": [
+    "lens"
+   ],
+   "reward": [],
+   "steps": [
+    {
+     "id": "identify-two",
+     "kind": "identify",
+     "target": "any",
+     "count": 2,
+     "zone": "",
+     "icon": "🔍",
+     "text": {
+      "en": "Look closely at 2 creatures with the lens {n}/{count}",
+      "fr": "Observe 2 créatures à la loupe {n}/{count}"
+     },
+     "line": "lensStep"
+    }
+   ]
+  }
+ ],
+ "expedition": {
+  "ui": {
+   "next": {
+    "en": "Next",
+    "fr": "Suivant"
+   },
+   "close": {
+    "en": "Close",
+    "fr": "Fermer"
+   },
+   "listen": {
+    "en": "Listen",
+    "fr": "Écouter"
+   },
+   "talk": {
+    "en": "Talk",
+    "fr": "Parler"
+   },
+   "pickUp": {
+    "en": "Pick up",
+    "fr": "Ramasser"
+   },
+   "sparkName": {
+    "en": "Glowing seed",
+    "fr": "Graine lumineuse"
+   },
+   "sparkFound": {
+    "en": "Seed {n} of {total}!",
+    "fr": "Graine {n} sur {total} !"
+   },
+   "questDone": {
+    "en": "Quest complete!",
+    "fr": "Quête terminée !"
+   },
+   "newTool": {
+    "en": "New tool: {tool}",
+    "fr": "Nouvel outil : {tool}"
+   },
+   "allDone": {
+    "en": "Expedition complete!",
+    "fr": "Expédition terminée !"
+   },
+   "camera": {
+    "en": "Field Camera",
+    "fr": "Appareil photo"
+   },
+   "cameraHint": {
+    "en": "Put a creature in the ring, then press the button.",
+    "fr": "Mets une créature dans le cercle, puis appuie sur le bouton."
+   },
+   "zoom": {
+    "en": "Zoom",
+    "fr": "Zoom"
+   },
+   "shutter": {
+    "en": "Take the photo",
+    "fr": "Prendre la photo"
+   },
+   "noCreature": {
+    "en": "No creature in this photo. Put one in the ring and try again!",
+    "fr": "Pas de créature sur cette photo. Mets-en une dans le cercle et réessaie !"
+   },
+   "tipCentre": {
+    "en": "Tip: put it in the middle of the ring.",
+    "fr": "Astuce : mets-la au milieu du cercle."
+   },
+   "tipCloser": {
+    "en": "Tip: walk a little closer, slowly, or zoom in.",
+    "fr": "Astuce : approche-toi doucement, ou zoome."
+   },
+   "tipFill": {
+    "en": "Tip: it is too big! Step back or zoom out a little.",
+    "fr": "Astuce : elle est trop grande ! Recule ou dézoome un peu."
+   },
+   "tipBehaviour": {
+    "en": "Tip: wait and watch. A photo while it eats or does something special is worth more!",
+    "fr": "Astuce : attends et observe. Une photo pendant qu'elle mange ou fait quelque chose de spécial vaut plus !"
+   },
+   "perfect": {
+    "en": "A perfect photo!",
+    "fr": "Une photo parfaite !"
+   },
+   "starsLabel": {
+    "en": "{n} of 3 stars",
+    "fr": "{n} étoiles sur 3"
+   },
+   "photoBest": {
+    "en": "New best photo!",
+    "fr": "Nouvelle meilleure photo !"
+   },
+   "photoKept": {
+    "en": "Your best photo of it has {n} stars.",
+    "fr": "Ta meilleure photo d'elle a {n} étoiles."
+   },
+   "newPage": {
+    "en": "New in your Field Guide!",
+    "fr": "Nouveau dans ton Guide de terrain !"
+   },
+   "tooShy": {
+    "en": "It ran off! Creatures hide when you rush at them. Walk slowly.",
+    "fr": "Elle s'est sauvée ! Les créatures se cachent si tu cours vers elles. Marche doucement."
+   },
+   "guide": {
+    "en": "Field Guide",
+    "fr": "Guide de terrain"
+   },
+   "guideProgress": {
+    "en": "{n} of {total} facts found",
+    "fr": "{n} faits trouvés sur {total}"
+   },
+   "guideChip": {
+    "en": "Field Guide {n}/{total}",
+    "fr": "Guide {n}/{total}"
+   },
+   "unknown": {
+    "en": "Not found yet",
+    "fr": "Pas encore trouvée"
+   },
+   "stageSeen": {
+    "en": "Seen",
+    "fr": "Vue"
+   },
+   "stagePhoto": {
+    "en": "Photographed",
+    "fr": "Photographiée"
+   },
+   "stageId": {
+    "en": "Identified",
+    "fr": "Identifiée"
+   },
+   "stageBehaviour": {
+    "en": "Behaviour seen",
+    "fr": "Comportement observé"
+   },
+   "lockedSeen": {
+    "en": "Find this creature to start its page.",
+    "fr": "Trouve cette créature pour commencer sa page."
+   },
+   "lockedPhoto": {
+    "en": "Take its photo to learn more.",
+    "fr": "Prends-la en photo pour en savoir plus."
+   },
+   "lockedId": {
+    "en": "Look at it with the hand lens.",
+    "fr": "Observe-la avec la loupe."
+   },
+   "lockedBehaviour": {
+    "en": "Photograph it while it eats or does something special.",
+    "fr": "Photographie-la pendant qu'elle mange ou fait quelque chose de spécial."
+   },
+   "source": {
+    "en": "Source: {source}",
+    "fr": "Source : {source}"
+   },
+   "bestPhoto": {
+    "en": "Best photo",
+    "fr": "Meilleure photo"
+   },
+   "noPhoto": {
+    "en": "No photo yet",
+    "fr": "Pas encore de photo"
+   },
+   "back": {
+    "en": "Back",
+    "fr": "Retour"
+   },
+   "lens": {
+    "en": "Hand lens",
+    "fr": "Loupe"
+   },
+   "lensHint": {
+    "en": "Tap a creature near you to look closely.",
+    "fr": "Touche une créature près de toi pour l'observer de près."
+   },
+   "lensFar": {
+    "en": "Get a little closer to look with the lens.",
+    "fr": "Approche-toi un peu pour regarder à la loupe."
+   },
+   "lensNone": {
+    "en": "No creature near you. Walk up to one, slowly.",
+    "fr": "Pas de créature près de toi. Approche-toi doucement d'une créature."
+   },
+   "lensTitle": {
+    "en": "Look closely",
+    "fr": "Regarde de près"
+   },
+   "lensCompare": {
+    "en": "Look at it, and at the drawing.",
+    "fr": "Regarde-la, et regarde le dessin."
+   },
+   "lensCheck": {
+    "en": "Check",
+    "fr": "Vérifier"
+   },
+   "lensRight": {
+    "en": "Well observed! It is {group}.",
+    "fr": "Bien observé ! C'est {group}."
+   },
+   "lensWrong": {
+    "en": "Not quite. Look again, slowly.",
+    "fr": "Pas tout à fait. Regarde encore, doucement."
+   },
+   "lensCountHint": {
+    "en": "Tap + once for each one you see.",
+    "fr": "Touche + une fois pour chacun que tu vois."
+   },
+   "yes": {
+    "en": "Yes",
+    "fr": "Oui"
+   },
+   "no": {
+    "en": "No",
+    "fr": "Non"
+   },
+   "undo": {
+    "en": "Undo",
+    "fr": "Annuler"
+   },
+   "doingIdle": {
+    "en": "resting",
+    "fr": "se repose"
+   },
+   "doingMove": {
+    "en": "moving",
+    "fr": "se déplace"
+   },
+   "doingHide": {
+    "en": "hiding",
+    "fr": "se cache"
+   },
+   "stationIntro": {
+    "en": "Find and photograph the creatures of the rainforest, the canyon and the coast, and dig for fossils in the canyon.",
+    "fr": "Trouve et photographie les créatures de la forêt, du canyon et de la côte, et fouille les fossiles dans le canyon."
+   }
+  },
+  "keeper": {
+   "name": {
+    "en": "Grove Keeper",
+    "fr": "Gardien du bosquet"
+   },
+   "modelUrl": "https://future-api.mexty.ai/api/files/p/6addfc60ca61b98af27faaff",
+   "portraitUrl": "https://future-api.mexty.ai/api/files/p/6addfcfcca61b98af27fadb8",
+   "icon": "🧓",
+   "lines": [
+    {
+     "id": "greet1",
+     "anim": "wave",
+     "text": {
+      "en": "Hello, young explorer! I am the Grove Keeper.",
+      "fr": "Bonjour, jeune explorateur ! Je suis le Gardien du bosquet."
+     },
+     "audio": {
+      "en": "https://future-api.mexty.ai/api/files/p/6addf554ca61b98af27f9cbc",
+      "fr": "https://future-api.mexty.ai/api/files/p/6addf557ca61b98af27f9cca"
+     }
+    },
+    {
+     "id": "greet2",
+     "anim": "talk",
+     "text": {
+      "en": "Explorers learn by looking closely at living things.",
+      "fr": "Les explorateurs apprennent en regardant de près les êtres vivants."
+     },
+     "audio": {
+      "en": "https://future-api.mexty.ai/api/files/p/6addf558ca61b98af27f9cd5",
+      "fr": "https://future-api.mexty.ai/api/files/p/6addf559ca61b98af27f9ce0"
+     }
+    },
+    {
+     "id": "sparks",
+     "anim": "talk",
+     "text": {
+      "en": "Find three glowing seeds around the Grove. Drag to look around: one is behind you!",
+      "fr": "Trouve trois graines qui brillent dans le bosquet. Fais glisser pour regarder autour : il y en a une derrière toi !"
+     },
+     "audio": {
+      "en": "https://future-api.mexty.ai/api/files/p/6addf55aca61b98af27f9ceb",
+      "fr": "https://future-api.mexty.ai/api/files/p/6addf55bca61b98af27f9cf6"
+     }
+    },
+    {
+     "id": "back",
+     "anim": "wave",
+     "text": {
+      "en": "You found them all! Come back to me, by the Idea Tree.",
+      "fr": "Tu les as toutes trouvées ! Reviens me voir, près de l'Arbre à idées."
+     },
+     "audio": {
+      "en": "https://future-api.mexty.ai/api/files/p/6addf55bca61b98af27f9d01",
+      "fr": "https://future-api.mexty.ai/api/files/p/6addf55cca61b98af27f9d0c"
+     }
+    },
+    {
+     "id": "sparksDone1",
+     "anim": "talk",
+     "text": {
+      "en": "Three sparks! You looked everywhere, like a real explorer.",
+      "fr": "Trois étincelles ! Tu as regardé partout, comme un vrai explorateur."
+     },
+     "audio": {
+      "en": "https://future-api.mexty.ai/api/files/p/6addf55dca61b98af27f9d17",
+      "fr": "https://future-api.mexty.ai/api/files/p/6addf55eca61b98af27f9d22"
+     }
+    },
+    {
+     "id": "sparksDone2",
+     "anim": "wave",
+     "text": {
+      "en": "Here is your Field Camera, and your Field Guide.",
+      "fr": "Voici ton appareil photo, et ton Guide de terrain."
+     },
+     "audio": {
+      "en": "https://future-api.mexty.ai/api/files/p/6addf55fca61b98af27f9d2d",
+      "fr": "https://future-api.mexty.ai/api/files/p/6addf560ca61b98af27f9d38"
+     }
+    },
+    {
+     "id": "frog",
+     "anim": "talk",
+     "text": {
+      "en": "Look! A tree frog is sitting on the Biome Frontier stall. Take its photo!",
+      "fr": "Regarde ! Une rainette est assise sur l'étal de la Frontière des biomes. Prends-la en photo !"
+     },
+     "audio": {
+      "en": "https://future-api.mexty.ai/api/files/p/6addf561ca61b98af27f9d43",
+      "fr": "https://future-api.mexty.ai/api/files/p/6addf562ca61b98af27f9d4e"
+     }
+    },
+    {
+     "id": "firstPhoto",
+     "anim": "wave",
+     "text": {
+      "en": "Your first photo! Its page in your Field Guide is filling in.",
+      "fr": "Ta première photo ! Sa page dans ton Guide de terrain se remplit."
+     },
+     "audio": {
+      "en": "https://future-api.mexty.ai/api/files/p/6addf563ca61b98af27f9d59",
+      "fr": "https://future-api.mexty.ai/api/files/p/6addf564ca61b98af27f9d64"
+     }
+    },
+    {
+     "id": "frontier",
+     "anim": "talk",
+     "text": {
+      "en": "Now walk into the Biome Frontier, through its stall.",
+      "fr": "Maintenant, entre dans la Frontière des biomes, par son étal."
+     },
+     "audio": {
+      "en": "https://future-api.mexty.ai/api/files/p/6addf564ca61b98af27f9d6f",
+      "fr": "https://future-api.mexty.ai/api/files/p/6addf565ca61b98af27f9d7a"
+     }
+    },
+    {
+     "id": "photos3",
+     "anim": "talk",
+     "text": {
+      "en": "Photograph three different creatures there. Walk slowly, or they hide!",
+      "fr": "Photographie trois créatures différentes. Marche doucement, sinon elles se cachent !"
+     },
+     "audio": {
+      "en": "https://future-api.mexty.ai/api/files/p/6addf566ca61b98af27f9d85",
+      "fr": "https://future-api.mexty.ai/api/files/p/6addf567ca61b98af27f9d90"
+     }
+    },
+    {
+     "id": "lens",
+     "anim": "wave",
+     "text": {
+      "en": "Great photos! Here is a hand lens. Tap a creature near you and count what you see.",
+      "fr": "Superbes photos ! Voici une loupe. Touche une créature près de toi et compte ce que tu vois."
+     },
+     "audio": {
+      "en": "https://future-api.mexty.ai/api/files/p/6addf568ca61b98af27f9d9b",
+      "fr": "https://future-api.mexty.ai/api/files/p/6addf569ca61b98af27f9da6"
+     }
+    },
+    {
+     "id": "lensStep",
+     "anim": "talk",
+     "text": {
+      "en": "Look closely at two creatures with your hand lens.",
+      "fr": "Observe deux créatures de près avec ta loupe."
+     },
+     "audio": {
+      "en": "https://future-api.mexty.ai/api/files/p/6addf56aca61b98af27f9db1",
+      "fr": "https://future-api.mexty.ai/api/files/p/6addf56bca61b98af27f9dbc"
+     }
+    },
+    {
+     "id": "allDone",
+     "anim": "wave",
+     "text": {
+      "en": "Wonderful! You are a real field explorer now. Keep filling your Field Guide!",
+      "fr": "Merveilleux ! Tu es un vrai explorateur de terrain. Continue à remplir ton Guide !"
+     },
+     "audio": {
+      "en": "https://future-api.mexty.ai/api/files/p/6addf56cca61b98af27f9dc7",
+      "fr": "https://future-api.mexty.ai/api/files/p/6addf56dca61b98af27f9dd2"
+     }
+    },
+    {
+     "id": "welcomeBack",
+     "anim": "wave",
+     "text": {
+      "en": "Welcome back, explorer!",
+      "fr": "Bon retour, explorateur !"
+     },
+     "audio": {
+      "en": "https://future-api.mexty.ai/api/files/p/6addf56eca61b98af27f9ddd",
+      "fr": "https://future-api.mexty.ai/api/files/p/6addf56eca61b98af27f9de8"
+     }
+    }
+   ],
+   "dialogues": [
+    {
+     "id": "greet",
+     "lines": [
+      "greet1",
+      "greet2",
+      "sparks"
+     ]
+    },
+    {
+     "id": "sparksDone",
+     "lines": [
+      "sparksDone1",
+      "sparksDone2"
+     ]
+    },
+    {
+     "id": "frog",
+     "lines": [
+      "frog"
+     ]
+    },
+    {
+     "id": "firstPhoto",
+     "lines": [
+      "firstPhoto"
+     ]
+    },
+    {
+     "id": "frontier",
+     "lines": [
+      "frontier"
+     ]
+    },
+    {
+     "id": "lens",
+     "lines": [
+      "lens"
+     ]
+    },
+    {
+     "id": "allDone",
+     "lines": [
+      "allDone"
+     ]
+    }
+   ]
+  },
+  "tools": [
+   {
+    "id": "camera",
+    "icon": "📷",
+    "iconUrl": "https://future-api.mexty.ai/api/files/p/6addfcb6ca61b98af27facd9",
+    "modelUrl": "https://future-api.mexty.ai/api/files/p/6addfc63ca61b98af27fab17",
+    "name": {
+     "en": "Field Camera",
+     "fr": "Appareil photo de terrain"
+    },
+    "about": {
+     "en": "Photograph creatures. Calm, well-framed photos of creatures doing something are the best.",
+     "fr": "Photographie les créatures. Les meilleures photos sont calmes, bien cadrées, et montrent la créature en action."
+    }
+   },
+   {
+    "id": "guide",
+    "icon": "📖",
+    "iconUrl": "https://future-api.mexty.ai/api/files/p/6addfcb8ca61b98af27facf1",
+    "modelUrl": "https://future-api.mexty.ai/api/files/p/6addfc65ca61b98af27fab2f",
+    "name": {
+     "en": "Field Guide",
+     "fr": "Guide de terrain"
+    },
+    "about": {
+     "en": "A page for every creature. Each thing you find out fills it in.",
+     "fr": "Une page par créature. Chaque découverte la remplit."
+    }
+   },
+   {
+    "id": "lens",
+    "icon": "🔍",
+    "iconUrl": "https://future-api.mexty.ai/api/files/p/6addfcb7ca61b98af27face5",
+    "modelUrl": "https://future-api.mexty.ai/api/files/p/6addfc64ca61b98af27fab23",
+    "name": {
+     "en": "Hand lens",
+     "fr": "Loupe"
+    },
+    "about": {
+     "en": "Look closely and count legs, wings and arms to find out what a creature is.",
+     "fr": "Regarde de près et compte les pattes, les ailes et les bras pour savoir ce qu'est une créature."
+    }
+   }
+  ],
+  "lensFeatures": [
+   {
+    "id": "legs",
+    "kind": "count",
+    "icon": "🦵",
+    "max": 10,
+    "question": {
+     "en": "How many legs?",
+     "fr": "Combien de pattes ?"
+    },
+    "tip": {
+     "en": "Count the legs slowly, one by one: look under the body too.",
+     "fr": "Compte les pattes doucement, une par une : regarde aussi sous le corps."
+    }
+   },
+   {
+    "id": "wings",
+    "kind": "count",
+    "icon": "🪽",
+    "max": 6,
+    "question": {
+     "en": "How many wings?",
+     "fr": "Combien d'ailes ?"
+    },
+    "tip": {
+     "en": "Look at both sides: wings come in pairs.",
+     "fr": "Regarde des deux côtés : les ailes vont par paires."
+    }
+   },
+   {
+    "id": "antennae",
+    "kind": "count",
+    "icon": "📡",
+    "max": 4,
+    "question": {
+     "en": "How many feelers (antennae) on its head?",
+     "fr": "Combien d'antennes sur sa tête ?"
+    },
+    "tip": {
+     "en": "Look at the top of its head.",
+     "fr": "Regarde le haut de sa tête."
+    }
+   },
+   {
+    "id": "arms",
+    "kind": "count",
+    "icon": "💪",
+    "max": 10,
+    "question": {
+     "en": "How many arms?",
+     "fr": "Combien de bras ?"
+    },
+    "tip": {
+     "en": "Start from one arm and go round, counting each one.",
+     "fr": "Pars d'un bras et fais le tour en les comptant."
+    }
+   },
+   {
+    "id": "flippers",
+    "kind": "count",
+    "icon": "🌊",
+    "max": 6,
+    "question": {
+     "en": "How many flippers?",
+     "fr": "Combien de nageoires-palettes ?"
+    },
+    "tip": {
+     "en": "Look at the front and at the back of its body.",
+     "fr": "Regarde devant et derrière son corps."
+    }
+   },
+   {
+    "id": "shell",
+    "kind": "yesno",
+    "icon": "🐚",
+    "max": 1,
+    "question": {
+     "en": "Does it have a hard shell?",
+     "fr": "A-t-elle une carapace dure ?"
+    },
+    "tip": {
+     "en": "Look at its back: is it hard and round, or soft?",
+     "fr": "Regarde son dos : est-il dur et bombé, ou mou ?"
+    }
+   },
+   {
+    "id": "spines",
+    "kind": "yesno",
+    "icon": "🌵",
+    "max": 1,
+    "question": {
+     "en": "Does it have spikes or spines?",
+     "fr": "A-t-elle des piquants ?"
+    },
+    "tip": {
+     "en": "Look at its edges and its head closely.",
+     "fr": "Regarde bien ses bords et sa tête."
+    }
+   },
+   {
+    "id": "fur",
+    "kind": "yesno",
+    "icon": "🧶",
+    "max": 1,
+    "question": {
+     "en": "Does it have fur?",
+     "fr": "A-t-elle des poils ?"
+    },
+    "tip": {
+     "en": "Is its body covered in soft hair?",
+     "fr": "Son corps est-il couvert de poils doux ?"
+    }
+   },
+   {
+    "id": "fins",
+    "kind": "yesno",
+    "icon": "🐟",
+    "max": 1,
+    "question": {
+     "en": "Does it have fins?",
+     "fr": "A-t-elle des nageoires ?"
+    },
+    "tip": {
+     "en": "Look at its back and its tail.",
+     "fr": "Regarde son dos et sa queue."
+    }
+   },
+   {
+    "id": "horns",
+    "kind": "yesno",
+    "icon": "🐏",
+    "max": 1,
+    "question": {
+     "en": "Does it have horns?",
+     "fr": "A-t-elle des cornes ?"
+    },
+    "tip": {
+     "en": "Look at the top of its head.",
+     "fr": "Regarde le haut de sa tête."
+    }
+   }
+  ],
+  "species": [
+   {
+    "id": "toucan",
+    "biome": "rainforest",
+    "icon": "🐦",
+    "name": {
+     "en": "Toucan",
+     "fr": "Toucan"
+    },
+    "group": {
+     "en": "a bird",
+     "fr": "un oiseau"
+    },
+    "iconUrl": "https://future-api.mexty.ai/api/files/p/6addfc8eca61b98af27fabf4",
+    "silhouetteUrl": "https://future-api.mexty.ai/api/files/p/6addfcd6ca61b98af27fad19",
+    "modelUrl": "https://future-api.mexty.ai/api/files/p/6addfb0bca61b98af27fa8c4",
+    "scale": 1.3,
+    "feed": {
+     "en": "pecking fruit",
+     "fr": "picore un fruit"
+    },
+    "special": {
+     "en": "flying",
+     "fr": "vole"
+    },
+    "facts": [
+     {
+      "text": {
+       "en": "Toucans live in the tropical forests of Central and South America.",
+       "fr": "Les toucans vivent dans les forêts tropicales d'Amérique centrale et du Sud."
+      },
+      "easy": {
+       "en": "It lives in warm, rainy forests.",
+       "fr": "Il vit dans les forêts chaudes et pluvieuses."
+      },
+      "source": "Encyclopaedia Britannica, “Toucan”"
+     },
+     {
+      "text": {
+       "en": "Its huge beak is very light: inside, it is full of tiny air spaces.",
+       "fr": "Son énorme bec est très léger : à l'intérieur, il est plein de petits espaces d'air."
+      },
+      "easy": {
+       "en": "Its big beak is very light.",
+       "fr": "Son grand bec est très léger."
+      },
+      "source": "Smithsonian's National Zoo, “Toco toucan”"
+     },
+     {
+      "text": {
+       "en": "It is a bird: two legs, two wings and feathers. Two toes point forward and two point back, to grip branches.",
+       "fr": "C'est un oiseau : deux pattes, deux ailes et des plumes. Deux doigts vont vers l'avant et deux vers l'arrière, pour tenir les branches."
+      },
+      "easy": {
+       "en": "It is a bird: 2 legs, 2 wings.",
+       "fr": "C'est un oiseau : 2 pattes, 2 ailes."
+      },
+      "source": "Smithsonian's National Zoo, “Toco toucan”"
+     },
+     {
+      "text": {
+       "en": "It picks fruit with the tip of its beak, then tosses its head back to swallow it.",
+       "fr": "Il cueille un fruit du bout du bec, puis rejette la tête en arrière pour l'avaler."
+      },
+      "easy": {
+       "en": "It picks fruit with its beak.",
+       "fr": "Il cueille des fruits avec son bec."
+      },
+      "source": "San Diego Zoo Wildlife Alliance, “Toucan”"
+     }
+    ],
+    "lens": [
+     {
+      "feature": "legs",
+      "value": 2
+     },
+     {
+      "feature": "wings",
+      "value": 2
+     }
+    ],
+    "factAudio": {
+     "en": "https://future-api.mexty.ai/api/files/p/6addf579ca61b98af27f9df4",
+     "fr": "https://future-api.mexty.ai/api/files/p/6addf579ca61b98af27f9dff"
+    }
+   },
+   {
+    "id": "tree-frog",
+    "biome": "rainforest",
+    "icon": "🐸",
+    "name": {
+     "en": "Red-eyed tree frog",
+     "fr": "Rainette aux yeux rouges"
+    },
+    "group": {
+     "en": "an amphibian",
+     "fr": "un amphibien"
+    },
+    "iconUrl": "https://future-api.mexty.ai/api/files/p/6addfc8fca61b98af27fac00",
+    "silhouetteUrl": "https://future-api.mexty.ai/api/files/p/6addfcd7ca61b98af27fad25",
+    "modelUrl": "https://future-api.mexty.ai/api/files/p/6addfb0cca61b98af27fa8d0",
+    "scale": 1.6,
+    "feed": {
+     "en": "catching an insect",
+     "fr": "attrape un insecte"
+    },
+    "special": {
+     "en": "calling",
+     "fr": "coasse"
+    },
+    "facts": [
+     {
+      "text": {
+       "en": "Red-eyed tree frogs live in the rainforests of Central America, near ponds and streams.",
+       "fr": "Les rainettes aux yeux rouges vivent dans les forêts tropicales d'Amérique centrale, près des mares et des ruisseaux."
+      },
+      "easy": {
+       "en": "It lives near water in the rainforest.",
+       "fr": "Elle vit près de l'eau, dans la forêt tropicale."
+      },
+      "source": "Smithsonian's National Zoo, “Red-eyed tree frog”"
+     },
+     {
+      "text": {
+       "en": "Its big red eyes can startle a hungry animal, which gives the frog time to jump away.",
+       "fr": "Ses grands yeux rouges peuvent surprendre un animal affamé : la grenouille a le temps de sauter loin."
+      },
+      "easy": {
+       "en": "Its red eyes surprise other animals.",
+       "fr": "Ses yeux rouges surprennent les autres animaux."
+      },
+      "source": "Smithsonian's National Zoo, “Red-eyed tree frog”"
+     },
+     {
+      "text": {
+       "en": "It is an amphibian: four legs, no shell, and moist skin. Sticky toe pads help it climb leaves.",
+       "fr": "C'est un amphibien : quatre pattes, pas de carapace et une peau humide. Ses doigts collants l'aident à grimper sur les feuilles."
+      },
+      "easy": {
+       "en": "It has 4 legs and sticky toes.",
+       "fr": "Elle a 4 pattes et des doigts collants."
+      },
+      "source": "Encyclopaedia Britannica, “Tree frog”"
+     },
+     {
+      "text": {
+       "en": "It sleeps under a leaf in the day and hunts insects such as crickets and moths at night.",
+       "fr": "Elle dort sous une feuille le jour et chasse la nuit des insectes comme les grillons et les papillons de nuit."
+      },
+      "easy": {
+       "en": "It hunts insects at night.",
+       "fr": "Elle chasse des insectes la nuit."
+      },
+      "source": "Smithsonian's National Zoo, “Red-eyed tree frog”"
+     }
+    ],
+    "lens": [
+     {
+      "feature": "legs",
+      "value": 4
+     },
+     {
+      "feature": "shell",
+      "value": 0
+     }
+    ],
+    "factAudio": {
+     "en": "https://future-api.mexty.ai/api/files/p/6addf57aca61b98af27f9e0a",
+     "fr": "https://future-api.mexty.ai/api/files/p/6addf57bca61b98af27f9e15"
+    }
+   },
+   {
+    "id": "morpho",
+    "biome": "rainforest",
+    "icon": "🦋",
+    "name": {
+     "en": "Blue morpho butterfly",
+     "fr": "Papillon morpho bleu"
+    },
+    "group": {
+     "en": "an insect",
+     "fr": "un insecte"
+    },
+    "iconUrl": "https://future-api.mexty.ai/api/files/p/6addfc8fca61b98af27fac0c",
+    "silhouetteUrl": "https://future-api.mexty.ai/api/files/p/6addfcd8ca61b98af27fad31",
+    "modelUrl": "https://future-api.mexty.ai/api/files/p/6addfb0eca61b98af27fa8dc",
+    "scale": 1.4,
+    "feed": {
+     "en": "drinking fruit juice",
+     "fr": "boit le jus d'un fruit"
+    },
+    "special": {
+     "en": "fluttering",
+     "fr": "volette"
+    },
+    "facts": [
+     {
+      "text": {
+       "en": "Blue morphos live in the rainforests of Central and South America.",
+       "fr": "Les morphos bleus vivent dans les forêts tropicales d'Amérique centrale et du Sud."
+      },
+      "easy": {
+       "en": "It lives in the rainforest.",
+       "fr": "Il vit dans la forêt tropicale."
+      },
+      "source": "Encyclopaedia Britannica, “Morpho”"
+     },
+     {
+      "text": {
+       "en": "Its wings are not painted blue: tiny scales bounce the light so they shine.",
+       "fr": "Ses ailes ne sont pas peintes en bleu : de minuscules écailles renvoient la lumière et les font briller."
+      },
+      "easy": {
+       "en": "Its wings shine blue in the light.",
+       "fr": "Ses ailes brillent en bleu dans la lumière."
+      },
+      "source": "Natural History Museum, London, “Blue morpho”"
+     },
+     {
+      "text": {
+       "en": "It is an insect: six legs, two antennae and four wings.",
+       "fr": "C'est un insecte : six pattes, deux antennes et quatre ailes."
+      },
+      "easy": {
+       "en": "It is an insect: 4 wings.",
+       "fr": "C'est un insecte : 4 ailes."
+      },
+      "source": "Encyclopaedia Britannica, “Insect”"
+     },
+     {
+      "text": {
+       "en": "It drinks the juice of ripe, fallen fruit through a long, tube-like mouth called a proboscis.",
+       "fr": "Il boit le jus des fruits mûrs tombés au sol avec une longue bouche en forme de tube, la trompe."
+      },
+      "easy": {
+       "en": "It drinks fruit juice with a long tube.",
+       "fr": "Il boit le jus des fruits avec un long tube."
+      },
+      "source": "Smithsonian's National Museum of Natural History, “Blue morpho”"
+     }
+    ],
+    "lens": [
+     {
+      "feature": "wings",
+      "value": 4
+     },
+     {
+      "feature": "antennae",
+      "value": 2
+     }
+    ],
+    "factAudio": {
+     "en": "https://future-api.mexty.ai/api/files/p/6addf57cca61b98af27f9e20",
+     "fr": "https://future-api.mexty.ai/api/files/p/6addf57dca61b98af27f9e2b"
+    }
+   },
+   {
+    "id": "sloth",
+    "biome": "rainforest",
+    "icon": "🦥",
+    "name": {
+     "en": "Sloth",
+     "fr": "Paresseux"
+    },
+    "group": {
+     "en": "a mammal",
+     "fr": "un mammifère"
+    },
+    "iconUrl": "https://future-api.mexty.ai/api/files/p/6addfc90ca61b98af27fac18",
+    "silhouetteUrl": "https://future-api.mexty.ai/api/files/p/6addfcd9ca61b98af27fad3d",
+    "modelUrl": "https://future-api.mexty.ai/api/files/p/6addfb08ca61b98af27fa892",
+    "scale": 1,
+    "feed": {
+     "en": "chewing leaves",
+     "fr": "mâche des feuilles"
+    },
+    "special": {
+     "en": "climbing slowly",
+     "fr": "grimpe lentement"
+    },
+    "facts": [
+     {
+      "text": {
+       "en": "Sloths live high in the rainforest trees of Central and South America.",
+       "fr": "Les paresseux vivent en haut des arbres des forêts tropicales d'Amérique centrale et du Sud."
+      },
+      "easy": {
+       "en": "It lives high up in the trees.",
+       "fr": "Il vit en haut des arbres."
+      },
+      "source": "Smithsonian's National Zoo, “Two-toed sloth”"
+     },
+     {
+      "text": {
+       "en": "Tiny green algae grow in its fur, which helps it hide among the leaves.",
+       "fr": "De minuscules algues vertes poussent dans sa fourrure, ce qui l'aide à se cacher dans les feuilles."
+      },
+      "easy": {
+       "en": "Its fur can turn a little green.",
+       "fr": "Sa fourrure peut devenir un peu verte."
+      },
+      "source": "Encyclopaedia Britannica, “Sloth”"
+     },
+     {
+      "text": {
+       "en": "It is a mammal: it has fur, and four limbs with long curved claws for hanging from branches.",
+       "fr": "C'est un mammifère : il a des poils, et quatre membres avec de longues griffes courbes pour se suspendre aux branches."
+      },
+      "easy": {
+       "en": "It has fur and 4 legs with claws.",
+       "fr": "Il a des poils et 4 pattes à griffes."
+      },
+      "source": "Encyclopaedia Britannica, “Sloth”"
+     },
+     {
+      "text": {
+       "en": "It eats leaves and moves very slowly to save energy. It comes down from its tree only about once a week, to go to the toilet!",
+       "fr": "Il mange des feuilles et bouge très lentement pour économiser son énergie. Il ne descend de son arbre qu'environ une fois par semaine, pour aller aux toilettes !"
+      },
+      "easy": {
+       "en": "It eats leaves and moves slowly.",
+       "fr": "Il mange des feuilles et bouge lentement."
+      },
+      "source": "Smithsonian's National Zoo, “Two-toed sloth”"
+     }
+    ],
+    "lens": [
+     {
+      "feature": "legs",
+      "value": 4
+     },
+     {
+      "feature": "fur",
+      "value": 1
+     }
+    ],
+    "factAudio": {
+     "en": "https://future-api.mexty.ai/api/files/p/6addf57eca61b98af27f9e36",
+     "fr": "https://future-api.mexty.ai/api/files/p/6addf57fca61b98af27f9e41"
+    }
+   },
+   {
+    "id": "tortoise",
+    "biome": "canyon",
+    "icon": "🐢",
+    "name": {
+     "en": "Desert tortoise",
+     "fr": "Tortue du désert"
+    },
+    "group": {
+     "en": "a reptile",
+     "fr": "un reptile"
+    },
+    "iconUrl": "https://future-api.mexty.ai/api/files/p/6addfc91ca61b98af27fac24",
+    "silhouetteUrl": "https://future-api.mexty.ai/api/files/p/6addfcdaca61b98af27fad49",
+    "modelUrl": "https://future-api.mexty.ai/api/files/p/6addfb2aca61b98af27fa953",
+    "scale": 1.5,
+    "feed": {
+     "en": "eating plants",
+     "fr": "mange des plantes"
+    },
+    "special": {
+     "en": "resting in its shell",
+     "fr": "se repose dans sa carapace"
+    },
+    "facts": [
+     {
+      "text": {
+       "en": "Desert tortoises live in the deserts of the south-western United States and Mexico.",
+       "fr": "Les tortues du désert vivent dans les déserts du sud-ouest des États-Unis et du Mexique."
+      },
+      "easy": {
+       "en": "It lives in hot deserts.",
+       "fr": "Elle vit dans les déserts chauds."
+      },
+      "source": "U.S. National Park Service, “Desert tortoise”"
+     },
+     {
+      "text": {
+       "en": "Its domed shell is part of its skeleton: a tortoise can never climb out of it.",
+       "fr": "Sa carapace bombée fait partie de son squelette : une tortue ne peut jamais en sortir."
+      },
+      "easy": {
+       "en": "Its shell is part of its body.",
+       "fr": "Sa carapace fait partie de son corps."
+      },
+      "source": "Encyclopaedia Britannica, “Turtle”"
+     },
+     {
+      "text": {
+       "en": "It is a reptile: four sturdy legs, scaly skin and a hard shell.",
+       "fr": "C'est un reptile : quatre pattes solides, une peau à écailles et une carapace dure."
+      },
+      "easy": {
+       "en": "It has 4 legs and a shell.",
+       "fr": "Elle a 4 pattes et une carapace."
+      },
+      "source": "Encyclopaedia Britannica, “Reptile”"
+     },
+     {
+      "text": {
+       "en": "It eats grasses, flowers and cactus, and gets much of its water from these plants.",
+       "fr": "Elle mange des herbes, des fleurs et des cactus, et trouve une grande partie de son eau dans ces plantes."
+      },
+      "easy": {
+       "en": "It eats plants and flowers.",
+       "fr": "Elle mange des plantes et des fleurs."
+      },
+      "source": "U.S. National Park Service, “Desert tortoise”"
+     }
+    ],
+    "lens": [
+     {
+      "feature": "legs",
+      "value": 4
+     },
+     {
+      "feature": "shell",
+      "value": 1
+     }
+    ],
+    "factAudio": {
+     "en": "https://future-api.mexty.ai/api/files/p/6addf580ca61b98af27f9e4c",
+     "fr": "https://future-api.mexty.ai/api/files/p/6addf581ca61b98af27f9e57"
+    }
+   },
+   {
+    "id": "horned-lizard",
+    "biome": "canyon",
+    "icon": "🦎",
+    "name": {
+     "en": "Horned lizard",
+     "fr": "Lézard cornu"
+    },
+    "group": {
+     "en": "a reptile",
+     "fr": "un reptile"
+    },
+    "iconUrl": "https://future-api.mexty.ai/api/files/p/6addfc92ca61b98af27fac30",
+    "silhouetteUrl": "https://future-api.mexty.ai/api/files/p/6addfcdaca61b98af27fad55",
+    "modelUrl": "https://future-api.mexty.ai/api/files/p/6addfb2bca61b98af27fa95f",
+    "scale": 1.6,
+    "feed": {
+     "en": "catching ants",
+     "fr": "attrape des fourmis"
+    },
+    "special": {
+     "en": "basking in the sun",
+     "fr": "se chauffe au soleil"
+    },
+    "facts": [
+     {
+      "text": {
+       "en": "Horned lizards live in dry, sandy and rocky places of North America.",
+       "fr": "Les lézards cornus vivent dans les endroits secs, sableux et rocheux d'Amérique du Nord."
+      },
+      "easy": {
+       "en": "It lives in dry, sandy places.",
+       "fr": "Il vit dans les endroits secs et sableux."
+      },
+      "source": "U.S. National Park Service, “Horned lizards”"
+     },
+     {
+      "text": {
+       "en": "Its flat, spiky, sand-coloured body is camouflage: lying still, it looks like the ground.",
+       "fr": "Son corps plat, piquant et couleur sable est un camouflage : immobile, il ressemble au sol."
+      },
+      "easy": {
+       "en": "Its sandy colours help it hide.",
+       "fr": "Ses couleurs de sable l'aident à se cacher."
+      },
+      "source": "U.S. National Park Service, “Horned lizards”"
+     },
+     {
+      "text": {
+       "en": "It is a reptile: four legs, scaly skin and spiky horns on its head.",
+       "fr": "C'est un reptile : quatre pattes, une peau à écailles et des cornes piquantes sur la tête."
+      },
+      "easy": {
+       "en": "It has 4 legs and spikes.",
+       "fr": "Il a 4 pattes et des piquants."
+      },
+      "source": "Encyclopaedia Britannica, “Horned lizard”"
+     },
+     {
+      "text": {
+       "en": "In the morning it lies in the sun to warm up: reptiles take their heat from the world around them.",
+       "fr": "Le matin, il se couche au soleil pour se réchauffer : les reptiles prennent leur chaleur autour d'eux."
+      },
+      "easy": {
+       "en": "It warms up in the sun.",
+       "fr": "Il se réchauffe au soleil."
+      },
+      "source": "Encyclopaedia Britannica, “Reptile”"
+     }
+    ],
+    "lens": [
+     {
+      "feature": "legs",
+      "value": 4
+     },
+     {
+      "feature": "spines",
+      "value": 1
+     }
+    ],
+    "factAudio": {
+     "en": "https://future-api.mexty.ai/api/files/p/6addf582ca61b98af27f9e62",
+     "fr": "https://future-api.mexty.ai/api/files/p/6addf583ca61b98af27f9e6d"
+    }
+   },
+   {
+    "id": "bighorn",
+    "biome": "canyon",
+    "icon": "🐏",
+    "name": {
+     "en": "Desert bighorn sheep",
+     "fr": "Mouflon du désert"
+    },
+    "group": {
+     "en": "a mammal",
+     "fr": "un mammifère"
+    },
+    "iconUrl": "https://future-api.mexty.ai/api/files/p/6addfc93ca61b98af27fac3c",
+    "silhouetteUrl": "https://future-api.mexty.ai/api/files/p/6addfcf6ca61b98af27fad70",
+    "modelUrl": "https://future-api.mexty.ai/api/files/p/6addfb09ca61b98af27fa8a2",
+    "scale": 1,
+    "feed": {
+     "en": "grazing",
+     "fr": "broute"
+    },
+    "special": {
+     "en": "climbing the rocks",
+     "fr": "grimpe sur les rochers"
+    },
+    "facts": [
+     {
+      "text": {
+       "en": "Desert bighorn sheep live on steep, rocky mountains and canyons of the south-western United States and Mexico.",
+       "fr": "Les mouflons du désert vivent sur les montagnes et les canyons rocheux et raides du sud-ouest des États-Unis et du Mexique."
+      },
+      "easy": {
+       "en": "It lives on steep, rocky cliffs.",
+       "fr": "Il vit sur des falaises de roche."
+      },
+      "source": "U.S. National Park Service, “Desert bighorn sheep”"
+     },
+     {
+      "text": {
+       "en": "A ram's big curled horns can weigh more than all the other bones in its body.",
+       "fr": "Les grandes cornes enroulées d'un bélier peuvent peser plus que tous les autres os de son corps."
+      },
+      "easy": {
+       "en": "Its horns are very heavy.",
+       "fr": "Ses cornes sont très lourdes."
+      },
+      "source": "U.S. National Park Service, “Desert bighorn sheep”"
+     },
+     {
+      "text": {
+       "en": "It is a mammal: four legs and split hooves with a hard edge and a soft, grippy middle for climbing.",
+       "fr": "C'est un mammifère : quatre pattes et des sabots fendus, au bord dur et au centre souple qui accroche pour grimper."
+      },
+      "easy": {
+       "en": "It has 4 legs and grippy hooves.",
+       "fr": "Il a 4 pattes et des sabots qui accrochent."
+      },
+      "source": "U.S. National Park Service, “Desert bighorn sheep”"
+     },
+     {
+      "text": {
+       "en": "It grazes on grasses and shrubs, and can go a long time without drinking water.",
+       "fr": "Il broute des herbes et des arbustes, et peut rester longtemps sans boire."
+      },
+      "easy": {
+       "en": "It eats grass and shrubs.",
+       "fr": "Il mange de l'herbe et des arbustes."
+      },
+      "source": "U.S. National Park Service, “Desert bighorn sheep”"
+     }
+    ],
+    "lens": [
+     {
+      "feature": "legs",
+      "value": 4
+     },
+     {
+      "feature": "horns",
+      "value": 1
+     }
+    ],
+    "factAudio": {
+     "en": "https://future-api.mexty.ai/api/files/p/6addf584ca61b98af27f9e78",
+     "fr": "https://future-api.mexty.ai/api/files/p/6addf584ca61b98af27f9e83"
+    }
+   },
+   {
+    "id": "saguaro",
+    "biome": "canyon",
+    "icon": "🌵",
+    "name": {
+     "en": "Saguaro cactus",
+     "fr": "Cactus saguaro"
+    },
+    "group": {
+     "en": "a plant",
+     "fr": "une plante"
+    },
+    "iconUrl": "https://future-api.mexty.ai/api/files/p/6addfc94ca61b98af27fac48",
+    "silhouetteUrl": "https://future-api.mexty.ai/api/files/p/6addfcf7ca61b98af27fad7c",
+    "modelUrl": "https://future-api.mexty.ai/api/files/p/6add3bcfca61b98af27f6aee",
+    "scale": 1,
+    "feed": {
+     "en": "",
+     "fr": ""
+    },
+    "special": {
+     "en": "in flower",
+     "fr": "en fleurs"
+    },
+    "facts": [
+     {
+      "text": {
+       "en": "Saguaros grow only in the Sonoran Desert, in Arizona and in Mexico.",
+       "fr": "Les saguaros ne poussent que dans le désert de Sonora, en Arizona et au Mexique."
+      },
+      "easy": {
+       "en": "It grows in a hot desert.",
+       "fr": "Il pousse dans un désert chaud."
+      },
+      "source": "U.S. National Park Service, Saguaro National Park"
+     },
+     {
+      "text": {
+       "en": "A saguaro can grow taller than a house. Its first arm may take 50 to 70 years to appear.",
+       "fr": "Un saguaro peut devenir plus haut qu'une maison. Son premier bras met parfois 50 à 70 ans à pousser."
+      },
+      "easy": {
+       "en": "It grows taller than a house.",
+       "fr": "Il devient plus haut qu'une maison."
+      },
+      "source": "U.S. National Park Service, Saguaro National Park"
+     },
+     {
+      "text": {
+       "en": "It is a plant, not an animal: no legs at all, but sharp spines that shade and protect it.",
+       "fr": "C'est une plante, pas un animal : pas de pattes du tout, mais des épines pointues qui lui font de l'ombre et le protègent."
+      },
+      "easy": {
+       "en": "It is a plant with spines.",
+       "fr": "C'est une plante avec des épines."
+      },
+      "source": "U.S. National Park Service, Saguaro National Park"
+     },
+     {
+      "text": {
+       "en": "Its white flowers open at night and stay open into the next day. Bats, birds and bees visit them.",
+       "fr": "Ses fleurs blanches s'ouvrent la nuit et restent ouvertes le lendemain. Les chauves-souris, les oiseaux et les abeilles les visitent."
+      },
+      "easy": {
+       "en": "Its white flowers feed bats and bees.",
+       "fr": "Ses fleurs blanches nourrissent chauves-souris et abeilles."
+      },
+      "source": "U.S. National Park Service, Saguaro National Park"
+     }
+    ],
+    "lens": [
+     {
+      "feature": "legs",
+      "value": 0
+     },
+     {
+      "feature": "spines",
+      "value": 1
+     }
+    ],
+    "factAudio": {
+     "en": "https://future-api.mexty.ai/api/files/p/6addf585ca61b98af27f9e8e",
+     "fr": "https://future-api.mexty.ai/api/files/p/6addf586ca61b98af27f9e99"
+    }
+   },
+   {
+    "id": "sea-turtle",
+    "biome": "coast",
+    "icon": "🐢",
+    "name": {
+     "en": "Green sea turtle",
+     "fr": "Tortue verte"
+    },
+    "group": {
+     "en": "a reptile",
+     "fr": "un reptile"
+    },
+    "iconUrl": "https://future-api.mexty.ai/api/files/p/6addfcb2ca61b98af27faca9",
+    "silhouetteUrl": "https://future-api.mexty.ai/api/files/p/6addfcf8ca61b98af27fad88",
+    "modelUrl": "https://future-api.mexty.ai/api/files/p/6addfc66ca61b98af27fab3b",
+    "scale": 1.5,
+    "feed": {
+     "en": "eating seagrass",
+     "fr": "mange des herbes marines"
+    },
+    "special": {
+     "en": "coming up to breathe",
+     "fr": "remonte respirer"
+    },
+    "facts": [
+     {
+      "text": {
+       "en": "Green sea turtles swim in warm oceans all around the world.",
+       "fr": "Les tortues vertes nagent dans les océans chauds du monde entier."
+      },
+      "easy": {
+       "en": "It swims in warm seas.",
+       "fr": "Elle nage dans les mers chaudes."
+      },
+      "source": "NOAA Fisheries, “Green turtle”"
+     },
+     {
+      "text": {
+       "en": "It is named after the green colour of the fat under its shell, not the shell itself.",
+       "fr": "Elle doit son nom à la couleur verte de sa graisse, sous sa carapace, pas à la carapace."
+      },
+      "easy": {
+       "en": "Its name comes from its green fat.",
+       "fr": "Son nom vient de sa graisse verte."
+      },
+      "source": "NOAA Fisheries, “Green turtle”"
+     },
+     {
+      "text": {
+       "en": "It is a reptile: a hard shell, and four flippers instead of feet.",
+       "fr": "C'est un reptile : une carapace dure, et quatre nageoires-palettes à la place des pattes."
+      },
+      "easy": {
+       "en": "It has a shell and 4 flippers.",
+       "fr": "Elle a une carapace et 4 nageoires."
+      },
+      "source": "NOAA Fisheries, “Green turtle”"
+     },
+     {
+      "text": {
+       "en": "Adults eat seagrass and algae, and they swim up to the surface to breathe air.",
+       "fr": "Les adultes mangent des herbes marines et des algues, et remontent à la surface pour respirer de l'air."
+      },
+      "easy": {
+       "en": "It eats seagrass and breathes air.",
+       "fr": "Elle mange des herbes marines et respire de l'air."
+      },
+      "source": "NOAA Fisheries, “Green turtle”"
+     }
+    ],
+    "lens": [
+     {
+      "feature": "flippers",
+      "value": 4
+     },
+     {
+      "feature": "shell",
+      "value": 1
+     }
+    ],
+    "factAudio": {
+     "en": "https://future-api.mexty.ai/api/files/p/6addf587ca61b98af27f9ea4",
+     "fr": "https://future-api.mexty.ai/api/files/p/6addf588ca61b98af27f9eaf"
+    }
+   },
+   {
+    "id": "clownfish",
+    "biome": "coast",
+    "icon": "🐠",
+    "name": {
+     "en": "Clownfish",
+     "fr": "Poisson-clown"
+    },
+    "group": {
+     "en": "a fish",
+     "fr": "un poisson"
+    },
+    "iconUrl": "https://future-api.mexty.ai/api/files/p/6addfcb3ca61b98af27facb5",
+    "silhouetteUrl": "https://future-api.mexty.ai/api/files/p/6addfcf9ca61b98af27fad94",
+    "modelUrl": "https://future-api.mexty.ai/api/files/p/6addfb2eca61b98af27fa977",
+    "scale": 1.8,
+    "feed": {
+     "en": "nibbling food",
+     "fr": "grignote sa nourriture"
+    },
+    "special": {
+     "en": "hiding in its anemone",
+     "fr": "se cache dans son anémone"
+    },
+    "facts": [
+     {
+      "text": {
+       "en": "Clownfish live on coral reefs in the warm Indian and Pacific Oceans.",
+       "fr": "Les poissons-clowns vivent sur les récifs de corail des océans Indien et Pacifique, où l'eau est chaude."
+      },
+      "easy": {
+       "en": "It lives on warm coral reefs.",
+       "fr": "Il vit sur les récifs de corail chauds."
+      },
+      "source": "Australian Museum, “Clown anemonefish”"
+     },
+     {
+      "text": {
+       "en": "Many clownfish are orange with three white bands, edged in black.",
+       "fr": "Beaucoup de poissons-clowns sont orange avec trois bandes blanches bordées de noir."
+      },
+      "easy": {
+       "en": "It is orange with white stripes.",
+       "fr": "Il est orange avec des bandes blanches."
+      },
+      "source": "Australian Museum, “Clown anemonefish”"
+     },
+     {
+      "text": {
+       "en": "It is a fish: no legs, it swims with its fins and breathes with gills.",
+       "fr": "C'est un poisson : pas de pattes, il nage avec ses nageoires et respire avec des branchies."
+      },
+      "easy": {
+       "en": "It is a fish: it swims with fins.",
+       "fr": "C'est un poisson : il nage avec des nageoires."
+      },
+      "source": "Encyclopaedia Britannica, “Fish”"
+     },
+     {
+      "text": {
+       "en": "It lives among the stinging arms of a sea anemone. A slimy coat keeps it from being stung.",
+       "fr": "Il vit entre les bras piquants d'une anémone de mer. Une couche de mucus le protège des piqûres."
+      },
+      "easy": {
+       "en": "It hides in a sea anemone.",
+       "fr": "Il se cache dans une anémone de mer."
+      },
+      "source": "Australian Museum, “Clown anemonefish”"
+     }
+    ],
+    "lens": [
+     {
+      "feature": "legs",
+      "value": 0
+     },
+     {
+      "feature": "fins",
+      "value": 1
+     }
+    ],
+    "factAudio": {
+     "en": "https://future-api.mexty.ai/api/files/p/6addf589ca61b98af27f9eba",
+     "fr": "https://future-api.mexty.ai/api/files/p/6addf58aca61b98af27f9ec5"
+    }
+   },
+   {
+    "id": "sea-star",
+    "biome": "coast",
+    "icon": "⭐",
+    "name": {
+     "en": "Sea star",
+     "fr": "Étoile de mer"
+    },
+    "group": {
+     "en": "an echinoderm, a cousin of sea urchins",
+     "fr": "un échinoderme, cousin des oursins"
+    },
+    "iconUrl": "https://future-api.mexty.ai/api/files/p/6addfcb4ca61b98af27facc1",
+    "silhouetteUrl": "https://future-api.mexty.ai/api/files/p/6addfcfaca61b98af27fada0",
+    "modelUrl": "https://future-api.mexty.ai/api/files/p/6addfb2fca61b98af27fa983",
+    "scale": 1.4,
+    "feed": {
+     "en": "eating a mussel",
+     "fr": "mange une moule"
+    },
+    "special": {
+     "en": "",
+     "fr": ""
+    },
+    "facts": [
+     {
+      "text": {
+       "en": "Sea stars live in every ocean of the world, from rocky shores to the deep sea.",
+       "fr": "Les étoiles de mer vivent dans tous les océans du monde, des rochers du rivage aux grandes profondeurs."
+      },
+      "easy": {
+       "en": "It lives in the sea, on rocks.",
+       "fr": "Elle vit dans la mer, sur les rochers."
+      },
+      "source": "NOAA Ocean Service, “Sea stars”"
+     },
+     {
+      "text": {
+       "en": "Most sea stars have five arms, with a tiny eye spot at the tip of each arm.",
+       "fr": "La plupart des étoiles de mer ont cinq bras, avec un petit œil au bout de chaque bras."
+      },
+      "easy": {
+       "en": "It has an eye at the end of each arm.",
+       "fr": "Elle a un œil au bout de chaque bras."
+      },
+      "source": "NOAA Ocean Service, “Sea stars”"
+     },
+     {
+      "text": {
+       "en": "It is not a fish! It has no bones and moves on hundreds of tiny tube feet.",
+       "fr": "Ce n'est pas un poisson ! Elle n'a pas d'os et avance sur des centaines de petits pieds en tube."
+      },
+      "easy": {
+       "en": "It walks on tiny tube feet.",
+       "fr": "Elle marche sur de petits pieds en tube."
+      },
+      "source": "NOAA Ocean Service, “Sea stars”"
+     },
+     {
+      "text": {
+       "en": "It eats mussels and clams: it pulls their shells open with its tube feet.",
+       "fr": "Elle mange des moules et des palourdes : elle ouvre leur coquille en tirant avec ses pieds en tube."
+      },
+      "easy": {
+       "en": "It opens shells to eat mussels.",
+       "fr": "Elle ouvre des coquillages pour manger."
+      },
+      "source": "Encyclopaedia Britannica, “Sea star”"
+     }
+    ],
+    "lens": [
+     {
+      "feature": "arms",
+      "value": 5
+     },
+     {
+      "feature": "legs",
+      "value": 0
+     }
+    ],
+    "factAudio": {
+     "en": "https://future-api.mexty.ai/api/files/p/6addf58bca61b98af27f9ed0",
+     "fr": "https://future-api.mexty.ai/api/files/p/6addf58cca61b98af27f9edb"
+    }
+   },
+   {
+    "id": "octopus",
+    "biome": "coast",
+    "icon": "🐙",
+    "name": {
+     "en": "Octopus",
+     "fr": "Pieuvre"
+    },
+    "group": {
+     "en": "a mollusc",
+     "fr": "un mollusque"
+    },
+    "iconUrl": "https://future-api.mexty.ai/api/files/p/6addfcb5ca61b98af27faccd",
+    "silhouetteUrl": "https://future-api.mexty.ai/api/files/p/6addfcfbca61b98af27fadac",
+    "modelUrl": "https://future-api.mexty.ai/api/files/p/6addfb0aca61b98af27fa8b4",
+    "scale": 1,
+    "feed": {
+     "en": "peeking out of its den",
+     "fr": "sort de sa cachette"
+    },
+    "special": {
+     "en": "changing colour",
+     "fr": "change de couleur"
+    },
+    "facts": [
+     {
+      "text": {
+       "en": "Octopuses live in every ocean. Many hide in dens among rocks and coral.",
+       "fr": "Les pieuvres vivent dans tous les océans. Beaucoup se cachent dans des abris entre les rochers et le corail."
+      },
+      "easy": {
+       "en": "It hides among rocks in the sea.",
+       "fr": "Elle se cache entre les rochers, dans la mer."
+      },
+      "source": "Smithsonian Ocean, “Octopus”"
+     },
+     {
+      "text": {
+       "en": "It has three hearts and blue blood.",
+       "fr": "Elle a trois cœurs et du sang bleu."
+      },
+      "easy": {
+       "en": "It has 3 hearts!",
+       "fr": "Elle a 3 cœurs !"
+      },
+      "source": "Smithsonian Ocean, “Octopus”"
+     },
+     {
+      "text": {
+       "en": "It is a mollusc, like snails: eight arms covered in suckers, and no bones.",
+       "fr": "C'est un mollusque, comme les escargots : huit bras couverts de ventouses, et pas d'os."
+      },
+      "easy": {
+       "en": "It has 8 arms with suckers.",
+       "fr": "Elle a 8 bras avec des ventouses."
+      },
+      "source": "Encyclopaedia Britannica, “Octopus”"
+     },
+     {
+      "text": {
+       "en": "It can change colour in less than a second, to hide or to show how it feels.",
+       "fr": "Elle peut changer de couleur en moins d'une seconde, pour se cacher ou montrer ce qu'elle ressent."
+      },
+      "easy": {
+       "en": "It can change colour to hide.",
+       "fr": "Elle change de couleur pour se cacher."
+      },
+      "source": "Smithsonian Ocean, “Octopus”"
+     }
+    ],
+    "lens": [
+     {
+      "feature": "arms",
+      "value": 8
+     },
+     {
+      "feature": "shell",
+      "value": 0
+     }
+    ],
+    "factAudio": {
+     "en": "https://future-api.mexty.ai/api/files/p/6addf58dca61b98af27f9ee6",
+     "fr": "https://future-api.mexty.ai/api/files/p/6addf58eca61b98af27f9ef1"
+    }
+   }
+  ],
+  "models": {
+   "spark": "https://future-api.mexty.ai/api/files/p/6addfc61ca61b98af27fab0b"
+  },
+  "sounds": {
+   "shutter": ""
+  }
+ },
+ "voice": {
+  "biomeFrontier": {
+   "en": "https://future-api.mexty.ai/api/files/p/6addf58fca61b98af27f9efc",
+   "fr": "https://future-api.mexty.ai/api/files/p/6addf590ca61b98af27f9f07"
+  }
+ }
+}

@@ -35,6 +35,27 @@ The hub of the world: a 3/4-view walk around a carved stone plaza under the gian
   density, light shafts/fireflies; Auto lowers the pixel ratio if the frame rate drops), sound on/off.
   The store's `paused` stops rendering and sound; `muted` silences it.
 
+## The first expedition (ticket 6addeddaca61b98af27f98ae)
+
+Learning by doing, no quizzes. Props `quests[]` (the quest engine, `src/game/quests.ts`) and `expedition`
+(the Grove Keeper, the field kit, the Field Guide's 12 species with 4 sourced facts each, the hand-lens features).
+
+- **Grove Keeper** by the Idea Tree (`scene/Expedition3D.tsx`): greets new explorers after the start screen,
+  reminds returning ones of their step; speech bubble with a next button and EN/FR voice lines (`keeper.lines[].audio`).
+- **Quests**: Three sparks (3 glowing seeds, one behind the start view) → Field Camera + Field Guide; Your first photo
+  (the tree frog on the Biome Frontier stall); Into the Biome Frontier (3 different species); Look closer (hand lens, 2 species).
+- **Field Camera** (`ui/FieldKit.tsx`): viewfinder with focus ring, zoom (camera fov), shutter. A photo is a record
+  `{ speciesId, behaviour, stars, at }`: 1 star in frame, +1 well framed (in the ring, 10–85 % of the frame's short side,
+  ≤ 11 m away), +1 while the creature feeds or does its special behaviour. Each species keeps its best photo.
+- **Field Guide**: a page per species, stages seen → photographed → identified → behaviour observed, one true fact each.
+- **Hand lens**: the explorer counts legs / wings / arms and checks shell, fur, spines… on the close-up; a right observation identifies it.
+- **Creatures** (`zones/biome-frontier/Creatures.tsx`, `scene/creatures.tsx`): behaviour brains with real habits; they
+  flee for a moment when the explorer rushes straight at them (the camera makes the explorer tiptoe).
+- Saved in one cloud-save key, `expedition`. Learning record: `mexty.progress.answer` per new guide stage and per lens check,
+  `complete(stages filled, 48)` when the 4 quests are done.
+- `node dev/export_expedition.mjs` builds `dev/expedition.props.json` (the saved variant's `quests` / `expedition` / `voice`)
+  from `src/expedition/content.ts` + `assets/manifest.voice.json` + `assets/manifest.expedition.json`, and refreshes `dev/props.local.json`.
+
 ## Props drive everything
 
 Every learner-facing word (`ui`, all `{ en, fr }`), the lanterns, districts, constellations,

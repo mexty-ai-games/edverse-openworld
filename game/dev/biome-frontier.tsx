@@ -4,7 +4,7 @@
 //
 // Assets: the props' library URLs are mapped to local files (/bf/<file> = the district's build folder,
 // /a/<file> = the grove's dev/public/a), because the library refuses cross-origin requests from localhost.
-// URL params: ?q=low|medium|high  ?pos=x,z[,ry]  ?open=card:0|dig|station|sign:coast  ?easy=1  ?lang=fr
+// URL params: ?q=low|medium|high  ?pos=x,z[,ry]  ?open=dig|station|sign:coast  ?easy=1  ?lang=fr
 import React, { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import ReactDOM from "react-dom/client";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
@@ -207,8 +207,7 @@ function App() {
       const [k, v] = o.split(":");
       window.setTimeout(() => {
         const s = useSurvey.getState();
-        if (k === "card") s.open({ kind: "card", spot: Number(v || 0) });
-        else if (k === "sign") s.open({ kind: "sign", biome: v || "coast" });
+        if (k === "sign") s.open({ kind: "sign", biome: v || "coast" });
         else if (k === "dig") s.open({ kind: "dig" });
         else s.open({ kind: "station" });
       }, 300);

@@ -1,0 +1,1498 @@
+[
+  {
+    "key": "tool:net",
+    "name": "Butterfly net",
+    "kind": "model",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfa73ca61b98af27fa61d",
+    "fileAssetId": "6addfa73ca61b98af27fa61d",
+    "catalogueAssetId": "6addfca3ca61b98af27fac7d",
+    "triangles": 2156,
+    "nodes": [
+      "net_handle",
+      "net_hoop",
+      "net_bag"
+    ],
+    "sizeBytes": 246024,
+    "fileName": "ow-p2-tool_net.glb",
+    "tags": [
+      "phase2",
+      "tool",
+      "net"
+    ],
+    "notes": "~1.2 m. Nodes net_handle, net_hoop, net_bag (pivot at hoop centre: sway it).",
+    "units": "metres, origin at the grip"
+  },
+  {
+    "key": "tool:net:icon",
+    "name": "Butterfly net - icon",
+    "kind": "image",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfc8bca61b98af27fabe8",
+    "fileAssetId": "6addfc8bca61b98af27fabe8",
+    "catalogueAssetId": null,
+    "sizeBytes": 20288,
+    "fileName": "ow-p2-tool_net_icon.png",
+    "tags": [],
+    "width": 256,
+    "height": 256
+  },
+  {
+    "key": "tool:jar",
+    "name": "Catch-and-release jar with air-hole lid",
+    "kind": "model",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfab2ca61b98af27fa6cd",
+    "fileAssetId": "6addfab2ca61b98af27fa6cd",
+    "catalogueAssetId": "6addfca4ca61b98af27fac88",
+    "triangles": 2939,
+    "nodes": [
+      "jar_glass",
+      "jar_lid",
+      "jar_leaf"
+    ],
+    "sizeBytes": 201964,
+    "fileName": "ow-p2-tool_jar.glb",
+    "tags": [
+      "phase2",
+      "tool",
+      "jar"
+    ],
+    "notes": "~22 cm. Nodes jar_glass (transparent), jar_lid (pivot at lid centre: unscrew/lift), jar_leaf (leaf + twig inside).",
+    "units": "metres, origin at the grip"
+  },
+  {
+    "key": "tool:jar:icon",
+    "name": "Catch-and-release jar with air-hole lid - icon",
+    "kind": "image",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfc89ca61b98af27fabd0",
+    "fileAssetId": "6addfc89ca61b98af27fabd0",
+    "catalogueAssetId": null,
+    "sizeBytes": 48638,
+    "fileName": "ow-p2-tool_jar_icon.png",
+    "tags": [],
+    "width": 256,
+    "height": 256
+  },
+  {
+    "key": "tool:ruler",
+    "name": "30 cm ruler",
+    "kind": "model",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfab3ca61b98af27fa6d9",
+    "fileAssetId": "6addfab3ca61b98af27fa6d9",
+    "catalogueAssetId": "6addfdd0ca61b98af27fb203",
+    "triangles": 210,
+    "nodes": [
+      "ruler"
+    ],
+    "sizeBytes": 171276,
+    "fileName": "ow-p2-tool_ruler.glb",
+    "tags": [
+      "phase2",
+      "tool",
+      "ruler"
+    ],
+    "notes": "Scale face with mm ticks and cm numbers, faces -Z glTF (toward viewer).",
+    "units": "metres, origin at the grip"
+  },
+  {
+    "key": "tool:ruler:icon",
+    "name": "30 cm ruler - icon",
+    "kind": "image",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfd6cca61b98af27fb026",
+    "fileAssetId": "6addfd6cca61b98af27fb026",
+    "catalogueAssetId": null,
+    "sizeBytes": 16818,
+    "fileName": "ow-p2-tool_ruler_icon.png",
+    "tags": [],
+    "width": 256,
+    "height": 256
+  },
+  {
+    "key": "tool:tape",
+    "name": "Tape measure",
+    "kind": "model",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfab4ca61b98af27fa6e5",
+    "fileAssetId": "6addfab4ca61b98af27fa6e5",
+    "catalogueAssetId": "6addfdd1ca61b98af27fb219",
+    "triangles": 932,
+    "nodes": [
+      "tape_case",
+      "tape_blade"
+    ],
+    "sizeBytes": 131328,
+    "fileName": "ow-p2-tool_tape.glb",
+    "tags": [
+      "phase2",
+      "tool",
+      "tape"
+    ],
+    "notes": "Nodes tape_case, tape_blade (origin at the case mouth; scale X: 1 = 30 cm pulled out).",
+    "units": "metres, origin at the grip"
+  },
+  {
+    "key": "tool:tape:icon",
+    "name": "Tape measure - icon",
+    "kind": "image",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfd89ca61b98af27fb09f",
+    "fileAssetId": "6addfd89ca61b98af27fb09f",
+    "catalogueAssetId": null,
+    "sizeBytes": 17403,
+    "fileName": "ow-p2-tool_tape_icon.png",
+    "tags": [],
+    "width": 256,
+    "height": 256
+  },
+  {
+    "key": "tool:scale",
+    "name": "Pan balance scale",
+    "kind": "model",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfab5ca61b98af27fa6f1",
+    "fileAssetId": "6addfab5ca61b98af27fa6f1",
+    "catalogueAssetId": "6addfdd0ca61b98af27fb20e",
+    "triangles": 1724,
+    "nodes": [
+      "scale_base",
+      "scale_beam",
+      "scale_pointer",
+      "scale_pan_L",
+      "scale_pan_R"
+    ],
+    "sizeBytes": 195952,
+    "fileName": "ow-p2-tool_scale.glb",
+    "tags": [
+      "phase2",
+      "tool",
+      "scale"
+    ],
+    "notes": "Nodes scale_base, scale_beam (pivot at fulcrum: rotate about Z glTF to tilt), scale_pointer (same pivot), scale_pan_L / scale_pan_R (pivot at hook: move vertically with the beam ends, +-0.205 m).",
+    "units": "metres, origin at the grip"
+  },
+  {
+    "key": "tool:scale:icon",
+    "name": "Pan balance scale - icon",
+    "kind": "image",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfd6cca61b98af27fb032",
+    "fileAssetId": "6addfd6cca61b98af27fb032",
+    "catalogueAssetId": null,
+    "sizeBytes": 45023,
+    "fileName": "ow-p2-tool_scale_icon.png",
+    "tags": [],
+    "width": 256,
+    "height": 256
+  },
+  {
+    "key": "tool:brush",
+    "name": "Soft dig brush",
+    "kind": "model",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfab6ca61b98af27fa6fd",
+    "fileAssetId": "6addfab6ca61b98af27fa6fd",
+    "catalogueAssetId": "6addfca4ca61b98af27fac93",
+    "triangles": 916,
+    "nodes": [
+      "brush"
+    ],
+    "sizeBytes": 208964,
+    "fileName": "ow-p2-tool_brush.glb",
+    "tags": [
+      "phase2",
+      "tool",
+      "brush"
+    ],
+    "notes": "~27 cm, single node 'brush'.",
+    "units": "metres, origin at the grip"
+  },
+  {
+    "key": "tool:brush:icon",
+    "name": "Soft dig brush - icon",
+    "kind": "image",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfc88ca61b98af27fabc4",
+    "fileAssetId": "6addfc88ca61b98af27fabc4",
+    "catalogueAssetId": null,
+    "sizeBytes": 13335,
+    "fileName": "ow-p2-tool_brush_icon.png",
+    "tags": [],
+    "width": 256,
+    "height": 256
+  },
+  {
+    "key": "tool:trowel",
+    "name": "Archaeologist's trowel",
+    "kind": "model",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfab7ca61b98af27fa71f",
+    "fileAssetId": "6addfab7ca61b98af27fa71f",
+    "catalogueAssetId": "6addfdd1ca61b98af27fb224",
+    "triangles": 818,
+    "nodes": [
+      "trowel"
+    ],
+    "sizeBytes": 154536,
+    "fileName": "ow-p2-tool_trowel.glb",
+    "tags": [
+      "phase2",
+      "tool",
+      "trowel"
+    ],
+    "notes": "~32 cm, single node 'trowel'.",
+    "units": "metres, origin at the grip"
+  },
+  {
+    "key": "tool:trowel:icon",
+    "name": "Archaeologist's trowel - icon",
+    "kind": "image",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfd8aca61b98af27fb0ad",
+    "fileAssetId": "6addfd8aca61b98af27fb0ad",
+    "catalogueAssetId": null,
+    "sizeBytes": 13501,
+    "fileName": "ow-p2-tool_trowel_icon.png",
+    "tags": [],
+    "width": 256,
+    "height": 256
+  },
+  {
+    "key": "tool:recorder",
+    "name": "Handheld sound recorder",
+    "kind": "model",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfab8ca61b98af27fa741",
+    "fileAssetId": "6addfab8ca61b98af27fa741",
+    "catalogueAssetId": "6addfdcfca61b98af27fb1f8",
+    "triangles": 1594,
+    "nodes": [
+      "recorder_body",
+      "recorder_led"
+    ],
+    "sizeBytes": 166676,
+    "fileName": "ow-p2-tool_recorder.glb",
+    "tags": [
+      "phase2",
+      "tool",
+      "recorder"
+    ],
+    "notes": "Nodes recorder_body (fluffy windshield mic, waveform screen), recorder_led (material 'recorder_led': blink emissive while recording).",
+    "units": "metres, origin at the grip"
+  },
+  {
+    "key": "tool:recorder:icon",
+    "name": "Handheld sound recorder - icon",
+    "kind": "image",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfd6bca61b98af27fb01a",
+    "fileAssetId": "6addfd6bca61b98af27fb01a",
+    "catalogueAssetId": null,
+    "sizeBytes": 22533,
+    "fileName": "ow-p2-tool_recorder_icon.png",
+    "tags": [],
+    "width": 256,
+    "height": 256
+  },
+  {
+    "key": "tool:lantern",
+    "name": "Lantern",
+    "kind": "model",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfab9ca61b98af27fa763",
+    "fileAssetId": "6addfab9ca61b98af27fa763",
+    "catalogueAssetId": "6addfca4ca61b98af27fac9e",
+    "triangles": 1748,
+    "nodes": [
+      "lantern_body",
+      "lantern_glow"
+    ],
+    "sizeBytes": 132976,
+    "fileName": "ow-p2-tool_lantern.glb",
+    "tags": [
+      "phase2",
+      "tool",
+      "lantern"
+    ],
+    "notes": "Origin at the handle grip, hangs below. Nodes lantern_body, lantern_glow (material 'lantern_glow'; add a warm PointLight at its position).",
+    "units": "metres, origin at the grip"
+  },
+  {
+    "key": "tool:lantern:icon",
+    "name": "Lantern - icon",
+    "kind": "image",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfc8aca61b98af27fabdc",
+    "fileAssetId": "6addfc8aca61b98af27fabdc",
+    "catalogueAssetId": null,
+    "sizeBytes": 36421,
+    "fileName": "ow-p2-tool_lantern_icon.png",
+    "tags": [],
+    "width": 256,
+    "height": 256
+  },
+  {
+    "key": "insect:flea",
+    "name": "Cat flea (display scale, ~120x real size)",
+    "kind": "model",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfadfca61b98af27fa7e5",
+    "fileAssetId": "6addfadfca61b98af27fa7e5",
+    "catalogueAssetId": "6addfc16ca61b98af27faa51",
+    "triangles": 4031,
+    "nodes": [
+      "flea"
+    ],
+    "clips": [
+      "idle",
+      "jump",
+      "move",
+      "special"
+    ],
+    "sizeBytes": 408120,
+    "fileName": "ow-p2-flea.glb",
+    "tags": [
+      "phase2",
+      "creature",
+      "flea"
+    ],
+    "notes": "Real length 1-3 mm; jumps ~100x its body length. Flattened side-to-side body, big hind jumping legs. Clip 'jump' (= special) is in place: root rises ~0.55 m; translate in code for distance.",
+    "units": "display scale (~0.3 m long), facing +Z glTF, origin at the feet"
+  },
+  {
+    "key": "insect:flea:icon",
+    "name": "Cat flea (display scale, ~120x real size) - icon",
+    "kind": "image",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfc0aca61b98af27faa20",
+    "fileAssetId": "6addfc0aca61b98af27faa20",
+    "catalogueAssetId": null,
+    "sizeBytes": 53121,
+    "fileName": "ow-p2-flea_icon.png",
+    "tags": [],
+    "width": 256,
+    "height": 256
+  },
+  {
+    "key": "insect:flea:silhouette",
+    "name": "Cat flea (display scale, ~120x real size) - silhouette",
+    "kind": "image",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfc0bca61b98af27faa2c",
+    "fileAssetId": "6addfc0bca61b98af27faa2c",
+    "catalogueAssetId": null,
+    "sizeBytes": 15036,
+    "fileName": "ow-p2-flea_sil.png",
+    "tags": [],
+    "width": 256,
+    "height": 256
+  },
+  {
+    "key": "insect:dung_beetle",
+    "name": "Dung beetle with its ball",
+    "kind": "model",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfae0ca61b98af27fa7f1",
+    "fileAssetId": "6addfae0ca61b98af27fa7f1",
+    "catalogueAssetId": "6addfc21ca61b98af27faa5c",
+    "triangles": 4790,
+    "nodes": [
+      "dung_ball",
+      "dung_beetle"
+    ],
+    "clips": [
+      "idle",
+      "move",
+      "push",
+      "special"
+    ],
+    "sizeBytes": 467232,
+    "fileName": "ow-p2-dung_beetle.glb",
+    "tags": [
+      "phase2",
+      "creature",
+      "dung_beetle"
+    ],
+    "notes": "Real length ~2 cm; pushes balls 10x+ its size, pulls >1000x its weight. Ball is a separate node 'dung_ball' on bone 'ball' (hide/show); 'push' (= special) rolls it.",
+    "units": "display scale (~0.3 m long), facing +Z glTF, origin at the feet"
+  },
+  {
+    "key": "insect:dung_beetle:icon",
+    "name": "Dung beetle with its ball - icon",
+    "kind": "image",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfc06ca61b98af27fa9f0",
+    "fileAssetId": "6addfc06ca61b98af27fa9f0",
+    "catalogueAssetId": null,
+    "sizeBytes": 45777,
+    "fileName": "ow-p2-dung_beetle_icon.png",
+    "tags": [],
+    "width": 256,
+    "height": 256
+  },
+  {
+    "key": "insect:dung_beetle:silhouette",
+    "name": "Dung beetle with its ball - silhouette",
+    "kind": "image",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfc07ca61b98af27fa9fc",
+    "fileAssetId": "6addfc07ca61b98af27fa9fc",
+    "catalogueAssetId": null,
+    "sizeBytes": 12945,
+    "fileName": "ow-p2-dung_beetle_sil.png",
+    "tags": [],
+    "width": 256,
+    "height": 256
+  },
+  {
+    "key": "insect:locust",
+    "name": "Desert locust (Schistocerca gregaria)",
+    "kind": "model",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfae1ca61b98af27fa7fd",
+    "fileAssetId": "6addfae1ca61b98af27fa7fd",
+    "catalogueAssetId": "6addfc68ca61b98af27fab5d",
+    "triangles": 4064,
+    "nodes": [
+      "locust"
+    ],
+    "clips": [
+      "idle",
+      "jump",
+      "move",
+      "special"
+    ],
+    "sizeBytes": 408964,
+    "fileName": "ow-p2-locust.glb",
+    "tags": [
+      "phase2",
+      "creature",
+      "locust"
+    ],
+    "notes": "Real length 5-7 cm, gregarious yellow phase. 'jump' (= special): crouch, leap with wings opening, land, in place.",
+    "units": "display scale (~0.3 m long), facing +Z glTF, origin at the feet"
+  },
+  {
+    "key": "insect:locust:icon",
+    "name": "Desert locust (Schistocerca gregaria) - icon",
+    "kind": "image",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfc53ca61b98af27faacc",
+    "fileAssetId": "6addfc53ca61b98af27faacc",
+    "catalogueAssetId": null,
+    "sizeBytes": 45176,
+    "fileName": "ow-p2-locust_icon.png",
+    "tags": [],
+    "width": 256,
+    "height": 256
+  },
+  {
+    "key": "insect:locust:silhouette",
+    "name": "Desert locust (Schistocerca gregaria) - silhouette",
+    "kind": "image",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfc54ca61b98af27faad8",
+    "fileAssetId": "6addfc54ca61b98af27faad8",
+    "catalogueAssetId": null,
+    "sizeBytes": 14364,
+    "fileName": "ow-p2-locust_sil.png",
+    "tags": [],
+    "width": 256,
+    "height": 256
+  },
+  {
+    "key": "insect:tiger_beetle",
+    "name": "Green tiger beetle (Cicindela campestris)",
+    "kind": "model",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfae2ca61b98af27fa809",
+    "fileAssetId": "6addfae2ca61b98af27fa809",
+    "catalogueAssetId": "6addfca3ca61b98af27fac72",
+    "triangles": 3846,
+    "nodes": [
+      "tiger_beetle"
+    ],
+    "clips": [
+      "idle",
+      "move",
+      "run",
+      "special"
+    ],
+    "sizeBytes": 397860,
+    "fileName": "ow-p2-tiger_beetle.glb",
+    "tags": [
+      "phase2",
+      "creature",
+      "tiger_beetle"
+    ],
+    "notes": "Real length 1.2-1.5 cm; one of the fastest running insects for its size. 'run' (= special) is a sprint cycle; 'move' a trot.",
+    "units": "display scale (~0.3 m long), facing +Z glTF, origin at the feet"
+  },
+  {
+    "key": "insect:tiger_beetle:icon",
+    "name": "Green tiger beetle (Cicindela campestris) - icon",
+    "kind": "image",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfc86ca61b98af27fabac",
+    "fileAssetId": "6addfc86ca61b98af27fabac",
+    "catalogueAssetId": null,
+    "sizeBytes": 39864,
+    "fileName": "ow-p2-tiger_beetle_icon.png",
+    "tags": [],
+    "width": 256,
+    "height": 256
+  },
+  {
+    "key": "insect:tiger_beetle:silhouette",
+    "name": "Green tiger beetle (Cicindela campestris) - silhouette",
+    "kind": "image",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfc87ca61b98af27fabb8",
+    "fileAssetId": "6addfc87ca61b98af27fabb8",
+    "catalogueAssetId": null,
+    "sizeBytes": 14402,
+    "fileName": "ow-p2-tiger_beetle_sil.png",
+    "tags": [],
+    "width": 256,
+    "height": 256
+  },
+  {
+    "key": "insect:firefly",
+    "name": "Firefly (Photinus pyralis)",
+    "kind": "model",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfae3ca61b98af27fa815",
+    "fileAssetId": "6addfae3ca61b98af27fa815",
+    "catalogueAssetId": "6addfc21ca61b98af27faa67",
+    "triangles": 4562,
+    "nodes": [
+      "firefly"
+    ],
+    "clips": [
+      "fly",
+      "idle",
+      "move",
+      "special"
+    ],
+    "sizeBytes": 424848,
+    "fileName": "ow-p2-firefly.glb",
+    "tags": [
+      "phase2",
+      "creature",
+      "firefly"
+    ],
+    "notes": "Real length 1-1.4 cm. Lantern = material 'firefly_glow' (emissive): pulse emissiveIntensity in code. 'fly' (= move) hovers ~0.2 m up; 'special' = courtship flash pose.",
+    "units": "display scale (~0.3 m long), facing +Z glTF, origin at the feet"
+  },
+  {
+    "key": "insect:firefly:icon",
+    "name": "Firefly (Photinus pyralis) - icon",
+    "kind": "image",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfc08ca61b98af27faa08",
+    "fileAssetId": "6addfc08ca61b98af27faa08",
+    "catalogueAssetId": null,
+    "sizeBytes": 40922,
+    "fileName": "ow-p2-firefly_icon.png",
+    "tags": [],
+    "width": 256,
+    "height": 256
+  },
+  {
+    "key": "insect:firefly:silhouette",
+    "name": "Firefly (Photinus pyralis) - silhouette",
+    "kind": "image",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfc09ca61b98af27faa14",
+    "fileAssetId": "6addfc09ca61b98af27faa14",
+    "catalogueAssetId": null,
+    "sizeBytes": 13114,
+    "fileName": "ow-p2-firefly_sil.png",
+    "tags": [],
+    "width": 256,
+    "height": 256
+  },
+  {
+    "key": "insect:leafcutter_ant",
+    "name": "Leafcutter ant (Atta) carrying a leaf",
+    "kind": "model",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfae3ca61b98af27fa821",
+    "fileAssetId": "6addfae3ca61b98af27fa821",
+    "catalogueAssetId": "6addfc21ca61b98af27faa74",
+    "triangles": 4348,
+    "nodes": [
+      "ant_leaf",
+      "leafcutter_ant"
+    ],
+    "clips": [
+      "carry",
+      "idle",
+      "move",
+      "special"
+    ],
+    "sizeBytes": 508664,
+    "fileName": "ow-p2-leafcutter_ant.glb",
+    "tags": [
+      "phase2",
+      "creature",
+      "leafcutter_ant"
+    ],
+    "notes": "Real worker 0.5-1.5 cm. Leaf = separate node 'ant_leaf' on the head bone (hide it for an empty-handed ant). 'carry' = move; 'special' = snip-snip cutting.",
+    "units": "display scale (~0.3 m long), facing +Z glTF, origin at the feet"
+  },
+  {
+    "key": "insect:leafcutter_ant:icon",
+    "name": "Leafcutter ant (Atta) carrying a leaf - icon",
+    "kind": "image",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfc0cca61b98af27faa38",
+    "fileAssetId": "6addfc0cca61b98af27faa38",
+    "catalogueAssetId": null,
+    "sizeBytes": 46399,
+    "fileName": "ow-p2-leafcutter_ant_icon.png",
+    "tags": [],
+    "width": 256,
+    "height": 256
+  },
+  {
+    "key": "insect:leafcutter_ant:silhouette",
+    "name": "Leafcutter ant (Atta) carrying a leaf - silhouette",
+    "kind": "image",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfc0cca61b98af27faa44",
+    "fileAssetId": "6addfc0cca61b98af27faa44",
+    "catalogueAssetId": null,
+    "sizeBytes": 16291,
+    "fileName": "ow-p2-leafcutter_ant_sil.png",
+    "tags": [],
+    "width": 256,
+    "height": 256
+  },
+  {
+    "key": "insect:stick_insect",
+    "name": "Indian stick insect (Carausius morosus)",
+    "kind": "model",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfafdca61b98af27fa847",
+    "fileAssetId": "6addfafdca61b98af27fa847",
+    "catalogueAssetId": "6addfca2ca61b98af27fac67",
+    "triangles": 2825,
+    "nodes": [
+      "stick_insect"
+    ],
+    "clips": [
+      "idle",
+      "move",
+      "special"
+    ],
+    "sizeBytes": 369068,
+    "fileName": "ow-p2-stick_insect.glb",
+    "tags": [
+      "phase2",
+      "creature",
+      "stick_insect"
+    ],
+    "notes": "Real length 7-10 cm. Readable green look for catching/Field Guide. Camouflage variant: insect:stick_insect:camo (same rig and clips). 'idle' sways like a twig; 'special' freezes into a twig pose.",
+    "units": "display scale (~0.3 m long), facing +Z glTF, origin at the feet"
+  },
+  {
+    "key": "insect:stick_insect:icon",
+    "name": "Indian stick insect (Carausius morosus) - icon",
+    "kind": "image",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfc84ca61b98af27fab94",
+    "fileAssetId": "6addfc84ca61b98af27fab94",
+    "catalogueAssetId": null,
+    "sizeBytes": 33035,
+    "fileName": "ow-p2-stick_insect_icon.png",
+    "tags": [],
+    "width": 256,
+    "height": 256
+  },
+  {
+    "key": "insect:stick_insect:silhouette",
+    "name": "Indian stick insect (Carausius morosus) - silhouette",
+    "kind": "image",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfc85ca61b98af27faba0",
+    "fileAssetId": "6addfc85ca61b98af27faba0",
+    "catalogueAssetId": null,
+    "sizeBytes": 17264,
+    "fileName": "ow-p2-stick_insect_sil.png",
+    "tags": [],
+    "width": 256,
+    "height": 256
+  },
+  {
+    "key": "insect:stick_insect:camo",
+    "name": "Indian stick insect - camouflage variant",
+    "kind": "model",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfafeca61b98af27fa854",
+    "fileAssetId": "6addfafeca61b98af27fa854",
+    "catalogueAssetId": "6addfc69ca61b98af27fab68",
+    "triangles": 2825,
+    "nodes": [
+      "stick_insect"
+    ],
+    "clips": [
+      "idle",
+      "move",
+      "special"
+    ],
+    "sizeBytes": 369052,
+    "fileName": "ow-p2-stick_insect_camo.glb",
+    "tags": [
+      "phase2",
+      "creature",
+      "stick_insect_camo"
+    ],
+    "notes": "Same rig/clips as insect:stick_insect, mottled twig-brown + lichen-green material (stick_insect_camo) to hide on the arena hide_board.",
+    "units": "display scale (~0.3 m long), facing +Z glTF, origin at the feet"
+  },
+  {
+    "key": "insect:stick_insect:camo:icon",
+    "name": "Indian stick insect - camouflage variant - icon",
+    "kind": "image",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfc55ca61b98af27faae4",
+    "fileAssetId": "6addfc55ca61b98af27faae4",
+    "catalogueAssetId": null,
+    "sizeBytes": 31674,
+    "fileName": "ow-p2-stick_insect_camo_icon.png",
+    "tags": [],
+    "width": 256,
+    "height": 256
+  },
+  {
+    "key": "insect:stick_insect:camo:silhouette",
+    "name": "Indian stick insect - camouflage variant - silhouette",
+    "kind": "image",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfc55ca61b98af27faaf0",
+    "fileAssetId": "6addfc55ca61b98af27faaf0",
+    "catalogueAssetId": null,
+    "sizeBytes": 17216,
+    "fileName": "ow-p2-stick_insect_camo_sil.png",
+    "tags": [],
+    "width": 256,
+    "height": 256
+  },
+  {
+    "key": "insect:snail",
+    "name": "Garden snail (Cornu aspersum)",
+    "kind": "model",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfaffca61b98af27fa860",
+    "fileAssetId": "6addfaffca61b98af27fa860",
+    "catalogueAssetId": "6addfdcfca61b98af27fb1ed",
+    "triangles": 3558,
+    "nodes": [
+      "snail"
+    ],
+    "clips": [
+      "idle",
+      "move",
+      "special"
+    ],
+    "sizeBytes": 293600,
+    "fileName": "ow-p2-snail.glb",
+    "tags": [
+      "phase2",
+      "creature",
+      "snail"
+    ],
+    "notes": "Real shell 2.5-4 cm. Not an insect (a mollusc) - good for the 'count the legs' lesson. 'special' = retracts eye stalks and tucks in.",
+    "units": "display scale (~0.3 m long), facing +Z glTF, origin at the feet"
+  },
+  {
+    "key": "insect:snail:icon",
+    "name": "Garden snail (Cornu aspersum) - icon",
+    "kind": "image",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfd69ca61b98af27fb002",
+    "fileAssetId": "6addfd69ca61b98af27fb002",
+    "catalogueAssetId": null,
+    "sizeBytes": 41108,
+    "fileName": "ow-p2-snail_icon.png",
+    "tags": [],
+    "width": 256,
+    "height": 256
+  },
+  {
+    "key": "insect:snail:silhouette",
+    "name": "Garden snail (Cornu aspersum) - silhouette",
+    "kind": "image",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfd6aca61b98af27fb00e",
+    "fileAssetId": "6addfd6aca61b98af27fb00e",
+    "catalogueAssetId": null,
+    "sizeBytes": 13179,
+    "fileName": "ow-p2-snail_sil.png",
+    "tags": [],
+    "width": 256,
+    "height": 256
+  },
+  {
+    "key": "insect:honeybee",
+    "name": "Western honeybee (Apis mellifera), pollinator",
+    "kind": "model",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfb00ca61b98af27fa86c",
+    "fileAssetId": "6addfb00ca61b98af27fa86c",
+    "catalogueAssetId": "6addfc67ca61b98af27fab47",
+    "triangles": 4434,
+    "nodes": [
+      "honeybee"
+    ],
+    "clips": [
+      "fly",
+      "idle",
+      "move",
+      "special"
+    ],
+    "sizeBytes": 439972,
+    "fileName": "ow-p2-honeybee.glb",
+    "tags": [
+      "phase2",
+      "creature",
+      "honeybee"
+    ],
+    "notes": "Real length 1.2-1.5 cm, orange pollen baskets on hind legs. 'fly' (= move) hovers ~0.22 m up; 'special' = waggle dance.",
+    "units": "display scale (~0.3 m long), facing +Z glTF, origin at the feet"
+  },
+  {
+    "key": "insect:honeybee:icon",
+    "name": "Western honeybee (Apis mellifera), pollinator - icon",
+    "kind": "image",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfc4fca61b98af27faa9c",
+    "fileAssetId": "6addfc4fca61b98af27faa9c",
+    "catalogueAssetId": null,
+    "sizeBytes": 45888,
+    "fileName": "ow-p2-honeybee_icon.png",
+    "tags": [],
+    "width": 256,
+    "height": 256
+  },
+  {
+    "key": "insect:honeybee:silhouette",
+    "name": "Western honeybee (Apis mellifera), pollinator - silhouette",
+    "kind": "image",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfc50ca61b98af27faaa8",
+    "fileAssetId": "6addfc50ca61b98af27faaa8",
+    "catalogueAssetId": null,
+    "sizeBytes": 21088,
+    "fileName": "ow-p2-honeybee_sil.png",
+    "tags": [],
+    "width": 256,
+    "height": 256
+  },
+  {
+    "key": "insect:monarch_caterpillar",
+    "name": "Monarch caterpillar (Danaus plexippus larva)",
+    "kind": "model",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfb01ca61b98af27fa878",
+    "fileAssetId": "6addfb01ca61b98af27fa878",
+    "catalogueAssetId": "6addfc68ca61b98af27fab52",
+    "triangles": 4316,
+    "nodes": [
+      "monarch_caterpillar"
+    ],
+    "clips": [
+      "eat",
+      "idle",
+      "move",
+      "special"
+    ],
+    "sizeBytes": 352376,
+    "fileName": "ow-p2-monarch_caterpillar.glb",
+    "tags": [
+      "phase2",
+      "creature",
+      "monarch_caterpillar"
+    ],
+    "notes": "Real length up to 5 cm; black/yellow/white bands, 2 pairs of filaments, 3 pairs of true legs + prolegs. 'eat' (= special) munching milkweed.",
+    "units": "display scale (~0.3 m long), facing +Z glTF, origin at the feet"
+  },
+  {
+    "key": "insect:monarch_caterpillar:icon",
+    "name": "Monarch caterpillar (Danaus plexippus larva) - icon",
+    "kind": "image",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfc51ca61b98af27faab4",
+    "fileAssetId": "6addfc51ca61b98af27faab4",
+    "catalogueAssetId": null,
+    "sizeBytes": 48454,
+    "fileName": "ow-p2-monarch_caterpillar_icon.png",
+    "tags": [],
+    "width": 256,
+    "height": 256
+  },
+  {
+    "key": "insect:monarch_caterpillar:silhouette",
+    "name": "Monarch caterpillar (Danaus plexippus larva) - silhouette",
+    "kind": "image",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfc52ca61b98af27faac0",
+    "fileAssetId": "6addfc52ca61b98af27faac0",
+    "catalogueAssetId": null,
+    "sizeBytes": 11685,
+    "fileName": "ow-p2-monarch_caterpillar_sil.png",
+    "tags": [],
+    "width": 256,
+    "height": 256
+  },
+  {
+    "key": "arena:grandstand",
+    "name": "Bug Games grandstand",
+    "kind": "model",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfb21ca61b98af27fa8f3",
+    "fileAssetId": "6addfb21ca61b98af27fa8f3",
+    "catalogueAssetId": "6addfdeeca61b98af27fb23b",
+    "triangles": 4859,
+    "nodes": [
+      "grandstand",
+      "grandstand_garland",
+      "grandstand_pennants"
+    ],
+    "sizeBytes": 581580,
+    "fileName": "ow-p2-arena_grandstand.glb",
+    "tags": [
+      "phase2",
+      "bug-games",
+      "arena",
+      "grandstand"
+    ],
+    "notes": "4 m wide, 3 tiers. Nodes grandstand, grandstand_garland, grandstand_pennants (colour-blind-safe flags; sway).",
+    "units": "metres, origin on the ground at the centre, front faces +Z glTF"
+  },
+  {
+    "key": "arena:grandstand:icon",
+    "name": "Bug Games grandstand - icon",
+    "kind": "image",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfd8bca61b98af27fb0cd",
+    "fileAssetId": "6addfd8bca61b98af27fb0cd",
+    "catalogueAssetId": null,
+    "sizeBytes": 61602,
+    "fileName": "ow-p2-arena_grandstand_icon.png",
+    "tags": [],
+    "width": 256,
+    "height": 256
+  },
+  {
+    "key": "arena:long_jump",
+    "name": "Long-jump sand lane",
+    "kind": "model",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfd66ca61b98af27fafde",
+    "fileAssetId": "6addfd66ca61b98af27fafde",
+    "catalogueAssetId": "6addfdefca61b98af27fb246",
+    "triangles": 3653,
+    "nodes": [
+      "long_jump_sand",
+      "long_jump",
+      "lj_bush"
+    ],
+    "sizeBytes": 502916,
+    "fileName": "ow-p2-arena_long_jump.glb",
+    "tags": [
+      "phase2",
+      "bug-games",
+      "arena",
+      "long_jump"
+    ],
+    "notes": "4.4 x 0.7 m along Y glTF(-Z..+Z = Blender -Y..+Y). Take-off board at 0.4 m from the start end; markers 1..8 every 0.5 m (marker k at Blender y=-2+0.5k). Nodes long_jump, long_jump_sand, lj_bush.",
+    "units": "metres, origin on the ground at the centre, front faces +Z glTF"
+  },
+  {
+    "key": "arena:long_jump:icon",
+    "name": "Long-jump sand lane - icon",
+    "kind": "image",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfd8cca61b98af27fb10d",
+    "fileAssetId": "6addfd8cca61b98af27fb10d",
+    "catalogueAssetId": null,
+    "sizeBytes": 30492,
+    "fileName": "ow-p2-arena_long_jump_icon.png",
+    "tags": [],
+    "width": 256,
+    "height": 256
+  },
+  {
+    "key": "arena:weight_pull",
+    "name": "Weight-pull track",
+    "kind": "model",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfd67ca61b98af27fafea",
+    "fileAssetId": "6addfd67ca61b98af27fafea",
+    "catalogueAssetId": "6addfdefca61b98af27fb251",
+    "triangles": 3631,
+    "nodes": [
+      "weight_pull",
+      "pull_sled",
+      "pull_weights",
+      "pull_bushes"
+    ],
+    "sizeBytes": 536672,
+    "fileName": "ow-p2-arena_weight_pull.glb",
+    "tags": [
+      "phase2",
+      "bug-games",
+      "arena",
+      "weight_pull"
+    ],
+    "notes": "3 m rail track. Nodes weight_pull, pull_sled (move along the track), pull_weights (4 acorn-cap discs), pull_bushes.",
+    "units": "metres, origin on the ground at the centre, front faces +Z glTF"
+  },
+  {
+    "key": "arena:weight_pull:icon",
+    "name": "Weight-pull track - icon",
+    "kind": "image",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfdacca61b98af27fb196",
+    "fileAssetId": "6addfdacca61b98af27fb196",
+    "catalogueAssetId": null,
+    "sizeBytes": 41102,
+    "fileName": "ow-p2-arena_weight_pull_icon.png",
+    "tags": [],
+    "width": 256,
+    "height": 256
+  },
+  {
+    "key": "arena:race_lane",
+    "name": "Race lane (2 lanes)",
+    "kind": "model",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfd68ca61b98af27faff6",
+    "fileAssetId": "6addfd68ca61b98af27faff6",
+    "catalogueAssetId": "6addfdefca61b98af27fb25c",
+    "triangles": 3477,
+    "nodes": [
+      "race_lane",
+      "race_start",
+      "race_finish",
+      "race_bushes"
+    ],
+    "sizeBytes": 519528,
+    "fileName": "ow-p2-arena_race_lane.glb",
+    "tags": [
+      "phase2",
+      "bug-games",
+      "arena",
+      "race_lane"
+    ],
+    "notes": "4 m, start gate + chequered finish gate. Nodes race_lane, race_start, race_finish, race_bushes.",
+    "units": "metres, origin on the ground at the centre, front faces +Z glTF"
+  },
+  {
+    "key": "arena:race_lane:icon",
+    "name": "Race lane (2 lanes) - icon",
+    "kind": "image",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfd8fca61b98af27fb131",
+    "fileAssetId": "6addfd8fca61b98af27fb131",
+    "catalogueAssetId": null,
+    "sizeBytes": 47092,
+    "fileName": "ow-p2-arena_race_lane_icon.png",
+    "tags": [],
+    "width": 256,
+    "height": 256
+  },
+  {
+    "key": "arena:hide_board",
+    "name": "Camouflage hide-and-seek board",
+    "kind": "model",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfb22ca61b98af27fa8ff",
+    "fileAssetId": "6addfb22ca61b98af27fa8ff",
+    "catalogueAssetId": "6addfdf0ca61b98af27fb267",
+    "triangles": 2074,
+    "nodes": [
+      "hide_board",
+      "hide_leaves",
+      "hide_twigs"
+    ],
+    "sizeBytes": 371316,
+    "fileName": "ow-p2-arena_hide_board.glb",
+    "tags": [
+      "phase2",
+      "bug-games",
+      "arena",
+      "hide_board"
+    ],
+    "notes": "1.8 x 1.3 m leafy board with twigs (hide the stick insect / camo variant on it). Nodes hide_board, hide_leaves, hide_twigs.",
+    "units": "metres, origin on the ground at the centre, front faces +Z glTF"
+  },
+  {
+    "key": "arena:hide_board:icon",
+    "name": "Camouflage hide-and-seek board - icon",
+    "kind": "image",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfd8bca61b98af27fb0ed",
+    "fileAssetId": "6addfd8bca61b98af27fb0ed",
+    "catalogueAssetId": null,
+    "sizeBytes": 82516,
+    "fileName": "ow-p2-arena_hide_board_icon.png",
+    "tags": [],
+    "width": 256,
+    "height": 256
+  },
+  {
+    "key": "arena:night_box",
+    "name": "Night box (firefly / night-vision event)",
+    "kind": "model",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfd65ca61b98af27fafd2",
+    "fileAssetId": "6addfd65ca61b98af27fafd2",
+    "catalogueAssetId": "6addfdf0ca61b98af27fb272",
+    "triangles": 2804,
+    "nodes": [
+      "night_box",
+      "night_box_lining",
+      "night_box_lid"
+    ],
+    "sizeBytes": 318880,
+    "fileName": "ow-p2-arena_night_box.glb",
+    "tags": [
+      "phase2",
+      "bug-games",
+      "arena",
+      "night_box"
+    ],
+    "notes": "1 m box, star lining glows faintly, peep windows, low opening. Lid node 'night_box_lid' pivots on its back hinge: rotate about X to open.",
+    "units": "metres, origin on the ground at the centre, front faces +Z glTF"
+  },
+  {
+    "key": "arena:night_box:icon",
+    "name": "Night box (firefly / night-vision event) - icon",
+    "kind": "image",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfd8dca61b98af27fb119",
+    "fileAssetId": "6addfd8dca61b98af27fb119",
+    "catalogueAssetId": null,
+    "sizeBytes": 62171,
+    "fileName": "ow-p2-arena_night_box_icon.png",
+    "tags": [],
+    "width": 256,
+    "height": 256
+  },
+  {
+    "key": "arena:podium",
+    "name": "Podium with leaf medals",
+    "kind": "model",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfb24ca61b98af27fa923",
+    "fileAssetId": "6addfb24ca61b98af27fa923",
+    "catalogueAssetId": "6addfdf1ca61b98af27fb27d",
+    "triangles": 2575,
+    "nodes": [
+      "podium",
+      "medal_gold",
+      "medal_silver",
+      "medal_bronze"
+    ],
+    "sizeBytes": 357680,
+    "fileName": "ow-p2-arena_podium.glb",
+    "tags": [
+      "phase2",
+      "bug-games",
+      "arena",
+      "podium"
+    ],
+    "notes": "1-2-3 podium. Medal nodes medal_gold / medal_silver / medal_bronze hang on the rail (pivot at ribbon top).",
+    "units": "metres, origin on the ground at the centre, front faces +Z glTF"
+  },
+  {
+    "key": "arena:podium:icon",
+    "name": "Podium with leaf medals - icon",
+    "kind": "image",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfd8eca61b98af27fb125",
+    "fileAssetId": "6addfd8eca61b98af27fb125",
+    "catalogueAssetId": null,
+    "sizeBytes": 48899,
+    "fileName": "ow-p2-arena_podium_icon.png",
+    "tags": [],
+    "width": 256,
+    "height": 256
+  },
+  {
+    "key": "arena:scoreboard",
+    "name": "Scoreboard frame",
+    "kind": "model",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfb26ca61b98af27fa93b",
+    "fileAssetId": "6addfb26ca61b98af27fa93b",
+    "catalogueAssetId": "6addfdf1ca61b98af27fb288",
+    "triangles": 2042,
+    "nodes": [
+      "scoreboard",
+      "scoreboard_garland",
+      "scoreboard_screen"
+    ],
+    "sizeBytes": 398456,
+    "fileName": "ow-p2-arena_scoreboard.glb",
+    "tags": [
+      "phase2",
+      "bug-games",
+      "arena",
+      "scoreboard"
+    ],
+    "notes": "Node 'scoreboard_screen' uses material 'scoreboard_screen' (slate texture, UV 0..1, 2:1 aspect, 2 x 1 m): replace its map with a CanvasTexture for in-game text (EN/FR). Ladybird crest.",
+    "units": "metres, origin on the ground at the centre, front faces +Z glTF"
+  },
+  {
+    "key": "arena:scoreboard:icon",
+    "name": "Scoreboard frame - icon",
+    "kind": "image",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfdabca61b98af27fb18a",
+    "fileAssetId": "6addfdabca61b98af27fb18a",
+    "catalogueAssetId": null,
+    "sizeBytes": 40148,
+    "fileName": "ow-p2-arena_scoreboard_icon.png",
+    "tags": [],
+    "width": 256,
+    "height": 256
+  },
+  {
+    "key": "dig:block",
+    "name": "Dig site v2 - layered soil block",
+    "kind": "model",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfb01ca61b98af27fa884",
+    "fileAssetId": "6addfb01ca61b98af27fa884",
+    "catalogueAssetId": "6addfdd2ca61b98af27fb22f",
+    "triangles": 9050,
+    "nodes": [
+      "dig_layer0",
+      "dig_layer1",
+      "dig_layer2",
+      "dig_layer3",
+      "dig_bedrock",
+      "dig_frame"
+    ],
+    "sizeBytes": 820380,
+    "fileName": "ow-p2-dig_block.glb",
+    "tags": [
+      "phase2",
+      "dig",
+      "fossil"
+    ],
+    "notes": "1.2 x 1.2 m, 4 removable strata + bedrock + frame with string grid and a colour depth gauge. Deeper = older.",
+    "units": "metres, origin on the ground at the centre"
+  },
+  {
+    "key": "dig:block:icon",
+    "name": "Dig site v2 - icon",
+    "kind": "image",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfdadca61b98af27fb1a2",
+    "fileAssetId": "6addfdadca61b98af27fb1a2",
+    "catalogueAssetId": null,
+    "sizeBytes": 85995,
+    "fileName": "ow-p2-dig_block_icon.png",
+    "tags": [],
+    "width": 256,
+    "height": 256
+  },
+  {
+    "key": "dig:layer0",
+    "name": "Dig layer 0: humus topsoil with grass",
+    "kind": "node",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfb01ca61b98af27fa884",
+    "fileAssetId": "6addfb01ca61b98af27fa884",
+    "catalogueAssetId": "6addfdd2ca61b98af27fb22f",
+    "nodes": [
+      "dig_layer0"
+    ],
+    "triangles": null,
+    "sizeBytes": null,
+    "notes": "Node of dig:block. Top at 0.92 m, base (node pivot) at 0.74 m (glTF Y). Remove/fade it, or scale Y to 0, to dig it away. Remove in order 0,1,2,3."
+  },
+  {
+    "key": "dig:layer1",
+    "name": "Dig layer 1: red clay with pebbles",
+    "kind": "node",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfb01ca61b98af27fa884",
+    "fileAssetId": "6addfb01ca61b98af27fa884",
+    "catalogueAssetId": "6addfdd2ca61b98af27fb22f",
+    "nodes": [
+      "dig_layer1"
+    ],
+    "triangles": null,
+    "sizeBytes": null,
+    "notes": "Node of dig:block. Top at 0.74 m, base (node pivot) at 0.56 m (glTF Y). Remove/fade it, or scale Y to 0, to dig it away. Remove in order 0,1,2,3."
+  },
+  {
+    "key": "dig:layer2",
+    "name": "Dig layer 2: banded sandstone",
+    "kind": "node",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfb01ca61b98af27fa884",
+    "fileAssetId": "6addfb01ca61b98af27fa884",
+    "catalogueAssetId": "6addfdd2ca61b98af27fb22f",
+    "nodes": [
+      "dig_layer2"
+    ],
+    "triangles": null,
+    "sizeBytes": null,
+    "notes": "Node of dig:block. Top at 0.56 m, base (node pivot) at 0.38 m (glTF Y). Remove/fade it, or scale Y to 0, to dig it away. Remove in order 0,1,2,3."
+  },
+  {
+    "key": "dig:layer3",
+    "name": "Dig layer 3: grey shale",
+    "kind": "node",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfb01ca61b98af27fa884",
+    "fileAssetId": "6addfb01ca61b98af27fa884",
+    "catalogueAssetId": "6addfdd2ca61b98af27fb22f",
+    "nodes": [
+      "dig_layer3"
+    ],
+    "triangles": null,
+    "sizeBytes": null,
+    "notes": "Node of dig:block. Top at 0.38 m, base (node pivot) at 0.2 m (glTF Y). Remove/fade it, or scale Y to 0, to dig it away. Remove in order 0,1,2,3."
+  },
+  {
+    "key": "dig:fossil:shark_tooth",
+    "name": "Fossil shark tooth",
+    "kind": "model",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfb49ca61b98af27fa9c0",
+    "fileAssetId": "6addfb49ca61b98af27fa9c0",
+    "catalogueAssetId": "6addfe0bca61b98af27fb2b7",
+    "triangles": 1020,
+    "nodes": [
+      "fossil_shark_tooth"
+    ],
+    "sizeBytes": 25696,
+    "fileName": "ow-p2-fossil_shark_tooth.glb",
+    "tags": [
+      "phase2",
+      "fossil",
+      "shark_tooth"
+    ],
+    "notes": "~15 million years (Miocene). Revealed when dig_layer0 is removed.",
+    "digSpot": [
+      -0.22,
+      0.752,
+      -0.12
+    ],
+    "coveredBy": "dig:layer0",
+    "units": "display scale, origin at the fossil centre-bottom"
+  },
+  {
+    "key": "dig:fossil:shark_tooth:icon",
+    "name": "Fossil shark tooth - icon",
+    "kind": "image",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfdb1ca61b98af27fb1d2",
+    "fileAssetId": "6addfdb1ca61b98af27fb1d2",
+    "catalogueAssetId": null,
+    "sizeBytes": 43162,
+    "fileName": "ow-p2-fossil_shark_tooth_icon.png",
+    "tags": [],
+    "width": 256,
+    "height": 256
+  },
+  {
+    "key": "dig:fossil:dino_bone",
+    "name": "Dinosaur bone fragment",
+    "kind": "model",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfb4aca61b98af27fa9cc",
+    "fileAssetId": "6addfb4aca61b98af27fa9cc",
+    "catalogueAssetId": "6addfe0cca61b98af27fb2c2",
+    "triangles": 1008,
+    "nodes": [
+      "fossil_dino_bone"
+    ],
+    "sizeBytes": 72012,
+    "fileName": "ow-p2-fossil_dino_bone.glb",
+    "tags": [
+      "phase2",
+      "fossil",
+      "dino_bone"
+    ],
+    "notes": "~70 million years (Late Cretaceous). Revealed under dig_layer1.",
+    "digSpot": [
+      0.1,
+      0.59,
+      0.1
+    ],
+    "coveredBy": "dig:layer1",
+    "units": "display scale, origin at the fossil centre-bottom"
+  },
+  {
+    "key": "dig:fossil:dino_bone:icon",
+    "name": "Dinosaur bone fragment - icon",
+    "kind": "image",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfdafca61b98af27fb1ba",
+    "fileAssetId": "6addfdafca61b98af27fb1ba",
+    "catalogueAssetId": null,
+    "sizeBytes": 25125,
+    "fileName": "ow-p2-fossil_dino_bone_icon.png",
+    "tags": [],
+    "width": 256,
+    "height": 256
+  },
+  {
+    "key": "dig:fossil:ammonite",
+    "name": "Ammonite fossil",
+    "kind": "model",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfb48ca61b98af27fa9b4",
+    "fileAssetId": "6addfb48ca61b98af27fa9b4",
+    "catalogueAssetId": "6addfe0bca61b98af27fb2ac",
+    "triangles": 2544,
+    "nodes": [
+      "fossil_ammonite"
+    ],
+    "sizeBytes": 103396,
+    "fileName": "ow-p2-fossil_ammonite.glb",
+    "tags": [
+      "phase2",
+      "fossil",
+      "ammonite"
+    ],
+    "notes": "~150 million years (Jurassic). Revealed under dig_layer2.",
+    "digSpot": [
+      -0.15,
+      0.4,
+      -0.2
+    ],
+    "coveredBy": "dig:layer2",
+    "units": "display scale, origin at the fossil centre-bottom"
+  },
+  {
+    "key": "dig:fossil:ammonite:icon",
+    "name": "Ammonite fossil - icon",
+    "kind": "image",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfdaeca61b98af27fb1ae",
+    "fileAssetId": "6addfdaeca61b98af27fb1ae",
+    "catalogueAssetId": null,
+    "sizeBytes": 49582,
+    "fileName": "ow-p2-fossil_ammonite_icon.png",
+    "tags": [],
+    "width": 256,
+    "height": 256
+  },
+  {
+    "key": "dig:fossil:fern",
+    "name": "Fossil fern frond on stone",
+    "kind": "model",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfb47ca61b98af27fa9a8",
+    "fileAssetId": "6addfb47ca61b98af27fa9a8",
+    "catalogueAssetId": "6addfe0bca61b98af27fb2a1",
+    "triangles": 2195,
+    "nodes": [
+      "fossil_fern"
+    ],
+    "sizeBytes": 104300,
+    "fileName": "ow-p2-fossil_fern.glb",
+    "tags": [
+      "phase2",
+      "fossil",
+      "fern"
+    ],
+    "notes": "~300 million years (Carboniferous). Revealed under dig_layer3 (on the bedrock).",
+    "digSpot": [
+      0.2,
+      0.212,
+      -0.18
+    ],
+    "coveredBy": "dig:layer3",
+    "units": "display scale, origin at the fossil centre-bottom"
+  },
+  {
+    "key": "dig:fossil:fern:icon",
+    "name": "Fossil fern frond on stone - icon",
+    "kind": "image",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfdb0ca61b98af27fb1c6",
+    "fileAssetId": "6addfdb0ca61b98af27fb1c6",
+    "catalogueAssetId": null,
+    "sizeBytes": 66830,
+    "fileName": "ow-p2-fossil_fern_icon.png",
+    "tags": [],
+    "width": 256,
+    "height": 256
+  },
+  {
+    "key": "dig:fossil:trilobite",
+    "name": "Trilobite fossil",
+    "kind": "model",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfb46ca61b98af27fa99c",
+    "fileAssetId": "6addfb46ca61b98af27fa99c",
+    "catalogueAssetId": "6addfe0aca61b98af27fb296",
+    "triangles": 3688,
+    "nodes": [
+      "fossil_trilobite"
+    ],
+    "sizeBytes": 204852,
+    "fileName": "ow-p2-fossil_trilobite.glb",
+    "tags": [
+      "phase2",
+      "fossil",
+      "trilobite"
+    ],
+    "notes": "~500 million years (Cambrian). In the bedrock pit, revealed under dig_layer3.",
+    "digSpot": [
+      -0.2,
+      0.17,
+      0.18
+    ],
+    "coveredBy": "dig:layer3",
+    "units": "display scale, origin at the fossil centre-bottom"
+  },
+  {
+    "key": "dig:fossil:trilobite:icon",
+    "name": "Trilobite fossil - icon",
+    "kind": "image",
+    "url": "https://future-api.mexty.ai/api/files/p/6addfdb2ca61b98af27fb1de",
+    "fileAssetId": "6addfdb2ca61b98af27fb1de",
+    "catalogueAssetId": null,
+    "sizeBytes": 51742,
+    "fileName": "ow-p2-fossil_trilobite_icon.png",
+    "tags": [],
+    "width": 256,
+    "height": 256
+  },
+  {
+    "key": "DONE"
+  }
+]

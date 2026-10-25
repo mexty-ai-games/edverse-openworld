@@ -17,6 +17,8 @@ import { useSettings } from "./settings";
 import { makeNickname } from "./game/nickname";
 import { openPresence, Presence, roomForAge } from "./game/net";
 import { GROVE, PROPS_KEY, isDistrict, loadZone } from "./zones/registry";
+import { Expedition } from "./ui/Expedition";
+import { defaultExpedition, defaultQuests } from "./expedition/content";
 import "./game.css";
 import "./ui/hub.css";
 
@@ -681,6 +683,227 @@ export interface SkyharborOpen {
   ref?: string;
 }
 
+// ---- The first expedition (props keys `quests` and `expedition`): the Grove Keeper, quests, tools, the Field Guide ----
+
+/** One step of a quest. Steps run in order; a step is done when `count` different things matched it. */
+export interface QuestStep {
+  id: string;
+  /** talk (walk up to / tap the Grove Keeper) | find (glowing seeds) | tool (own a tool) | visit (enter a zone) | photo | identify (hand lens) | observe (photo of a behaviour) */
+  kind: string;
+  /** What matches: "keeper", "spark", a tool id, a zone id, a species id, or "any". */
+  target: string;
+  /** How many different matches finish the step (e.g. 3 different species). */
+  count: number;
+  /** Only counts in this zone (idea-grove or a district id); empty = anywhere. */
+  zone?: string;
+  /** Icon of the quest tracker chip. */
+  icon: string;
+  /** Tracker text ({n} done of {count}). */
+  text: LocalizedText;
+  /** The keeper line that says this step out loud (tracker speaker button, start of the step). */
+  line?: string;
+  /** talk steps: the dialogue the keeper says when the explorer reaches him. */
+  dialogue?: string;
+}
+
+export interface Quest {
+  id: string;
+  icon: string;
+  title: LocalizedText;
+  /** Dialogue the keeper says when the quest starts. */
+  intro?: string;
+  /** Dialogue when it is finished (before the next quest starts). */
+  done?: string;
+  /** Tool ids given when the quest starts. */
+  giveAtStart: string[];
+  /** Tool ids given when the quest is finished. */
+  reward: string[];
+  steps: QuestStep[];
+}
+
+/** A line the Grove Keeper says (speech bubble, next button only), with its voice-over. */
+export interface KeeperLine {
+  id: string;
+  text: LocalizedText;
+  /** Voice-over audio URL per language. */
+  audio?: LocalizedText;
+  /** Keeper animation while saying it: talk | wave */
+  anim?: string;
+}
+
+export interface Dialogue {
+  id: string;
+  /** Keeper line ids, in order. */
+  lines: string[];
+}
+
+export interface KeeperProps {
+  name: LocalizedText;
+  /** Rigged model (clips idle / wave / talk); empty = the explorer base model in a naturalist's colours. */
+  modelUrl: string;
+  /** Portrait in the speech bubble (image URL); empty = the icon. */
+  portraitUrl: string;
+  icon: string;
+  lines: KeeperLine[];
+  dialogues: Dialogue[];
+}
+
+/** A tool of the field kit (earned by quests). id: camera | guide | lens */
+export interface Tool {
+  id: string;
+  icon: string;
+  /** Picture of the tool (HUD button, reward card); empty = the icon. */
+  iconUrl: string;
+  /** 3D model shown on the reward card / in the world; optional. */
+  modelUrl: string;
+  name: LocalizedText;
+  about: LocalizedText;
+}
+
+/** A true fact of a Field Guide page, with where it can be checked. */
+export interface GuideFact {
+  text: LocalizedText;
+  /** The same idea in a few easy words (ages 4-6). */
+  easy: LocalizedText;
+  /** Where the fact can be checked (shown small under it). */
+  source: string;
+}
+
+/** What the explorer checks with the hand lens: a count (legs, arms...) or yes / no (shell, fur...). */
+export interface LensFeature {
+  id: string;
+  /** count | yesno */
+  kind: string;
+  icon: string;
+  question: LocalizedText;
+  /** A kind tip after a wrong observation (never the answer). */
+  tip: LocalizedText;
+  /** count: the highest number offered. */
+  max: number;
+}
+
+export interface LensCheck {
+  /** LensFeature id. */
+  feature: string;
+  /** The true count, or 1 = yes / 0 = no. */
+  value: number;
+}
+
+/** A creature (or plant) with a page in the Field Guide. Stages: seen → photographed → identified → behaviour observed; each reveals one fact. */
+export interface GuideSpecies {
+  id: string;
+  /** rainforest | canyon | coast */
+  biome: string;
+  icon: string;
+  name: LocalizedText;
+  /** What the hand lens shows it is, e.g. "a bird", "an insect". */
+  group: LocalizedText;
+  /** Picture once photographed (render of its model); empty = the icon. */
+  iconUrl: string;
+  /** Silhouette shown before it is seen; empty = the icon drawn dark. */
+  silhouetteUrl: string;
+  /** Its 3D model in the world. */
+  modelUrl: string;
+  /** Size in the world (the models are about real size for small animals; 1-2 makes them easy to see). */
+  scale: number;
+  /** What its 'feed' behaviour looks like ("pecking fruit"); empty = it has none. */
+  feed: LocalizedText;
+  /** What its 'special' behaviour looks like ("basking in the sun"). */
+  special: LocalizedText;
+  /** 4 facts: seen, photographed, identified, behaviour observed. */
+  facts: GuideFact[];
+  /** What the hand lens asks the explorer to check. */
+  lens: LensCheck[];
+  /** Voice-over of the first fact (speaker button of its page). */
+  factAudio?: LocalizedText;
+}
+
+export interface ExpeditionUi {
+  next: LocalizedText;
+  close: LocalizedText;
+  listen: LocalizedText;
+  talk: LocalizedText;
+  pickUp: LocalizedText;
+  sparkName: LocalizedText;
+  sparkFound: LocalizedText;
+  questDone: LocalizedText;
+  newTool: LocalizedText;
+  allDone: LocalizedText;
+  // field camera
+  camera: LocalizedText;
+  cameraHint: LocalizedText;
+  zoom: LocalizedText;
+  shutter: LocalizedText;
+  noCreature: LocalizedText;
+  tipCentre: LocalizedText;
+  tipCloser: LocalizedText;
+  tipFill: LocalizedText;
+  tipBehaviour: LocalizedText;
+  perfect: LocalizedText;
+  starsLabel: LocalizedText;
+  photoBest: LocalizedText;
+  photoKept: LocalizedText;
+  newPage: LocalizedText;
+  tooShy: LocalizedText;
+  // field guide
+  guide: LocalizedText;
+  guideProgress: LocalizedText;
+  guideChip: LocalizedText;
+  unknown: LocalizedText;
+  stageSeen: LocalizedText;
+  stagePhoto: LocalizedText;
+  stageId: LocalizedText;
+  stageBehaviour: LocalizedText;
+  lockedSeen: LocalizedText;
+  lockedPhoto: LocalizedText;
+  lockedId: LocalizedText;
+  lockedBehaviour: LocalizedText;
+  source: LocalizedText;
+  bestPhoto: LocalizedText;
+  noPhoto: LocalizedText;
+  back: LocalizedText;
+  // hand lens
+  lens: LocalizedText;
+  lensHint: LocalizedText;
+  lensFar: LocalizedText;
+  lensNone: LocalizedText;
+  lensTitle: LocalizedText;
+  lensCompare: LocalizedText;
+  lensCheck: LocalizedText;
+  lensRight: LocalizedText;
+  lensWrong: LocalizedText;
+  lensCountHint: LocalizedText;
+  yes: LocalizedText;
+  no: LocalizedText;
+  undo: LocalizedText;
+  // behaviours
+  doingIdle: LocalizedText;
+  doingMove: LocalizedText;
+  doingHide: LocalizedText;
+  /** Biome Frontier field station board. */
+  stationIntro: LocalizedText;
+}
+
+export interface ExpeditionModels {
+  /** A glowing seed of the "Three sparks" quest. */
+  spark: string;
+}
+
+export interface ExpeditionSounds {
+  /** Field Camera shutter; empty = a soft click made by the game. */
+  shutter: string;
+}
+
+export interface ExpeditionProps {
+  ui: ExpeditionUi;
+  keeper: KeeperProps;
+  tools: Tool[];
+  species: GuideSpecies[];
+  lensFeatures: LensFeature[];
+  models: ExpeditionModels;
+  sounds: ExpeditionSounds;
+}
+
 export interface BlockProps {
   ui: UiText;
   /** Shipped ideas: one lantern each on the Idea Tree. */
@@ -705,6 +928,10 @@ export interface BlockProps {
   /** Skyharbor district (coding, space, engineering). */
   skyharbor?: SkyharborProps;
   voice?: VoiceLines;
+  /** The first expedition: quests, in order (the quest engine runs them one after another). */
+  quests?: Quest[];
+  /** The Grove Keeper, the field kit and the Field Guide. */
+  expedition?: ExpeditionProps;
 }
 
 /** Catches a model or texture that could not load, so the child sees a kind message and a retry button. */
@@ -787,6 +1014,9 @@ export const Block: React.FC<Partial<BlockProps>> = (raw) => {
   const [note, setNote] = useState<ReportStatus | null>(null);
   const [flagTarget, setFlagTarget] = useState<ReportTarget | null>(null);
   const [young, setYoung] = useState(false);
+  const [expBusy, setExpBusy] = useState(false);
+  const exp = props.expedition || defaultExpedition;
+  const quests = props.quests && props.quests.length ? props.quests : defaultQuests;
   /** Local screenshots only: stop drawing frames (headless software rendering is slow). */
   const [frozen, setFrozen] = useState(false);
   const game = useMemo<Game>(() => createGame(), []);
@@ -1106,6 +1336,8 @@ export const Block: React.FC<Partial<BlockProps>> = (raw) => {
 
   const labelFor = useCallback(
     (tg: Target): [string, string] | null => {
+      if (tg.kind === "keeper") return [exp.keeper.icon || "🧓", t(exp.ui.talk)];
+      if (tg.kind === "spark") return ["✨", t(exp.ui.pickUp)];
       if (zone.id === "skyharbor" && zoneProps) {
         const ui = (zoneProps as SkyharborProps).ui;
         if (tg.kind === "skyharbor:robot") return ["🤖", t(ui.talkRobot)];
@@ -1113,7 +1345,7 @@ export const Block: React.FC<Partial<BlockProps>> = (raw) => {
       }
       return null;
     },
-    [zone.id, zoneProps, t],
+    [zone.id, zoneProps, t, exp],
   );
 
   if (!ready) return <div className="ow-root ow-empty">EdVerse OpenWorld</div>;
@@ -1209,7 +1441,7 @@ export const Block: React.FC<Partial<BlockProps>> = (raw) => {
           game={game}
           presence={presence}
           roomInfo={roomInfo}
-          blocked={!!card || skyOpen || busy || !!report || !!fade || paused}
+          blocked={!!card || skyOpen || busy || expBusy || !!report || !!fade || paused}
           onBack={backToStart}
           found={saved.found.length}
           zoneName={zone.mod ? districtName : undefined}
@@ -1218,9 +1450,22 @@ export const Block: React.FC<Partial<BlockProps>> = (raw) => {
           labelFor={labelFor}
         />
       )}
+      {loaded && (
+        <Expedition
+          exp={exp}
+          quests={quests}
+          t={t}
+          game={game}
+          zone={zone.id}
+          phase={phase}
+          young={young}
+          blocked={!!card || skyOpen || busy || !!report || !!fade || paused}
+          onBusy={setExpBusy}
+        />
+      )}
       {loaded && phase === "play" && Activity && zoneProps && (
         <React.Fragment key={zone.id}>
-          {zone.id === "biome-frontier" && <Activity props={zoneProps} t={t} paused={paused} onBusy={setDistrictBusy} />}
+          {zone.id === "biome-frontier" && <Activity props={zoneProps} expedition={exp} t={t} paused={paused} onBusy={setDistrictBusy} />}
           {zone.id === "chrono-quarter" && <Activity props={zoneProps} game={game} t={t} paused={paused} onBlockingChange={setDistrictBusy} />}
           {zone.id === "skyharbor" && shOpen && <Activity props={zoneProps} open={shOpen} t={t} onClose={() => setShOpen(null)} paused={paused} />}
         </React.Fragment>

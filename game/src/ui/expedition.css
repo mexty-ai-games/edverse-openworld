@@ -1,0 +1,350 @@
+/* The first expedition: quest tracker, field-kit buttons, speech bubble, viewfinder, photo card,
+   Field Guide book and hand lens. Swarm-Legends family: warm parchment cards, big touch targets. */
+
+/* quest tracker chip (under the HUD chips) */
+.ex-tracker {
+  position: absolute;
+  z-index: 9;
+  top: calc(max(10px, env(safe-area-inset-top)) + 40px);
+  left: max(10px, env(safe-area-inset-left));
+  max-width: min(78vw, 460px);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(180deg, #fff6df 0%, #f6e3b8 100%);
+  border: 3px solid #e0a43c;
+  border-radius: 18px;
+  padding: 6px 8px 6px 10px;
+  font-weight: 900;
+  font-size: clamp(14px, 2.1vmin, 17px);
+  box-shadow: 0 4px 12px rgba(60, 30, 5, 0.3);
+  animation: ow-pop 0.3s ease-out;
+}
+.ex-tracker.dim { opacity: 0.5; }
+.ex-tracker.low { top: calc(max(10px, env(safe-area-inset-top)) + 88px); }
+.ex-tracker-icon { font-size: 1.5em; }
+.ex-tracker-text { line-height: 1.15; }
+.ex-tracker-say {
+  flex: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid var(--edge);
+  background: #fffaf0;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+/* field kit buttons: a column on the right edge */
+.ex-tools {
+  position: absolute;
+  z-index: 9;
+  right: max(14px, env(safe-area-inset-right));
+  top: 50%;
+  transform: translateY(-62%);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.ex-tool { width: 62px; height: 62px; font-size: 30px; animation: ow-pop 0.35s ease-out; }
+.ex-tool img { width: 80%; height: 80%; object-fit: contain; }
+.ex-tool.on { background: #ffd98a; border-color: var(--go-dark); }
+.ex-small { width: 46px; height: 46px; font-size: 19px; flex: none; }
+
+/* toast */
+.ex-toast {
+  position: absolute;
+  z-index: 26;
+  left: 50%;
+  top: calc(max(10px, env(safe-area-inset-top)) + 96px);
+  transform: translateX(-50%);
+  max-width: min(90vw, 480px);
+  background: rgba(40, 25, 10, 0.86);
+  color: #fff3d6;
+  border-radius: 16px;
+  padding: 10px 16px;
+  font-weight: 900;
+  font-size: clamp(15px, 2.3vmin, 19px);
+  text-align: center;
+  pointer-events: none;
+  animation: ow-pop 0.25s ease-out;
+}
+
+/* the Grove Keeper's speech bubble */
+.ex-bubble-wrap {
+  position: absolute;
+  z-index: 16;
+  left: 0;
+  right: 0;
+  bottom: calc(max(12px, env(safe-area-inset-bottom)) + 4px);
+  display: flex;
+  justify-content: center;
+  padding: 0 12px;
+  pointer-events: none;
+}
+.ex-bubble {
+  pointer-events: auto;
+  position: relative;
+  width: min(640px, 100%);
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 12px;
+  align-items: center;
+  padding: 12px 14px;
+  animation: ow-pop 0.25s ease-out;
+}
+.ex-bubble::before {
+  content: "";
+  position: absolute;
+  top: -16px;
+  left: 44px;
+  border: 14px solid transparent;
+  border-bottom-color: var(--edge);
+  border-top: 0;
+}
+.ex-portrait {
+  width: clamp(54px, 10vmin, 74px);
+  height: clamp(54px, 10vmin, 74px);
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 35%, #fff4d8, #e9c98a);
+  border: 3px solid var(--edge);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(30px, 6vmin, 42px);
+  overflow: hidden;
+}
+.ex-portrait img { width: 100%; height: 100%; object-fit: cover; }
+.ex-bubble-name { font-weight: 900; color: var(--ink-soft); font-size: clamp(13px, 1.9vmin, 15px); }
+.ex-bubble-text { font-weight: 800; font-size: clamp(16px, 2.6vmin, 21px); line-height: 1.25; }
+.ex-bubble-btns { display: flex; flex-direction: column; gap: 8px; align-items: center; }
+.ex-next { min-width: 64px; }
+@media (max-width: 520px) {
+  .ex-bubble { grid-template-columns: auto 1fr; }
+  .ex-bubble-btns { grid-column: 1 / 3; flex-direction: row; justify-content: flex-end; }
+}
+
+/* lens hint */
+.ex-lens-hint {
+  position: absolute;
+  z-index: 10;
+  left: 50%;
+  bottom: calc(max(18px, env(safe-area-inset-bottom)) + 8px);
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255, 246, 223, 0.95);
+  border: 3px solid var(--edge);
+  border-radius: 18px;
+  padding: 6px 6px 6px 14px;
+  font-weight: 900;
+  font-size: clamp(14px, 2.2vmin, 18px);
+  max-width: min(64vw, 460px);
+}
+
+/* the viewfinder */
+.ex-viewfinder { position: absolute; inset: 0; z-index: 11; pointer-events: none; }
+.ex-viewfinder > button, .ex-viewfinder .ex-zoom, .ex-viewfinder .ex-cam-top { pointer-events: auto; }
+.ex-frame { position: absolute; inset: 7% 6%; }
+.ex-frame i { position: absolute; width: 44px; height: 44px; border: 0 solid rgba(255, 255, 255, 0.9); filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.6)); }
+.ex-frame .tl { left: 0; top: 0; border-left-width: 5px; border-top-width: 5px; border-top-left-radius: 10px; }
+.ex-frame .tr { right: 0; top: 0; border-right-width: 5px; border-top-width: 5px; border-top-right-radius: 10px; }
+.ex-frame .bl { left: 0; bottom: 0; border-left-width: 5px; border-bottom-width: 5px; border-bottom-left-radius: 10px; }
+.ex-frame .br { right: 0; bottom: 0; border-right-width: 5px; border-bottom-width: 5px; border-bottom-right-radius: 10px; }
+.ex-ring {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 72vmin;
+  height: 72vmin;
+  transform: translate(-50%, -50%) scale(0.5);
+  border: 4px dashed rgba(255, 255, 255, 0.85);
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18);
+  transition: border-color 0.2s;
+}
+.ex-ring.ok { border-style: solid; border-color: #9cf06a; }
+.ex-lock {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  border: 3px solid rgba(255, 220, 120, 0.9);
+  border-radius: 12px;
+  transition: left 0.12s linear, top 0.12s linear, width 0.12s, height 0.12s;
+}
+.ex-lock.ok { border-color: #9cf06a; }
+.ex-flash { position: absolute; inset: 0; background: #fff; animation: ex-flash 0.45s ease-out forwards; }
+@keyframes ex-flash { from { opacity: 0.95; } to { opacity: 0; } }
+.ex-cam-top {
+  position: absolute;
+  top: calc(max(10px, env(safe-area-inset-top)) + 40px);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  background: rgba(30, 20, 8, 0.66);
+  color: #fff3d6;
+  font-weight: 900;
+  font-size: clamp(14px, 2.2vmin, 18px);
+  padding: 6px 6px 6px 14px;
+  border-radius: 18px;
+  width: max-content;
+  max-width: min(90vw, 560px);
+}
+.ex-zoom {
+  position: absolute;
+  right: max(14px, env(safe-area-inset-right));
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+.ex-zoom-range {
+  writing-mode: vertical-lr;
+  direction: rtl;
+  width: 34px;
+  height: min(34vh, 220px);
+  accent-color: #f0962f;
+}
+.ex-shutter {
+  position: absolute;
+  left: 50%;
+  bottom: calc(max(18px, env(safe-area-inset-bottom)) + 6px);
+  transform: translateX(-50%);
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  border: 6px solid #fff;
+  background: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ex-shutter span { width: 62px; height: 62px; border-radius: 50%; background: radial-gradient(circle at 40% 35%, #ffd27a, #f0962f); border: 3px solid #b5601a; }
+.ex-shutter:active span { transform: scale(0.9); }
+
+/* modal cards */
+.ow-modal.ex-modal { z-index: 18; }
+.ex-photo { width: min(440px, 100%); max-height: 100%; overflow-y: auto; text-align: center; touch-action: pan-y; }
+.ex-polaroid { background: #fff; border-radius: 10px; padding: 10px 10px 8px; box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3); transform: rotate(-2deg); margin: 0 auto 10px; width: min(260px, 80%); animation: ex-develop 0.6s ease-out; }
+@keyframes ex-develop { from { filter: brightness(2.2) saturate(0); transform: rotate(-2deg) scale(0.92); } to { filter: none; transform: rotate(-2deg); } }
+.ex-polaroid-name { font-weight: 900; font-size: clamp(17px, 2.8vmin, 22px); margin-top: 6px; }
+.ex-polaroid-doing { color: var(--ink-soft); font-weight: 800; }
+.ex-photo-none { font-size: 64px; }
+.ex-photo-stars { font-size: 30px; }
+.ex-stars span { color: #d8c8a8; text-shadow: 0 1px 0 #fff; }
+.ex-stars span.on { color: #ffb400; text-shadow: 0 0 8px rgba(255, 180, 0, 0.6); }
+.ex-text { font-weight: 800; font-size: clamp(15px, 2.3vmin, 18px); margin: 8px 0; }
+.ex-small-text { font-weight: 700; font-size: clamp(12px, 1.8vmin, 14px); color: var(--ink-soft); }
+.ex-badge { display: inline-block; background: #6b4fb8; color: #fff; font-weight: 900; padding: 4px 14px; border-radius: 999px; margin: 4px 0; }
+.ex-newfacts { background: #fff7e2; border: 2px dashed #d9b682; border-radius: 14px; padding: 8px 12px; margin-top: 8px; text-align: left; font-weight: 700; }
+.ex-newfacts p { margin: 6px 0 0; }
+.center { text-align: center; }
+
+.ex-pic { width: 76px; height: 76px; border-radius: 14px; background: #f3e4c4; display: flex; align-items: center; justify-content: center; overflow: hidden; margin: 0 auto; }
+.ex-pic img { width: 100%; height: 100%; object-fit: cover; }
+.ex-pic.icon { font-size: 44px; }
+.ex-pic.big { width: min(220px, 60vw); height: min(220px, 60vw); border-radius: 18px; }
+.ex-pic.big.icon { font-size: min(130px, 34vw); }
+.ex-pic.shadow img, .ex-pic.shadow.icon { filter: brightness(0) opacity(0.55); }
+.ex-polaroid .ex-pic.big { width: 100%; height: auto; aspect-ratio: 1; }
+
+/* the Field Guide book */
+.ex-book {
+  width: min(860px, 100%);
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: linear-gradient(90deg, #f4e2bb 0%, #fbf0d6 49.5%, #e9d3a5 50%, #fbf0d6 51%, #f4e2bb 100%);
+  border-color: #8a5a2b;
+  border-width: 5px;
+}
+.ex-book-head { display: flex; align-items: center; gap: 10px; justify-content: space-between; }
+.ex-book-title { font-weight: 900; font-size: clamp(20px, 3.4vmin, 28px); }
+.ex-book-progress { font-weight: 800; color: var(--ink-soft); font-size: clamp(13px, 2vmin, 16px); text-align: center; }
+.ex-book-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); gap: 10px; overflow-y: auto; touch-action: pan-y; padding: 4px; }
+.ex-book-grid.young { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+.ex-book-grid.young .ex-pic { width: 104px; height: 104px; }
+.ex-book-cell {
+  font: inherit;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 6px;
+  border-radius: 16px;
+  border: 3px solid #d9b682;
+  background: rgba(255, 250, 236, 0.85);
+  cursor: pointer;
+  min-height: 132px;
+}
+.ex-book-cell.seen { border-color: #b9874c; background: #fffaf0; }
+.ex-cell-name { font-weight: 900; font-size: clamp(12px, 1.8vmin, 14px); text-align: center; line-height: 1.1; }
+.ex-pips { display: flex; gap: 4px; }
+.ex-pips i { width: 12px; height: 12px; border-radius: 50%; background: #e2cfa6; border: 2px solid #c7a874; }
+.ex-pips i.on { background: #f0962f; border-color: #b5601a; }
+.ex-page { display: grid; grid-template-columns: minmax(200px, 300px) 1fr; gap: 16px; overflow-y: auto; touch-action: pan-y; padding: 4px; }
+.ex-page-left { display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center; }
+.ex-page-name { margin: 2px 0 0; font-size: clamp(20px, 3.4vmin, 28px); font-weight: 900; line-height: 1.1; }
+.ex-page-group { font-weight: 900; color: #3f6d24; }
+.ex-page-photo { font-weight: 800; }
+.ex-page-photo .ex-stars { font-size: 22px; }
+.ex-page-facts { display: flex; flex-direction: column; gap: 8px; }
+.ex-fact { background: rgba(255, 255, 255, 0.55); border: 2px dashed #d9b682; border-radius: 14px; padding: 8px 12px; }
+.ex-fact.on { background: #fffaf0; border-style: solid; border-color: #b9874c; }
+.ex-fact p { margin: 4px 0; font-weight: 700; font-size: clamp(14px, 2.1vmin, 17px); }
+.ex-fact-stage { font-weight: 900; color: var(--ink-soft); font-size: clamp(13px, 1.9vmin, 15px); }
+.ex-fact-easy { font-size: clamp(20px, 3.4vmin, 28px) !important; font-weight: 900 !important; }
+.ex-locked { color: #a08260; }
+.ex-source { font-size: 12px; color: #8a6a48; font-style: italic; }
+.ex-page.young { grid-template-columns: 1fr; justify-items: center; }
+@media (orientation: portrait), (max-width: 620px) {
+  .ex-page { grid-template-columns: 1fr; }
+  .ex-book { background: linear-gradient(180deg, #fbf0d6 0%, #f4e2bb 100%); }
+}
+
+/* the hand lens: a sheet at the bottom, the close-up stays visible above it */
+.ex-lens {
+  position: absolute;
+  z-index: 18;
+  left: 50%;
+  bottom: max(10px, env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  width: min(620px, calc(100% - 20px));
+  max-height: 58%;
+  overflow-y: auto;
+  touch-action: pan-y;
+  animation: ow-pop 0.25s ease-out;
+}
+.ex-lens-head { display: flex; justify-content: space-between; align-items: center; }
+.ex-lens-title { font-weight: 900; font-size: clamp(18px, 3vmin, 24px); }
+.ex-lens-body { display: grid; grid-template-columns: auto 1fr; gap: 12px; align-items: start; margin-top: 6px; }
+.ex-lens-compare { width: 96px; text-align: center; }
+.ex-lens-compare .ex-pic { width: 88px; height: 88px; }
+.ex-lens-checks { display: flex; flex-direction: column; gap: 8px; }
+.ex-check { background: #fffaf0; border: 2px solid #d9b682; border-radius: 14px; padding: 8px 10px; }
+.ex-check.wrong { border-color: #e08a3c; background: #fff1de; }
+.ex-check.right { border-color: #6aa84f; background: #f1fae8; }
+.ex-check-q { font-weight: 900; font-size: clamp(15px, 2.3vmin, 18px); margin-bottom: 6px; }
+.ex-count { display: flex; align-items: center; gap: 10px; }
+.ex-tally { flex: 1; display: flex; align-items: center; gap: 10px; min-height: 46px; }
+.ex-tally b { font-size: 30px; min-width: 30px; text-align: center; }
+.ex-dots { display: flex; flex-wrap: wrap; gap: 4px; }
+.ex-dots i { width: 14px; height: 14px; border-radius: 50%; background: #f0962f; border: 2px solid #b5601a; }
+.ex-yesno button { min-height: 50px; font-size: clamp(15px, 2.2vmin, 18px); }
+.ex-kind { margin-top: 6px; font-weight: 800; color: #9a4f12; }
+.ex-good { background: #f1fae8; border: 2px solid #6aa84f; border-radius: 14px; padding: 8px 12px; margin-top: 8px; font-weight: 700; }
+.ex-good p { margin: 6px 0 0; }
+.ow-btn:disabled { opacity: 0.55; cursor: default; }
+@media (max-width: 420px) {
+  .ex-lens-body { grid-template-columns: 1fr; }
+  .ex-lens-compare { width: auto; display: flex; align-items: center; gap: 10px; }
+  .ex-lens-compare .ex-pic { margin: 0; width: 64px; height: 64px; }
+}

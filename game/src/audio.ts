@@ -114,6 +114,42 @@ class SoundEngine {
     src.start();
   }
 
+  /** The Field Camera's shutter: a prop sound if there is one, else a soft two-part click made here. */
+  shutter(url?: string) {
+    if (!this.ctx || this.muted) return;
+    const buf = url ? this.buffers.get(url) : undefined;
+    if (url && !buf) this.load(url);
+    if (buf) {
+      const src = this.ctx.createBufferSource();
+      src.buffer = buf;
+      src.connect(this.sfxGain!);
+      src.start();
+      return;
+    }
+    const ctx = this.ctx;
+    const len = Math.floor(ctx.sampleRate * 0.12);
+    const noise = ctx.createBuffer(1, len, ctx.sampleRate);
+    const d = noise.getChannelData(0);
+    for (let i = 0; i < len; i++) {
+      const t = i / ctx.sampleRate;
+      // two clicks (shutter opens, closes), each a fast-decaying burst
+      const env = Math.exp(-t * 90) + (t > 0.055 ? 0.7 * Math.exp(-(t - 0.055) * 110) : 0);
+      d[i] = (Math.random() * 2 - 1) * env;
+    }
+    const src = ctx.createBufferSource();
+    src.buffer = noise;
+    const f = ctx.createBiquadFilter();
+    f.type = "bandpass";
+    f.frequency.value = 2400;
+    f.Q.value = 0.8;
+    const g = ctx.createGain();
+    g.gain.value = 0.9;
+    src.connect(f);
+    f.connect(g);
+    g.connect(this.sfxGain!);
+    src.start();
+  }
+
   startAmbience() {
     this.wantAmb = true;
     const url = this.ambOverride || this.urls.ambience;

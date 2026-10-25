@@ -93,18 +93,25 @@ function Avatar({ url, preset, read }: { url: string; preset: AvatarPreset | und
 }
 
 /** Nickname tag and phrase bubble above an explorer; updated without re-rendering. */
-function Tag({ nick, read, phrases, mine, onTap, hidden }: {
+function Tag({ nick, read, phrases, mine, onTap, hidden, away }: {
   nick: string;
   read: () => { phrase: string | null; phraseAt: number };
   phrases: Record<string, { icon: string; text: LocalizedText }>;
   mine?: boolean;
   onTap?: () => void;
   hidden?: boolean;
+  /** While true the tag is not shown (the explorer's own tag behind the Field Camera). */
+  away?: () => boolean;
 }) {
   const bubble = useRef<HTMLDivElement>(null);
+  const wrap = useRef<HTMLDivElement>(null);
   const shown = useRef("");
   const { language, defaultLanguage } = useLanguage();
   useFrame(() => {
+    if (wrap.current && away) {
+      const d = away() ? "none" : "";
+      if (wrap.current.style.display !== d) wrap.current.style.display = d;
+    }
     const el = bubble.current;
     if (!el) return;
     const s = read();
@@ -119,7 +126,7 @@ function Tag({ nick, read, phrases, mine, onTap, hidden }: {
   });
   return (
     <Html position={[0, 1.5, 0]} center zIndexRange={[7, 0]} style={{ pointerEvents: "none" }}>
-      <div className="ow-tagwrap">
+      <div className="ow-tagwrap" ref={wrap}>
         <div ref={bubble} className="ow-bubble" />
         <div
           className={"ow-tag" + (mine ? " mine" : "") + (hidden ? " muted" : "")}
@@ -264,7 +271,8 @@ function Me({ props, game, phrases, layout }: { props: BlockProps; game: Game; p
         iz /= len;
         len = 1;
       }
-      const speed = 4.6 * len;
+      // with the Field Camera up the explorer tiptoes: creatures stay calm
+      const speed = (game.cam.aim ? 2.1 : 4.6) * len;
       let nx = me.x + ix * speed * dt;
       let nz = me.z + iz * speed * dt;
       for (let pass = 0; pass < 2; pass++) {
@@ -285,8 +293,10 @@ function Me({ props, game, phrases, layout }: { props: BlockProps; game: Game; p
         nz *= WORLD_R / r;
       }
       const moved = Math.hypot(nx - me.x, nz - me.z);
+      game.speed += (moved / Math.max(dt, 1e-4) - game.speed) * Math.min(1, dt * 6);
       me.moving = len > 0.08 && moved > 0.2 * speed * dt;
       if (len > 0.08) me.ry = angleLerp(me.ry, Math.atan2(ix, iz), 1 - Math.exp(-dt * 12));
+      else if (game.cam.aim) me.ry = angleLerp(me.ry, Math.atan2(-Math.sin(game.cam.yaw), -Math.cos(game.cam.yaw)), 1 - Math.exp(-dt * 10));
       me.x = nx;
       me.z = nz;
       if (game.walkTo && !me.moving) game.walkTo = null;
@@ -313,13 +323,39 @@ function Me({ props, game, phrases, layout }: { props: BlockProps; game: Game; p
     if (g) {
       g.position.set(me.x, me.y, me.z);
       g.rotation.y = me.ry;
+      // the viewfinder looks over the explorer's head: the explorer is not drawn in the way
+      g.visible = !(game.mode === "play" && game.cam.aim);
     }
     // camera: close on the explorer at the start, then a 3/4 view from behind and above
     const portrait = size.height > size.width;
     // orbit: yaw turns the camera around the explorer, pitch raises it, zoom scales the distance
     const cyaw = Math.cos(game.cam.yaw);
     const syaw = Math.sin(game.cam.yaw);
-    if (game.mode === "play") {
+    game.view.camera = camera as THREE.PerspectiveCamera;
+    game.view.width = size.width;
+    game.view.height = size.height;
+    // the Field Camera's zoom: a narrower field of view
+    const pc = camera as THREE.PerspectiveCamera;
+    const wantFov = game.mode === "play" ? game.cam.fov : 50;
+    if (pc.isPerspectiveCamera && Math.abs(pc.fov - wantFov) > 0.05) {
+      pc.fov += (wantFov - pc.fov) * (1 - Math.exp(-total * 10));
+      pc.updateProjectionMatrix();
+    }
+    const fc = game.cam.focus;
+    if (game.mode === "play" && fc) {
+      // hand lens close-up: from beside the explorer, close to the creature
+      const dx = me.x - fc.x;
+      const dz = me.z - fc.z;
+      const dl = Math.max(0.01, Math.hypot(dx, dz));
+      wantPos.current.set(fc.x + (dx / dl) * fc.d - (dz / dl) * fc.d * 0.35, fc.y + fc.d * 0.55, fc.z + (dz / dl) * fc.d + (dx / dl) * fc.d * 0.35);
+      // look a little below it, so the creature sits in the upper half (the lens panel is at the bottom)
+      look.current.lerp(new THREE.Vector3(fc.x, fc.y - fc.d * 0.42, fc.z), 1 - Math.exp(-total * 6));
+    } else if (game.mode === "play" && game.cam.aim) {
+      // viewfinder: just behind and above the explorer's head, looking where the camera's yaw points
+      // (dragging up and down tilts it)
+      wantPos.current.set(me.x + syaw * 1.9, me.y + 1.75, me.z + cyaw * 1.9);
+      look.current.lerp(new THREE.Vector3(me.x - syaw * 10, me.y + 1.0 - (game.cam.pitch - 0.5) * 4, me.z - cyaw * 10), 1 - Math.exp(-total * 8));
+    } else if (game.mode === "play") {
       const k = (portrait ? 1.35 : 1) * game.cam.zoom;
       const h = (2.4 + 6 * game.cam.pitch) * k;
       const d = (9.6 - 2.8 * game.cam.pitch) * k;
@@ -334,13 +370,13 @@ function Me({ props, game, phrases, layout }: { props: BlockProps; game: Game; p
       snap.current = false;
       camera.position.copy(wantPos.current);
       look.current.set(me.x - syaw * 3.2, me.y + 1.5, me.z - cyaw * 3.2);
-    } else camera.position.lerp(wantPos.current, 1 - Math.exp(-total * (game.mode === "play" ? 4 : 3)));
+    } else camera.position.lerp(wantPos.current, 1 - Math.exp(-total * (game.mode !== "play" ? 3 : game.cam.aim || fc ? 7 : 4)));
     camera.lookAt(look.current);
   });
   return (
     <group ref={group}>
       <Avatar url={props.models.avatar} preset={props.avatars?.[game.avatar]} read={() => game.me} />
-      {game.mode === "play" && <Tag nick={game.nickname} mine read={() => game.me} phrases={phrases} />}
+      {game.mode === "play" && <Tag nick={game.nickname} mine read={() => game.me} phrases={phrases} away={() => game.cam.aim} />}
     </group>
   );
 }

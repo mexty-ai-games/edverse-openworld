@@ -10,13 +10,15 @@ import type { QualityPlan } from "../../settings";
 import { addWind, glowTexture, useModel, useTiles, wind } from "../../scene/assets";
 import type { BiomeFrontierProps } from "./types";
 import {
-  BOARDS, BRIDGE, CARD_SPOTS, CLIFF, CORALS, CRITTERS, DIG, EXIT, GATE, PALMS, PIER, POOL, ROCKS, SIGNPOST, STATION, TREES,
+  BOARDS, BRIDGE, CLIFF, CORALS, CRITTERS, DIG, EXIT, GATE, PALMS, PIER, POOL, ROCKS, SIGNPOST, STATION, TREES,
   keepClear, landHeight, regionWeights, shoreX, trailDist, waterDist, WORLD_R,
 } from "./layout";
 import { useSurvey } from "./store";
+import type { ExpeditionProps } from "../../block";
+import { defaultExpedition } from "../../expedition/content";
+import { Creatures } from "./Creatures";
 
 export const KIND = {
-  card: "biome-frontier:card",
   dig: "biome-frontier:dig",
   station: "biome-frontier:station",
   sign: "biome-frontier:sign",
@@ -799,183 +801,12 @@ function GroundCover({ props, plan }: { props: BiomeFrontierProps; plan: Quality
   );
 }
 
-// ------------------------------------------------------------------ the species living here (decor)
-function Critters({ props }: { props: BiomeFrontierProps }) {
-  const m = props.models;
-  const c = CRITTERS;
-  const morpho = useRef<THREE.Group>(null);
-  const turtle = useRef<THREE.Group>(null);
-  const fish = useRef<THREE.Group>(null);
-  const tort = useRef<THREE.Group>(null);
-  const morphoM = useModel(m.morpho);
-  const turtleM = useModel(m.seaTurtle);
-  const fishM = useModel(m.clownfish);
-  const tortM = useModel(m.tortoise);
-  const sag = useModel(m.saguaro);
-  const sagParts = useMemo(() => meshesUnder(sag.scene), [sag]);
-  const sagM = useMemo(() => c.saguaro.map((s) => mat4(s.x, landHeight(s.x, s.z) - 0.05, s.z, s.ry, s.s)), [c.saguaro]);
-  const wings = useMemo(() => {
-    const out: THREE.Object3D[] = [];
-    morphoM.scene.traverse((o) => /morpho_wing/.test(o.name) && out.push(o));
-    return out;
-  }, [morphoM]);
-  useFrame(() => {
-    const t = wind.value;
-    if (morpho.current) {
-      const a = t * 0.35;
-      morpho.current.position.set(c.morpho.x + Math.sin(a) * 3.2, 1.4 + Math.sin(t * 2.3) * 0.35, c.morpho.z + Math.sin(a * 2) * 1.8);
-      morpho.current.rotation.y = -a + Math.PI / 2;
-      // flutter: the wings fold toward the body and open again
-      const k = 0.3 + 0.7 * Math.abs(Math.cos(t * 9));
-      wings.forEach((w) => (w.scale.x = k));
-    }
-    if (turtle.current) {
-      const a = t * 0.12;
-      turtle.current.position.set(c.turtle.x + Math.cos(a) * 3.5, -0.75 + Math.sin(t * 0.8) * 0.06, c.turtle.z + Math.sin(a) * 3.5);
-      turtle.current.rotation.y = -a + Math.PI;
-    }
-    if (fish.current) {
-      fish.current.position.y = landHeight(c.clownfish.x, c.clownfish.z) + Math.sin(t * 1.7) * 0.04;
-      fish.current.rotation.y = Math.sin(t * 0.5) * 0.5;
-    }
-    if (tort.current) {
-      const k = (Math.sin(t * 0.08) + 1) / 2;
-      tort.current.position.set(c.tortoise.x + (k - 0.5) * 2.4, 0, c.tortoise.z);
-      tort.current.rotation.y = Math.cos(t * 0.08) > 0 ? -Math.PI / 2 : Math.PI / 2;
-    }
-  });
-  return (
-    <>
-      <Single url={m.toucan} x={c.toucan.x} y={c.toucan.y} z={c.toucan.z} ry={c.toucan.ry} s={1.3} />
-      <Single url={m.treeFrog} x={c.frog.x} y={landHeight(c.frog.x, c.frog.z) + 0.02} z={c.frog.z} ry={c.frog.ry} s={1.6} />
-      <Single url={m.hornedLizard} x={c.lizard.x} y={c.lizard.y} z={c.lizard.z} ry={c.lizard.ry} s={1.6} />
-      <Single url={m.seaStar} x={c.seaStar.x} y={landHeight(c.seaStar.x, c.seaStar.z) + 0.02} z={c.seaStar.z} ry={c.seaStar.ry} s={1.4} />
-      <group ref={morpho} scale={1.4}>
-        <primitive object={morphoM.scene} position={[0, -0.3, 0]} />
-      </group>
-      <group ref={turtle} scale={1.5}>
-        <primitive object={turtleM.scene} />
-      </group>
-      <group ref={fish} position={[c.clownfish.x, 0, c.clownfish.z]} scale={1.8}>
-        <primitive object={fishM.scene} />
-      </group>
-      <group ref={tort} scale={1.5}>
-        <primitive object={tortM.scene} />
-      </group>
-      <Instanced parts={sagParts} matrices={sagM} shadows />
-    </>
-  );
-}
-
-// ------------------------------------------------------------------ glowing field cards
-let cardTex: THREE.CanvasTexture | null = null;
-function cardTexture() {
-  if (cardTex) return cardTex;
-  const c = document.createElement("canvas");
-  c.width = 128;
-  c.height = 160;
-  const g = c.getContext("2d")!;
-  g.fillStyle = "#f6ead0";
-  g.beginPath();
-  g.roundRect(4, 4, 120, 152, 14);
-  g.fill();
-  g.strokeStyle = "#c58b3a";
-  g.lineWidth = 6;
-  g.stroke();
-  g.fillStyle = "#3f9a4c";
-  g.beginPath();
-  g.ellipse(64, 64, 34, 34, 0, 0, Math.PI * 2);
-  g.fill();
-  g.fillStyle = "#fff8e6";
-  g.font = "bold 58px system-ui, sans-serif";
-  g.textAlign = "center";
-  g.textBaseline = "middle";
-  g.fillText("?", 64, 68);
-  g.fillStyle = "#c8643a";
-  g.fillRect(24, 116, 26, 10);
-  g.fillStyle = "#2a9fb8";
-  g.fillRect(52, 116, 26, 10);
-  g.fillStyle = "#3f9a4c";
-  g.fillRect(80, 116, 26, 10);
-  cardTex = new THREE.CanvasTexture(c);
-  cardTex.colorSpace = THREE.SRGBColorSpace;
-  return cardTex;
-}
-
-let beamTex: THREE.CanvasTexture | null = null;
-function beamTexture() {
-  if (beamTex) return beamTex;
-  const c = document.createElement("canvas");
-  c.width = 16;
-  c.height = 128;
-  const g = c.getContext("2d")!;
-  const v = g.createLinearGradient(0, 0, 0, 128);
-  v.addColorStop(0, "rgba(255,230,150,0)");
-  v.addColorStop(0.6, "rgba(255,220,130,0.55)");
-  v.addColorStop(1, "rgba(255,210,120,0.9)");
-  g.fillStyle = v;
-  g.fillRect(0, 0, 16, 128);
-  beamTex = new THREE.CanvasTexture(c);
-  beamTex.colorSpace = THREE.SRGBColorSpace;
-  return beamTex;
-}
-
-function FieldCard({ spot, index, onPick }: { spot: { x: number; z: number }; index: number; onPick: () => void }) {
-  const card = useRef<THREE.Mesh>(null);
-  const ring = useRef<THREE.Mesh>(null);
-  const y0 = landHeight(spot.x, spot.z);
-  useFrame(() => {
-    const t = wind.value + index * 0.7;
-    if (card.current) {
-      card.current.position.y = y0 + 1.25 + Math.sin(t * 1.6) * 0.12;
-      card.current.rotation.y = t * 0.9;
-      card.current.rotation.z = Math.sin(t * 1.1) * 0.12;
-    }
-    if (ring.current) {
-      const k = (t * 0.6) % 1;
-      ring.current.scale.setScalar(0.6 + k * 1.2);
-      (ring.current.material as THREE.MeshBasicMaterial).opacity = 0.7 * (1 - k);
-    }
-  });
-  return (
-    <Clickable onPick={onPick}>
-      <group position={[spot.x, 0, spot.z]}>
-        <mesh ref={card} castShadow>
-          <planeGeometry args={[0.62, 0.78]} />
-          <meshStandardMaterial map={cardTexture()} side={THREE.DoubleSide} emissive="#ffd889" emissiveIntensity={0.35} emissiveMap={cardTexture()} roughness={0.8} />
-        </mesh>
-        <sprite position={[0, y0 + 1.25, 0]} scale={[2.2, 2.2, 1]} renderOrder={7}>
-          <spriteMaterial map={glowTexture()} color="#ffd27a" transparent depthWrite={false} blending={THREE.AdditiveBlending} opacity={0.75} />
-        </sprite>
-        <mesh position={[0, y0 + 1.6, 0]} renderOrder={6}>
-          <cylinderGeometry args={[0.1, 0.2, 3.2, 12, 1, true]} />
-          <meshBasicMaterial map={beamTexture()} color="#ffb347" opacity={0.45} transparent depthWrite={false} blending={THREE.AdditiveBlending} side={THREE.DoubleSide} fog={false} />
-        </mesh>
-        <mesh ref={ring} position={[0, y0 + 0.04, 0]} rotation-x={-Math.PI / 2} renderOrder={5}>
-          <ringGeometry args={[0.55, 0.7, 32]} />
-          <meshBasicMaterial color="#ffe3a0" transparent depthWrite={false} blending={THREE.AdditiveBlending} />
-        </mesh>
-        {/* an easy, generous tap area */}
-        <mesh position={[0, y0 + 1.0, 0]} visible={false}>
-          <cylinderGeometry args={[0.8, 0.8, 2.2, 8]} />
-          <meshBasicMaterial />
-        </mesh>
-      </group>
-    </Clickable>
-  );
-}
-
-function Cards() {
-  const round = useSurvey((s) => s.round);
-  const open = useSurvey((s) => s.open);
-  if (!round) return null;
-  return (
-    <>
-      {round.picks.map((_, i) =>
-        round.cards[i] || !CARD_SPOTS[i] ? null : <FieldCard key={round.id + "-" + i} index={i} spot={CARD_SPOTS[i]} onPick={() => open({ kind: "card", spot: i })} />,
-      )}
-    </>
-  );
+// ------------------------------------------------------------------ the other saguaros (decor; the flowering one is a creature)
+function Saguaros({ url }: { url: string }) {
+  const sag = useModel(url);
+  const parts = useMemo(() => meshesUnder(sag.scene).filter((p) => !/flower/.test(p.name)), [sag]);
+  const mats = useMemo(() => CRITTERS.saguaro.slice(1).map((s) => mat4(s.x, landHeight(s.x, s.z) - 0.05, s.z, s.ry, s.s)), []);
+  return <Instanced parts={parts} matrices={mats} shadows />;
 }
 
 // ------------------------------------------------------------------ atmosphere
@@ -1059,15 +890,9 @@ function Motes({ count = 90 }: { count?: number }) {
 
 // ------------------------------------------------------------------ targets + exit
 function useTargets(game: Game) {
-  const round = useSurvey((s) => s.round);
   useEffect(() => {
     const k = (s: string) => s as unknown as TargetKind;
     const own: Target[] = [];
-    if (round)
-      round.picks.forEach((_, i) => {
-        const c = CARD_SPOTS[i];
-        if (c && !round.cards[i]) own.push({ key: "bf-card-" + i, kind: k(KIND.card), ref: i, x: c.x, z: c.z, reach: 2.0 });
-      });
     own.push({ key: "bf-dig", kind: k(KIND.dig), ref: "dig", x: DIG.x + Math.sin(DIG.ry) * 1.6, z: DIG.z + Math.cos(DIG.ry) * 1.6, reach: 2.6 });
     own.push({ key: "bf-station", kind: k(KIND.station), ref: "station", x: STATION.x - 0.5, z: STATION.z + 4.2, reach: 2.4 });
     for (const b of BOARDS) own.push({ key: "bf-sign-" + b.key, kind: k(KIND.sign), ref: b.biome, x: b.x + Math.sin(b.ry) * 1.0, z: b.z + Math.cos(b.ry) * 1.0, reach: 1.9 });
@@ -1075,7 +900,7 @@ function useTargets(game: Game) {
     return () => {
       game.targets = game.targets.filter((t) => own.indexOf(t) < 0);
     };
-  }, [game, round]);
+  }, [game]);
 }
 
 function ExitWatch({ game, onExit }: { game: Game; onExit: () => void }) {
@@ -1092,17 +917,17 @@ function ExitWatch({ game, onExit }: { game: Game; onExit: () => void }) {
 }
 
 // ------------------------------------------------------------------ the district
-export function Scene({ props, game, plan, onOpen, onExit }: {
+export function Scene({ props, game, plan, onOpen, onExit, expedition }: {
   props: BiomeFrontierProps;
   game: Game;
   plan: QualityPlan;
   onOpen: (card: BiomeCard) => void;
   onExit: () => void;
+  /** The first expedition's props (the Field Guide species live here as creatures). */
+  expedition?: ExpeditionProps;
 }) {
   const m = props.models;
-  const ensureRound = useSurvey((s) => s.ensureRound);
   const open = useSurvey((s) => s.open);
-  useEffect(() => ensureRound(props.species || [], props.roundSize || 8), [ensureRound, props.species, props.roundSize]);
   useTargets(game);
   const station = () => {
     open({ kind: "station" });
@@ -1128,8 +953,8 @@ export function Scene({ props, game, plan, onOpen, onExit }: {
       <Corals url={m.corals} />
       <Trees props={props} plan={plan} />
       <GroundCover props={props} plan={plan} />
-      <Critters props={props} />
-      <Cards />
+      <Saguaros url={m.saguaro} />
+      <Creatures species={(expedition || defaultExpedition).species} game={game} anemoneUrl={m.clownfish} />
       <ExitWatch game={game} onExit={onExit} />
       {plan.extras && <LightShafts />}
       {plan.extras && <Motes />}

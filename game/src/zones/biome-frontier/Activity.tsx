@@ -1,16 +1,17 @@
-// "Field survey": the Biome Frontier's learning activity (DOM overlay over the scene).
-// 1) Field cards: the wind scattered 8 explorers' cards (species) over the map. Each card found is sorted
-//    into its biome (rainforest, desert canyon, coral coast); a kind clue after a miss, then a true fact.
-// 2) Fossil dig: in the canyon, tap the oldest rock layer, then the fossils from oldest to youngest
-//    (deeper layers are older). Every answer -> mexty.progress.answer; the round -> complete(score, max).
-// Picture mode for ages 4-6: icons first, short facts. No timer, no lives; replayable with new species.
+// The Biome Frontier's DOM overlay: the fossil dig (in the canyon, tap the oldest rock layer, then the
+// fossils from oldest to youngest — deeper layers are older; every answer -> mexty.progress.answer), the
+// field station board and the area signs. The creatures are found and photographed with the hub's
+// expedition tools (ui/Expedition.tsx); this district's chip shows the Field Guide's progress.
+// Picture mode for ages 4-6. No timer, no lives.
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useMexty } from "@mexty/sdk";
-import type { T } from "../../block";
+import type { ExpeditionProps, T } from "../../block";
+import { useExp } from "../../game/expedition";
+import { guideScore } from "../../game/quests";
 import { sound } from "../../audio";
-import type { BiomeFrontierProps, Species } from "./types";
+import type { BiomeFrontierProps } from "./types";
 import { KIND } from "./Scene";
-import { roundTotals, useSurvey } from "./store";
+import { useSurvey } from "./store";
 import "./activity.css";
 
 type Mexty = ReturnType<typeof useMexty>;
@@ -21,22 +22,6 @@ function answer(mexty: Mexty, questionId: string, question: string, correct: boo
   } catch {
     /* outside EdVerse */
   }
-}
-
-function SpeciesPicture({ s }: { s: Species }) {
-  const [bad, setBad] = useState(false);
-  useEffect(() => setBad(false), [s.imageUrl]);
-  if (s.imageUrl && !bad)
-    return (
-      <div className="bf-pic">
-        <img src={s.imageUrl} alt="" draggable={false} onError={() => setBad(true)} crossOrigin={/mexty\.ai|mext\.app/.test(s.imageUrl) ? "use-credentials" : undefined} />
-      </div>
-    );
-  return (
-    <div className="bf-pic bf-pic-icon" aria-hidden>
-      {s.icon}
-    </div>
-  );
 }
 
 function ModeToggle({ props, t }: { props: BiomeFrontierProps; t: T }) {
@@ -63,89 +48,6 @@ function Head({ icon, title, props, t, onClose }: { icon: string; title: string;
       <button className="ow-round ow-close" aria-label={t(props.ui.close)} onClick={onClose}>
         ✕
       </button>
-    </div>
-  );
-}
-
-// ------------------------------------------------------------------ 1. sort a field card
-function CardSort({ props, t, spot, onDone, onClose }: { props: BiomeFrontierProps; t: T; spot: number; onDone: () => void; onClose: () => void }) {
-  const mexty = useMexty();
-  const ui = props.ui;
-  const round = useSurvey((s) => s.round);
-  const easy = useSurvey((s) => s.easy);
-  const cardDone = useSurvey((s) => s.cardDone);
-  const sp = (props.species || []).find((s) => s.id === round?.picks[spot]);
-  const [misses, setMisses] = useState(0);
-  const [wrong, setWrong] = useState<string[]>([]);
-  const [right, setRight] = useState(false);
-  const [showMe, setShowMe] = useState(false);
-  if (!sp) return null;
-  const home = (props.biomes || []).find((b) => b.id === sp.biome);
-  const pick = (biome: string) => {
-    if (right) return;
-    if (biome === sp.biome) {
-      const first = misses === 0;
-      answer(mexty, "biome-frontier:" + sp.id, t(ui.whereLives) + " — " + t(sp.name), first, misses + 1);
-      cardDone(spot, first);
-      setRight(true);
-      sound.sfx("success", 0.8);
-    } else {
-      setMisses((m) => m + 1);
-      setWrong((w) => (w.indexOf(biome) < 0 ? w.concat(biome) : w));
-      sound.sfx("pop", 0.5);
-    }
-  };
-  return (
-    <div className="ow-card bf-panel" role="dialog" aria-modal="true">
-      <Head icon="📇" title={t(ui.cardTitle)} props={props} t={t} onClose={onClose} />
-      <div className={"bf-species" + (easy ? " easy" : "")}>
-        <SpeciesPicture s={sp} />
-        <div className="bf-species-text">
-          <h2 className="bf-name">{t(sp.name)}</h2>
-          {!right && <div className="bf-q">{t(easy ? ui.whereLivesEasy : ui.whereLives)}</div>}
-          {right && home && (
-            <div className="bf-good">
-              <b>
-                {home.icon} {t(ui.rightBiome, { biome: t(home.name) })}
-              </b>
-              <p>{t(easy ? sp.factEasy : sp.fact)}</p>
-            </div>
-          )}
-          {!right && misses > 0 && <div className="bf-kind">{t(ui.tryAgain, { hint: t(sp.hint) })}</div>}
-        </div>
-      </div>
-      <div className={"bf-biomes" + (easy ? " easy" : "")}>
-        {(props.biomes || []).map((b) => {
-          const isWrong = wrong.indexOf(b.id) >= 0 && !right;
-          const glow = (showMe && b.id === sp.biome) || (right && b.id === sp.biome);
-          return (
-            <button
-              key={b.id}
-              className={"bf-biome" + (isWrong ? " wrong" : "") + (glow ? " glow" : "") + (right && b.id !== sp.biome ? " dim" : "")}
-              style={{ ["--bf-c" as string]: b.color } as React.CSSProperties}
-              onClick={() => pick(b.id)}
-              aria-label={t(b.name)}
-            >
-              <span className="bf-biome-icon" aria-hidden>
-                {b.icon}
-              </span>
-              <span className="bf-biome-name">{t(b.name)}</span>
-            </button>
-          );
-        })}
-      </div>
-      <div className="ow-row">
-        {!right && misses >= 2 && !showMe && (
-          <button className="ow-btn ow-btn-small" onClick={() => setShowMe(true)}>
-            💡 {t(ui.showMe)}
-          </button>
-        )}
-        {right && (
-          <button className="ow-btn ow-btn-go" onClick={onDone} autoFocus>
-            {t(ui.next)} ➜
-          </button>
-        )}
-      </div>
     </div>
   );
 }
@@ -226,8 +128,8 @@ function Dig({ props, t, onDone, onClose }: { props: BiomeFrontierProps; t: T; o
   const digAnswer = useSurvey((s) => s.digAnswer);
   const fossils = useMemo(() => (props.fossils || []).slice().sort((a, b) => a.layer - b.layer), [props.fossils]);
   const layers = Math.max(1, fossils.length);
-  const already = (round?.digAnswers || 0) >= 2;
-  const [step, setStep] = useState<"oldest" | "order" | "done">(already ? "done" : (round?.digAnswers || 0) === 1 ? "order" : "oldest");
+  const already = round.digAnswers >= 2;
+  const [step, setStep] = useState<"oldest" | "order" | "done">(already ? "done" : round.digAnswers === 1 ? "order" : "oldest");
   const [msg, setMsg] = useState<"" | "oldWrong" | "oldRight" | "orderWrong" | "orderRight">("");
   const [missA, setMissA] = useState(0);
   const [missB, setMissB] = useState(0);
@@ -356,47 +258,45 @@ function Dig({ props, t, onDone, onClose }: { props: BiomeFrontierProps; t: T; o
   );
 }
 
-// ------------------------------------------------------------------ 3. the field station board (progress, new round)
-function Station({ props, t, onClose, celebrate }: { props: BiomeFrontierProps; t: T; onClose: () => void; celebrate: boolean }) {
+// ------------------------------------------------------------------ 3. the field station board (dig, Field Guide)
+function Station({ props, exp, t, onClose }: { props: BiomeFrontierProps; exp: ExpeditionProps | undefined; t: T; onClose: () => void }) {
   const ui = props.ui;
   const round = useSurvey((s) => s.round);
-  const newRound = useSurvey((s) => s.newRound);
-  const tot = roundTotals(round);
-  const species = props.species || [];
+  const newDig = useSurvey((s) => s.newDig);
+  const save = useExp((s) => s.save);
+  const hasGuide = save.tools.indexOf("guide") >= 0;
+  const dug = round.digAnswers >= 2;
+  const total = ((exp && exp.species) || []).length * 4;
   return (
     <div className="ow-card bf-panel" role="dialog" aria-modal="true">
-      <Head icon={celebrate ? "🎉" : "🏕️"} title={t(celebrate ? ui.roundDone : ui.stationTitle)} props={props} t={t} onClose={onClose} />
-      {celebrate ? (
-        <p className="bf-score">⭐ {t(ui.roundScore, { n: tot.firstTry, total: tot.total })}</p>
-      ) : (
-        <p className="bf-q">{t(ui.stationIntro)}</p>
-      )}
+      <Head icon="🏕️" title={t(ui.stationTitle)} props={props} t={t} onClose={onClose} />
+      {exp && <p className="bf-q">{t(exp.ui.stationIntro)}</p>}
       <div className="bf-grid">
-        {(round?.picks || []).map((id, i) => {
-          const s = species.find((x) => x.id === id);
-          const done = !!round?.cards[i];
-          const b = (props.biomes || []).find((x) => x.id === s?.biome);
-          return (
-            <div key={i} className={"bf-slot" + (done ? " done" : "")} style={done && b ? ({ ["--bf-c" as string]: b.color } as React.CSSProperties) : undefined} title={done && s ? t(s.name) : t(ui.notFoundYet)}>
-              <span className="bf-slot-icon">{done && s ? s.icon : "❔"}</span>
-              <span className="bf-slot-name">{done && s ? t(s.name) : ""}</span>
-              {done && b && <span className="bf-slot-biome">{b.icon}</span>}
-            </div>
-          );
-        })}
-        <div className={"bf-slot dig" + ((round?.digAnswers || 0) >= 2 ? " done" : "")}>
+        <div className={"bf-slot dig" + (dug ? " done" : "")}>
           <span className="bf-slot-icon">⛏️</span>
-          <span className="bf-slot-name">{(round?.digAnswers || 0) >= 2 ? t(ui.digDone) : t(ui.digWaiting)}</span>
+          <span className="bf-slot-name">{dug ? t(ui.digDone) : t(ui.digWaiting)}</span>
         </div>
+        {exp && (
+          <button
+            className={"bf-slot" + (hasGuide ? " done" : "")}
+            disabled={!hasGuide}
+            onClick={() => {
+              onClose();
+              useExp.setState({ mode: "guide", page: null });
+            }}
+          >
+            <span className="bf-slot-icon">📖</span>
+            <span className="bf-slot-name">{t(exp.ui.guideChip, { n: guideScore(save), total })}</span>
+          </button>
+        )}
       </div>
-      <p className="bf-progress">{t(ui.stationProgress, { n: tot.done, total: tot.total })}</p>
       <ModeToggle props={props} t={t} />
       <div className="ow-row">
-        {tot.complete && (
+        {dug && (
           <button
             className="ow-btn ow-btn-small"
             onClick={() => {
-              newRound(species, props.roundSize || 8);
+              newDig();
               sound.sfx("chime", 0.6);
             }}
           >
@@ -429,21 +329,18 @@ function Sign({ props, t, biome, onClose }: { props: BiomeFrontierProps; t: T; b
 }
 
 // ------------------------------------------------------------------ the overlay
-export function Activity({ props, t, paused, onBusy }: { props: BiomeFrontierProps; t: T; paused?: boolean; onBusy?: (busy: boolean) => void }) {
+export function Activity({ props, expedition, t, paused, onBusy }: { props: BiomeFrontierProps; expedition?: ExpeditionProps; t: T; paused?: boolean; onBusy?: (busy: boolean) => void }) {
   const mexty = useMexty();
   const view = useSurvey((s) => s.view);
   const open = useSurvey((s) => s.open);
   const close = useSurvey((s) => s.close);
   const round = useSurvey((s) => s.round);
-  const ensureRound = useSurvey((s) => s.ensureRound);
   const easyChosen = useSurvey((s) => s.easyChosen);
   const setEasy = useSurvey((s) => s.setEasy);
-  const markReported = useSurvey((s) => s.markReported);
-  const [celebrate, setCelebrate] = useState(false);
-  const ui = props.ui;
-  const tot = roundTotals(round);
+  const save = useExp((s) => s.save);
+  const hasGuide = save.tools.indexOf("guide") >= 0;
+  const total = ((expedition && expedition.species) || []).length * 4;
 
-  useEffect(() => ensureRound(props.species || [], props.roundSize || 8), [ensureRound, props.species, props.roundSize]);
   useEffect(() => onBusy && onBusy(!!view), [view, onBusy]);
 
   // the youngest explorers start in picture mode (they can switch)
@@ -466,8 +363,7 @@ export function Activity({ props, t, paused, onBusy }: { props: BiomeFrontierPro
     const h = (e: Event) => {
       const f = (e as CustomEvent<{ kind: string; ref: string | number }>).detail;
       if (!f || typeof f.kind !== "string" || f.kind.indexOf("biome-frontier:") !== 0) return;
-      if (f.kind === KIND.card) open({ kind: "card", spot: Number(f.ref) });
-      else if (f.kind === KIND.dig) open({ kind: "dig" });
+      if (f.kind === KIND.dig) open({ kind: "dig" });
       else if (f.kind === KIND.station) open({ kind: "station" });
       else if (f.kind === KIND.sign) open({ kind: "sign", biome: String(f.ref) });
     };
@@ -477,26 +373,7 @@ export function Activity({ props, t, paused, onBusy }: { props: BiomeFrontierPro
 
   useEffect(() => {
     if (view) sound.sfx(view.kind === "sign" ? "pop" : "chime", 0.6);
-    if (!view || view.kind !== "station") setCelebrate(false);
   }, [view]);
-
-  // the round is complete: record it once, then celebrate at the station board
-  const after = () => {
-    const r = useSurvey.getState().round;
-    const tt = roundTotals(r);
-    if (r && tt.complete && !r.reported) {
-      markReported();
-      try {
-        mexty.progress.complete(tt.firstTry, tt.total, { timeSpentMs: Date.now() - r.startedAt });
-        mexty.celebrate();
-      } catch {
-        /* outside EdVerse */
-      }
-      setCelebrate(true);
-      open({ kind: "station" });
-      sound.sfx("success", 0.9);
-    } else close();
-  };
 
   const esc = useRef(close);
   esc.current = close;
@@ -508,15 +385,18 @@ export function Activity({ props, t, paused, onBusy }: { props: BiomeFrontierPro
 
   return (
     <>
-      <button className="bf-chip" onClick={() => open({ kind: "station" })} aria-label={t(ui.stationTitle)}>
-        <span>📇 {t(ui.surveyChip, { n: tot.cardsDone, total: round?.picks.length || 0 })}</span>
-        <span className={(round?.digAnswers || 0) >= 2 ? "ok" : ""}>⛏️ {(round?.digAnswers || 0) >= 2 ? "✓" : "…"}</span>
+      <button
+        className="bf-chip"
+        onClick={() => (hasGuide ? useExp.setState({ mode: "guide", page: null }) : open({ kind: "station" }))}
+        aria-label={expedition ? t(expedition.ui.guide) : t(props.ui.stationTitle)}
+      >
+        {expedition && <span>📖 {t(expedition.ui.guideChip, { n: guideScore(save), total })}</span>}
+        <span className={round.digAnswers >= 2 ? "ok" : ""}>⛏️ {round.digAnswers >= 2 ? "✓" : "…"}</span>
       </button>
       {view && !paused && (
         <div className="ow-modal bf-modal" onPointerDown={(e) => e.target === e.currentTarget && view.kind === "sign" && close()}>
-          {view.kind === "card" && <CardSort key={(round?.id || 0) + "-" + view.spot} props={props} t={t} spot={view.spot} onDone={after} onClose={close} />}
-          {view.kind === "dig" && <Dig key={round?.id || 0} props={props} t={t} onDone={after} onClose={close} />}
-          {view.kind === "station" && <Station props={props} t={t} onClose={close} celebrate={celebrate} />}
+          {view.kind === "dig" && <Dig key={round.id} props={props} t={t} onDone={close} onClose={close} />}
+          {view.kind === "station" && <Station props={props} exp={expedition} t={t} onClose={close} />}
           {view.kind === "sign" && <Sign props={props} t={t} biome={view.biome} onClose={close} />}
         </div>
       )}

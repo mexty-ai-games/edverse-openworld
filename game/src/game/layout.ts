@@ -28,6 +28,19 @@ export const STALLS: StallSpot[] = [
 
 export const TELESCOPE = { x: -4.4, z: 3.4, ry: 2.3 };
 
+/** The Grove Keeper stands by the Idea Tree, facing the explorer's arrival point. */
+export const KEEPER = { x: 2.7, z: -5.4, ry: Math.atan2(0 - 2.7, 4.2 + 5.4) };
+
+/** The three glowing seeds of "Three sparks": one in view, one beside the tree, one behind the start view. */
+export const SPARKS = [
+  { id: "spark-tree", x: -6.4, z: -6.6 },
+  { id: "spark-east", x: 7.6, z: -9.2 },
+  { id: "spark-behind", x: -3.2, z: 14.4 },
+];
+
+/** Where the tree frog sits on the Biome Frontier stall (stall-local x, height, z). */
+export const FROG_CAMEO = { lx: 0.55, y: 1.02, lz: 0.75 };
+
 export interface Placed {
   variant: number;
   x: number;
@@ -93,6 +106,7 @@ export function colliders(): Circle[] {
     for (const p of PLINTHS) out.push({ ...stallPoint(st, p.lx, p.lz), r: PLINTH_R + 0.08 });
   }
   out.push({ x: TELESCOPE.x, z: TELESCOPE.z, r: 0.65 });
+  out.push({ x: KEEPER.x, z: KEEPER.z, r: 0.45 });
   for (const b of BOULDERS) out.push({ x: b.x, z: b.z, r: (b.variant === 1 ? 1.3 : b.variant === 0 ? 1.0 : 0.7) * b.s * 0.95 });
   return out;
 }

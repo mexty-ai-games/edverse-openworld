@@ -13,6 +13,8 @@ import { StallPreviews } from "./Previews";
 import type { CardState } from "../ui/Cards";
 import type { ZoneModule } from "../zones/registry";
 import { wind } from "./assets";
+import { GroveExpedition } from "./Expedition3D";
+import { defaultExpedition } from "../expedition/content";
 
 /** Keeps the picture smooth on slower phones: when the frame rate stays low, fewer pixels are drawn. */
 function AdaptiveDpr({ active, min, dpr, onChange }: { active: boolean; min: number; dpr: number; onChange: (d: number) => void }) {
@@ -119,12 +121,15 @@ export function GameCanvas({ props, game, settings, paused, zone, onZoneReady, o
             <World props={props} game={game} plan={plan} onOpen={onOpen} />
             <Lanterns props={props} game={game} plan={plan} onOpen={onOpen} />
             <StallPreviews props={props} />
+            <Suspense fallback={null}>
+              <GroveExpedition props={props} exp={props.expedition || defaultExpedition} game={game} />
+            </Suspense>
             <Loaded onLoaded={onZoneReady} />
           </Suspense>
         ) : (
           <ZoneGuard key={zone.id} onError={onZoneError}>
             <Suspense fallback={null}>
-              <Scene props={zone.props} game={game} plan={plan} onOpen={onDistrictOpen} onExit={onExit} />
+              <Scene props={zone.props} game={game} plan={plan} onOpen={onDistrictOpen} onExit={onExit} expedition={props.expedition || defaultExpedition} />
               <Loaded onLoaded={onZoneReady} />
             </Suspense>
           </ZoneGuard>
