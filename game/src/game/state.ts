@@ -2,7 +2,8 @@
 // times a second). Plain mutable data: no React re-render per frame.
 import { SPAWN } from "./layout";
 
-export type TargetKind = "lantern" | "stall" | "telescope";
+/** Hub kinds ("lantern" | "stall" | "telescope") or a district's own, "<district>:<what>" (handled by its Activity). */
+export type TargetKind = string;
 
 export interface Target {
   key: string;

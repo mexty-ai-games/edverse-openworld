@@ -3,17 +3,22 @@ import { useCloudSave, useLanguage, useMexty, pickLanguage } from "@mexty/sdk";
 import { useGLTF, useProgress } from "@react-three/drei";
 import { useLoader } from "@react-three/fiber";
 import * as THREE from "three";
-import { GameCanvas } from "./scene/GameCanvas";
+import { GameCanvas, GROVE_ZONE, ActiveZone } from "./scene/GameCanvas";
+import { GROVE_LAYOUT } from "./scene/Players";
 import { Start } from "./ui/Start";
 import { Hud } from "./ui/Hud";
 import { Sky } from "./ui/Sky";
 import { InfoCard, CardState } from "./ui/Cards";
-import { createGame, Game, Target } from "./game/state";
+import { ReportNote, ReportSheet, ReportStatus, ReportTarget, sendReport } from "./ui/Report";
+import { createGame, Game, Peer, Target } from "./game/state";
+import { STALLS, stallPoint } from "./game/layout";
 import { sound } from "./audio";
 import { useSettings } from "./settings";
 import { makeNickname } from "./game/nickname";
 import { openPresence, Presence, roomForAge } from "./game/net";
+import { GROVE, PROPS_KEY, isDistrict, loadZone } from "./zones/registry";
 import "./game.css";
+import "./ui/hub.css";
 
 /** Only the languages this game ships. */
 export interface LocalizedText {
@@ -23,7 +28,10 @@ export interface LocalizedText {
 
 /** A shipped idea, hung as a lantern on the Idea Tree. Credited by generated nickname only. */
 export interface Lantern {
+  /** The family's generated nickname (ignored when `by` is "team"). */
   nickname: string;
+  /** Who shared the idea: kid (a family, through the EdVerse idea queue) | team (the MEXTY team). Defaults to kid. */
+  by?: string;
   title: LocalizedText;
   /** District id: idea-grove | biome-frontier | chrono-quarter | skyharbor | anywhere */
   where: string;
@@ -31,7 +39,16 @@ export interface Lantern {
   shippedAt: string;
 }
 
-/** A district of the world: its stall in the Grove shows "Coming soon" with its concept art. */
+/** A small 3D model shown on a plinth in front of a district's stall: a taste of what is there. */
+export interface DistrictPreview {
+  /** Public .glb URL (MEXTY Asset Catalogue). */
+  modelUrl: string;
+  label: LocalizedText;
+  /** Author credit shown under the label (third-party assets), e.g. "Quaternius (CC0)". */
+  credit?: string;
+}
+
+/** A district of the world: its stall in the Grove shows its concept art and the door into it. */
 export interface District {
   id: string;
   name: LocalizedText;
@@ -40,6 +57,8 @@ export interface District {
   learns: LocalizedText;
   imageUrl: string;
   imageAlt: LocalizedText;
+  /** Up to 3 models shown in front of the stall. */
+  previews?: DistrictPreview[];
 }
 
 export interface DistrictName {
@@ -116,6 +135,20 @@ export interface Sounds {
   success: string;
 }
 
+/** Short voice-over lines (audio URLs per language), played for ages 4-6 and by the speaker button. */
+export interface VoiceLines {
+  welcome?: LocalizedText;
+  move?: LocalizedText;
+  tapGlow?: LocalizedText;
+  biomeFrontier?: LocalizedText;
+  chronoQuarter?: LocalizedText;
+  skyharbor?: LocalizedText;
+  wellDone?: LocalizedText;
+  tryAgain?: LocalizedText;
+  backGate?: LocalizedText;
+  thanks?: LocalizedText;
+}
+
 export interface UiText {
   title: LocalizedText;
   tagline: LocalizedText;
@@ -127,6 +160,10 @@ export interface UiText {
   howToKeys: LocalizedText;
   howToTouch: LocalizedText;
   ideaBy: LocalizedText;
+  /** Kicker of a lantern whose idea came from the MEXTY team. */
+  ideaByTeam?: LocalizedText;
+  /** Heading of the preview list on a stall card. */
+  youWillSee?: LocalizedText;
   livesIn: LocalizedText;
   builtOn: LocalizedText;
   lanternCount: LocalizedText;
@@ -169,13 +206,486 @@ export interface UiText {
   lookLabel: LocalizedText;
   loadError: LocalizedText;
   retry: LocalizedText;
+  /** Badge of an open district's stall. */
+  nowOpen?: LocalizedText;
+  /** Stall card button, {place} = the district's name. */
+  enterDistrict?: LocalizedText;
+  /** Shown while the next place loads, {place}. */
+  entering?: LocalizedText;
+  /** HUD button inside a district. */
+  backToGrove?: LocalizedText;
+  /** Start button of a returning explorer, {place}. */
+  resume?: LocalizedText;
+  /** Speaker button (voice lines). */
+  listen?: LocalizedText;
+  /** One-tap report. */
+  report?: LocalizedText;
+  reportTitle?: LocalizedText;
+  reportUnkind?: LocalizedText;
+  reportScary?: LocalizedText;
+  reportPersonal?: LocalizedText;
+  reportBroken?: LocalizedText;
+  reportOther?: LocalizedText;
+  reportThanks?: LocalizedText;
+  reportGuest?: LocalizedText;
+  reportError?: LocalizedText;
+}
+
+// ---- Biome Frontier (props key `biomeFrontier`), defined here so the props schema parser sees it; zones/biome-frontier/types.ts re-exports it ----
+
+/** One of the three linked areas. id: rainforest | canyon | coast */
+export interface Biome {
+  id: string;
+  name: LocalizedText;
+  /** Big icon for the picture-only mode (ages 4-6). */
+  icon: string;
+  /** Button / badge colour (hex). Colour is never the only cue: icon + name always shown. */
+  color: string;
+  /** Shown on the area's sign board: what this biome is like (true, short). */
+  about: LocalizedText;
+}
+
+/** A living thing to sort into its biome during the field survey. */
+export interface Species {
+  id: string;
+  /** Biome id where it lives. */
+  biome: string;
+  name: LocalizedText;
+  icon: string;
+  /** Optional picture (a render of its model); empty = show the icon. */
+  imageUrl: string;
+  /** One true fact for ages 7-12, shown once it is sorted. */
+  fact: LocalizedText;
+  /** The same idea in a few easy words, for ages 4-6. */
+  factEasy: LocalizedText;
+  /** A kind clue after a wrong guess (never the answer itself). */
+  hint: LocalizedText;
+}
+
+/** A fossil in the dig face. layer 0 = the deepest (oldest) rock layer. */
+export interface Fossil {
+  id: string;
+  layer: number;
+  name: LocalizedText;
+  icon: string;
+  /** Roughly how old, in words ("about 500 million years old"). */
+  age: LocalizedText;
+}
+
+export interface BiomeUi {
+  title: LocalizedText;
+  surveyChip: LocalizedText;
+  digChip: LocalizedText;
+  findCards: LocalizedText;
+  cardTitle: LocalizedText;
+  whereLives: LocalizedText;
+  whereLivesEasy: LocalizedText;
+  rightBiome: LocalizedText;
+  tryAgain: LocalizedText;
+  showMe: LocalizedText;
+  next: LocalizedText;
+  close: LocalizedText;
+  digTitle: LocalizedText;
+  digIntro: LocalizedText;
+  digOldest: LocalizedText;
+  digOldestEasy: LocalizedText;
+  digOldestRight: LocalizedText;
+  digOldestWrong: LocalizedText;
+  digOrder: LocalizedText;
+  digOrderWrong: LocalizedText;
+  digOrderRight: LocalizedText;
+  digDone: LocalizedText;
+  layerLabel: LocalizedText;
+  stationTitle: LocalizedText;
+  stationIntro: LocalizedText;
+  stationProgress: LocalizedText;
+  roundDone: LocalizedText;
+  roundScore: LocalizedText;
+  playAgain: LocalizedText;
+  easyMode: LocalizedText;
+  explorerMode: LocalizedText;
+  modeLabel: LocalizedText;
+  backToGrove: LocalizedText;
+  look: LocalizedText;
+  notFoundYet: LocalizedText;
+  digWaiting: LocalizedText;
+}
+
+export interface BiomeModels {
+  jungleTree: string;
+  palm: string;
+  /** Nodes: bigleaf_banana, bigleaf_ear, bigleaf_sprout */
+  giantLeaves: string;
+  /** Node water_lip marks where the waterfall pours. */
+  waterfallCliff: string;
+  /** Nodes: wall_a (fossil insets), wall_b, mesa, rock_a..c */
+  canyonRocks: string;
+  /** Nodes: layer_0..3, fossil_trilobite, fossil_fern, fossil_ammonite, fossil_tooth */
+  digSite: string;
+  /** Nodes: coral_brain, coral_branch, coral_fan, coral_tubes */
+  corals: string;
+  pier: string;
+  fieldStation: string;
+  ropeBridge: string;
+  /** Nodes: signpost, board_forest, board_canyon, board_coast, board_grove, camera_trap */
+  signposts: string;
+  trailGate: string;
+  toucan: string;
+  treeFrog: string;
+  morpho: string;
+  tortoise: string;
+  hornedLizard: string;
+  saguaro: string;
+  seaTurtle: string;
+  clownfish: string;
+  seaStar: string;
+  /** Shared with the Idea Grove (OpenWorld's own assets). */
+  fern: string;
+  grassTuft: string;
+}
+
+export interface BiomeTextures {
+  jungleFloor: string;
+  sand: string;
+  canyonFloor: string;
+  waterNormal: string;
+}
+
+export interface BiomeSounds {
+  /** Waterfall, waves and birds (loop). */
+  ambience: string;
+}
+
+export interface BiomeFrontierProps {
+  ui: BiomeUi;
+  biomes: Biome[];
+  /** The pool of species; each round draws `roundSize` of them (at least 2 per biome). */
+  species: Species[];
+  /** 6-8; the fossil dig adds 2 more answers to the round. */
+  roundSize: number;
+  fossils: Fossil[];
+  /** Why deeper layers are older (shown after the dig). */
+  layersFact: LocalizedText;
+  layersFactEasy: LocalizedText;
+  models: BiomeModels;
+  textures: BiomeTextures;
+  sounds: BiomeSounds;
+}
+
+// ---- Chrono Quarter (props key `chronoQuarter`), defined here so the props schema parser sees it; zones/chrono-quarter/types.ts re-exports it ----
+
+/** One of the three era neighbourhoods. */
+export interface CqEra {
+  /** rome | edo | maya (the layout places each era's stand by this id). */
+  id: string;
+  name: LocalizedText;
+  /** When it was, e.g. "around 100 CE". */
+  period: LocalizedText;
+  /** A year inside the era, used to check the timeline order (smaller = longer ago). */
+  sortYear: number;
+  /** Emoji shown on its sign, cards and buttons (icon mode for 4-6). */
+  icon: string;
+  /** Colour of its sign and buttons (CSS colour). */
+  color: string;
+  /** A true fact about the era, shown at its display stand. */
+  intro: LocalizedText;
+}
+
+/** A lost artifact to bring back to its era. */
+export interface CqArtifact {
+  id: string;
+  /** Era id it belongs to. */
+  era: string;
+  name: LocalizedText;
+  /** What it looks like / what it is for (shown when picked up, before the era is known). */
+  clue: LocalizedText;
+  /** A true fact, shown when it reaches the right era (ages 7-12). */
+  fact: LocalizedText;
+  /** The same fact in one short sentence (little detectives, 4-6). */
+  factSimple: LocalizedText;
+  icon: string;
+  /** Mesh name inside models.artifacts. */
+  mesh: string;
+  /** Scale in the world (the meshes are real size; 2-4 makes them easy to spot). */
+  scale: number;
+}
+
+export interface CqUi {
+  title: LocalizedText;
+  intro: LocalizedText;
+  introYoung: LocalizedText;
+  start: LocalizedText;
+  caseFile: LocalizedText;
+  returned: LocalizedText;
+  lostHere: LocalizedText;
+  pickUp: LocalizedText;
+  carryHint: LocalizedText;
+  carrying: LocalizedText;
+  putBack: LocalizedText;
+  question: LocalizedText;
+  correct: LocalizedText;
+  wrong: LocalizedText;
+  hint: LocalizedText;
+  standOf: LocalizedText;
+  standEmpty: LocalizedText;
+  standHas: LocalizedText;
+  allReturned: LocalizedText;
+  dialTitle: LocalizedText;
+  dialAsk: LocalizedText;
+  dialAskYoung: LocalizedText;
+  dialWrong: LocalizedText;
+  dialNotYet: LocalizedText;
+  dialRight: LocalizedText;
+  oldest: LocalizedText;
+  newest: LocalizedText;
+  done: LocalizedText;
+  score: LocalizedText;
+  again: LocalizedText;
+  close: LocalizedText;
+  next: LocalizedText;
+  young: LocalizedText;
+  big: LocalizedText;
+  gate: LocalizedText;
+  dial: LocalizedText;
+}
+
+export interface CqModels {
+  temple: string;
+  columns: string;
+  fountain: string;
+  pavilion: string;
+  bridge: string;
+  stoneLantern: string;
+  pyramid: string;
+  stela: string;
+  cherry: string;
+  streetLamp: string;
+  gate: string;
+  plinths: string;
+  dial: string;
+  jungle: string;
+  pondLife: string;
+  artifacts: string;
+  /** Idea Grove (OpenWorld) models reused here. */
+  boulders: string;
+  forestTree: string;
+  fern: string;
+  flowers: string;
+  grassTuft: string;
+}
+
+export interface CqTextures {
+  grass: string;
+  dirt: string;
+  cobbles: string;
+  paving: string;
+  /** Hazy far-off skyline (PNG with alpha), wraps around the horizon. */
+  skyline: string;
+}
+
+export interface CqSounds {
+  ambience: string;
+}
+
+export interface ChronoQuarterProps {
+  ui: CqUi;
+  eras: CqEra[];
+  artifacts: CqArtifact[];
+  /** Artifacts per round, ages 7+ (6-10). */
+  roundSize: number;
+  /** Artifacts per round in little-detective mode (ages 4-6). */
+  roundSizeYoung: number;
+  /** Wrong tries before the right stand starts to glow (ages 7+). */
+  hintAfter: number;
+  /** Shown when the timeline is ordered. */
+  timelineFact: LocalizedText;
+  timelineFactSimple: LocalizedText;
+  models: CqModels;
+  textures: CqTextures;
+  sounds: CqSounds;
+}
+
+// ---- Skyharbor (props key `skyharbor`), defined here so the props schema parser sees it; zones/skyharbor/types.ts re-exports it ----
+
+export interface SkyharborModels {
+  /** Brass-and-glass observatory tower (origin at the base, door facing +Z). */
+  observatory: string;
+  /** Wooden airship: nodes prop_0 / prop_1 spin, meshes named sails* flutter. */
+  airship: string;
+  /** Geodesic greenhouse: glass material sh_glass is drawn see-through, plants glow inside. */
+  greenhouse: string;
+  /** Robot workshop: nodes gear_0..gear_5 spin about their own axis. */
+  workshop: string;
+  /** The friendly courier robot: robot_body, robot_head, arm_l, arm_r (pivots at the joints). */
+  robot: string;
+  /** Props pack: rail, lamp, dock, crate, bench (one mesh each, at the origin). */
+  harbor: string;
+  /** Cliff pack: rim_a/rim_b (cliff face, top at 0), spire_a/spire_b (distant pillars), rock_a/rock_b. */
+  cliff: string;
+  /** Glowing plants: plant_fern, plant_bell, plant_blades, plant_caps, plant_crystal. */
+  glowPlants: string;
+  /** Exit gate back to the Idea Grove: node "portal" swirls. */
+  gate: string;
+  /** Shared OpenWorld assets of the Idea Grove (reused, they are OpenWorld's own). */
+  fern: string;
+  grassTuft: string;
+  forestTree: string;
+}
+
+export interface SkyharborTextures {
+  /** Tiling flagstones of the plaza and paths. */
+  paving: string;
+  /** Tiling night moss of the plateau. */
+  moss: string;
+}
+
+export interface SkyharborSounds {
+  ambience: string;
+  beep: string;
+  bump: string;
+  whirr: string;
+}
+
+/**
+ * One Robot Courier puzzle. `rows` is the grid, top row first, one character per cell:
+ * `.` free, `#` crate (blocked), `S` robot start, `P` the part to pick up, `G` the airship (deliver here).
+ */
+export interface CourierLevel {
+  id: string;
+  /** "main" (code blocks, ages 7–12) or "simple" (arrows, ages 4–6). */
+  mode: string;
+  /** "sequence" | "turns" | "loops" (loops shows the repeat block and a memory limit). */
+  stage: string;
+  rows: string[];
+  /** Where the robot looks at the start: N | E | S | W (N is up). */
+  facing: string;
+  /** The robot's memory: at most this many blocks (0 = no limit). */
+  maxBlocks: number;
+  /** A gentle tip shown under the grid. */
+  tip: LocalizedText;
+}
+
+/** A planet of the Solar System, for Planet Parade (order them from the Sun). */
+export interface Planet {
+  id: string;
+  name: LocalizedText;
+  /** 1 = closest to the Sun. */
+  order: number;
+  /** A true fact, shown once placed. */
+  fact: LocalizedText;
+  /** A hint toward this planet when it is the one to find. */
+  hint: LocalizedText;
+  /** Drawing: main colour, second colour (bands / land), relative size, rings. */
+  color: string;
+  color2: string;
+  size: number;
+  rings: boolean;
+}
+
+/** A place in Skyharbor that shows a short true fact when the explorer looks at it. */
+export interface InfoSpot {
+  id: string;
+  icon: string;
+  title: LocalizedText;
+  text: LocalizedText;
+}
+
+export interface SkyharborUi {
+  name: LocalizedText;
+  backToGrove: LocalizedText;
+  close: LocalizedText;
+  // targets (action button / labels)
+  talkRobot: LocalizedText;
+  usePlanets: LocalizedText;
+  look: LocalizedText;
+  // Robot Courier
+  courierTitle: LocalizedText;
+  courierIntro: LocalizedText;
+  chooseMode: LocalizedText;
+  modeSimple: LocalizedText;
+  modeSimpleHint: LocalizedText;
+  modeMain: LocalizedText;
+  modeMainHint: LocalizedText;
+  level: LocalizedText;
+  goal: LocalizedText;
+  goalSimple: LocalizedText;
+  blockForward: LocalizedText;
+  blockLeft: LocalizedText;
+  blockRight: LocalizedText;
+  blockRepeat: LocalizedText;
+  arrowUp: LocalizedText;
+  arrowDown: LocalizedText;
+  arrowLeft: LocalizedText;
+  arrowRight: LocalizedText;
+  times: LocalizedText;
+  loopDone: LocalizedText;
+  loopInside: LocalizedText;
+  program: LocalizedText;
+  programEmpty: LocalizedText;
+  programEmptySimple: LocalizedText;
+  dragHint: LocalizedText;
+  memory: LocalizedText;
+  run: LocalizedText;
+  reset: LocalizedText;
+  clear: LocalizedText;
+  undo: LocalizedText;
+  showMe: LocalizedText;
+  shownSolution: LocalizedText;
+  msgEmpty: LocalizedText;
+  msgTooLong: LocalizedText;
+  msgBump: LocalizedText;
+  msgEdge: LocalizedText;
+  msgNoPart: LocalizedText;
+  msgNotThere: LocalizedText;
+  msgPicked: LocalizedText;
+  msgDelivered: LocalizedText;
+  msgFirstTry: LocalizedText;
+  next: LocalizedText;
+  roundDone: LocalizedText;
+  roundScore: LocalizedText;
+  playAgain: LocalizedText;
+  changeMode: LocalizedText;
+  questionCourier: LocalizedText;
+  // Planet Parade
+  planetsTitle: LocalizedText;
+  planetsIntro: LocalizedText;
+  planetsFind: LocalizedText;
+  planetsNotYet: LocalizedText;
+  planetsGood: LocalizedText;
+  planetsDone: LocalizedText;
+  planetsHint: LocalizedText;
+  sun: LocalizedText;
+  questionPlanet: LocalizedText;
+}
+
+export interface SkyharborProps {
+  ui: SkyharborUi;
+  /** Robot Courier puzzles (both modes); a round picks from them by stage. */
+  levels: CourierLevel[];
+  /** How many puzzles a round has: main mode (7–12) and simple mode (4–6). */
+  roundMain: number;
+  roundSimple: number;
+  planets: Planet[];
+  /** Fact cards: "greenhouse", "airship". */
+  spots: InfoSpot[];
+  models: SkyharborModels;
+  textures: SkyharborTextures;
+  sounds: SkyharborSounds;
+}
+
+/** What the scene asks the hub to open (the hub passes it to <Activity open=… />). */
+export interface SkyharborOpen {
+  /** "skyharbor:robot" | "skyharbor:planets" | "skyharbor:info" */
+  kind: string;
+  /** For "skyharbor:info": the InfoSpot id. */
+  ref?: string;
 }
 
 export interface BlockProps {
   ui: UiText;
   /** Shipped ideas: one lantern each on the Idea Tree. */
   lanterns: Lantern[];
-  /** The three districts still being built (stalls). */
+  /** The three districts (stalls in the grove). */
   districts: District[];
   /** Names of every district id (for lantern cards). */
   districtNames: DistrictName[];
@@ -188,6 +698,13 @@ export interface BlockProps {
   models: Models;
   textures: Textures;
   sounds: Sounds;
+  /** Biome Frontier district (science, geography). */
+  biomeFrontier?: BiomeFrontierProps;
+  /** Chrono Quarter district (history). */
+  chronoQuarter?: ChronoQuarterProps;
+  /** Skyharbor district (coding, space, engineering). */
+  skyharbor?: SkyharborProps;
+  voice?: VoiceLines;
 }
 
 /** Catches a model or texture that could not load, so the child sees a kind message and a retry button. */
@@ -211,9 +728,14 @@ interface ExplorerSave {
   nickname: string;
   /** Constellation ids found at least once. */
   found: string[];
+  /** The zone the explorer was last in (idea-grove or a district id), to resume there. */
+  zone?: string;
 }
 
 const EMPTY_SAVE: ExplorerSave = { avatar: 0, nickname: "", found: [] };
+const LOCAL = typeof window !== "undefined" && /^(localhost|127\.0\.0\.1)$/.test(window.location.hostname);
+
+type VoiceId = keyof VoiceLines;
 
 function apiOrigin(models: Partial<Models> | undefined): string {
   for (const u of Object.values(models || {})) {
@@ -243,6 +765,8 @@ export const Block: React.FC<Partial<BlockProps>> = (raw) => {
   );
   const save = useCloudSave<ExplorerSave>("explorer", EMPTY_SAVE);
   const saved = save.value || EMPTY_SAVE;
+  const savedRef = useRef(saved);
+  savedRef.current = saved;
   const avatars = props.avatars || [];
   const [avatar, setAvatar] = useState(0);
   const [nickname, setNickname] = useState("");
@@ -254,13 +778,41 @@ export const Block: React.FC<Partial<BlockProps>> = (raw) => {
   const [skyOpen, setSkyOpen] = useState(false);
   const [presence, setPresence] = useState<Presence | null>(null);
   const [roomInfo, setRoomInfo] = useState<{ online: boolean; reason: string }>({ online: false, reason: "" });
+  const [zone, setZone] = useState<ActiveZone>(GROVE_ZONE);
+  const [fade, setFade] = useState<string | null>(null);
+  const [districtBusy, setDistrictBusy] = useState(false);
+  const [shOpen, setShOpen] = useState<{ kind: string; ref?: string } | null>(null);
+  const [report, setReport] = useState<{ target: ReportTarget; peerId?: string } | null>(null);
+  const [reportHidden, setReportHidden] = useState(false);
+  const [note, setNote] = useState<ReportStatus | null>(null);
+  const [flagTarget, setFlagTarget] = useState<ReportTarget | null>(null);
+  const [young, setYoung] = useState(false);
+  /** Local screenshots only: stop drawing frames (headless software rendering is slow). */
+  const [frozen, setFrozen] = useState(false);
   const game = useMemo<Game>(() => createGame(), []);
   // local testing hook (never on the store's domains)
-  if (typeof window !== "undefined" && /^(localhost|127\.0\.0\.1)$/.test(window.location.hostname)) (window as unknown as { __owGame: Game }).__owGame = game;
+  if (LOCAL) (window as unknown as { __owGame: Game }).__owGame = game;
   const { progress } = useProgress();
   const shown = useRef(0);
   shown.current = Math.max(shown.current, Math.min(99, Math.round(progress)));
   const words = { adj: props.nicknameAdjectives || [], animals: props.nicknameAnimals || [] };
+  const switching = useRef(false);
+  const lastObj = useRef<{ id: string; at: number } | null>(null);
+  /** The zone whose voice lines play once its first picture is on screen. */
+  const pendingVoice = useRef<string | null>(null);
+
+  // the props of the district the explorer is in (its saved sub-tree, else the module's own defaults)
+  const zoneProps = useMemo(() => {
+    if (!zone.mod) return null;
+    const key = PROPS_KEY[zone.id];
+    return (key && (props as unknown as Record<string, unknown>)[key]) || zone.mod.defaultProps;
+  }, [zone, props]);
+  const activeZone = useMemo<ActiveZone>(() => ({ ...zone, props: zoneProps }), [zone, zoneProps]);
+  const districtName = useMemo(() => {
+    if (!zone.mod) return "";
+    const d = (props.districts || []).find((x) => x.id === zone.id) || (props.districtNames || []).find((x) => x.id === zone.id);
+    return d ? t(d.name) : "";
+  }, [zone, props.districts, props.districtNames, t]);
 
   // the first screen is our own loader: the store's can go
   useEffect(() => {
@@ -293,8 +845,65 @@ export const Block: React.FC<Partial<BlockProps>> = (raw) => {
   useEffect(() => {
     game.paused = !!mexty.paused;
   }, [mexty.paused, game]);
+  // a district plays its own ambience loop while the explorer is inside it
+  useEffect(() => {
+    const s = zoneProps && (zoneProps as { sounds?: { ambience?: string } }).sounds;
+    sound.setAmbience((s && s.ambience) || "");
+  }, [zoneProps]);
 
-  // presence: one room per EdVerse age tile, opened once the player enters the grove
+  // ages 4-6 hear the short voice lines on their own (everyone has the speaker button)
+  useEffect(() => {
+    let alive = true;
+    mexty
+      .getPlayer()
+      .then((p) => {
+        let max = p.ageMax;
+        if (max == null && LOCAL) {
+          const q = Number(new URLSearchParams(window.location.search).get("age"));
+          if (q) max = q;
+        }
+        if (alive) setYoung(max != null && max <= 6);
+      })
+      .catch(() => undefined);
+    return () => {
+      alive = false;
+    };
+  }, [mexty]);
+  const voiceUrl = useCallback((id: VoiceId) => t((props.voice || {})[id]), [props.voice, t]);
+  const speak = useCallback((ids: VoiceId[]) => sound.voice(ids.map(voiceUrl)), [voiceUrl]);
+  const linesFor = useCallback((zid: string): VoiceId[] => (isDistrict(zid) ? [PROPS_KEY[zid] as VoiceId, "backGate"] : ["welcome", "move", "tapGlow"]), []);
+  // kind words after each answer and at the end of a round, for the youngest (every activity reports through mexty.progress)
+  const cue = useRef<(id: VoiceId) => void>(() => undefined);
+  const lastCue = useRef<{ id: string; at: number }>({ id: "", at: 0 });
+  cue.current = (id: VoiceId) => {
+    if (!young || phase !== "play") return;
+    const now = performance.now();
+    if (now - lastCue.current.at < 2200) return;
+    lastCue.current = { id, at: now };
+    sound.voice([voiceUrl(id)]);
+  };
+  useEffect(() => {
+    const pr = mexty.progress as unknown as {
+      answer: (a: { correct: boolean }) => void;
+      complete: (...a: unknown[]) => void;
+      __owVoice?: boolean;
+    };
+    if (!pr || pr.__owVoice) return;
+    pr.__owVoice = true;
+    const answer = pr.answer;
+    const complete = pr.complete;
+    pr.answer = (a) => {
+      answer(a);
+      cue.current(a && a.correct ? "wellDone" : "tryAgain");
+    };
+    pr.complete = (...a) => {
+      complete(...a);
+      lastCue.current.at = 0;
+      cue.current("wellDone");
+    };
+  }, [mexty]);
+
+  // presence: one room per zone and EdVerse age tile, opened once the player is in the world
   const api = useMemo(() => apiOrigin(props.models), [props.models]);
   useEffect(() => {
     if (phase !== "play") return;
@@ -303,7 +912,7 @@ export const Block: React.FC<Partial<BlockProps>> = (raw) => {
     mexty
       .getPlayer()
       .then((p) => {
-        const room = roomForAge(p.ageMin, p.ageMax);
+        const room = roomForAge(p.ageMin, p.ageMax, zone.id);
         if (!room) {
           if (alive) setRoomInfo({ online: false, reason: "age" });
           return null;
@@ -326,7 +935,67 @@ export const Block: React.FC<Partial<BlockProps>> = (raw) => {
       if (pr) pr.close();
       setPresence(null);
     };
-  }, [phase, api, game, mexty]);
+  }, [phase, api, game, mexty, zone.id]);
+
+  /** Fades out, loads the district (its own chunk), puts the explorer at its spawn (or back at the stall) and fades in. */
+  const goZone = useCallback(
+    (id: string, fromDistrict?: string) => {
+      if (switching.current || id === zone.id) return;
+      switching.current = true;
+      setCard(null);
+      setSkyOpen(false);
+      setShOpen(null);
+      setReport(null);
+      setDistrictBusy(false);
+      sound.stopVoice();
+      const placeName = (() => {
+        const d = (props.districtNames || []).find((x) => x.id === id);
+        return d ? t(d.name) : t(props.ui.title);
+      })();
+      setFade(props.ui.entering ? t(props.ui.entering, { place: placeName }) : placeName);
+      const wait = new Promise((r) => window.setTimeout(r, 450));
+      const load = isDistrict(id) ? loadZone(id) : Promise.resolve(null);
+      Promise.all([load, wait])
+        .then(([mod]) => {
+          game.targets = [];
+          game.focus = null;
+          game.walkTo = null;
+          game.input.x = game.input.z = 0;
+          const layout = mod ? { id, SPAWN: mod.SPAWN, colliders: mod.colliders, groundY: mod.groundY, WORLD_R: mod.WORLD_R } : GROVE_LAYOUT;
+          const st = !mod && fromDistrict ? STALLS.find((s) => s.district === fromDistrict) : undefined;
+          if (st) {
+            // back in front of the stall the explorer left from, facing the plaza
+            const p = stallPoint(st, 0, 3.4);
+            game.me.x = p.x;
+            game.me.z = p.z;
+            game.me.ry = st.ry;
+          } else {
+            game.me.x = layout.SPAWN.x;
+            game.me.z = layout.SPAWN.z;
+            game.me.ry = layout.SPAWN.ry;
+          }
+          game.me.y = layout.groundY(game.me.x, game.me.z);
+          setZone({ id, mod, props: null, layout });
+          pendingVoice.current = id;
+          save.save({ ...savedRef.current, avatar: game.avatar, nickname: game.nickname, zone: id });
+          switching.current = false;
+        })
+        .catch(() => {
+          // the district could not download: stay where we are
+          switching.current = false;
+          setFade(null);
+        });
+    },
+    [zone.id, game, props.districtNames, props.ui, t, save],
+  );
+
+  const onZoneReady = useCallback(() => {
+    setLoaded(true);
+    setFade(null);
+    const z = pendingVoice.current;
+    pendingVoice.current = null;
+    if (z && young && game.mode === "play") speak(linesFor(z));
+  }, [young, game, speak, linesFor]);
 
   const enter = () => {
     sound.unlock();
@@ -339,12 +1008,22 @@ export const Block: React.FC<Partial<BlockProps>> = (raw) => {
     } catch {
       /* outside EdVerse */
     }
+    if (isDistrict(saved.zone)) goZone(saved.zone);
+    else if (young) speak(linesFor(GROVE));
   };
   const backToStart = () => {
     game.mode = "start";
     setPhase("start");
     setCard(null);
     setSkyOpen(false);
+    setShOpen(null);
+    setReport(null);
+    sound.stopVoice();
+    if (zone.mod) {
+      game.targets = [];
+      setZone(GROVE_ZONE);
+      save.save({ ...saved, avatar, nickname, zone: GROVE });
+    }
   };
 
   const open = useCallback(
@@ -360,36 +1039,111 @@ export const Block: React.FC<Partial<BlockProps>> = (raw) => {
     },
     [game],
   );
-  // the HUD's action button opens the nearest thing (same as tapping it in the world)
+  const openDistrict = useCallback((o: { kind: string; ref?: string }) => {
+    lastObj.current = { id: o.kind + (o.ref ? ":" + o.ref : ""), at: performance.now() };
+    if (String(o.kind).indexOf("skyharbor:") === 0) setShOpen({ kind: o.kind, ref: o.ref });
+  }, []);
+  // the HUD's action button opens the nearest thing (same as tapping it in the world); district kinds
+  // ("<district>:<what>") belong to that district's Activity, which listens to the same event
   useEffect(() => {
     const h = (e: Event) => {
       const f = (e as CustomEvent<Target>).detail;
       if (!f) return;
-      if (f.kind === "lantern") open({ kind: "lantern", index: f.ref as number, empty: (f.ref as number) >= (props.lanterns || []).length });
-      else if (f.kind === "stall") open({ kind: "stall", district: String(f.ref) });
-      else open({ kind: "telescope" });
+      const k = String(f.kind);
+      if (k === "lantern") open({ kind: "lantern", index: f.ref as number, empty: (f.ref as number) >= (props.lanterns || []).length });
+      else if (k === "stall") open({ kind: "stall", district: String(f.ref) });
+      else if (k === "telescope") open({ kind: "telescope" });
+      else if (k.indexOf(":") > 0) openDistrict({ kind: k, ref: f.ref != null ? String(f.ref) : undefined });
     };
     window.addEventListener("ow-open", h);
     return () => window.removeEventListener("ow-open", h);
-  }, [open, props.lanterns]);
+  }, [open, openDistrict, props.lanterns]);
+
+  // a district card or activity is open: it gets a small flag button (report what it shows)
+  const busy = districtBusy || !!shOpen;
+  useEffect(() => {
+    if (!busy || !zone.mod) {
+      setFlagTarget(null);
+      return;
+    }
+    const lo = lastObj.current;
+    const id = lo && performance.now() - lo.at < 3000 ? lo.id : zone.id + ":activity";
+    setFlagTarget({ kind: "object", id, label: districtName });
+  }, [busy, zone, districtName]);
 
   const onFound = (id: string) => {
     if (saved.found.indexOf(id) < 0) save.save({ ...saved, avatar, nickname, found: saved.found.concat(id) });
   };
 
+  const onPeerTap = useCallback(
+    (p: Peer) => {
+      if (game.mode !== "play") return;
+      setReportHidden(game.hidden.has(p.id));
+      setReport({ target: { kind: "player", id: p.id, label: p.nick }, peerId: p.id });
+      sound.sfx("pop", 0.6);
+    },
+    [game],
+  );
+  const doReport = (reason: Parameters<typeof sendReport>[1]) => {
+    const r = report;
+    if (!r) return;
+    // a reported explorer disappears for me at once
+    if (r.peerId) game.hidden.add(r.peerId);
+    setReport(null);
+    sendReport(r.target, reason).then((s) => {
+      setNote(s);
+      if ((s === "sent" || s === "limit") && young) speak(["thanks"]);
+    });
+  };
+  useEffect(() => {
+    if (!note) return;
+    const id = window.setTimeout(() => setNote(null), 5000);
+    return () => window.clearTimeout(id);
+  }, [note]);
+
+  // local testing hooks (never on the store's domains)
+  if (LOCAL) (window as unknown as Record<string, unknown>).__ow = { goZone, zone: zone.id, openReport: onPeerTap, freeze: setFrozen };
+
+  const labelFor = useCallback(
+    (tg: Target): [string, string] | null => {
+      if (zone.id === "skyharbor" && zoneProps) {
+        const ui = (zoneProps as SkyharborProps).ui;
+        if (tg.kind === "skyharbor:robot") return ["🤖", t(ui.talkRobot)];
+        if (tg.kind === "skyharbor:planets") return ["🪐", t(ui.usePlanets)];
+      }
+      return null;
+    },
+    [zone.id, zoneProps, t],
+  );
+
   if (!ready) return <div className="ow-root ow-empty">EdVerse OpenWorld</div>;
+
+  const paused = !!mexty.paused;
+  const Activity = zone.mod ? zone.mod.Activity : null;
+  const resumeName = isDistrict(saved.zone) ? (props.districtNames || []).find((d) => d.id === saved.zone) : undefined;
 
   return (
     <div className="ow-root" onPointerDown={() => sound.unlock()}>
       <LoadGuard key={attempt} onError={() => setFailed(true)}>
-      <GameCanvas
-        props={props}
-        game={game}
-        settings={settings}
-        paused={!!mexty.paused}
-        onLoaded={() => setLoaded(true)}
-        onOpen={open}
-      />
+        <GameCanvas
+          props={props}
+          game={game}
+          settings={settings}
+          paused={paused || frozen}
+          zone={activeZone}
+          onZoneReady={onZoneReady}
+          onZoneError={() => {
+            // a district that fails to load: back home
+            switching.current = false;
+            game.targets = [];
+            setZone(GROVE_ZONE);
+            setFade(null);
+          }}
+          onOpen={open}
+          onDistrictOpen={openDistrict}
+          onExit={() => goZone(GROVE, zone.id)}
+          onPeerTap={onPeerTap}
+        />
       </LoadGuard>
       {failed && (
         <div className="ow-loading">
@@ -445,6 +1199,7 @@ export const Block: React.FC<Partial<BlockProps>> = (raw) => {
             sound.sfx("pop", 0.5);
           }}
           onEnter={enter}
+          enterLabel={resumeName && props.ui.resume ? t(props.ui.resume, { place: t(resumeName.name) }) : undefined}
         />
       )}
       {loaded && phase === "play" && (
@@ -454,12 +1209,46 @@ export const Block: React.FC<Partial<BlockProps>> = (raw) => {
           game={game}
           presence={presence}
           roomInfo={roomInfo}
-          blocked={!!card || skyOpen || !!mexty.paused}
+          blocked={!!card || skyOpen || busy || !!report || !!fade || paused}
           onBack={backToStart}
           found={saved.found.length}
+          zoneName={zone.mod ? districtName : undefined}
+          onHome={zone.mod ? () => goZone(GROVE, zone.id) : undefined}
+          onSpeak={props.voice ? () => speak(linesFor(zone.id)) : undefined}
+          labelFor={labelFor}
         />
       )}
-      {card && <InfoCard card={card} props={props} t={t} language={lang.language} onClose={() => setCard(null)} />}
+      {loaded && phase === "play" && Activity && zoneProps && (
+        <React.Fragment key={zone.id}>
+          {zone.id === "biome-frontier" && <Activity props={zoneProps} t={t} paused={paused} onBusy={setDistrictBusy} />}
+          {zone.id === "chrono-quarter" && <Activity props={zoneProps} game={game} t={t} paused={paused} onBlockingChange={setDistrictBusy} />}
+          {zone.id === "skyharbor" && shOpen && <Activity props={zoneProps} open={shOpen} t={t} onClose={() => setShOpen(null)} paused={paused} />}
+        </React.Fragment>
+      )}
+      {flagTarget && !report && (
+        <button
+          className="ow-flag ow-flag-float"
+          aria-label={t(props.ui.report)}
+          title={t(props.ui.report)}
+          onClick={() => {
+            setReport({ target: flagTarget });
+            sound.sfx("pop", 0.6);
+          }}
+        >
+          🚩
+        </button>
+      )}
+      {card && (
+        <InfoCard
+          card={card}
+          props={props}
+          t={t}
+          language={lang.language}
+          onClose={() => setCard(null)}
+          onEnter={(d) => isDistrict(d) && goZone(d)}
+          onReport={(o) => setReport({ target: { kind: "object", id: o.id, label: o.label } })}
+        />
+      )}
       {skyOpen && (
         <Sky
           ui={props.ui}
@@ -467,10 +1256,35 @@ export const Block: React.FC<Partial<BlockProps>> = (raw) => {
           constellations={props.constellations || []}
           onFound={onFound}
           onClose={() => setSkyOpen(false)}
-          paused={!!mexty.paused}
+          paused={paused}
         />
       )}
-      {mexty.paused && loaded && <div className="ow-paused">{t(props.ui.paused)}</div>}
+      {report && (
+        <ReportSheet
+          target={report.target}
+          ui={props.ui}
+          t={t}
+          hidden={reportHidden}
+          onToggleHide={
+            report.peerId
+              ? () => {
+                  const id = report.peerId!;
+                  if (game.hidden.has(id)) game.hidden.delete(id);
+                  else game.hidden.add(id);
+                  setReportHidden(game.hidden.has(id));
+                }
+              : undefined
+          }
+          onReport={doReport}
+          onClose={() => setReport(null)}
+        />
+      )}
+      {note && <ReportNote status={note} ui={props.ui} t={t} onClose={() => setNote(null)} />}
+      <div className={"ow-fade" + (fade ? " on" : "")} aria-hidden={!fade}>
+        <div className="ow-lantern-spin" />
+        <div>{fade || ""}</div>
+      </div>
+      {paused && loaded && <div className="ow-paused">{t(props.ui.paused)}</div>}
     </div>
   );
 };

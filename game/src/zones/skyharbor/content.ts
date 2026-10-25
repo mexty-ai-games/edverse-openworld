@@ -3,7 +3,7 @@
 import type { CourierLevel, InfoSpot, Planet, SkyharborProps, SkyharborUi } from "./types";
 
 const ui: SkyharborUi = {
-  name: { en: "Skyharbor", fr: "Port-du-Ciel" },
+  name: { en: "Skyharbor", fr: "Port-Céleste" },
   backToGrove: { en: "Back to the Idea Grove", fr: "Retour au Bosquet des idées" },
   close: { en: "Close", fr: "Fermer" },
   talkRobot: { en: "Help Bolt the robot", fr: "Aider Boulon le robot" },

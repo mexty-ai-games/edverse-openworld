@@ -1,0 +1,92 @@
+/* Idea Grove hub additions (ticket 7f686b): zone fade, district chip, report sheet and flag, voice button. */
+.ow-topright { display: flex; gap: 8px; }
+.ow-chip-zone { background: rgba(255, 244, 214, 0.96); }
+.ow-row-center { align-items: center; }
+.ow-fade {
+  position: absolute;
+  inset: 0;
+  z-index: 28;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  background: radial-gradient(circle at 50% 45%, #3a2a17 0%, #160e06 75%);
+  color: #fff3d6;
+  font-weight: 900;
+  font-size: clamp(20px, 4vmin, 32px);
+  text-align: center;
+  padding: 16px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.42s ease;
+}
+.ow-fade.on { opacity: 1; pointer-events: auto; }
+.ow-flag {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid var(--edge);
+  background: #fff6e2;
+  font-size: 20px;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(40, 20, 5, 0.25);
+}
+.ow-info { position: relative; }
+.ow-flag-float {
+  position: absolute;
+  left: max(12px, env(safe-area-inset-left));
+  bottom: max(12px, env(safe-area-inset-bottom));
+  top: auto;
+  right: auto;
+  z-index: 17;
+}
+.ow-report-modal { z-index: 25; }
+.ow-report { width: min(440px, 100%); text-align: center; }
+.ow-report-head { display: flex; align-items: center; gap: 12px; justify-content: center; margin-bottom: 10px; }
+.ow-report-flag { font-size: 34px; }
+.ow-report-who { font-weight: 900; font-size: clamp(18px, 3vmin, 24px); }
+.ow-report-reasons { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; }
+.ow-report-reason {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  min-height: 84px;
+  padding: 8px 4px;
+  border-radius: 16px;
+  border: 3px solid var(--edge);
+  background: #fffaf0;
+  cursor: pointer;
+  font-family: inherit;
+  color: inherit;
+}
+.ow-report-reason:active { transform: scale(0.96); }
+.ow-report-reason:disabled { opacity: 0.6; }
+.ow-report-icon { font-size: 34px; line-height: 1; }
+.ow-report-text { font-weight: 800; font-size: clamp(11px, 1.7vmin, 14px); line-height: 1.1; }
+@media (max-width: 420px) {
+  .ow-report-reasons { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+.ow-toast {
+  position: absolute;
+  left: 50%;
+  bottom: calc(max(12px, env(safe-area-inset-bottom)) + 96px);
+  transform: translateX(-50%);
+  z-index: 26;
+  max-width: min(90vw, 460px);
+  background: rgba(248, 236, 210, 0.97);
+  border: 3px solid var(--edge);
+  border-radius: 18px;
+  padding: 12px 18px;
+  font-weight: 800;
+  font-size: clamp(15px, 2.2vmin, 18px);
+  text-align: center;
+  box-shadow: 0 6px 16px rgba(40, 20, 5, 0.3);
+  animation: ow-in 0.2s ease-out;
+}
+.ow-toast-icon { font-size: 22px; }
+.ow-chips { max-width: calc(100% - 170px); }

@@ -75,12 +75,22 @@ export function stallPoint(st: StallSpot, lx: number, lz: number) {
   return local(st.x, st.z, st.ry, lx, lz);
 }
 
+/** The three plinths in front of each stall, where its district's preview models stand (stall-local x, z). */
+export const PLINTHS = [
+  { lx: -1.15, lz: 1.45 },
+  { lx: 0, lz: 1.6 },
+  { lx: 1.15, lz: 1.45 },
+];
+export const PLINTH_R = 0.32;
+export const PLINTH_H = 0.42;
+
 export function colliders(): Circle[] {
   const out: Circle[] = [{ x: TREE.x, z: TREE.z, r: 3.4 }];
   for (const st of STALLS) {
     for (const lx of [-0.75, 0.75]) out.push({ ...stallPoint(st, lx, 0.1), r: 1.05 });
     out.push({ ...stallPoint(st, 1.75, 0.4), r: 0.38 });
     out.push({ ...stallPoint(st, -1.8, 0.1), r: 0.32 });
+    for (const p of PLINTHS) out.push({ ...stallPoint(st, p.lx, p.lz), r: PLINTH_R + 0.08 });
   }
   out.push({ x: TELESCOPE.x, z: TELESCOPE.z, r: 0.65 });
   for (const b of BOULDERS) out.push({ x: b.x, z: b.z, r: (b.variant === 1 ? 1.3 : b.variant === 0 ? 1.0 : 0.7) * b.s * 0.95 });

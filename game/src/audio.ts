@@ -17,6 +17,13 @@ class SoundEngine {
   private buffers = new Map<string, AudioBuffer>();
   private loading = new Map<string, Promise<AudioBuffer | null>>();
   private amb: AudioBufferSourceNode | null = null;
+  private ambUrl = "";
+  /** A district's own loop while the explorer is inside it (empty: the grove's). */
+  private ambOverride = "";
+  private voiceGain: GainNode | null = null;
+  private voiceSrc: AudioBufferSourceNode | null = null;
+  private voiceQueue: string[] = [];
+  private voiceSeq = 0;
   private wantAmb = false;
   private muted = false;
   private suspended = false;
@@ -40,6 +47,9 @@ class SoundEngine {
       this.sfxGain = this.ctx.createGain();
       this.sfxGain.gain.value = 0.7;
       this.sfxGain.connect(this.master);
+      this.voiceGain = this.ctx.createGain();
+      this.voiceGain.gain.value = 1;
+      this.voiceGain.connect(this.master);
       this.apply();
       this.preload();
     }
@@ -49,6 +59,10 @@ class SoundEngine {
 
   setMuted(m: boolean) {
     this.muted = m;
+    if (m) {
+      this.voiceQueue = [];
+      this.stopVoice();
+    }
     this.apply();
   }
 
@@ -65,7 +79,7 @@ class SoundEngine {
   }
 
   private preload() {
-    [this.urls.ambience, this.urls.chime, this.urls.pop, this.urls.success].forEach((u) => u && this.load(u));
+    [this.ambOverride || this.urls.ambience, this.urls.chime, this.urls.pop, this.urls.success].forEach((u) => u && this.load(u));
   }
 
   private load(url: string): Promise<AudioBuffer | null> {
@@ -102,17 +116,96 @@ class SoundEngine {
 
   startAmbience() {
     this.wantAmb = true;
-    const url = this.urls.ambience;
+    const url = this.ambOverride || this.urls.ambience;
     if (!this.ctx || this.amb || !url) return;
     this.load(url).then((buf) => {
-      if (!buf || !this.ctx || this.amb || !this.wantAmb) return;
+      if (!buf || !this.ctx || this.amb || !this.wantAmb || (this.ambOverride || this.urls.ambience) !== url) return;
       const src = this.ctx.createBufferSource();
       src.buffer = buf;
       src.loop = true;
       src.connect(this.ambGain!);
       src.start();
       this.amb = src;
+      this.ambUrl = url;
     });
+  }
+
+  /** Swap the ambience loop: a district's own while inside it, the grove's ("") back home. */
+  setAmbience(url: string) {
+    if (url === this.ambOverride) return;
+    this.ambOverride = url;
+    const want = this.wantAmb;
+    if (this.amb && this.ambUrl === (url || this.urls.ambience)) return;
+    this.stopLoop();
+    if (want) this.startAmbience();
+  }
+
+  /** Voice-over: plays one line after another (a new call with `interrupt` replaces what is playing). */
+  voice(urls: string[], interrupt = true) {
+    const list = urls.filter(Boolean);
+    if (!list.length) return;
+    if (interrupt) {
+      this.voiceQueue = [];
+      this.stopVoice();
+    }
+    this.voiceQueue.push(...list);
+    if (!this.voiceSrc) this.nextVoice();
+  }
+
+  stopVoice() {
+    this.voiceSeq++;
+    if (this.voiceSrc) {
+      try {
+        this.voiceSrc.stop();
+      } catch {
+        /* already stopped */
+      }
+      this.voiceSrc = null;
+    }
+    this.duck(false);
+  }
+
+  private nextVoice() {
+    const url = this.voiceQueue.shift();
+    if (!url || !this.ctx) {
+      this.duck(false);
+      return;
+    }
+    const seq = ++this.voiceSeq;
+    this.load(url).then((buf) => {
+      if (seq !== this.voiceSeq || !this.ctx) return;
+      if (!buf || this.muted) {
+        this.nextVoice();
+        return;
+      }
+      const src = this.ctx.createBufferSource();
+      src.buffer = buf;
+      src.connect(this.voiceGain!);
+      src.onended = () => {
+        if (this.voiceSrc !== src) return;
+        this.voiceSrc = null;
+        this.nextVoice();
+      };
+      this.duck(true);
+      src.start();
+      this.voiceSrc = src;
+    });
+  }
+
+  /** The ambience goes quieter while a voice line plays. */
+  private duck(on: boolean) {
+    if (this.ambGain && this.ctx) this.ambGain.gain.setTargetAtTime(on ? 0.16 : 0.45, this.ctx.currentTime, 0.12);
+  }
+
+  private stopLoop() {
+    if (this.amb) {
+      try {
+        this.amb.stop();
+      } catch {
+        /* already stopped */
+      }
+      this.amb = null;
+    }
   }
 
   stopAmbience() {

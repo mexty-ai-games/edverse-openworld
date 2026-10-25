@@ -5,9 +5,21 @@ import * as THREE from "three";
 import { clone as cloneSkinned } from "three/examples/jsm/utils/SkeletonUtils.js";
 import type { AvatarPreset, BlockProps, LocalizedText } from "../block";
 import { Game, Peer, PHRASE_SECONDS } from "../game/state";
-import { SPAWN, WORLD_R, colliders, groundY } from "../game/layout";
+import * as GROVE from "../game/layout";
+import type { Circle } from "../game/layout";
 import { useModel } from "./assets";
 import { pickLanguage, useLanguage } from "@mexty/sdk";
+
+/** Where the explorer walks: the Idea Grove's layout, or the active district's (its own SPAWN, solids, ground and edge). */
+export interface ZoneLayout {
+  id: string;
+  SPAWN: { x: number; y: number; z: number; ry: number };
+  colliders: () => Circle[];
+  groundY: (x: number, z: number) => number;
+  WORLD_R: number;
+}
+
+export const GROVE_LAYOUT: ZoneLayout = { id: "idea-grove", SPAWN: GROVE.SPAWN, colliders: GROVE.colliders, groundY: GROVE.groundY, WORLD_R: GROVE.WORLD_R };
 
 const TINTED = ["skin", "hair", "shirt", "pants", "shoes", "bag"] as const;
 const EMOTE_MS: Record<string, number> = { wave: 1500, cheer: 1250 };
@@ -133,11 +145,17 @@ function angleLerp(a: number, b: number, k: number) {
 }
 
 /** The player's own explorer: movement, collisions, the 3/4 follow camera, the nearest thing to use. */
-function Me({ props, game, phrases }: { props: BlockProps; game: Game; phrases: Record<string, { icon: string; text: LocalizedText }> }) {
+function Me({ props, game, phrases, layout }: { props: BlockProps; game: Game; phrases: Record<string, { icon: string; text: LocalizedText }>; layout: ZoneLayout }) {
   const group = useRef<THREE.Group>(null);
   const camera = useThree((s) => s.camera);
   const size = useThree((s) => s.size);
-  const solid = useMemo(colliders, []);
+  const solid = useMemo(() => layout.colliders(), [layout]);
+  const { SPAWN, WORLD_R, groundY } = layout;
+  // a new zone: the camera jumps straight behind the explorer (the fade hides the cut)
+  const snap = useRef(true);
+  useEffect(() => {
+    snap.current = true;
+  }, [layout]);
   const look = useRef(new THREE.Vector3(0, 1, 0));
   const wantPos = useRef(new THREE.Vector3());
   const [, force] = useState(0);
@@ -234,7 +252,11 @@ function Me({ props, game, phrases }: { props: BlockProps; game: Game; phrases: 
       wantPos.current.set(me.x + 0.4 + side, me.y + 1.35, me.z + (portrait ? 4.6 : 3.6));
       look.current.lerp(new THREE.Vector3(me.x + side, me.y + (portrait ? 0.45 : 0.85), me.z), 1 - Math.exp(-dt * 6));
     }
-    camera.position.lerp(wantPos.current, 1 - Math.exp(-dt * (game.mode === "play" ? 4 : 3)));
+    if (snap.current && game.mode === "play") {
+      snap.current = false;
+      camera.position.copy(wantPos.current);
+      look.current.set(me.x, me.y + 1.5, me.z - 3.2);
+    } else camera.position.lerp(wantPos.current, 1 - Math.exp(-dt * (game.mode === "play" ? 4 : 3)));
     camera.lookAt(look.current);
   });
   return (
@@ -245,7 +267,14 @@ function Me({ props, game, phrases }: { props: BlockProps; game: Game; phrases: 
   );
 }
 
-function Remote({ peer, props, game, phrases }: { peer: Peer; props: BlockProps; game: Game; phrases: Record<string, { icon: string; text: LocalizedText }> }) {
+function Remote({ peer, props, game, phrases, groundY, onTap }: {
+  peer: Peer;
+  props: BlockProps;
+  game: Game;
+  phrases: Record<string, { icon: string; text: LocalizedText }>;
+  groundY: (x: number, z: number) => number;
+  onTap: (peer: Peer) => void;
+}) {
   const group = useRef<THREE.Group>(null);
   const [hidden, setHidden] = useState(game.hidden.has(peer.id));
   const [av, setAv] = useState(peer.avatar);
@@ -265,21 +294,19 @@ function Remote({ peer, props, game, phrases }: { peer: Peer; props: BlockProps;
       g.rotation.y = peer.ry;
     }
     if (peer.avatar !== av) setAv(peer.avatar);
+    // hidden from the report sheet (or shown again) without a re-render of the list
+    if (game.hidden.has(peer.id) !== hidden) setHidden(game.hidden.has(peer.id));
   });
-  const toggle = () => {
-    if (game.hidden.has(peer.id)) game.hidden.delete(peer.id);
-    else game.hidden.add(peer.id);
-    setHidden(game.hidden.has(peer.id));
-  };
   return (
     <group ref={group}>
       {!hidden && <Avatar url={props.models.avatar} preset={props.avatars?.[av]} read={() => peer} />}
-      <Tag nick={peer.nick} read={() => peer} phrases={phrases} onTap={toggle} hidden={hidden} />
+      <Tag nick={peer.nick} read={() => peer} phrases={phrases} onTap={() => onTap(peer)} hidden={hidden} />
     </group>
   );
 }
 
-export function Players({ props, game }: { props: BlockProps; game: Game }) {
+/** Tapping another explorer's name tag opens the report / hide sheet (onPeerTap). */
+export function Players({ props, game, layout = GROVE_LAYOUT, onPeerTap }: { props: BlockProps; game: Game; layout?: ZoneLayout; onPeerTap: (peer: Peer) => void }) {
   const phrases = useMemo(() => {
     const m: Record<string, { icon: string; text: LocalizedText }> = {};
     for (const p of props.phrases || []) m[p.id] = { icon: p.icon, text: p.text };
@@ -296,8 +323,8 @@ export function Players({ props, game }: { props: BlockProps; game: Game }) {
   });
   return (
     <>
-      <Me props={props} game={game} phrases={phrases} />
-      {game.mode === "play" && list.map((p) => <Remote key={p.id} peer={p} props={props} game={game} phrases={phrases} />)}
+      <Me props={props} game={game} phrases={phrases} layout={layout} />
+      {game.mode === "play" && list.map((p) => <Remote key={p.id} peer={p} props={props} game={game} phrases={phrases} groundY={layout.groundY} onTap={onPeerTap} />)}
     </>
   );
 }

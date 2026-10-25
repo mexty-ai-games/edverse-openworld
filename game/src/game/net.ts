@@ -18,8 +18,8 @@ interface Transport {
 const LOCAL = typeof window !== "undefined" && /^(localhost|127\.0\.0\.1)$/.test(window.location.hostname);
 const TILES = [4, 7, 10, 13, 16];
 
-/** The open room for a player's ages, or null when no age is known (then the explorer plays alone). */
-export function roomForAge(ageMin: number | null, ageMax: number | null): string | null {
+/** The open room for a player's ages in one zone (Idea Grove or a district), or null when no age is known (then the explorer plays alone). */
+export function roomForAge(ageMin: number | null, ageMax: number | null, zone = "idea-grove"): string | null {
   let lo = ageMin;
   let hi = ageMax;
   if (lo == null && hi == null && LOCAL) {
@@ -30,7 +30,8 @@ export function roomForAge(ageMin: number | null, ageMax: number | null): string
   const age = lo != null && hi != null ? (lo + hi) / 2 : ((lo ?? hi) as number);
   let tile = 0;
   for (let i = 0; i < TILES.length; i++) if (age >= TILES[i]) tile = i;
-  return "edverse-openworld-idea-grove-t" + tile;
+  const z = /^[a-z0-9-]{1,32}$/.test(zone) ? zone : "idea-grove";
+  return "edverse-openworld-" + z + "-t" + tile;
 }
 
 class LocalTransport implements Transport {
@@ -170,8 +171,8 @@ export async function openPresence(room: string, apiUrl: string, game: Game): Pr
       }
       p.nick = nick;
       p.avatar = Math.max(0, Math.min(15, Math.floor(Number(m.a) || 0)));
-      p.tx = Math.max(-30, Math.min(30, x));
-      p.tz = Math.max(-30, Math.min(30, z));
+      p.tx = Math.max(-40, Math.min(40, x));
+      p.tz = Math.max(-40, Math.min(40, z));
       p.tr = Number(m.r) || 0;
       p.moving = !!m.m;
       p.seen = now;

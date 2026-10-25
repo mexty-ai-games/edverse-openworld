@@ -4,12 +4,14 @@ import { EffectComposer, Bloom, Vignette, ToneMapping } from "@react-three/postp
 import { ToneMappingMode } from "postprocessing";
 import * as THREE from "three";
 import type { BlockProps } from "../block";
-import type { Game } from "../game/state";
+import type { Game, Peer } from "../game/state";
 import { qualityPlan, Settings, TOUCH } from "../settings";
 import { World } from "./World";
 import { Lanterns } from "./Lanterns";
-import { Players } from "./Players";
+import { Players, GROVE_LAYOUT, ZoneLayout } from "./Players";
+import { StallPreviews } from "./Previews";
 import type { CardState } from "../ui/Cards";
+import type { ZoneModule } from "../zones/registry";
 import { wind } from "./assets";
 
 /** Keeps the picture smooth on slower phones: when the frame rate stays low, fewer pixels are drawn. */
@@ -49,18 +51,51 @@ function Loaded({ onLoaded }: { onLoaded: () => void }) {
   return null;
 }
 
-export function GameCanvas({ props, game, settings, paused, onLoaded, onOpen }: {
+/** A district that cannot load sends the explorer back to the grove instead of an error screen. */
+class ZoneGuard extends React.Component<{ onError: () => void; children: React.ReactNode }, { failed: boolean }> {
+  state = { failed: false };
+  static getDerivedStateFromError() {
+    return { failed: true };
+  }
+  componentDidCatch() {
+    this.props.onError();
+  }
+  render() {
+    return this.state.failed ? null : this.props.children;
+  }
+}
+
+export interface ActiveZone {
+  id: string;
+  /** The district's module (null in the Idea Grove). */
+  mod: ZoneModule | null;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  props: any;
+  layout: ZoneLayout;
+}
+
+export const GROVE_ZONE: ActiveZone = { id: "idea-grove", mod: null, props: null, layout: GROVE_LAYOUT };
+
+export function GameCanvas({ props, game, settings, paused, zone, onZoneReady, onZoneError, onOpen, onDistrictOpen, onExit, onPeerTap }: {
   props: BlockProps;
   game: Game;
   settings: Settings;
   paused: boolean;
-  onLoaded: () => void;
+  zone: ActiveZone;
+  /** The active zone's first picture is on screen (ends the loader / the fade). */
+  onZoneReady: () => void;
+  onZoneError: () => void;
   onOpen: (c: CardState) => void;
+  /** A district scene asks the hub to open something (Skyharbor's onOpen). */
+  onDistrictOpen: (o: { kind: string; ref?: string }) => void;
+  onExit: () => void;
+  onPeerTap: (p: Peer) => void;
 }) {
   const plan = qualityPlan(settings.quality);
   const [dpr, setDpr] = useState(plan.dpr);
   useEffect(() => setDpr(qualityPlan(settings.quality).dpr), [settings.quality]);
   const post = plan.bloom || plan.vignette;
+  const Scene = zone.mod ? zone.mod.Scene : null;
   return (
     <Canvas
       className="ow-canvas"
@@ -68,8 +103,8 @@ export function GameCanvas({ props, game, settings, paused, onLoaded, onOpen }: 
       shadows={plan.shadows ? "soft" : false}
       dpr={dpr}
       frameloop={paused ? "never" : "always"}
-      camera={{ position: [0, 6, 16], fov: 50, near: 0.3, far: 400 }}
-      gl={{ antialias: !TOUCH && !post, powerPreference: "high-performance", stencil: false }}
+      camera={{ position: [0, 6, 16], fov: 50, near: 0.3, far: 700 }}
+      gl={{ antialias: !TOUCH && !post, powerPreference: "high-performance", stencil: false, preserveDrawingBuffer: /^(localhost|127\.0\.0\.1)$/.test(window.location.hostname) }}
       onCreated={({ gl, scene }) => {
         gl.toneMapping = THREE.ACESFilmicToneMapping;
         gl.toneMappingExposure = 1.05;
@@ -78,10 +113,23 @@ export function GameCanvas({ props, game, settings, paused, onLoaded, onOpen }: 
     >
       <Clock />
       <Suspense fallback={null}>
-        <World props={props} game={game} plan={plan} onOpen={onOpen} />
-        <Lanterns props={props} game={game} plan={plan} onOpen={onOpen} />
-        <Players props={props} game={game} />
-        <Loaded onLoaded={onLoaded} />
+        {/* only one zone's scene at a time: districts set (and restore) fog and exposure themselves */}
+        {!Scene ? (
+          <Suspense fallback={null} key="idea-grove">
+            <World props={props} game={game} plan={plan} onOpen={onOpen} />
+            <Lanterns props={props} game={game} plan={plan} onOpen={onOpen} />
+            <StallPreviews props={props} />
+            <Loaded onLoaded={onZoneReady} />
+          </Suspense>
+        ) : (
+          <ZoneGuard key={zone.id} onError={onZoneError}>
+            <Suspense fallback={null}>
+              <Scene props={zone.props} game={game} plan={plan} onOpen={onDistrictOpen} onExit={onExit} />
+              <Loaded onLoaded={onZoneReady} />
+            </Suspense>
+          </ZoneGuard>
+        )}
+        <Players props={props} game={game} layout={zone.layout} onPeerTap={onPeerTap} />
       </Suspense>
       <AdaptiveDpr active={plan.adaptive && !paused} min={plan.minDpr} dpr={dpr} onChange={setDpr} />
       {post && (

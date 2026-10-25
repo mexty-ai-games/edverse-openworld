@@ -16,7 +16,7 @@ export function PresetFace({ p }: { p: AvatarPreset }) {
   );
 }
 
-export function Start({ ui, t, avatars, avatar, nickname, onAvatar, onReroll, onEnter }: {
+export function Start({ ui, t, avatars, avatar, nickname, onAvatar, onReroll, onEnter, enterLabel }: {
   ui: UiText;
   t: T;
   avatars: AvatarPreset[];
@@ -25,6 +25,8 @@ export function Start({ ui, t, avatars, avatar, nickname, onAvatar, onReroll, on
   onAvatar: (i: number) => void;
   onReroll: () => void;
   onEnter: () => void;
+  /** A returning explorer goes back to the district they left. */
+  enterLabel?: string;
 }) {
   return (
     <div className="ow-start">
@@ -47,7 +49,7 @@ export function Start({ ui, t, avatars, avatar, nickname, onAvatar, onReroll, on
           </button>
         </div>
         <button className="ow-btn ow-btn-go" onClick={onEnter}>
-          {t(ui.enter)} ➜
+          {enterLabel || t(ui.enter)} ➜
         </button>
         <p className="ow-howto">{t(TOUCH ? ui.howToTouch : ui.howToKeys)}</p>
       </div>

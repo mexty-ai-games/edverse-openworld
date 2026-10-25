@@ -54,7 +54,7 @@ const KEYS: Record<string, [number, number]> = {
   KeyW: [0, -1], ArrowUp: [0, -1], KeyS: [0, 1], ArrowDown: [0, 1], KeyA: [-1, 0], ArrowLeft: [-1, 0], KeyD: [1, 0], ArrowRight: [1, 0],
 };
 
-export function Hud({ props, t, game, presence, roomInfo, blocked, onBack, found }: {
+export function Hud({ props, t, game, presence, roomInfo, blocked, onBack, found, zoneName, onHome, onSpeak, labelFor }: {
   props: BlockProps;
   t: T;
   game: Game;
@@ -63,6 +63,13 @@ export function Hud({ props, t, game, presence, roomInfo, blocked, onBack, found
   blocked: boolean;
   onBack: () => void;
   found: number;
+  /** Inside a district: its name (chip) and the way home. */
+  zoneName?: string;
+  onHome?: () => void;
+  /** The speaker button: say the place's short voice lines again. */
+  onSpeak?: () => void;
+  /** A district's own label for the action button ([icon, text]), or null for the default. */
+  labelFor?: (target: Target) => [string, string] | null;
 }) {
   const ui = props.ui;
   const settings = useSettings();
@@ -148,8 +155,9 @@ export function Hud({ props, t, game, presence, roomInfo, blocked, onBack, found
   }, [game, blocked, props.phrases]);
 
   const lanternCount = (props.lanterns || []).length;
-  const actLabel = focus ? (focus.kind === "lantern" ? t(ui.readLantern) : focus.kind === "telescope" ? t(ui.useTelescope) : t(ui.look)) : "";
-  const actIcon = focus ? (focus.kind === "lantern" ? "🏮" : focus.kind === "telescope" ? "🔭" : "👀") : "";
+  const custom = focus && labelFor ? labelFor(focus) : null;
+  const actLabel = custom ? custom[1] : focus ? (focus.kind === "lantern" ? t(ui.readLantern) : focus.kind === "telescope" ? t(ui.useTelescope) : t(ui.look)) : "";
+  const actIcon = custom ? custom[0] : focus ? (focus.kind === "lantern" ? "🏮" : focus.kind === "telescope" ? "🔭" : "👀") : "";
   const total = (props.constellations || []).length;
   const qualities: [Quality, string][] = [
     ["auto", t(ui.qualityAuto)],
@@ -161,13 +169,29 @@ export function Hud({ props, t, game, presence, roomInfo, blocked, onBack, found
   return (
     <div className={"ow-hud" + (blocked ? " blocked" : "")}>
       <div className="ow-chips">
-        <div className="ow-chip">🏮 {lanternCount ? t(ui.lanternCount, { n: lanternCount }) : "0"}</div>
-        <div className="ow-chip">⭐ {t(ui.skyProgress, { n: Math.min(found, total), total })}</div>
+        {zoneName ? (
+          <div className="ow-chip ow-chip-zone">📍 {zoneName}</div>
+        ) : (
+          <>
+            <div className="ow-chip">🏮 {lanternCount ? t(ui.lanternCount, { n: lanternCount }) : "0"}</div>
+            <div className="ow-chip">⭐ {t(ui.skyProgress, { n: Math.min(found, total), total })}</div>
+          </>
+        )}
         <div className="ow-chip" title={roomInfo.online ? "" : t(ui.roomNote)}>
           👥 {roomInfo.online && others > 0 ? t(ui.explorersHere, { n: others + 1 }) : t(ui.aloneHere)}
         </div>
       </div>
       <div className="ow-topright">
+        {onHome && (
+          <button className="ow-round" aria-label={t(ui.backToGrove)} title={t(ui.backToGrove)} onClick={onHome}>
+            🌳
+          </button>
+        )}
+        {onSpeak && (
+          <button className="ow-round" aria-label={t(ui.listen)} title={t(ui.listen)} onClick={onSpeak}>
+            🔈
+          </button>
+        )}
         <button className="ow-round" aria-label={t(ui.settings)} onClick={() => setPanel(panel === "settings" ? null : "settings")}>
           ⚙️
         </button>

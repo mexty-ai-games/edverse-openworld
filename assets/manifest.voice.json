@@ -1,0 +1,422 @@
+[
+ {
+  "id": "ow-voice-welcome-en",
+  "name": "Voice line welcome (EN)",
+  "kind": "audio",
+  "url": "https://future-api.mexty.ai/api/files/p/6add41f5ca61b98af27f7443",
+  "fileAssetId": "6add41f5ca61b98af27f7443",
+  "district": "anywhere",
+  "tags": [
+   "openworld",
+   "voice",
+   "en"
+  ],
+  "license": "mexty-original",
+  "source": "generated",
+  "durationSec": 1.96,
+  "createdAt": "2026-10-24T23:40:00Z",
+  "fileName": "ow-voice-welcome-en.mp3",
+  "catalogueId": "6add421aca61b98af27f7521",
+  "text": "Welcome to the Idea Grove!",
+  "notes": "ElevenLabs TTS (voice 'sarah') via MEXTY generate_audio; ages 4-6 voice-over."
+ },
+ {
+  "id": "ow-voice-welcome-fr",
+  "name": "Voice line welcome (FR)",
+  "kind": "audio",
+  "url": "https://future-api.mexty.ai/api/files/p/6add41f9ca61b98af27f744e",
+  "fileAssetId": "6add41f9ca61b98af27f744e",
+  "district": "anywhere",
+  "tags": [
+   "openworld",
+   "voice",
+   "fr"
+  ],
+  "license": "mexty-original",
+  "source": "generated",
+  "durationSec": 1.88,
+  "createdAt": "2026-10-24T23:40:00Z",
+  "fileName": "ow-voice-welcome-fr.mp3",
+  "catalogueId": "6add4230ca61b98af27f752b",
+  "text": "Bienvenue au Bosquet des idées !",
+  "notes": "ElevenLabs TTS (voice 'sarah') via MEXTY generate_audio; ages 4-6 voice-over."
+ },
+ {
+  "id": "ow-voice-move-en",
+  "name": "Voice line move (EN)",
+  "kind": "audio",
+  "url": "https://future-api.mexty.ai/api/files/p/6add41faca61b98af27f7459",
+  "fileAssetId": "6add41faca61b98af27f7459",
+  "district": "anywhere",
+  "tags": [
+   "openworld",
+   "voice",
+   "en"
+  ],
+  "license": "mexty-original",
+  "source": "generated",
+  "durationSec": 3.55,
+  "createdAt": "2026-10-24T23:40:00Z",
+  "fileName": "ow-voice-move-en.mp3",
+  "catalogueId": "6add4230ca61b98af27f7535",
+  "text": "To walk, tap the ground, or use the round stick.",
+  "notes": "ElevenLabs TTS (voice 'sarah') via MEXTY generate_audio; ages 4-6 voice-over."
+ },
+ {
+  "id": "ow-voice-move-fr",
+  "name": "Voice line move (FR)",
+  "kind": "audio",
+  "url": "https://future-api.mexty.ai/api/files/p/6add41fbca61b98af27f7464",
+  "fileAssetId": "6add41fbca61b98af27f7464",
+  "district": "anywhere",
+  "tags": [
+   "openworld",
+   "voice",
+   "fr"
+  ],
+  "license": "mexty-original",
+  "source": "generated",
+  "durationSec": 3.47,
+  "createdAt": "2026-10-24T23:40:00Z",
+  "fileName": "ow-voice-move-fr.mp3",
+  "catalogueId": "6add4230ca61b98af27f753f",
+  "text": "Pour marcher, touche le sol, ou utilise le rond.",
+  "notes": "ElevenLabs TTS (voice 'sarah') via MEXTY generate_audio; ages 4-6 voice-over."
+ },
+ {
+  "id": "ow-voice-tapGlow-en",
+  "name": "Voice line tapGlow (EN)",
+  "kind": "audio",
+  "url": "https://future-api.mexty.ai/api/files/p/6add41fcca61b98af27f746f",
+  "fileAssetId": "6add41fcca61b98af27f746f",
+  "district": "anywhere",
+  "tags": [
+   "openworld",
+   "voice",
+   "en"
+  ],
+  "license": "mexty-original",
+  "source": "generated",
+  "durationSec": 2.12,
+  "createdAt": "2026-10-24T23:40:00Z",
+  "fileName": "ow-voice-tapglow-en.mp3",
+  "catalogueId": "6add4231ca61b98af27f7549",
+  "text": "Tap the glowing things to explore!",
+  "notes": "ElevenLabs TTS (voice 'sarah') via MEXTY generate_audio; ages 4-6 voice-over."
+ },
+ {
+  "id": "ow-voice-tapGlow-fr",
+  "name": "Voice line tapGlow (FR)",
+  "kind": "audio",
+  "url": "https://future-api.mexty.ai/api/files/p/6add41fdca61b98af27f747a",
+  "fileAssetId": "6add41fdca61b98af27f747a",
+  "district": "anywhere",
+  "tags": [
+   "openworld",
+   "voice",
+   "fr"
+  ],
+  "license": "mexty-original",
+  "source": "generated",
+  "durationSec": 2.19,
+  "createdAt": "2026-10-24T23:40:00Z",
+  "fileName": "ow-voice-tapglow-fr.mp3",
+  "catalogueId": "6add4231ca61b98af27f7553",
+  "text": "Touche ce qui brille pour explorer !",
+  "notes": "ElevenLabs TTS (voice 'sarah') via MEXTY generate_audio; ages 4-6 voice-over."
+ },
+ {
+  "id": "ow-voice-biomeFrontier-en",
+  "name": "Voice line biomeFrontier (EN)",
+  "kind": "audio",
+  "url": "https://future-api.mexty.ai/api/files/p/6add41feca61b98af27f7485",
+  "fileAssetId": "6add41feca61b98af27f7485",
+  "district": "anywhere",
+  "tags": [
+   "openworld",
+   "voice",
+   "en"
+  ],
+  "license": "mexty-original",
+  "source": "generated",
+  "durationSec": 3.63,
+  "createdAt": "2026-10-24T23:40:00Z",
+  "fileName": "ow-voice-biomefrontier-en.mp3",
+  "catalogueId": "6add4232ca61b98af27f755d",
+  "text": "Find the glowing cards. Where does each animal live?",
+  "notes": "ElevenLabs TTS (voice 'sarah') via MEXTY generate_audio; ages 4-6 voice-over."
+ },
+ {
+  "id": "ow-voice-biomeFrontier-fr",
+  "name": "Voice line biomeFrontier (FR)",
+  "kind": "audio",
+  "url": "https://future-api.mexty.ai/api/files/p/6add41ffca61b98af27f7490",
+  "fileAssetId": "6add41ffca61b98af27f7490",
+  "district": "anywhere",
+  "tags": [
+   "openworld",
+   "voice",
+   "fr"
+  ],
+  "license": "mexty-original",
+  "source": "generated",
+  "durationSec": 3.08,
+  "createdAt": "2026-10-24T23:40:00Z",
+  "fileName": "ow-voice-biomefrontier-fr.mp3",
+  "catalogueId": "6add4232ca61b98af27f7567",
+  "text": "Trouve les fiches qui brillent. Où vit chaque animal ?",
+  "notes": "ElevenLabs TTS (voice 'sarah') via MEXTY generate_audio; ages 4-6 voice-over."
+ },
+ {
+  "id": "ow-voice-chronoQuarter-en",
+  "name": "Voice line chronoQuarter (EN)",
+  "kind": "audio",
+  "url": "https://future-api.mexty.ai/api/files/p/6add4203ca61b98af27f749b",
+  "fileAssetId": "6add4203ca61b98af27f749b",
+  "district": "anywhere",
+  "tags": [
+   "openworld",
+   "voice",
+   "en"
+  ],
+  "license": "mexty-original",
+  "source": "generated",
+  "durationSec": 3.97,
+  "createdAt": "2026-10-24T23:40:00Z",
+  "fileName": "ow-voice-chronoquarter-en.mp3",
+  "catalogueId": "6add4233ca61b98af27f7571",
+  "text": "Find the sparkles, and take each old thing home to its stand.",
+  "notes": "ElevenLabs TTS (voice 'sarah') via MEXTY generate_audio; ages 4-6 voice-over."
+ },
+ {
+  "id": "ow-voice-chronoQuarter-fr",
+  "name": "Voice line chronoQuarter (FR)",
+  "kind": "audio",
+  "url": "https://future-api.mexty.ai/api/files/p/6add4204ca61b98af27f74a6",
+  "fileAssetId": "6add4204ca61b98af27f74a6",
+  "district": "anywhere",
+  "tags": [
+   "openworld",
+   "voice",
+   "fr"
+  ],
+  "license": "mexty-original",
+  "source": "generated",
+  "durationSec": 4.83,
+  "createdAt": "2026-10-24T23:40:00Z",
+  "fileName": "ow-voice-chronoquarter-fr.mp3",
+  "catalogueId": "6add4233ca61b98af27f757b",
+  "text": "Trouve les étincelles, et ramène chaque objet ancien à son présentoir.",
+  "notes": "ElevenLabs TTS (voice 'sarah') via MEXTY generate_audio; ages 4-6 voice-over."
+ },
+ {
+  "id": "ow-voice-skyharbor-en",
+  "name": "Voice line skyharbor (EN)",
+  "kind": "audio",
+  "url": "https://future-api.mexty.ai/api/files/p/6add4205ca61b98af27f74b1",
+  "fileAssetId": "6add4205ca61b98af27f74b1",
+  "district": "anywhere",
+  "tags": [
+   "openworld",
+   "voice",
+   "en"
+  ],
+  "license": "mexty-original",
+  "source": "generated",
+  "durationSec": 2.69,
+  "createdAt": "2026-10-24T23:40:00Z",
+  "fileName": "ow-voice-skyharbor-en.mp3",
+  "catalogueId": "6add424aca61b98af27f7588",
+  "text": "Help Bolt the robot bring the gear to the airship!",
+  "notes": "ElevenLabs TTS (voice 'sarah') via MEXTY generate_audio; ages 4-6 voice-over."
+ },
+ {
+  "id": "ow-voice-skyharbor-fr",
+  "name": "Voice line skyharbor (FR)",
+  "kind": "audio",
+  "url": "https://future-api.mexty.ai/api/files/p/6add4206ca61b98af27f74bc",
+  "fileAssetId": "6add4206ca61b98af27f74bc",
+  "district": "anywhere",
+  "tags": [
+   "openworld",
+   "voice",
+   "fr"
+  ],
+  "license": "mexty-original",
+  "source": "generated",
+  "durationSec": 3.71,
+  "createdAt": "2026-10-24T23:40:00Z",
+  "fileName": "ow-voice-skyharbor-fr.mp3",
+  "catalogueId": "6add424bca61b98af27f7592",
+  "text": "Aide Boulon le robot à apporter l'engrenage au dirigeable !",
+  "notes": "ElevenLabs TTS (voice 'sarah') via MEXTY generate_audio; ages 4-6 voice-over."
+ },
+ {
+  "id": "ow-voice-wellDone-en",
+  "name": "Voice line wellDone (EN)",
+  "kind": "audio",
+  "url": "https://future-api.mexty.ai/api/files/p/6add4207ca61b98af27f74c7",
+  "fileAssetId": "6add4207ca61b98af27f74c7",
+  "district": "anywhere",
+  "tags": [
+   "openworld",
+   "voice",
+   "en"
+  ],
+  "license": "mexty-original",
+  "source": "generated",
+  "durationSec": 0.99,
+  "createdAt": "2026-10-24T23:40:00Z",
+  "fileName": "ow-voice-welldone-en.mp3",
+  "catalogueId": "6add424bca61b98af27f759c",
+  "text": "Well done!",
+  "notes": "ElevenLabs TTS (voice 'sarah') via MEXTY generate_audio; ages 4-6 voice-over."
+ },
+ {
+  "id": "ow-voice-wellDone-fr",
+  "name": "Voice line wellDone (FR)",
+  "kind": "audio",
+  "url": "https://future-api.mexty.ai/api/files/p/6add4208ca61b98af27f74d2",
+  "fileAssetId": "6add4208ca61b98af27f74d2",
+  "district": "anywhere",
+  "tags": [
+   "openworld",
+   "voice",
+   "fr"
+  ],
+  "license": "mexty-original",
+  "source": "generated",
+  "durationSec": 2.12,
+  "createdAt": "2026-10-24T23:40:00Z",
+  "fileName": "ow-voice-welldone-fr.mp3",
+  "catalogueId": "6add424bca61b98af27f75a6",
+  "text": "Bravo !",
+  "notes": "ElevenLabs TTS (voice 'sarah') via MEXTY generate_audio; ages 4-6 voice-over."
+ },
+ {
+  "id": "ow-voice-tryAgain-en",
+  "name": "Voice line tryAgain (EN)",
+  "kind": "audio",
+  "url": "https://future-api.mexty.ai/api/files/p/6add4209ca61b98af27f74df",
+  "fileAssetId": "6add4209ca61b98af27f74df",
+  "district": "anywhere",
+  "tags": [
+   "openworld",
+   "voice",
+   "en"
+  ],
+  "license": "mexty-original",
+  "source": "generated",
+  "durationSec": 2.27,
+  "createdAt": "2026-10-24T23:40:00Z",
+  "fileName": "ow-voice-tryagain-en.mp3",
+  "catalogueId": "6add424cca61b98af27f75b0",
+  "text": "Good try! Let's try again.",
+  "notes": "ElevenLabs TTS (voice 'sarah') via MEXTY generate_audio; ages 4-6 voice-over."
+ },
+ {
+  "id": "ow-voice-tryAgain-fr",
+  "name": "Voice line tryAgain (FR)",
+  "kind": "audio",
+  "url": "https://future-api.mexty.ai/api/files/p/6add420aca61b98af27f74ea",
+  "fileAssetId": "6add420aca61b98af27f74ea",
+  "district": "anywhere",
+  "tags": [
+   "openworld",
+   "voice",
+   "fr"
+  ],
+  "license": "mexty-original",
+  "source": "generated",
+  "durationSec": 2.27,
+  "createdAt": "2026-10-24T23:40:00Z",
+  "fileName": "ow-voice-tryagain-fr.mp3",
+  "catalogueId": "6add424cca61b98af27f75ba",
+  "text": "Bien essayé ! On recommence.",
+  "notes": "ElevenLabs TTS (voice 'sarah') via MEXTY generate_audio; ages 4-6 voice-over."
+ },
+ {
+  "id": "ow-voice-backGate-en",
+  "name": "Voice line backGate (EN)",
+  "kind": "audio",
+  "url": "https://future-api.mexty.ai/api/files/p/6add420bca61b98af27f74f5",
+  "fileAssetId": "6add420bca61b98af27f74f5",
+  "district": "anywhere",
+  "tags": [
+   "openworld",
+   "voice",
+   "en"
+  ],
+  "license": "mexty-original",
+  "source": "generated",
+  "durationSec": 2.27,
+  "createdAt": "2026-10-24T23:40:00Z",
+  "fileName": "ow-voice-backgate-en.mp3",
+  "catalogueId": "6add424dca61b98af27f75c4",
+  "text": "Walk through the gate to go back to the grove.",
+  "notes": "ElevenLabs TTS (voice 'sarah') via MEXTY generate_audio; ages 4-6 voice-over."
+ },
+ {
+  "id": "ow-voice-backGate-fr",
+  "name": "Voice line backGate (FR)",
+  "kind": "audio",
+  "url": "https://future-api.mexty.ai/api/files/p/6add420cca61b98af27f7500",
+  "fileAssetId": "6add420cca61b98af27f7500",
+  "district": "anywhere",
+  "tags": [
+   "openworld",
+   "voice",
+   "fr"
+  ],
+  "license": "mexty-original",
+  "source": "generated",
+  "durationSec": 2.12,
+  "createdAt": "2026-10-24T23:40:00Z",
+  "fileName": "ow-voice-backgate-fr.mp3",
+  "catalogueId": "6add424dca61b98af27f75ce",
+  "text": "Passe la porte pour revenir au bosquet.",
+  "notes": "ElevenLabs TTS (voice 'sarah') via MEXTY generate_audio; ages 4-6 voice-over."
+ },
+ {
+  "id": "ow-voice-thanks-en",
+  "name": "Voice line thanks (EN)",
+  "kind": "audio",
+  "url": "https://future-api.mexty.ai/api/files/p/6add420eca61b98af27f750b",
+  "fileAssetId": "6add420eca61b98af27f750b",
+  "district": "anywhere",
+  "tags": [
+   "openworld",
+   "voice",
+   "en"
+  ],
+  "license": "mexty-original",
+  "source": "generated",
+  "durationSec": 1.31,
+  "createdAt": "2026-10-24T23:40:00Z",
+  "fileName": "ow-voice-thanks-en.mp3",
+  "catalogueId": "6add424dca61b98af27f75d8",
+  "text": "Thank you for telling us!",
+  "notes": "ElevenLabs TTS (voice 'sarah') via MEXTY generate_audio; ages 4-6 voice-over."
+ },
+ {
+  "id": "ow-voice-thanks-fr",
+  "name": "Voice line thanks (FR)",
+  "kind": "audio",
+  "url": "https://future-api.mexty.ai/api/files/p/6add420eca61b98af27f7516",
+  "fileAssetId": "6add420eca61b98af27f7516",
+  "district": "anywhere",
+  "tags": [
+   "openworld",
+   "voice",
+   "fr"
+  ],
+  "license": "mexty-original",
+  "source": "generated",
+  "durationSec": 1.72,
+  "createdAt": "2026-10-24T23:40:00Z",
+  "fileName": "ow-voice-thanks-fr.mp3",
+  "catalogueId": "6add424eca61b98af27f75e2",
+  "text": "Merci de nous l'avoir dit !",
+  "notes": "ElevenLabs TTS (voice 'sarah') via MEXTY generate_audio; ages 4-6 voice-over."
+ }
+]
