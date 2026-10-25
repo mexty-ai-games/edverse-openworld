@@ -5,45 +5,74 @@ import type { Presence } from "../game/net";
 import { Quality, setSettings, TOUCH, useSettings } from "../settings";
 import { sound } from "../audio";
 
-/** On-screen stick for touch: drag from its centre; it writes the movement wish into the game. */
+/**
+ * On-screen stick for touch: drag from its centre; it writes the movement wish into the game.
+ * The finger is followed anywhere on the screen until it lifts (window listeners, not only the
+ * ring), and anywhere past the ring is full speed: sliding off the stick never slows the explorer
+ * and never hands the touch to the 3D scene.
+ */
 function Stick({ game }: { game: Game }) {
   const base = useRef<HTMLDivElement>(null);
   const [knob, setKnob] = useState({ x: 0, y: 0 });
   const active = useRef<number | null>(null);
+  const centre = useRef({ x: 0, y: 0, R: 1 });
   const move = (cx: number, cy: number) => {
-    const el = base.current;
-    if (!el) return;
-    const r = el.getBoundingClientRect();
-    const R = r.width / 2;
-    let dx = cx - (r.left + R);
-    let dy = cy - (r.top + R);
+    const { x, y, R } = centre.current;
+    let dx = cx - x;
+    let dy = cy - y;
     const d = Math.hypot(dx, dy);
     if (d > R) {
       dx *= R / d;
       dy *= R / d;
     }
     setKnob({ x: dx, y: dy });
-    const k = Math.min(1, d / (R * 0.85));
-    game.input.x = d > 4 ? (dx / Math.max(d, 1)) * k : 0;
-    game.input.z = d > 4 ? (dy / Math.max(d, 1)) * k : 0;
+    // full speed from 60% of the ring outward, so the edge (and beyond) is never slower
+    const k = Math.min(1, d / (R * 0.6));
+    game.input.x = d > 4 ? (dx / Math.max(Math.min(d, R), 1)) * k : 0;
+    game.input.z = d > 4 ? (dy / Math.max(Math.min(d, R), 1)) * k : 0;
   };
   const end = () => {
     active.current = null;
     setKnob({ x: 0, y: 0 });
     game.input.x = game.input.z = 0;
   };
+  useEffect(() => {
+    const onMove = (e: PointerEvent) => {
+      if (active.current !== e.pointerId) return;
+      e.preventDefault();
+      e.stopPropagation();
+      move(e.clientX, e.clientY);
+    };
+    const onEnd = (e: PointerEvent) => {
+      if (active.current === e.pointerId) end();
+    };
+    // capture phase: the stick's finger is handled before the 3D scene can see it
+    window.addEventListener("pointermove", onMove, { capture: true, passive: false });
+    window.addEventListener("pointerup", onEnd, true);
+    window.addEventListener("pointercancel", onEnd, true);
+    window.addEventListener("blur", end);
+    return () => {
+      window.removeEventListener("pointermove", onMove, true);
+      window.removeEventListener("pointerup", onEnd, true);
+      window.removeEventListener("pointercancel", onEnd, true);
+      window.removeEventListener("blur", end);
+      game.input.x = game.input.z = 0;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <div
       ref={base}
       className="ow-stick"
       onPointerDown={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const r = (e.currentTarget as HTMLElement).getBoundingClientRect();
+        centre.current = { x: r.left + r.width / 2, y: r.top + r.height / 2, R: r.width / 2 };
         active.current = e.pointerId;
-        (e.target as HTMLElement).setPointerCapture?.(e.pointerId);
+        (e.currentTarget as HTMLElement).setPointerCapture?.(e.pointerId);
         move(e.clientX, e.clientY);
       }}
-      onPointerMove={(e) => active.current === e.pointerId && move(e.clientX, e.clientY)}
-      onPointerUp={end}
-      onPointerCancel={end}
     >
       <div className="ow-knob" style={{ transform: `translate(${knob.x}px, ${knob.y}px)` }} />
     </div>

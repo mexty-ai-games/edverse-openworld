@@ -60,6 +60,11 @@ export interface Game {
   focus: Target | null;
   /** A point on the ground the explorer was tapped toward (cleared by the stick or keys). */
   walkTo: { x: number; z: number } | null;
+  /**
+   * The follow camera, orbiting the explorer: yaw turns around them (0 = looking north, -Z),
+   * pitch tilts between low (0) and high (1), zoom scales the distance. Dragging the scene sets them.
+   */
+  cam: { yaw: number; pitch: number; zoom: number };
   /** Bumped when peers join or leave, so the scene re-renders its list. */
   peerVersion: number;
   emote(kind: string): void;
@@ -83,6 +88,7 @@ export function createGame(): Game {
     targets: [],
     focus: null,
     walkTo: null,
+    cam: { yaw: 0, pitch: 0.5, zoom: 1 },
     peerVersion: 0,
     onSay: null,
     emote(kind: string) {

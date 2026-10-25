@@ -155,7 +155,73 @@ function Me({ props, game, phrases, layout }: { props: BlockProps; game: Game; p
   const snap = useRef(true);
   useEffect(() => {
     snap.current = true;
-  }, [layout]);
+    game.cam.yaw = 0; // each zone opens looking the way its layout was designed
+  }, [layout, game]);
+
+  // Orbit: drag the scene (one finger, or the mouse) to turn the camera around the explorer and
+  // tilt it; the mouse wheel zooms. A short tap still walks there or opens what was tapped:
+  // only a drag past 12 px turns the camera, and that drag's click is swallowed.
+  const gl = useThree((s) => s.gl);
+  useEffect(() => {
+    const el = gl.domElement;
+    let id: number | null = null;
+    let sx = 0;
+    let sy = 0;
+    let lx = 0;
+    let ly = 0;
+    let dragging = false;
+    const down = (e: PointerEvent) => {
+      if (game.mode !== "play" || id !== null || (e.pointerType === "mouse" && e.button !== 0 && e.button !== 2)) return;
+      id = e.pointerId;
+      sx = lx = e.clientX;
+      sy = ly = e.clientY;
+      dragging = false;
+    };
+    const move = (e: PointerEvent) => {
+      if (e.pointerId !== id) return;
+      if (!dragging && Math.hypot(e.clientX - sx, e.clientY - sy) > 12) dragging = true;
+      if (dragging) {
+        game.cam.yaw -= (e.clientX - lx) * 0.0075;
+        game.cam.pitch = Math.min(1, Math.max(0, game.cam.pitch + (e.clientY - ly) * 0.004));
+      }
+      lx = e.clientX;
+      ly = e.clientY;
+    };
+    const up = (e: PointerEvent) => {
+      if (e.pointerId !== id) return;
+      id = null;
+      if (dragging) {
+        // the drag is not a tap: no click on whatever the finger ended over
+        const swallow = (c: MouseEvent) => {
+          c.stopPropagation();
+          c.preventDefault();
+        };
+        window.addEventListener("click", swallow, { capture: true, once: true });
+        setTimeout(() => window.removeEventListener("click", swallow, true), 0);
+      }
+      dragging = false;
+    };
+    const wheel = (e: WheelEvent) => {
+      if (game.mode !== "play") return;
+      e.preventDefault();
+      game.cam.zoom = Math.min(1.7, Math.max(0.6, game.cam.zoom * Math.exp(e.deltaY * 0.001)));
+    };
+    const menu = (e: Event) => e.preventDefault();
+    el.addEventListener("pointerdown", down);
+    window.addEventListener("pointermove", move);
+    window.addEventListener("pointerup", up);
+    window.addEventListener("pointercancel", up);
+    el.addEventListener("wheel", wheel, { passive: false });
+    el.addEventListener("contextmenu", menu);
+    return () => {
+      el.removeEventListener("pointerdown", down);
+      window.removeEventListener("pointermove", move);
+      window.removeEventListener("pointerup", up);
+      window.removeEventListener("pointercancel", up);
+      el.removeEventListener("wheel", wheel);
+      el.removeEventListener("contextmenu", menu);
+    };
+  }, [gl, game]);
   const look = useRef(new THREE.Vector3(0, 1, 0));
   const wantPos = useRef(new THREE.Vector3());
   const [, force] = useState(0);
@@ -163,7 +229,11 @@ function Me({ props, game, phrases, layout }: { props: BlockProps; game: Game; p
   const nick = useRef(game.nickname);
   const mode = useRef(game.mode);
   useFrame((_, rawDt) => {
-    const dt = Math.min(rawDt, 0.05);
+    // a slow frame is split into short steps (collisions stay exact) instead of being cut short,
+    // so the explorer walks at the same speed whatever the frame rate
+    const total = Math.min(rawDt, 0.25);
+    const steps = Math.max(1, Math.ceil(total / 0.05));
+    const dt = total / steps;
     const me = game.me;
     if (avatarIdx.current !== game.avatar || nick.current !== game.nickname || mode.current !== game.mode) {
       avatarIdx.current = game.avatar;
@@ -171,9 +241,12 @@ function Me({ props, game, phrases, layout }: { props: BlockProps; game: Game; p
       mode.current = game.mode;
       force((n) => n + 1);
     }
-    if (game.mode === "play") {
-      let ix = game.input.x;
-      let iz = game.input.z;
+    if (game.mode === "play") for (let step = 0; step < steps; step++) {
+      // keys and the stick are screen-relative: turn them by the camera's yaw
+      const cy = Math.cos(game.cam.yaw);
+      const sy = Math.sin(game.cam.yaw);
+      let ix = game.input.x * cy + game.input.z * sy;
+      let iz = -game.input.x * sy + game.input.z * cy;
       if (ix || iz) game.walkTo = null;
       else if (game.walkTo) {
         const dx = game.walkTo.x - me.x;
@@ -243,20 +316,25 @@ function Me({ props, game, phrases, layout }: { props: BlockProps; game: Game; p
     }
     // camera: close on the explorer at the start, then a 3/4 view from behind and above
     const portrait = size.height > size.width;
+    // orbit: yaw turns the camera around the explorer, pitch raises it, zoom scales the distance
+    const cyaw = Math.cos(game.cam.yaw);
+    const syaw = Math.sin(game.cam.yaw);
     if (game.mode === "play") {
-      const k = portrait ? 1.35 : 1;
-      wantPos.current.set(me.x, me.y + 5.4 * k, me.z + 8.2 * k);
-      look.current.lerp(new THREE.Vector3(me.x, me.y + 1.5, me.z - 3.2), 1 - Math.exp(-dt * 6));
+      const k = (portrait ? 1.35 : 1) * game.cam.zoom;
+      const h = (2.4 + 6 * game.cam.pitch) * k;
+      const d = (9.6 - 2.8 * game.cam.pitch) * k;
+      wantPos.current.set(me.x + syaw * d, me.y + h, me.z + cyaw * d);
+      look.current.lerp(new THREE.Vector3(me.x - syaw * 3.2, me.y + 1.5, me.z - cyaw * 3.2), 1 - Math.exp(-total * 6));
     } else {
       const side = portrait ? 0 : 0.85;
       wantPos.current.set(me.x + 0.4 + side, me.y + 1.35, me.z + (portrait ? 4.6 : 3.6));
-      look.current.lerp(new THREE.Vector3(me.x + side, me.y + (portrait ? 0.45 : 0.85), me.z), 1 - Math.exp(-dt * 6));
+      look.current.lerp(new THREE.Vector3(me.x + side, me.y + (portrait ? 0.45 : 0.85), me.z), 1 - Math.exp(-total * 6));
     }
     if (snap.current && game.mode === "play") {
       snap.current = false;
       camera.position.copy(wantPos.current);
-      look.current.set(me.x, me.y + 1.5, me.z - 3.2);
-    } else camera.position.lerp(wantPos.current, 1 - Math.exp(-dt * (game.mode === "play" ? 4 : 3)));
+      look.current.set(me.x - syaw * 3.2, me.y + 1.5, me.z - cyaw * 3.2);
+    } else camera.position.lerp(wantPos.current, 1 - Math.exp(-total * (game.mode === "play" ? 4 : 3)));
     camera.lookAt(look.current);
   });
   return (
