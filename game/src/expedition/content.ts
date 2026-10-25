@@ -3,7 +3,8 @@
 // the props defaults (the saved variant holds the same content, with the voice-over URLs).
 import type { ExpeditionProps, GuideFact, Quest } from "../block";
 import { ASSETS } from "../zones/biome-frontier/assets.gen";
-import { EXP_ASSETS, EXP_VOICE } from "./assets.gen";
+import { EXP_ASSETS, EXP_VOICE, P2_ASSETS } from "./assets.gen";
+import { insects, phase2Dialogues, phase2LensFeatures, phase2Lines, phase2Quests, phase2Tools, phase2Ui } from "./phase2";
 
 const L = (en: string, fr: string) => ({ en, fr });
 const F = (en: string, fr: string, easyEn: string, easyFr: string, source: string): GuideFact => ({ text: L(en, fr), easy: L(easyEn, easyFr), source });
@@ -55,10 +56,12 @@ export const defaultQuests: Quest[] = [
     done: "allDone",
     giveAtStart: ["lens"],
     reward: [],
+    report: true,
     steps: [
       { id: "identify-two", kind: "identify", target: "any", count: 2, zone: "", icon: "🔍", text: L("Look closely at 2 creatures with the lens {n}/{count}", "Observe 2 créatures à la loupe {n}/{count}"), line: "lensStep" },
     ],
   },
+  ...phase2Quests,
 ];
 
 const base: ExpeditionProps = {
@@ -124,6 +127,7 @@ const base: ExpeditionProps = {
       "Find and photograph the creatures of the rainforest, the canyon and the coast, and dig for fossils in the canyon.",
       "Trouve et photographie les créatures de la forêt, du canyon et de la côte, et fouille les fossiles dans le canyon.",
     ),
+    ...phase2Ui,
   },
   keeper: {
     name: L("Grove Keeper", "Gardien du bosquet"),
@@ -145,6 +149,7 @@ const base: ExpeditionProps = {
       { id: "lensStep", anim: "talk", text: L("Look closely at two creatures with your hand lens.", "Observe deux créatures de près avec ta loupe.") },
       { id: "allDone", anim: "wave", text: L("Wonderful! You are a real field explorer now. Keep filling your Field Guide!", "Merveilleux ! Tu es un vrai explorateur de terrain. Continue à remplir ton Guide !") },
       { id: "welcomeBack", anim: "wave", text: L("Welcome back, explorer!", "Bon retour, explorateur !") },
+      ...phase2Lines,
     ],
     dialogues: [
       { id: "greet", lines: ["greet1", "greet2", "sparks"] },
@@ -154,12 +159,14 @@ const base: ExpeditionProps = {
       { id: "frontier", lines: ["frontier"] },
       { id: "lens", lines: ["lens"] },
       { id: "allDone", lines: ["allDone"] },
+      ...phase2Dialogues,
     ],
   },
   tools: [
     { id: "camera", icon: "📷", iconUrl: "", modelUrl: "", name: L("Field Camera", "Appareil photo de terrain"), about: L("Photograph creatures. Calm, well-framed photos of creatures doing something are the best.", "Photographie les créatures. Les meilleures photos sont calmes, bien cadrées, et montrent la créature en action.") },
     { id: "guide", icon: "📖", iconUrl: "", modelUrl: "", name: L("Field Guide", "Guide de terrain"), about: L("A page for every creature. Each thing you find out fills it in.", "Une page par créature. Chaque découverte la remplit.") },
     { id: "lens", icon: "🔍", iconUrl: "", modelUrl: "", name: L("Hand lens", "Loupe"), about: L("Look closely and count legs, wings and arms to find out what a creature is.", "Regarde de près et compte les pattes, les ailes et les bras pour savoir ce qu'est une créature.") },
+    ...phase2Tools,
   ],
   lensFeatures: [
     { id: "legs", kind: "count", icon: "🦵", max: 10, question: L("How many legs?", "Combien de pattes ?"), tip: L("Count the legs slowly, one by one: look under the body too.", "Compte les pattes doucement, une par une : regarde aussi sous le corps.") },
@@ -172,6 +179,7 @@ const base: ExpeditionProps = {
     { id: "fur", kind: "yesno", icon: "🧶", max: 1, question: L("Does it have fur?", "A-t-elle des poils ?"), tip: L("Is its body covered in soft hair?", "Son corps est-il couvert de poils doux ?") },
     { id: "fins", kind: "yesno", icon: "🐟", max: 1, question: L("Does it have fins?", "A-t-elle des nageoires ?"), tip: L("Look at its back and its tail.", "Regarde son dos et sa queue.") },
     { id: "horns", kind: "yesno", icon: "🐏", max: 1, question: L("Does it have horns?", "A-t-elle des cornes ?"), tip: L("Look at the top of its head.", "Regarde le haut de sa tête.") },
+    ...phase2LensFeatures,
   ],
   species: [
     {
@@ -318,8 +326,9 @@ const base: ExpeditionProps = {
       ],
       lens: [{ feature: "arms", value: 8 }, { feature: "shell", value: 0 }],
     },
+    ...insects,
   ],
-  models: { spark: "" },
+  models: { spark: "", milkweed: P2_ASSETS["plant:milkweed"] || "", lavender: P2_ASSETS["plant:lavender"] || "" },
   sounds: { shutter: "" },
 };
 

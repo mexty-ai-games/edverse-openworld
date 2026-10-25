@@ -2,59 +2,46 @@
 // (sources noted per fact in docs-style comments); everything here is a prop the store can override.
 import type { BiomeFrontierProps } from "./types";
 import { ASSETS } from "./assets.gen";
+import { P2_ASSETS as P2 } from "../../expedition/assets.gen";
 
 const L = (en: string, fr: string) => ({ en, fr });
 
 export const defaultProps: BiomeFrontierProps = {
   ui: {
     title: L("Biome Frontier", "La Frontière des biomes"),
-    surveyChip: L("Field cards {n}/{total}", "Fiches {n}/{total}"),
-    digChip: L("Fossil dig", "Fouille"),
-    findCards: L(
-      "The wind blew the explorers' field cards all over the frontier! Find the glowing cards and put each one back in the right biome.",
-      "Le vent a dispersé les fiches des explorateurs partout ! Trouve les fiches qui brillent et range chacune dans le bon biome.",
-    ),
-    cardTitle: L("Field card", "Fiche d'exploration"),
-    whereLives: L("Where does it live?", "Quel est son milieu de vie ?"),
-    whereLivesEasy: L("Where is its home?", "Où est sa maison ?"),
-    rightBiome: L("Yes! It lives in the {biome}.", "Oui ! Sa maison : {biome}."),
-    tryAgain: L("Good try! {hint}", "Bien essayé ! {hint}"),
     showMe: L("Show me", "Montre-moi"),
     next: L("Next", "Suivant"),
     close: L("Close", "Fermer"),
     digTitle: L("Fossil dig", "Fouille de fossiles"),
     digIntro: L(
-      "This rock face has 4 layers. Each one hides a fossil.",
-      "Cette paroi a 4 couches de roche. Chacune cache un fossile.",
+      "This dig block has 4 layers of soil and rock. Scrape them away one at a time with the trowel, and brush each fossil clean.",
+      "Ce bloc de fouille a 4 couches de terre et de roche. Retire-les une par une avec la truelle, et nettoie chaque fossile avec la brosse.",
     ),
-    digOldest: L("Which layer is the oldest? Tap it.", "Quelle couche est la plus ancienne ? Touche-la."),
-    digOldestEasy: L("Which layer was made first? Tap it.", "Quelle couche est arrivée en premier ? Touche-la."),
-    digOldestRight: L("Yes! The deepest layer is the oldest: it was there first.", "Oui ! La couche la plus profonde est la plus ancienne : elle était là en premier."),
-    digOldestWrong: L(
-      "Not quite. New layers settle on top of old ones, like a pile of blankets. Which one is at the very bottom?",
-      "Pas tout à fait. Les nouvelles couches se posent sur les anciennes, comme une pile de couvertures. Laquelle est tout en bas ?",
-    ),
-    digOrder: L("Now tap the fossils from the oldest to the youngest.", "Touche maintenant les fossiles, du plus ancien au plus récent."),
-    digOrderWrong: L("Almost! Start again from the bottom layer and go up.", "Presque ! Recommence par la couche du bas, puis monte."),
-    digOrderRight: L("Perfect order! You read the rock like a geologist.", "Ordre parfait ! Tu lis la roche comme un géologue."),
     digDone: L("Dig finished!", "Fouille terminée !"),
     layerLabel: L("Layer {n}", "Couche {n}"),
     stationTitle: L("Field station", "Station de terrain"),
-    stationIntro: L(
-      "Find the glowing field cards around the rainforest, the canyon and the coast, then dig for fossils in the canyon.",
-      "Trouve les fiches qui brillent dans la forêt, le canyon et la côte, puis fouille les fossiles dans le canyon.",
-    ),
-    stationProgress: L("{n} of {total} done", "{n} sur {total} faits"),
-    roundDone: L("Survey complete! Great field work, explorer.", "Exploration terminée ! Beau travail de terrain, explorateur."),
-    roundScore: L("{n} of {total} right on the first try", "{n} sur {total} justes du premier coup"),
     playAgain: L("New survey", "Nouvelle exploration"),
     easyMode: L("Pictures", "Images"),
     explorerMode: L("Explorer", "Explorateur"),
     modeLabel: L("Mode", "Mode"),
     backToGrove: L("Back to the Idea Grove", "Retour au Bosquet des idées"),
     look: L("Look", "Regarder"),
-    notFoundYet: L("Not found yet", "Pas encore trouvée"),
     digWaiting: L("Waiting in the canyon", "T'attend dans le canyon"),
+    digNeedTools: L("You need a trowel and a brush to dig. The Grove Keeper will give them to you.", "Il te faut une truelle et une brosse pour fouiller. Le Gardien du bosquet te les donnera."),
+    trowel: L("Trowel", "Truelle"),
+    brush: L("Brush", "Brosse"),
+    trowelHint: L("Rub the trowel back and forth over the top layer to scrape it away.", "Frotte la truelle d'avant en arrière sur la couche du dessus pour la retirer."),
+    brushHint: L("A fossil! Rub the soft brush over it, gently, to clean it.", "Un fossile ! Passe doucement la brosse dessus pour le nettoyer."),
+    useBrush: L("Careful! A fossil is fragile: use the soft brush.", "Attention ! Un fossile est fragile : utilise la brosse douce."),
+    useTrowel: L("The brush is too soft for soil. Use the trowel.", "La brosse est trop douce pour la terre. Utilise la truelle."),
+    brushFirst: L("Brush the fossil out first, before you dig deeper.", "Dégage d'abord le fossile avec la brosse, avant de creuser plus profond."),
+    layerGone: L("Layer {n} is gone. Deeper means older!", "La couche {n} est enlevée. Plus profond, c'est plus ancien !"),
+    fossilFound: L("Fossil found!", "Fossile trouvé !"),
+    timeline: L("Your timeline", "Ta frise du temps"),
+    timelineNow: L("Today", "Aujourd'hui"),
+    deeperOlder: L("The deeper you dig, the older it is: the order you found them is a timeline!", "Plus on creuse, plus c'est ancien : l'ordre où tu les as trouvés est une frise du temps !"),
+    mya: L("{n} million years ago", "il y a {n} millions d'années"),
+    digAgain: L("Fill it in and dig again", "Reboucher et refouiller"),
   },
   biomes: [
     {
@@ -88,137 +75,68 @@ export const defaultProps: BiomeFrontierProps = {
       ),
     },
   ],
-  roundSize: 8,
-  species: [
-    // ---- rainforest
-    {
-      id: "toucan", biome: "rainforest", icon: "🐦", imageUrl: ASSETS.img_toucan,
-      name: L("Toucan", "Toucan"),
-      fact: L(
-        "A toucan's huge beak is light: inside it is full of tiny air spaces. The beak also helps the bird cool down on hot days.",
-        "L'énorme bec du toucan est léger : à l'intérieur, il est plein de petits espaces d'air. Le bec l'aide aussi à se rafraîchir quand il fait chaud.",
-      ),
-      factEasy: L("Its big beak is very light. It helps it pick fruit.", "Son grand bec est très léger. Il l'aide à cueillir des fruits."),
-      hint: L("It eats fruit high up in tall, rainy trees.", "Il mange des fruits tout en haut de grands arbres sous la pluie."),
-    },
-    {
-      id: "tree-frog", biome: "rainforest", icon: "🐸", imageUrl: ASSETS.img_tree_frog,
-      name: L("Red-eyed tree frog", "Rainette aux yeux rouges"),
-      fact: L(
-        "In the day it sleeps under a leaf, with its eyes closed and its legs tucked in, so its bright colours are hidden.",
-        "Le jour, elle dort sous une feuille, les yeux fermés et les pattes repliées : ainsi ses couleurs vives sont cachées.",
-      ),
-      factEasy: L("It sleeps under a leaf in the day.", "Elle dort sous une feuille pendant le jour."),
-      hint: L("It needs damp, leafy places where it rains a lot.", "Il lui faut des endroits humides, pleins de feuilles, où il pleut beaucoup."),
-    },
-    {
-      id: "morpho", biome: "rainforest", icon: "🦋", imageUrl: ASSETS.img_morpho,
-      name: L("Blue morpho butterfly", "Papillon morpho bleu"),
-      fact: L(
-        "Its wings are not painted blue: tiny scales on them bounce the light so that they shine blue.",
-        "Ses ailes ne sont pas peintes en bleu : de minuscules écailles renvoient la lumière et les font briller en bleu.",
-      ),
-      factEasy: L("Its wings shine bright blue.", "Ses ailes brillent en bleu."),
-      hint: L("It flutters between giant leaves in warm, wet forests.", "Il volette entre les feuilles géantes des forêts chaudes et humides."),
-    },
-    {
-      id: "sloth", biome: "rainforest", icon: "🦥", imageUrl: "",
-      name: L("Sloth", "Paresseux"),
-      fact: L(
-        "Sloths move so slowly that tiny green algae grow in their fur. The green helps them hide in the trees.",
-        "Le paresseux bouge si lentement que de minuscules algues vertes poussent dans sa fourrure. Ce vert l'aide à se cacher dans les arbres.",
-      ),
-      factEasy: L("It hangs in the trees and moves very slowly.", "Il est suspendu aux arbres et bouge très lentement."),
-      hint: L("It spends almost all its life hanging in tall trees.", "Il passe presque toute sa vie suspendu dans de grands arbres."),
-    },
-    // ---- desert canyon
-    {
-      id: "tortoise", biome: "canyon", icon: "🐢", imageUrl: ASSETS.img_tortoise,
-      name: L("Desert tortoise", "Tortue du désert"),
-      fact: L(
-        "It digs burrows to hide from the hot sun, and it gets much of the water it needs from the plants it eats.",
-        "Elle creuse des terriers pour se cacher du soleil brûlant, et elle trouve une grande partie de son eau dans les plantes qu'elle mange.",
-      ),
-      factEasy: L("It digs a hole to hide from the hot sun.", "Elle creuse un trou pour se cacher du soleil."),
-      hint: L("Its home is hot and dry, with very little rain.", "Sa maison est chaude et sèche, avec très peu de pluie."),
-    },
-    {
-      id: "saguaro", biome: "canyon", icon: "🌵", imageUrl: ASSETS.img_saguaro,
-      name: L("Saguaro cactus", "Cactus saguaro"),
-      fact: L(
-        "After rain, a saguaro's pleated stem swells like an accordion to store water for the dry months.",
-        "Après la pluie, la tige plissée du saguaro gonfle comme un accordéon pour garder de l'eau pendant les mois secs.",
-      ),
-      factEasy: L("A cactus keeps water inside for later.", "Un cactus garde de l'eau à l'intérieur pour plus tard."),
-      hint: L("It grows where it hardly ever rains.", "Il pousse là où il ne pleut presque jamais."),
-    },
-    {
-      id: "horned-lizard", biome: "canyon", icon: "🦎", imageUrl: ASSETS.img_horned_lizard,
-      name: L("Horned lizard", "Lézard cornu"),
-      fact: L(
-        "Its flat, spiky, sandy-coloured body is camouflage: lying still, it looks just like the dry ground.",
-        "Son corps plat, piquant et couleur sable est un camouflage : immobile, il ressemble au sol sec.",
-      ),
-      factEasy: L("Its sandy colours help it hide.", "Ses couleurs de sable l'aident à se cacher."),
-      hint: L("Look at its colours: they match dry, sandy ground.", "Regarde ses couleurs : elles ressemblent au sol sec et sableux."),
-    },
-    {
-      id: "bighorn", biome: "canyon", icon: "🐏", imageUrl: "",
-      name: L("Desert bighorn sheep", "Mouflon du désert"),
-      fact: L(
-        "Its hooves have a hard edge and a soft, grippy middle, so it can climb steep canyon cliffs.",
-        "Ses sabots ont un bord dur et un centre souple qui accroche : il peut grimper sur les falaises raides des canyons.",
-      ),
-      factEasy: L("It climbs steep rocky cliffs.", "Il grimpe sur des falaises de roche."),
-      hint: L("It loves steep, rocky, dry cliffs.", "Il adore les falaises de roche, raides et sèches."),
-    },
-    // ---- coral coast
-    {
-      id: "sea-turtle", biome: "coast", icon: "🐢", imageUrl: ASSETS.img_sea_turtle,
-      name: L("Green sea turtle", "Tortue verte"),
-      fact: L(
-        "Mother sea turtles swim back to the beaches where they hatched to lay their own eggs in the sand.",
-        "Les mamans tortues reviennent sur les plages où elles sont nées pour pondre leurs œufs dans le sable.",
-      ),
-      factEasy: L("It swims in the sea and lays eggs on the beach.", "Elle nage dans la mer et pond sur la plage."),
-      hint: L("It has flippers for swimming, not feet for walking.", "Elle a des nageoires pour nager, pas des pattes pour marcher."),
-    },
-    {
-      id: "clownfish", biome: "coast", icon: "🐠", imageUrl: ASSETS.img_clownfish,
-      name: L("Clownfish", "Poisson-clown"),
-      fact: L(
-        "Clownfish live among the stinging arms of a sea anemone. A slimy coat keeps them from being stung.",
-        "Le poisson-clown vit entre les bras piquants d'une anémone de mer. Une couche de mucus le protège des piqûres.",
-      ),
-      factEasy: L("It hides in a sea anemone.", "Il se cache dans une anémone de mer."),
-      hint: L("It is a fish: it needs warm sea water around the reef.", "C'est un poisson : il lui faut l'eau de mer chaude du récif."),
-    },
-    {
-      id: "sea-star", biome: "coast", icon: "⭐", imageUrl: ASSETS.img_sea_star,
-      name: L("Sea star", "Étoile de mer"),
-      fact: L("A sea star has no brain, but it can grow back an arm it has lost.", "L'étoile de mer n'a pas de cerveau, mais elle peut faire repousser un bras perdu."),
-      factEasy: L("It can grow a new arm.", "Elle peut faire repousser un bras."),
-      hint: L("It lives in the sea, on rocks and sand by the shore.", "Elle vit dans la mer, sur les rochers et le sable près du rivage."),
-    },
-    {
-      id: "octopus", biome: "coast", icon: "🐙", imageUrl: "",
-      name: L("Octopus", "Pieuvre"),
-      fact: L("An octopus has three hearts and can change its colour in a blink to hide on the reef.", "La pieuvre a trois cœurs et peut changer de couleur en un clin d'œil pour se cacher sur le récif."),
-      factEasy: L("It has 8 arms and lives in the sea.", "Elle a 8 bras et vit dans la mer."),
-      hint: L("It has 8 arms for swimming and hiding in the sea.", "Elle a 8 bras pour nager et se cacher dans la mer."),
-    },
-  ],
   fossils: [
-    { id: "trilobite", layer: 0, icon: "🦴", name: L("Trilobite", "Trilobite"), age: L("about 500 million years old", "environ 500 millions d'années") },
-    { id: "fern", layer: 1, icon: "🌿", name: L("Fern leaf", "Feuille de fougère"), age: L("about 300 million years old", "environ 300 millions d'années") },
-    { id: "ammonite", layer: 2, icon: "🐚", name: L("Ammonite", "Ammonite"), age: L("about 150 million years old", "environ 150 millions d'années") },
-    { id: "shark-tooth", layer: 3, icon: "🦈", name: L("Shark tooth", "Dent de requin"), age: L("about 10 million years old", "environ 10 millions d'années") },
+    {
+      id: "shark-tooth", layer: 0, icon: "🦈", ageMyr: 15, name: L("Shark tooth", "Dent de requin"),
+      age: L("about 15 million years old", "environ 15 millions d'années"), period: L("Miocene", "Miocène"),
+      fact: L(
+        "Sharks lose and replace their teeth all their lives, so fossil shark teeth are among the most common fossils. Giant megalodon sharks lived from about 23 to 3.6 million years ago.",
+        "Les requins perdent et remplacent leurs dents toute leur vie : les dents de requin fossiles sont parmi les fossiles les plus courants. Le requin géant mégalodon a vécu il y a environ 23 à 3,6 millions d'années.",
+      ),
+      factEasy: L("Sharks grow new teeth all their lives!", "Les requins ont de nouvelles dents toute leur vie !"),
+      source: "Smithsonian Ocean, “Megalodon”; Florida Museum of Natural History, “Fossil shark teeth”",
+      modelUrl: P2["dig:fossil:shark_tooth"] || "", iconUrl: P2["dig:fossil:shark_tooth:icon"] || "", spot: [-0.22, 0.752, -0.12],
+    },
+    {
+      id: "dino-bone", layer: 1, icon: "🦴", ageMyr: 70, name: L("Dinosaur bone", "Os de dinosaure"),
+      age: L("about 70 million years old", "environ 70 millions d'années"), period: L("Late Cretaceous", "Crétacé supérieur"),
+      fact: L(
+        "Dinosaurs (all but the birds!) died out about 66 million years ago, so this bone is older than that. Over a very long time, minerals in the ground slowly turned it into stone.",
+        "Les dinosaures (sauf les oiseaux !) ont disparu il y a environ 66 millions d'années : cet os est donc plus ancien. Pendant très longtemps, les minéraux du sol l'ont lentement changé en pierre.",
+      ),
+      factEasy: L("A real dinosaur bone, turned to stone!", "Un vrai os de dinosaure, changé en pierre !"),
+      source: "Natural History Museum, London, “How do fossils form?”; Encyclopaedia Britannica, “Dinosaur”",
+      modelUrl: P2["dig:fossil:dino_bone"] || "", iconUrl: P2["dig:fossil:dino_bone:icon"] || "", spot: [0.1, 0.59, 0.1],
+    },
+    {
+      id: "ammonite", layer: 2, icon: "🐚", ageMyr: 150, name: L("Ammonite", "Ammonite"),
+      age: L("about 150 million years old", "environ 150 millions d'années"), period: L("Jurassic", "Jurassique"),
+      fact: L(
+        "Ammonites were sea animals with coiled shells, cousins of today's octopus and nautilus. They swam in the seas for millions of years and died out 66 million years ago, with the dinosaurs.",
+        "Les ammonites étaient des animaux marins à coquille enroulée, cousins de la pieuvre et du nautile. Elles ont nagé dans les mers pendant des millions d'années et ont disparu il y a 66 millions d'années, avec les dinosaures.",
+      ),
+      factEasy: L("A sea animal with a curly shell.", "Un animal de la mer à coquille enroulée."),
+      source: "Natural History Museum, London, “Ammonites”",
+      modelUrl: P2["dig:fossil:ammonite"] || "", iconUrl: P2["dig:fossil:ammonite:icon"] || "", spot: [-0.15, 0.4, -0.2],
+    },
+    {
+      id: "fern", layer: 3, icon: "🌿", ageMyr: 300, name: L("Fern leaf", "Feuille de fougère"),
+      age: L("about 300 million years old", "environ 300 millions d'années"), period: L("Carboniferous", "Carbonifère"),
+      fact: L(
+        "About 300 million years ago, in the Carboniferous period, huge swampy forests of ferns and giant plants grew. Their remains slowly became coal.",
+        "Il y a environ 300 millions d'années, au Carbonifère, d'immenses forêts marécageuses de fougères et de plantes géantes poussaient. Leurs restes sont lentement devenus du charbon.",
+      ),
+      factEasy: L("A fern from a very old forest.", "Une fougère d'une très vieille forêt."),
+      source: "Encyclopaedia Britannica, “Carboniferous Period”",
+      modelUrl: P2["dig:fossil:fern"] || "", iconUrl: P2["dig:fossil:fern:icon"] || "", spot: [0.2, 0.212, -0.18],
+    },
+    {
+      id: "trilobite", layer: 4, icon: "🪨", ageMyr: 500, name: L("Trilobite", "Trilobite"),
+      age: L("about 500 million years old", "environ 500 millions d'années"), period: L("Cambrian", "Cambrien"),
+      fact: L(
+        "Trilobites were sea animals with jointed legs, distant cousins of today's insects and crabs. They first appeared about 521 million years ago and lived for nearly 300 million years.",
+        "Les trilobites étaient des animaux marins aux pattes articulées, lointains cousins des insectes et des crabes. Ils sont apparus il y a environ 521 millions d'années et ont vécu près de 300 millions d'années.",
+      ),
+      factEasy: L("A very, very old sea animal.", "Un très, très vieil animal marin."),
+      source: "Natural History Museum, London, “Trilobites”",
+      modelUrl: P2["dig:fossil:trilobite"] || "", iconUrl: P2["dig:fossil:trilobite:icon"] || "", spot: [-0.2, 0.17, 0.18],
+    },
   ],
   layersFact: L(
-    "Sand and mud settle in layers, one on top of another, over a very long time. So the deepest layer was made first: it is the oldest. Trilobites and ammonites lived in the sea, so this canyon was under the sea long ago!",
-    "Le sable et la boue se déposent en couches, les unes sur les autres, pendant très longtemps. La couche la plus profonde s'est donc formée en premier : c'est la plus ancienne. Les trilobites et les ammonites vivaient dans la mer : ce canyon était sous la mer il y a très longtemps !",
+    "Mud and sand settle in layers, one on top of another, over a very long time. So the deeper you dig, the older the layer: the order you found the fossils is a timeline. Trilobites and ammonites lived in the sea, so this canyon was under the sea long ago!",
+    "La boue et le sable se déposent en couches, les unes sur les autres, pendant très longtemps. Plus on creuse, plus la couche est ancienne : l'ordre dans lequel tu as trouvé les fossiles est une frise du temps. Les trilobites et les ammonites vivaient dans la mer : ce canyon était sous la mer il y a très longtemps !",
   ),
-  layersFactEasy: L("New layers go on top. The bottom layer is the oldest!", "Les nouvelles couches vont dessus. La couche du bas est la plus ancienne !"),
+  layersFactEasy: L("New layers go on top. The deeper, the older!", "Les nouvelles couches vont dessus. Plus c'est profond, plus c'est ancien !"),
   models: {
     jungleTree: ASSETS.jungle_tree,
     palm: ASSETS.palm,
@@ -226,6 +144,7 @@ export const defaultProps: BiomeFrontierProps = {
     waterfallCliff: ASSETS.waterfall_cliff,
     canyonRocks: ASSETS.canyon_rocks,
     digSite: ASSETS.dig_site,
+    digBlock: P2["dig:block"] || "",
     corals: ASSETS.corals,
     pier: ASSETS.pier,
     fieldStation: ASSETS.field_station,

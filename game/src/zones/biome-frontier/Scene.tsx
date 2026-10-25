@@ -10,13 +10,15 @@ import type { QualityPlan } from "../../settings";
 import { addWind, glowTexture, useModel, useTiles, wind } from "../../scene/assets";
 import type { BiomeFrontierProps } from "./types";
 import {
-  BOARDS, BRIDGE, CLIFF, CORALS, CRITTERS, DIG, EXIT, GATE, PALMS, PIER, POOL, ROCKS, SIGNPOST, STATION, TREES,
-  keepClear, landHeight, regionWeights, shoreX, trailDist, waterDist, WORLD_R,
+  BOARDS, BRIDGE, CLIFF, CORALS, CRITTERS, DIG, DIG_STAND, EXIT, GATE, PALMS, PIER, POOL, ROCKS, SIGNPOST, STATION, TREES,
+  groundY, keepClear, landHeight, regionWeights, shoreX, trailDist, waterDist, WORLD_R,
 } from "./layout";
 import { useSurvey } from "./store";
 import type { ExpeditionProps } from "../../block";
 import { defaultExpedition } from "../../expedition/content";
 import { Creatures } from "./Creatures";
+import { DigBlock } from "./DigBlock";
+import { FrontierInsects } from "../../scene/Insects";
 
 export const KIND = {
   dig: "biome-frontier:dig",
@@ -893,7 +895,7 @@ function useTargets(game: Game) {
   useEffect(() => {
     const k = (s: string) => s as unknown as TargetKind;
     const own: Target[] = [];
-    own.push({ key: "bf-dig", kind: k(KIND.dig), ref: "dig", x: DIG.x + Math.sin(DIG.ry) * 1.6, z: DIG.z + Math.cos(DIG.ry) * 1.6, reach: 2.6 });
+    own.push({ key: "bf-dig", kind: k(KIND.dig), ref: "dig", x: DIG_STAND.x, z: DIG_STAND.z, reach: 2.6 });
     own.push({ key: "bf-station", kind: k(KIND.station), ref: "station", x: STATION.x - 0.5, z: STATION.z + 4.2, reach: 2.4 });
     for (const b of BOARDS) own.push({ key: "bf-sign-" + b.key, kind: k(KIND.sign), ref: b.biome, x: b.x + Math.sin(b.ry) * 1.0, z: b.z + Math.cos(b.ry) * 1.0, reach: 1.9 });
     game.targets = own;
@@ -945,6 +947,11 @@ export function Scene({ props, game, plan, onOpen, onExit, expedition }: {
       <Waterfall plan={plan} />
       <Rocks url={m.canyonRocks} />
       <Single url={m.digSite} x={DIG.x} z={DIG.z} ry={DIG.ry} onPick={() => open({ kind: "dig" })} />
+      {m.digBlock && (
+        <Clickable onPick={() => useSurvey.getState().view == null && open({ kind: "dig" })}>
+          <DigBlock url={m.digBlock} fossils={props.fossils || []} />
+        </Clickable>
+      )}
       <Single url={m.fieldStation} x={STATION.x} y={-0.05} z={STATION.z} ry={STATION.ry} windRe={/plant/} onPick={station} />
       <Single url={m.pier} x={PIER.x} z={PIER.z} ry={0} />
       <Single url={m.ropeBridge} x={BRIDGE.x} z={BRIDGE.z} ry={BRIDGE.ry} />
@@ -955,6 +962,7 @@ export function Scene({ props, game, plan, onOpen, onExit, expedition }: {
       <GroundCover props={props} plan={plan} />
       <Saguaros url={m.saguaro} />
       <Creatures species={(expedition || defaultExpedition).species} game={game} anemoneUrl={m.clownfish} />
+      <FrontierInsects exp={expedition || defaultExpedition} game={game} ground={groundY} />
       <ExitWatch game={game} onExit={onExit} />
       {plan.extras && <LightShafts />}
       {plan.extras && <Motes />}

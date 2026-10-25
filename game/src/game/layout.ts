@@ -49,9 +49,51 @@ export interface Placed {
   ry: number;
 }
 
+/** Where the meadow insects live (south-east of the plaza, away from the paths): lavender for the honeybee, milkweed for the monarch caterpillar. */
+export const MEADOW = {
+  lavender: [
+    { x: 7.6, z: 16.6, s: 1.7, ry: 0.3 },
+    { x: 8.9, z: 15.7, s: 1.5, ry: 1.9 },
+    { x: 8.8, z: 17.5, s: 1.45, ry: 4.0 },
+    { x: 7.0, z: 17.9, s: 1.3, ry: 2.6 },
+    { x: 10.1, z: 16.8, s: 1.35, ry: 5.1 },
+  ],
+  milkweed: [
+    { x: 12.0, z: 12.4, s: 1.5, ry: 0.5 },
+    { x: 12.9, z: 13.3, s: 1.35, ry: 2.2 },
+    { x: 11.2, z: 13.5, s: 1.3, ry: 4.1 },
+    { x: 13.3, z: 12.0, s: 1.2, ry: 1.2 },
+  ],
+};
+
+/** The Bug Games arena in the west meadow, between the Biome Frontier stall and the south path (pieces face the plaza, east). */
+export interface ArenaPiece {
+  key: "grandstand" | "long_jump" | "weight_pull" | "race_lane" | "hide_board" | "night_box" | "podium" | "scoreboard" | "dance";
+  x: number;
+  z: number;
+  ry: number;
+  /** Collision circles (piece-local x, z, r). */
+  solid: [number, number, number][];
+}
+export const ARENA = { x: -12.0, z: 8.6, rx: 5.2, rz: 6.6 };
+const EAST = Math.PI / 2;
+export const ARENA_PIECES: ArenaPiece[] = [
+  { key: "grandstand", x: -16.7, z: 8.6, ry: EAST, solid: [[-1.4, 0, 0.9], [0, 0, 0.9], [1.4, 0, 0.9]] },
+  { key: "long_jump", x: -14.3, z: 8.6, ry: 0, solid: [] },
+  { key: "weight_pull", x: -12.2, z: 8.6, ry: 0, solid: [] },
+  { key: "race_lane", x: -10.1, z: 8.6, ry: 0, solid: [] },
+  { key: "hide_board", x: -14.6, z: 13.6, ry: EAST - 0.35, solid: [[-0.7, 0, 0.35], [0.7, 0, 0.35]] },
+  { key: "night_box", x: -11.4, z: 13.9, ry: EAST - 0.15, solid: [[0, 0, 0.6]] },
+  { key: "scoreboard", x: -13.2, z: 3.4, ry: EAST - 0.45, solid: [[-1.0, 0, 0.25], [1.0, 0, 0.25]] },
+  { key: "podium", x: -10.0, z: 3.9, ry: EAST - 0.25, solid: [[0, 0, 0.9]] },
+  { key: "dance", x: -8.6, z: 12.4, ry: EAST, solid: [] },
+];
+/** Where the explorer stands to watch an event (east of the tracks, facing the arena). */
+export const ARENA_WATCH = { x: -7.4, z: 8.6 };
+
 export const BOULDERS: Placed[] = [
   { variant: 1, x: -15.5, z: -8.5, s: 1.3, ry: 0.3 },
-  { variant: 0, x: -13.6, z: 5.4, s: 1.0, ry: 1.2 },
+  { variant: 0, x: -17.6, z: 2.4, s: 1.0, ry: 1.2 },
   { variant: 2, x: -8.4, z: 11.8, s: 1.1, ry: 2.0 },
   { variant: 0, x: 5.2, z: 14.6, s: 1.2, ry: 0.7 },
   { variant: 1, x: 15.8, z: 3.2, s: 1.1, ry: 2.6 },
@@ -107,6 +149,8 @@ export function colliders(): Circle[] {
   }
   out.push({ x: TELESCOPE.x, z: TELESCOPE.z, r: 0.65 });
   out.push({ x: KEEPER.x, z: KEEPER.z, r: 0.45 });
+  for (const p of [...MEADOW.lavender, ...MEADOW.milkweed]) out.push({ x: p.x, z: p.z, r: 0.35 * p.s });
+  for (const p of ARENA_PIECES) for (const [lx, lz, r] of p.solid) out.push({ ...local(p.x, p.z, p.ry, lx, lz), r });
   for (const b of BOULDERS) out.push({ x: b.x, z: b.z, r: (b.variant === 1 ? 1.3 : b.variant === 0 ? 1.0 : 0.7) * b.s * 0.95 });
   return out;
 }

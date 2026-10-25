@@ -19,6 +19,8 @@ import { openPresence, Presence, roomForAge } from "./game/net";
 import { GROVE, PROPS_KEY, isDistrict, loadZone } from "./zones/registry";
 import { Expedition } from "./ui/Expedition";
 import { defaultExpedition, defaultQuests } from "./expedition/content";
+import { defaultBugGames } from "./expedition/bugGames";
+import { BugGames } from "./ui/BugGames";
 import "./game.css";
 import "./ui/hub.css";
 
@@ -247,70 +249,64 @@ export interface Biome {
   about: LocalizedText;
 }
 
-/** A living thing to sort into its biome during the field survey. */
-export interface Species {
-  id: string;
-  /** Biome id where it lives. */
-  biome: string;
-  name: LocalizedText;
-  icon: string;
-  /** Optional picture (a render of its model); empty = show the icon. */
-  imageUrl: string;
-  /** One true fact for ages 7-12, shown once it is sorted. */
-  fact: LocalizedText;
-  /** The same idea in a few easy words, for ages 4-6. */
-  factEasy: LocalizedText;
-  /** A kind clue after a wrong guess (never the answer itself). */
-  hint: LocalizedText;
-}
-
-/** A fossil in the dig face. layer 0 = the deepest (oldest) rock layer. */
+/** A fossil of the dig block. layer 0 = the top (youngest) soil layer, 3 = the deepest; it lies on the layer under `layer`. */
 export interface Fossil {
   id: string;
+  /** The dig layer (0 top .. 3 deepest) that covers it: digging that layer away uncovers it. */
   layer: number;
   name: LocalizedText;
   icon: string;
   /** Roughly how old, in words ("about 500 million years old"). */
   age: LocalizedText;
+  /** Age in millions of years (the timeline places it). */
+  ageMyr: number;
+  /** The period it comes from ("Cambrian"). */
+  period: LocalizedText;
+  /** One true fact, shown when it is brushed clean. */
+  fact: LocalizedText;
+  factEasy: LocalizedText;
+  /** Where the fact and the age can be checked. */
+  source: string;
+  /** Its 3D model (lies at `spot` in the dig block) and picture. */
+  modelUrl: string;
+  iconUrl: string;
+  /** Position in the dig block (block-local metres x, y, z; y = the top of the layer below). */
+  spot: number[];
 }
 
 export interface BiomeUi {
   title: LocalizedText;
-  surveyChip: LocalizedText;
-  digChip: LocalizedText;
-  findCards: LocalizedText;
-  cardTitle: LocalizedText;
-  whereLives: LocalizedText;
-  whereLivesEasy: LocalizedText;
-  rightBiome: LocalizedText;
-  tryAgain: LocalizedText;
   showMe: LocalizedText;
   next: LocalizedText;
   close: LocalizedText;
   digTitle: LocalizedText;
   digIntro: LocalizedText;
-  digOldest: LocalizedText;
-  digOldestEasy: LocalizedText;
-  digOldestRight: LocalizedText;
-  digOldestWrong: LocalizedText;
-  digOrder: LocalizedText;
-  digOrderWrong: LocalizedText;
-  digOrderRight: LocalizedText;
   digDone: LocalizedText;
   layerLabel: LocalizedText;
   stationTitle: LocalizedText;
-  stationIntro: LocalizedText;
-  stationProgress: LocalizedText;
-  roundDone: LocalizedText;
-  roundScore: LocalizedText;
   playAgain: LocalizedText;
   easyMode: LocalizedText;
   explorerMode: LocalizedText;
   modeLabel: LocalizedText;
   backToGrove: LocalizedText;
   look: LocalizedText;
-  notFoundYet: LocalizedText;
   digWaiting: LocalizedText;
+  // the real dig (trowel and brush on the dig block)
+  digNeedTools: LocalizedText;
+  trowel: LocalizedText;
+  brush: LocalizedText;
+  trowelHint: LocalizedText;
+  brushHint: LocalizedText;
+  useBrush: LocalizedText;
+  useTrowel: LocalizedText;
+  brushFirst: LocalizedText;
+  layerGone: LocalizedText;
+  fossilFound: LocalizedText;
+  timeline: LocalizedText;
+  timelineNow: LocalizedText;
+  deeperOlder: LocalizedText;
+  mya: LocalizedText;
+  digAgain: LocalizedText;
 }
 
 export interface BiomeModels {
@@ -322,8 +318,10 @@ export interface BiomeModels {
   waterfallCliff: string;
   /** Nodes: wall_a (fossil insets), wall_b, mesa, rock_a..c */
   canyonRocks: string;
-  /** Nodes: layer_0..3, fossil_trilobite, fossil_fern, fossil_ammonite, fossil_tooth */
+  /** Nodes: layer_0..3, fossil_trilobite, fossil_fern, fossil_ammonite, fossil_tooth (the canyon's fossil face, scenery) */
   digSite: string;
+  /** The dig block: nodes dig_layer0..3 (top to deepest, pivot at their base), dig_bedrock, dig_frame. */
+  digBlock: string;
   /** Nodes: coral_brain, coral_branch, coral_fan, coral_tubes */
   corals: string;
   pier: string;
@@ -361,10 +359,7 @@ export interface BiomeSounds {
 export interface BiomeFrontierProps {
   ui: BiomeUi;
   biomes: Biome[];
-  /** The pool of species; each round draws `roundSize` of them (at least 2 per biome). */
-  species: Species[];
-  /** 6-8; the fossil dig adds 2 more answers to the round. */
-  roundSize: number;
+  /** The fossils of the dig block, from the top layer down. */
   fossils: Fossil[];
   /** Why deeper layers are older (shown after the dig). */
   layersFact: LocalizedText;
@@ -688,7 +683,7 @@ export interface SkyharborOpen {
 /** One step of a quest. Steps run in order; a step is done when `count` different things matched it. */
 export interface QuestStep {
   id: string;
-  /** talk (walk up to / tap the Grove Keeper) | find (glowing seeds) | tool (own a tool) | visit (enter a zone) | photo | identify (hand lens) | observe (photo of a behaviour) */
+  /** talk (walk up to / tap the Grove Keeper) | find (glowing seeds) | tool (own a tool) | visit (enter a zone) | photo | identify (hand lens) | observe (photo of a behaviour) | release (caught, looked at and let go where found) | measure (tape) | weigh (scale) | dig (all fossils of the dig block) | games (a full Bug Games round) */
   kind: string;
   /** What matches: "keeper", "spark", a tool id, a zone id, a species id, or "any". */
   target: string;
@@ -719,6 +714,8 @@ export interface Quest {
   /** Tool ids given when the quest is finished. */
   reward: string[];
   steps: QuestStep[];
+  /** When this quest is done, the learning record gets complete(Field Guide stages, total). */
+  report?: boolean;
 }
 
 /** A line the Grove Keeper says (speech bubble, next button only), with its voice-over. */
@@ -748,7 +745,7 @@ export interface KeeperProps {
   dialogues: Dialogue[];
 }
 
-/** A tool of the field kit (earned by quests). id: camera | guide | lens */
+/** A tool of the field kit (earned by quests). id: camera | guide | lens | net | jar | tape | scale | trowel | brush */
 export interface Tool {
   id: string;
   icon: string;
@@ -790,9 +787,24 @@ export interface LensCheck {
 }
 
 /** A creature (or plant) with a page in the Field Guide. Stages: seen → photographed → identified → behaviour observed; each reveals one fact. */
+/** Real size and weight of a creature (the tape and the scale snap to these numbers). */
+export interface Measure {
+  /** Typical length in millimetres (the tape's reading). */
+  lengthMm: number;
+  /** How it is said, e.g. "about 1.3 cm long (12 to 15 mm)". */
+  lengthText: LocalizedText;
+  /** What the tape measures ("its body, head to tail, not the feelers"). */
+  what: LocalizedText;
+  /** Typical mass in grams (the scale's reading); 0 = not weighed. */
+  massG: number;
+  massText: LocalizedText;
+  /** Where the numbers can be checked. */
+  source: string;
+}
+
 export interface GuideSpecies {
   id: string;
-  /** rainforest | canyon | coast */
+  /** rainforest | canyon | coast | meadow | arena */
   biome: string;
   icon: string;
   name: LocalizedText;
@@ -816,6 +828,18 @@ export interface GuideSpecies {
   lens: LensCheck[];
   /** Voice-over of the first fact (speaker button of its page). */
   factAudio?: LocalizedText;
+  /** The page's stages (bits: 1 seen, 2 photographed, 4 identified, 8 behaviour observed, 16 caught and released, 32 measured), one fact each, in this order; empty = 1, 2, 4, 8. */
+  stages?: number[];
+  /** It can be caught with the net (and must be released where it was found). */
+  catchable?: boolean;
+  /** Real size and weight. */
+  measure?: Measure;
+  /** Where its body runs in its picture, tail to head (x0, y0, x1, y1 as 0..1 of the picture): the tape is laid along it. */
+  iconAxis?: number[];
+  /** Its camouflaged look in the wild (same rig); empty = modelUrl. */
+  camoModelUrl?: string;
+  /** Where to look for it (Field Guide hint). */
+  habitat?: LocalizedText;
 }
 
 export interface ExpeditionUi {
@@ -882,11 +906,65 @@ export interface ExpeditionUi {
   doingHide: LocalizedText;
   /** Biome Frontier field station board. */
   stationIntro: LocalizedText;
+  // catch and release (net and jar)
+  net: LocalizedText;
+  netHint: LocalizedText;
+  sweep: LocalizedText;
+  sweepHint: LocalizedText;
+  sweepKeys: LocalizedText;
+  sweepFast: LocalizedText;
+  sweepMiss: LocalizedText;
+  sweepNone: LocalizedText;
+  caught: LocalizedText;
+  jarFull: LocalizedText;
+  jar: LocalizedText;
+  jarLook: LocalizedText;
+  jarCount: LocalizedText;
+  isInsect: LocalizedText;
+  notInsect: LocalizedText;
+  release: LocalizedText;
+  releaseHere: LocalizedText;
+  releaseFar: LocalizedText;
+  released: LocalizedText;
+  releaseFirst: LocalizedText;
+  wentHome: LocalizedText;
+  lookFirst: LocalizedText;
+  // tape and scale
+  measureTitle: LocalizedText;
+  measureHint: LocalizedText;
+  measureShort: LocalizedText;
+  measureLong: LocalizedText;
+  measureRight: LocalizedText;
+  magnified: LocalizedText;
+  weighTitle: LocalizedText;
+  weighHint: LocalizedText;
+  weighHeavy: LocalizedText;
+  weighLight: LocalizedText;
+  weighRight: LocalizedText;
+  weighNone: LocalizedText;
+  weighClear: LocalizedText;
+  needTape: LocalizedText;
+  // the Field Guide grows
+  stageReleased: LocalizedText;
+  stageMeasured: LocalizedText;
+  lockedReleased: LocalizedText;
+  lockedMeasured: LocalizedText;
+  where: LocalizedText;
+  sizes: LocalizedText;
+  sizesHint: LocalizedText;
+  weights: LocalizedText;
+  measuredValue: LocalizedText;
+  weighedValue: LocalizedText;
+  guideAnimals: LocalizedText;
+  guideInsects: LocalizedText;
 }
 
 export interface ExpeditionModels {
   /** A glowing seed of the "Three sparks" quest. */
   spark: string;
+  /** Plants where meadow insects live (OpenWorld garden kit: node milkweed_flowering / lavender_flowering). */
+  milkweed: string;
+  lavender: string;
 }
 
 export interface ExpeditionSounds {
@@ -902,6 +980,105 @@ export interface ExpeditionProps {
   lensFeatures: LensFeature[];
   models: ExpeditionModels;
   sounds: ExpeditionSounds;
+}
+
+// ---- The Bug Games (props key `bugGames`): gentle competition of real insect talents in the Idea Grove ----
+
+/** A time of day the explorer picks for an event (insects are cold-blooded: warmth and light matter). */
+export interface GamesTime {
+  id: string;
+  icon: string;
+  name: LocalizedText;
+  /** Light colour over the arena (hex) and its brightness (0..1.5). */
+  light: string;
+  intensity: number;
+}
+
+/** One event: a real talent, the creature that has it, and the time it shows best. */
+export interface GamesEvent {
+  id: string;
+  icon: string;
+  name: LocalizedText;
+  /** What the event compares, in a few words. */
+  goal: LocalizedText;
+  /** Arena piece: long_jump | weight_pull | race_lane | hide_board | night_box | dance */
+  piece: string;
+  /** The species id that wins it. */
+  winner: string;
+  /** Time ids when it shows its talent best. */
+  times: string[];
+  /** Scoreboard line when it wins (big, short). */
+  score: LocalizedText;
+  /** The true fact behind it (shown on the result card), with its source. */
+  fact: LocalizedText;
+  factEasy: LocalizedText;
+  source: string;
+  /** Kind words when the time does not suit it. */
+  wrongTime: LocalizedText;
+  /** What the event needs ("a jumper"): "{a} is {talent}, not {needs}". */
+  needs: LocalizedText;
+  /** Creatures that share the talent but are not the champion (a locust jumps too), and what to say then. */
+  almostSpecies: string[];
+  almost: LocalizedText;
+}
+
+/** What each creature is good at, for kind feedback ("A flea is a jumper, not a puller"). */
+export interface GamesTalent {
+  species: string;
+  /** Its name with an article, starting a sentence ("A flea"). */
+  a: LocalizedText;
+  talent: LocalizedText;
+}
+
+export interface BugGamesUi {
+  title: LocalizedText;
+  intro: LocalizedText;
+  introEasy: LocalizedText;
+  start: LocalizedText;
+  again: LocalizedText;
+  event: LocalizedText;
+  pickAthlete: LocalizedText;
+  pickTime: LocalizedText;
+  go: LocalizedText;
+  team: LocalizedText;
+  guest: LocalizedText;
+  notYet: LocalizedText;
+  skip: LocalizedText;
+  wrongCreature: LocalizedText;
+  rightCreature: LocalizedText;
+  won: LocalizedText;
+  roundDone: LocalizedText;
+  score: LocalizedText;
+  medalGold: LocalizedText;
+  medalSilver: LocalizedText;
+  medalBronze: LocalizedText;
+  fleaGuest: LocalizedText;
+  needGuide: LocalizedText;
+  next: LocalizedText;
+  close: LocalizedText;
+  watch: LocalizedText;
+  board: LocalizedText;
+  enter: LocalizedText;
+}
+
+export interface BugGamesModels {
+  grandstand: string;
+  longJump: string;
+  weightPull: string;
+  raceLane: string;
+  hideBoard: string;
+  nightBox: string;
+  podium: string;
+  /** Node scoreboard_screen (material scoreboard_screen, 2:1 UV) shows the results. */
+  scoreboard: string;
+}
+
+export interface BugGamesProps {
+  ui: BugGamesUi;
+  events: GamesEvent[];
+  times: GamesTime[];
+  talents: GamesTalent[];
+  models: BugGamesModels;
 }
 
 export interface BlockProps {
@@ -932,6 +1109,8 @@ export interface BlockProps {
   quests?: Quest[];
   /** The Grove Keeper, the field kit and the Field Guide. */
   expedition?: ExpeditionProps;
+  /** The Bug Games arena in the Idea Grove. */
+  bugGames?: BugGamesProps;
 }
 
 /** Catches a model or texture that could not load, so the child sees a kind message and a retry button. */
@@ -1015,6 +1194,7 @@ export const Block: React.FC<Partial<BlockProps>> = (raw) => {
   const [flagTarget, setFlagTarget] = useState<ReportTarget | null>(null);
   const [young, setYoung] = useState(false);
   const [expBusy, setExpBusy] = useState(false);
+  const [gamesBusy, setGamesBusy] = useState(false);
   const exp = props.expedition || defaultExpedition;
   const quests = props.quests && props.quests.length ? props.quests : defaultQuests;
   /** Local screenshots only: stop drawing frames (headless software rendering is slow). */
@@ -1122,11 +1302,19 @@ export const Block: React.FC<Partial<BlockProps>> = (raw) => {
     pr.__owVoice = true;
     const answer = pr.answer;
     const complete = pr.complete;
+    // local testing record of the learning events (never on the store's domains)
+    const rec = (x: unknown) => {
+      if (!LOCAL) return;
+      const w = window as unknown as { __owProgress?: unknown[] };
+      (w.__owProgress = w.__owProgress || []).push(x);
+    };
     pr.answer = (a) => {
+      rec({ answer: a });
       answer(a);
       cue.current(a && a.correct ? "wellDone" : "tryAgain");
     };
     pr.complete = (...a) => {
+      rec({ complete: a });
       complete(...a);
       lastCue.current.at = 0;
       cue.current("wellDone");
@@ -1338,6 +1526,7 @@ export const Block: React.FC<Partial<BlockProps>> = (raw) => {
     (tg: Target): [string, string] | null => {
       if (tg.kind === "keeper") return [exp.keeper.icon || "🧓", t(exp.ui.talk)];
       if (tg.kind === "spark") return ["✨", t(exp.ui.pickUp)];
+      if (tg.kind === "games") return ["🏅", t((props.bugGames || defaultBugGames).ui.enter)];
       if (zone.id === "skyharbor" && zoneProps) {
         const ui = (zoneProps as SkyharborProps).ui;
         if (tg.kind === "skyharbor:robot") return ["🤖", t(ui.talkRobot)];
@@ -1375,6 +1564,7 @@ export const Block: React.FC<Partial<BlockProps>> = (raw) => {
           onDistrictOpen={openDistrict}
           onExit={() => goZone(GROVE, zone.id)}
           onPeerTap={onPeerTap}
+          t={t}
         />
       </LoadGuard>
       {failed && (
@@ -1441,7 +1631,7 @@ export const Block: React.FC<Partial<BlockProps>> = (raw) => {
           game={game}
           presence={presence}
           roomInfo={roomInfo}
-          blocked={!!card || skyOpen || busy || expBusy || !!report || !!fade || paused}
+          blocked={!!card || skyOpen || busy || expBusy || gamesBusy || !!report || !!fade || paused}
           onBack={backToStart}
           found={saved.found.length}
           zoneName={zone.mod ? districtName : undefined}
@@ -1459,13 +1649,24 @@ export const Block: React.FC<Partial<BlockProps>> = (raw) => {
           zone={zone.id}
           phase={phase}
           young={young}
-          blocked={!!card || skyOpen || busy || !!report || !!fade || paused}
+          blocked={!!card || skyOpen || busy || gamesBusy || !!report || !!fade || paused}
           onBusy={setExpBusy}
+        />
+      )}
+      {loaded && phase === "play" && !zone.mod && (
+        <BugGames
+          games={props.bugGames || defaultBugGames}
+          exp={exp}
+          t={t}
+          game={game}
+          young={young}
+          blocked={!!card || skyOpen || expBusy || !!report || !!fade || paused}
+          onBusy={setGamesBusy}
         />
       )}
       {loaded && phase === "play" && Activity && zoneProps && (
         <React.Fragment key={zone.id}>
-          {zone.id === "biome-frontier" && <Activity props={zoneProps} expedition={exp} t={t} paused={paused} onBusy={setDistrictBusy} />}
+          {zone.id === "biome-frontier" && <Activity props={zoneProps} expedition={exp} t={t} paused={paused} onBusy={setDistrictBusy} game={game} />}
           {zone.id === "chrono-quarter" && <Activity props={zoneProps} game={game} t={t} paused={paused} onBlockingChange={setDistrictBusy} />}
           {zone.id === "skyharbor" && shOpen && <Activity props={zoneProps} open={shOpen} t={t} onClose={() => setShOpen(null)} paused={paused} />}
         </React.Fragment>

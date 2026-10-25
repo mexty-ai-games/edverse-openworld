@@ -7,11 +7,12 @@ import type { ExpeditionProps, GuideSpecies, KeeperLine, Quest, T } from "../blo
 import type { Game } from "../game/state";
 import { useExp } from "../game/expedition";
 import {
-  applyEvent, cleanSave, currentQuest, currentStep, EMPTY_EXP, ExpSave, guideScore, Outcome, QuestEvent, STAGE, startExpedition,
+  applyEvent, cleanSave, currentQuest, currentStep, EMPTY_EXP, ExpSave, guideScore, guideTotal, Outcome, QuestEvent, STAGE, stagesOf, startExpedition, startTools,
 } from "../game/quests";
 import { KEEPER, SPARKS } from "../game/layout";
 import { sound } from "../audio";
 import { CameraView, FieldGuide, LensPanel, PhotoCard } from "./FieldKit";
+import { JarCard, NetView } from "./Catch";
 import "./expedition.css";
 
 type Mexty = ReturnType<typeof useMexty>;
@@ -22,11 +23,9 @@ const STAGE_NAMES: [number, keyof ExpeditionProps["ui"]][] = [
   [STAGE.photo, "stagePhoto"],
   [STAGE.id, "stageId"],
   [STAGE.behaviour, "stageBehaviour"],
+  [STAGE.released, "stageReleased"],
+  [STAGE.measured, "stageMeasured"],
 ];
-
-export function stageIndex(bit: number) {
-  return bit === STAGE.seen ? 0 : bit === STAGE.photo ? 1 : bit === STAGE.id ? 2 : 3;
-}
 
 function answer(mexty: Mexty, questionId: string, question: string, correct: boolean, attempt: number) {
   try {
@@ -88,11 +87,16 @@ export function Expedition({ exp, quests, t, game, zone, phase, young, blocked, 
 
   // ---------------------------------------------------------------- the save: load once, then mirror changes
   const lastWritten = useRef<ExpSave | null>(null);
+  const ahead = useRef<QuestEvent[]>([]);
+  const migrated = useRef(false);
   useEffect(() => {
     if (cloud.loading || useExp.getState().loaded) return;
-    const s = cleanSave(cloud.value);
-    lastWritten.current = s;
-    useExp.setState({ save: s, loaded: true });
+    const clean = cleanSave(cloud.value);
+    lastWritten.current = clean;
+    // a save from before the newest quests: the quest it now stands on hands over its tools (and says hello)
+    const mig = startTools(quests, clean);
+    useExp.setState({ save: mig.save, loaded: true });
+    if (mig.given.length) migrated.current = true;
   }, [cloud.loading, cloud.value]);
   useEffect(() => {
     if (!loaded || save === lastWritten.current) return;
@@ -142,27 +146,30 @@ export function Expedition({ exp, quests, t, game, zone, phase, young, blocked, 
     return m;
   }, [exp.species]);
   const species = useCallback((id: string) => speciesById[id], [speciesById]);
-  const total = (exp.species || []).length * 4;
+  const total = guideTotal(exp.species);
 
+  /** A quest marked `report` was just finished: the learning record gets the Field Guide's score. */
   const reportIfDone = useCallback(
-    (s: ExpSave) => {
-      if (s.reported || s.q < quests.length || !s.started) return s;
+    (s: ExpSave, q: Quest | null) => {
+      if (!q || !q.report || !s.started) return s;
+      const rp = s.rp || [];
+      if (rp.indexOf(q.id) >= 0) return s;
       try {
-        mexty.progress.complete(guideScore(s), total);
+        mexty.progress.complete(guideScore(s, exp.species), total);
         mexty.celebrate();
       } catch {
         /* outside EdVerse */
       }
-      return { ...s, reported: true };
+      return { ...s, reported: true, rp: rp.concat(q.id) };
     },
-    [mexty, quests.length, total],
+    [mexty, total, exp.species],
   );
 
   const handle = useCallback(
     (out: Outcome) => {
       const st = useExp.getState();
       let s = out.save;
-      if (out.allDone) s = reportIfDone(s);
+      if (out.questDone) s = reportIfDone(s, out.questDone);
       st.setSave(s);
       for (const tl of out.given) {
         const tool = (exp.tools || []).find((x) => x.id === tl);
@@ -191,6 +198,7 @@ export function Expedition({ exp, quests, t, game, zone, phase, young, blocked, 
       if (!st.loaded) return;
       const out = applyEvent(quests, st.save, ev);
       if (out.progressed) handle(out);
+      else if (/^(measure|weigh|release)$/.test(ev.kind) && !ahead.current.some((e) => e.kind === ev.kind && e.id === ev.id)) ahead.current = ahead.current.concat(ev).slice(-30);
     },
     [quests, handle],
   );
@@ -200,7 +208,7 @@ export function Expedition({ exp, quests, t, game, zone, phase, young, blocked, 
       const st = useExp.getState();
       const s = st.save;
       const sp = speciesById[sid];
-      if (!sp) return false;
+      if (!sp || stagesOf(sp).indexOf(bit) < 0) return false;
       const pg = s.g[sid] || { st: 0 };
       if (pg.st & bit) return false;
       st.setSave({ ...s, g: { ...s.g, [sid]: { ...pg, st: pg.st | bit } } });
@@ -269,7 +277,7 @@ export function Expedition({ exp, quests, t, game, zone, phase, young, blocked, 
     }
     const lines: KeeperLine[] = [];
     if (step && step.line && lineById[step.line]) lines.push(lineById[step.line]);
-    else if (lineById.allDone) lines.push(lineById.allDone);
+    else if (lineById.allDone2 || lineById.allDone) lines.push(lineById.allDone2 || lineById.allDone);
     say(lines);
   }, [quests, handle, say, linesOf, emit, lineById]);
   const pickSpark = useCallback(
@@ -343,11 +351,22 @@ export function Expedition({ exp, quests, t, game, zone, phase, young, blocked, 
       }
       const step = currentStep(quests, st.save);
       const lines = [lineById.welcomeBack].filter(Boolean);
+      const q = currentQuest(quests, st.save);
+      if (migrated.current && q && q.intro) {
+        // new quests since the last visit: the keeper introduces the one waiting, and hands its tools over
+        migrated.current = false;
+        for (const tl of q.giveAtStart) {
+          const tool = (exp.tools || []).find((x) => x.id === tl);
+          if (tool) st.showToast(tool.icon, t(ui.newTool, { tool: t(tool.name) }));
+        }
+        say(lines.concat(linesOf(q.intro)));
+        return;
+      }
       if (step && step.line && lineById[step.line]) lines.push(lineById[step.line]);
       say(lines);
     }, 900);
     return () => window.clearTimeout(id);
-  }, [phase, loaded, quests, handle, lineById, say]);
+  }, [phase, loaded, quests, handle, lineById, say, linesOf, exp.tools, t, ui]);
   useEffect(() => {
     if (phase !== "play") greeted.current = false;
   }, [phase]);
@@ -355,10 +374,24 @@ export function Expedition({ exp, quests, t, game, zone, phase, young, blocked, 
   useEffect(() => {
     if (phase === "play" && loaded) emit({ kind: "visit", id: zone, zone });
   }, [zone, phase, loaded, emit]);
-  // closing the tools when leaving a zone or the world
+  // closing the tools when leaving a zone or the world; a creature still in the jar goes home by itself
   useEffect(() => {
-    useExp.setState({ mode: null, lensOn: null, photo: null });
+    const st = useExp.getState();
+    if (st.jar) {
+      const sp = speciesById[st.jar.species];
+      if (sp) st.showToast(sp.icon, t(ui.wentHome, { name: t(sp.name) }));
+    }
+    useExp.setState({ mode: null, lensOn: null, photo: null, jar: null, jarTab: null });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [zone, phase]);
+
+  // things done ahead of their step during this visit (weighed while the measuring step was still on) count when it comes
+  const stepKey = save.q + ":" + save.s;
+  useEffect(() => {
+    const step = currentStep(quests, useExp.getState().save);
+    if (!step) return;
+    for (const ev of ahead.current.filter((e) => e.kind === step.kind)) emit(ev);
+  }, [stepKey, quests, emit]);
 
   // the camera rig follows the open tool
   useEffect(() => {
@@ -373,7 +406,9 @@ export function Expedition({ exp, quests, t, game, zone, phase, young, blocked, 
   }, [lensOn, game]);
 
   // ---------------------------------------------------------------- the HUD steps back while a panel is open
-  const busy = mode === "guide" || !!lensOn || !!photo;
+  const jarTab = useExp((s) => s.jarTab);
+  const jar = useExp((s) => s.jar);
+  const busy = mode === "guide" || !!lensOn || !!photo || !!jarTab;
   useEffect(() => onBusy(busy), [busy, onBusy]);
 
   // toasts fade
@@ -398,13 +433,13 @@ export function Expedition({ exp, quests, t, game, zone, phase, young, blocked, 
       </button>
     );
   };
-  const toggle = (m: "camera" | "lens" | "guide") => {
+  const toggle = (m: "camera" | "lens" | "guide" | "net") => {
     sound.sfx("pop", 0.6);
     useExp.getState().setMode(mode === m ? null : m);
   };
   return (
     <>
-      {step && !busy && mode !== "camera" && (
+      {step && !busy && mode !== "camera" && mode !== "net" && (
         <div className={"ex-tracker" + (blocked ? " dim" : "") + (zone !== "idea-grove" ? " low" : "")}>
           <span className="ex-tracker-icon" aria-hidden>
             {step.icon}
@@ -421,9 +456,21 @@ export function Expedition({ exp, quests, t, game, zone, phase, young, blocked, 
         <div className="ex-tools">
           {toolBtn("camera", () => toggle("camera"), false)}
           {toolBtn("lens", () => toggle("lens"), mode === "lens")}
+          {toolBtn("net", () => toggle("net"), mode === "net")}
+          {toolBtn(
+            "jar",
+            () => {
+              sound.sfx("pop", 0.6);
+              if (useExp.getState().jar) useExp.setState({ jarTab: "look", mode: null });
+              else useExp.getState().showToast("🫙", t(ui.netHint));
+            },
+            !!jar,
+          )}
           {toolBtn("guide", () => toggle("guide"), false)}
         </div>
       )}
+      {mode === "net" && !blocked && !jarTab && <NetView api={api} />}
+      {jarTab && !blocked && <JarCard api={api} />}
       {mode === "lens" && !lensOn && !blocked && (
         <div className="ex-lens-hint">
           🔍 {t(ui.lensHint)}

@@ -17,6 +17,13 @@ const root = path.resolve(here, "..", "..");
   const vo = rd(path.join(root, "assets/manifest.voice.json"));
   const by = {};
   for (const e of ex) if (e && e.key && e.url) by[e.key] = e.url;
+  // phase 2: tools, insects, the Bug Games arena, the dig block and fossils; the garden plants insects live on
+  const p2 = {};
+  for (const e of rd(path.join(root, "assets/manifest.phase2.json"))) if (e && e.key && e.url) p2[e.key] = e.url;
+  for (const e of rd(path.join(root, "assets/manifest.phase345.json"))) {
+    if (e && e.key === "plant:milkweed:flowering") p2["plant:milkweed"] = e.url;
+    if (e && e.key === "plant:lavender:flowering") p2["plant:lavender"] = e.url;
+  }
   const vb = {};
   for (const v of vo) if (/^ow-voice-(keeper|fact)-/.test(v.id)) vb[v.id] = v.url;
   const row = (o) => Object.keys(o).sort().map((k) => "  " + JSON.stringify(k) + ": " + JSON.stringify(o[k]) + ",").join("\n");
@@ -26,15 +33,22 @@ const root = path.resolve(here, "..", "..");
     "export const EXP_ASSETS: Record<string, string> = {", row(by), "};", "",
     "/** Voice-over URLs by manifest id (ow-voice-keeper-<line>-<lang>, ow-voice-fact-<species>-<lang>). */",
     "export const EXP_VOICE: Record<string, string> = {", row(vb), "};", "",
+    "/** Phase 2 assets by manifest key (assets/manifest.phase2.json; plant:milkweed / plant:lavender from manifest.phase345.json). */",
+    "export const P2_ASSETS: Record<string, string> = {", row(p2), "};", "",
   ].join("\n");
   const tsPath = path.join(here, "../src/expedition/assets.gen.ts");
   if (!fs.existsSync(tsPath) || fs.readFileSync(tsPath, "utf8") !== ts) fs.writeFileSync(tsPath, ts);
 }
 // 2) the content, bundled and evaluated
-const out = await build({ entryPoints: [path.join(here, "../src/expedition/content.ts")], bundle: true, write: false, format: "esm", platform: "node" });
-const mod = await import("data:text/javascript;base64," + Buffer.from(out.outputFiles[0].text).toString("base64"));
+const load = async (f) => {
+  const out = await build({ entryPoints: [path.join(here, f)], bundle: true, write: false, format: "esm", platform: "node", loader: { ".css": "empty" } });
+  return import("data:text/javascript;base64," + Buffer.from(out.outputFiles[0].text).toString("base64"));
+};
+const mod = await load("../src/expedition/content.ts");
 const quests = JSON.parse(JSON.stringify(mod.defaultQuests));
 const expedition = JSON.parse(JSON.stringify(mod.defaultExpedition));
+const bugGames = JSON.parse(JSON.stringify((await load("../src/expedition/bugGames.ts")).defaultBugGames));
+const biomeFrontier = JSON.parse(JSON.stringify((await load("../src/zones/biome-frontier/content.ts")).defaultProps));
 
 const readJson = (p, d) => (fs.existsSync(p) ? JSON.parse(fs.readFileSync(p, "utf8")) : d);
 const voice = readJson(path.join(root, "assets/manifest.voice.json"), []);
@@ -73,7 +87,7 @@ for (const s of expedition.species) {
 // the Biome Frontier's arrival line now talks about photographing creatures (the card quiz is gone)
 const bf2 = lang("ow-voice-biomeFrontier2");
 const voicePatch = bf2.en && bf2.fr ? { biomeFrontier: bf2 } : null;
-const remote = { quests, expedition, voice: voicePatch };
+const remote = { quests, expedition, voice: voicePatch, bugGames, biomeFrontier };
 fs.writeFileSync(path.join(here, "expedition.props.json"), JSON.stringify(remote, null, 1));
 
 // local copy: library URLs -> /lib/<id>.<ext> when that file is in dev/public/lib (else kept)
@@ -96,6 +110,8 @@ const localPath = path.join(here, "props.local.json");
 const local = JSON.parse(fs.readFileSync(localPath, "utf8"));
 local.quests = localize(quests);
 local.expedition = localize(expedition);
+local.bugGames = localize(bugGames);
+local.biomeFrontier = { ...local.biomeFrontier, ...localize(biomeFrontier), models: { ...local.biomeFrontier.models, ...localize({ digBlock: biomeFrontier.models.digBlock }) }, textures: local.biomeFrontier.textures, sounds: local.biomeFrontier.sounds };
 if (voicePatch) local.voice = { ...(local.voice || {}), ...localize(voicePatch) };
 fs.writeFileSync(localPath, JSON.stringify(local));
 const missing = [];

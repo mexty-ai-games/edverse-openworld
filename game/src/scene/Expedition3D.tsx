@@ -11,6 +11,7 @@ import { currentStep } from "../game/quests";
 import { FROG_CAMEO, KEEPER, PLAZA_TOP, SPARKS, STALLS, stallPoint, groundY } from "../game/layout";
 import { glowTexture, useModel } from "./assets";
 import { Creature, newBrain, restore, setBehaviour, Animate, Think } from "./creatures";
+import { GroveInsects } from "./Insects";
 
 /** The keeper's look when he is drawn with the explorers' base model (no model of his own yet). */
 const KEEPER_TINT: Record<string, string> = { skin: "#d9a57a", hair: "#e8e4dc", shirt: "#5f7d3a", pants: "#7a6046", shoes: "#4a3424", bag: "#a8743a" };
@@ -139,9 +140,39 @@ function QuestMark() {
   );
 }
 
-function SparkModel({ url }: { url: string }) {
+/** The glowing seed: its halo (node spark_glow) breathes, and its core and veins pulse with light. */
+function SparkModel({ url, index }: { url: string; index: number }) {
   const gltf = useModel(url);
-  const obj = useMemo(() => gltf.scene.clone(true), [gltf]);
+  const { obj, halo, glowMats, emissive } = useMemo(() => {
+    const obj = gltf.scene.clone(true);
+    const halo = obj.getObjectByName("spark_glow") || null;
+    const glowMats: THREE.MeshStandardMaterial[] = [];
+    const emissive: { m: THREE.MeshStandardMaterial; base: number }[] = [];
+    obj.traverse((o) => {
+      const m = o as THREE.Mesh;
+      if (!m.isMesh) return;
+      const mat = (m.material as THREE.MeshStandardMaterial).clone();
+      m.material = mat;
+      let inHalo = false;
+      for (let p: THREE.Object3D | null = m; p; p = p.parent) if (p === halo) inHalo = true;
+      if (inHalo || mat.name === "spark_glow") {
+        // the halo is a soft additive shell (the loader turned blended materials into cut-outs)
+        mat.transparent = true;
+        mat.alphaTest = 0;
+        mat.depthWrite = false;
+        mat.blending = THREE.AdditiveBlending;
+        glowMats.push(mat);
+      } else if (/spark_core|spark_vein/.test(mat.name) && mat.emissive) emissive.push({ m: mat, base: Math.max(0.6, mat.emissiveIntensity || 1) });
+    });
+    return { obj, halo, glowMats, emissive };
+  }, [gltf]);
+  useFrame(() => {
+    const t = performance.now() / 1000 + index * 0.7;
+    const k = 0.5 + 0.5 * Math.sin(t * 3.2);
+    if (halo) halo.scale.setScalar(0.9 + k * 0.35);
+    for (const m of glowMats) m.opacity = 0.35 + k * 0.55;
+    for (const e of emissive) e.m.emissiveIntensity = e.base * (0.7 + k * 1.1);
+  });
   return <primitive object={obj} />;
 }
 
@@ -172,7 +203,7 @@ function Spark({ spot, url, index }: { spot: (typeof SPARKS)[number]; url: strin
       <group ref={g}>
         {url ? (
           <React.Suspense fallback={null}>
-            <SparkModel url={url} />
+            <SparkModel url={url} index={index} />
           </React.Suspense>
         ) : null}
         <sprite scale={[1.5, 1.5, 1]} renderOrder={7}>
@@ -253,6 +284,7 @@ export function GroveExpedition({ props, exp, game }: { props: BlockProps; exp: 
         <Spark key={s.id} spot={s} url={exp.models.spark} index={SPARKS.indexOf(s)} />
       ))}
       {frogOn && <FrogCameo exp={exp} game={game} />}
+      <GroveInsects exp={exp} game={game} />
     </>
   );
 }

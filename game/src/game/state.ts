@@ -59,6 +59,10 @@ export interface LiveCreature {
   radius: number;
   /** What it is doing now: idle | move | feed | special | flee | hide */
   behaviour: string;
+  /** In the explorer's jar: not in the world for now. */
+  hidden?: boolean;
+  /** The net can catch it. */
+  catchable?: boolean;
 }
 
 export interface Game {
@@ -96,6 +100,8 @@ export interface Game {
   creatures: LiveCreature[];
   /** The explorer's speed over the last frames (m/s), for shy creatures. */
   speed: number;
+  /** The explorer walks slowly (the butterfly net is out): creatures stay calm. */
+  tiptoe: boolean;
   /** Bumped when peers join or leave, so the scene re-renders its list. */
   peerVersion: number;
   emote(kind: string): void;
@@ -123,6 +129,7 @@ export function createGame(): Game {
     view: { camera: null, width: 1, height: 1 },
     creatures: [],
     speed: 0,
+    tiptoe: false,
     peerVersion: 0,
     onSay: null,
     emote(kind: string) {

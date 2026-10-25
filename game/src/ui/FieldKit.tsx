@@ -6,7 +6,7 @@ import * as THREE from "three";
 import type { GuideSpecies, T } from "../block";
 import type { Game, LiveCreature } from "../game/state";
 import { useExp } from "../game/expedition";
-import { guideScore, PhotoCheck, photoStars, PHOTO_RULES, PhotoRecord, STAGE, STAGES } from "../game/quests";
+import { guideScore, guideTotal, PhotoCheck, photoStars, PHOTO_RULES, PhotoRecord, STAGE, stagesOf } from "../game/quests";
 import { sound } from "../audio";
 import type { ExpeditionApi } from "./Expedition";
 
@@ -36,6 +36,7 @@ export function inFrame(game: Game): Seen[] {
   const out: Seen[] = [];
   cam.updateMatrixWorld();
   for (const c of game.creatures) {
+    if (c.hidden) continue;
     const o = c.obj;
     o.getWorldPosition(tmp);
     tmp.y += c.cy;
@@ -209,7 +210,7 @@ export function PhotoCard({ api }: { api: ExpeditionApi }) {
   if (!res) return null;
   const done = () => useExp.setState({ photo: null });
   const sp = res.photo ? api.species(res.photo.speciesId) : undefined;
-  const newFacts = sp ? STAGES.map((b, i) => (res.newStages & b ? sp.facts[i] : null)).filter(Boolean) : [];
+  const newFacts = sp ? stagesOf(sp).map((b, i) => (res.newStages & b ? sp.facts[i] : null)).filter(Boolean) : [];
   const pg = sp ? save.g[sp.id] : undefined;
   return (
     <div className="ow-modal ex-modal" onPointerDown={(e) => e.target === e.currentTarget && done()}>
@@ -265,12 +266,71 @@ export function PhotoCard({ api }: { api: ExpeditionApi }) {
 }
 
 // ------------------------------------------------------------------ the Field Guide
-const STAGE_KEYS = [
-  ["stageSeen", "lockedSeen"],
-  ["stagePhoto", "lockedPhoto"],
-  ["stageId", "lockedId"],
-  ["stageBehaviour", "lockedBehaviour"],
-] as const;
+type UiKey = keyof ExpeditionApi["exp"]["ui"];
+/** Each stage bit: its icon, its name and what to do to fill it. */
+const STAGE_INFO: Record<number, [string, UiKey, UiKey]> = {
+  1: ["👀", "stageSeen", "lockedSeen"],
+  2: ["📷", "stagePhoto", "lockedPhoto"],
+  4: ["🔍", "stageId", "lockedId"],
+  8: ["⭐", "stageBehaviour", "lockedBehaviour"],
+  16: ["🫙", "stageReleased", "lockedReleased"],
+  32: ["📏", "stageMeasured", "lockedMeasured"],
+};
+
+function lenText(mm: number, fr: boolean): string {
+  const sep = fr ? "," : ".";
+  if (mm < 10) return String(Math.round(mm * 10) / 10).replace(".", sep) + " mm";
+  return String(Math.round(mm) / 10).replace(".", sep) + " cm";
+}
+
+/** The real sizes the explorer measured, smallest first, as bars. */
+function Sizes({ api }: { api: ExpeditionApi }) {
+  const { t, exp } = api;
+  const ui = exp.ui;
+  const save = useExp((s) => s.save);
+  const fr = t({ en: "en", fr: "fr" }) === "fr";
+  const list = (exp.species || []).filter((s) => s.measure && save.g[s.id] && save.g[s.id].st & STAGE.measured).sort((a, b) => a.measure!.lengthMm - b.measure!.lengthMm);
+  const max = Math.max(1, ...list.map((s) => s.measure!.lengthMm));
+  const heavy = (exp.species || []).filter((s) => s.measure && s.measure.massG && save.g[s.id] && save.g[s.id].st & STAGE.weighed).sort((a, b) => a.measure!.massG - b.measure!.massG);
+  const maxG = Math.max(0.1, ...heavy.map((s) => s.measure!.massG));
+  return (
+    <div className="ex-sizes">
+      <p className="ex-small-text">📏 {t(ui.sizesHint)}</p>
+      {list.length === 0 && <p className="ex-locked">🔒 {t(ui.lockedMeasured)}</p>}
+      {list.map((s) => (
+        <div key={s.id} className="ex-size-row">
+          <SpeciesPic s={s} known />
+          <div className="ex-size-main">
+            <div className="ex-size-name">
+              <b>{t(s.name)}</b> <span>{lenText(s.measure!.lengthMm, fr)}</span>
+            </div>
+            <div className="ex-size-bar">
+              <i style={{ width: Math.max(2, (s.measure!.lengthMm / max) * 100) + "%" }} />
+            </div>
+          </div>
+        </div>
+      ))}
+      {heavy.length > 0 && (
+        <>
+          <p className="ex-small-text">⚖️ {t(ui.weights)}</p>
+          {heavy.map((s) => (
+            <div key={s.id} className="ex-size-row">
+              <SpeciesPic s={s} known />
+              <div className="ex-size-main">
+                <div className="ex-size-name">
+                  <b>{t(s.name)}</b> <span>{t(s.measure!.massText)}</span>
+                </div>
+                <div className="ex-size-bar mass">
+                  <i style={{ width: Math.max(2, (s.measure!.massG / maxG) * 100) + "%" }} />
+                </div>
+              </div>
+            </div>
+          ))}
+        </>
+      )}
+    </div>
+  );
+}
 
 export function FieldGuide({ api }: { api: ExpeditionApi }) {
   const { t, exp, young } = api;
@@ -286,39 +346,57 @@ export function FieldGuide({ api }: { api: ExpeditionApi }) {
     return () => window.removeEventListener("keydown", k);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  const animals = list.filter((s) => !s.stages || !s.stages.length);
+  const small = list.filter((s) => s.stages && s.stages.length);
+  const anyMeasured = list.some((s) => save.g[s.id] && save.g[s.id].st & STAGE.measured);
+  const cell = (s: GuideSpecies) => {
+    const pg = save.g[s.id];
+    const st = pg ? pg.st : 0;
+    return (
+      <button key={s.id} className={"ex-book-cell" + (st ? " seen" : "")} onClick={() => useExp.setState({ page: s.id })}>
+        <SpeciesPic s={s} known={!!(st & STAGE.seen)} />
+        <span className="ex-cell-name">{st & STAGE.seen ? t(s.name) : "?"}</span>
+        <span className="ex-pips" aria-hidden>
+          {stagesOf(s).map((b) => (
+            <i key={b} className={st & b ? "on" : ""} />
+          ))}
+        </span>
+      </button>
+    );
+  };
   return (
     <div className="ow-modal ex-modal" onPointerDown={(e) => e.target === e.currentTarget && close()}>
       <div className="ex-book ow-card" role="dialog" aria-modal="true" aria-label={t(ui.guide)}>
         <div className="ex-book-head">
-          {sp ? (
+          {sp || page === "sizes" ? (
             <button className="ow-btn ow-btn-small" onClick={() => useExp.setState({ page: null })}>
               ◀ {t(ui.back)}
             </button>
           ) : (
             <div className="ex-book-title">📖 {t(ui.guide)}</div>
           )}
-          <div className="ex-book-progress">{t(ui.guideProgress, { n: guideScore(save), total: list.length * 4 })}</div>
+          <div className="ex-book-progress">{t(ui.guideProgress, { n: guideScore(save, list), total: guideTotal(list) })}</div>
           <button className="ow-round ow-close" aria-label={t(ui.close)} onClick={close}>
             ✕
           </button>
         </div>
-        {!sp ? (
-          <div className={"ex-book-grid" + (young ? " young" : "")}>
-            {list.map((s) => {
-              const pg = save.g[s.id];
-              const st = pg ? pg.st : 0;
-              return (
-                <button key={s.id} className={"ex-book-cell" + (st ? " seen" : "")} onClick={() => useExp.setState({ page: s.id })}>
-                  <SpeciesPic s={s} known={!!(st & STAGE.seen)} />
-                  <span className="ex-cell-name">{st & STAGE.seen ? t(s.name) : "?"}</span>
-                  <span className="ex-pips" aria-hidden>
-                    {STAGES.map((b) => (
-                      <i key={b} className={st & b ? "on" : ""} />
-                    ))}
-                  </span>
-                </button>
-              );
-            })}
+        {page === "sizes" ? (
+          <Sizes api={api} />
+        ) : !sp ? (
+          <div className="ex-book-index">
+            {anyMeasured && (
+              <button className="ow-btn ow-btn-small ex-sizes-btn" onClick={() => useExp.setState({ page: "sizes" })}>
+                📏 {t(ui.sizes)}
+              </button>
+            )}
+            <div className="ex-book-sec">{t(ui.guideAnimals)}</div>
+            <div className={"ex-book-grid" + (young ? " young" : "")}>{animals.map(cell)}</div>
+            {small.length > 0 && (
+              <>
+                <div className="ex-book-sec">{t(ui.guideInsects)}</div>
+                <div className={"ex-book-grid" + (young ? " young" : "")}>{small.map(cell)}</div>
+              </>
+            )}
           </div>
         ) : (
           <GuidePage api={api} s={sp} />
@@ -336,8 +414,11 @@ function GuidePage({ api, s }: { api: ExpeditionApi; s: GuideSpecies }) {
   const st = pg ? pg.st : 0;
   const seen = !!(st & STAGE.seen);
   const facts = s.facts || [];
+  const stages = stagesOf(s);
+  const fr = t({ en: "en", fr: "fr" }) === "fr";
   // ages 4-6: the big picture and the newest fact in a few easy words
-  const newest = STAGES.reduce((acc, b, i) => (st & b ? i : acc), -1);
+  const newest = stages.reduce((acc, b, i) => (st & b ? i : acc), -1);
+  const icon = (b: number) => (STAGE_INFO[b] || ["•"])[0];
   return (
     <div className={"ex-page" + (young ? " young" : "")}>
       <div className="ex-page-left">
@@ -353,6 +434,17 @@ function GuidePage({ api, s }: { api: ExpeditionApi; s: GuideSpecies }) {
             <span className="ex-small-text">📷 {t(ui.noPhoto)}</span>
           )}
         </div>
+        {s.measure && st & STAGE.measured ? (
+          <div className="ex-page-measure">
+            📏 {t(ui.measuredValue, { value: lenText(s.measure.lengthMm, fr) })}
+            {st & STAGE.weighed && s.measure.massG ? <> · ⚖️ {t(ui.weighedValue, { value: t(s.measure.massText) })}</> : null}
+          </div>
+        ) : null}
+        {s.habitat && t(s.habitat) && (
+          <div className="ex-small-text ex-where">
+            🧭 {t(ui.where)}: {t(s.habitat)}
+          </div>
+        )}
         {seen && s.factAudio && t(s.factAudio) && (
           <button className="ow-btn ow-btn-small" onClick={() => sound.voice([t(s.factAudio)])}>
             🔈 {t(ui.listen)}
@@ -363,7 +455,7 @@ function GuidePage({ api, s }: { api: ExpeditionApi; s: GuideSpecies }) {
         {young ? (
           newest >= 0 && facts[newest] ? (
             <div className="ex-fact on">
-              <div className="ex-fact-stage">{["👀", "📷", "🔍", "⭐"][newest]}</div>
+              <div className="ex-fact-stage">{icon(stages[newest])}</div>
               <p className="ex-fact-easy">{t(facts[newest].easy)}</p>
             </div>
           ) : (
@@ -372,13 +464,14 @@ function GuidePage({ api, s }: { api: ExpeditionApi; s: GuideSpecies }) {
             </div>
           )
         ) : (
-          STAGES.map((b, i) => {
+          stages.map((b, i) => {
             const on = !!(st & b);
             const f = facts[i];
+            const info = STAGE_INFO[b] || ["•", "stageSeen", "lockedSeen"];
             return (
               <div key={b} className={"ex-fact" + (on ? " on" : "")}>
                 <div className="ex-fact-stage">
-                  {["👀", "📷", "🔍", "⭐"][i]} {t(ui[STAGE_KEYS[i][0]])}
+                  {info[0]} {t(ui[info[1]])}
                 </div>
                 {on && f ? (
                   <>
@@ -386,7 +479,7 @@ function GuidePage({ api, s }: { api: ExpeditionApi; s: GuideSpecies }) {
                     <div className="ex-source">{t(ui.source, { source: f.source })}</div>
                   </>
                 ) : (
-                  <p className="ex-locked">🔒 {t(ui[STAGE_KEYS[i][1]])}</p>
+                  <p className="ex-locked">🔒 {t(ui[info[2]])}</p>
                 )}
               </div>
             );

@@ -272,7 +272,7 @@ function Me({ props, game, phrases, layout }: { props: BlockProps; game: Game; p
         len = 1;
       }
       // with the Field Camera up the explorer tiptoes: creatures stay calm
-      const speed = (game.cam.aim ? 2.1 : 4.6) * len;
+      const speed = (game.cam.aim || game.tiptoe ? 2.1 : 4.6) * len;
       let nx = me.x + ix * speed * dt;
       let nz = me.z + iz * speed * dt;
       for (let pass = 0; pass < 2; pass++) {
@@ -372,6 +372,12 @@ function Me({ props, game, phrases, layout }: { props: BlockProps; game: Game; p
       look.current.set(me.x - syaw * 3.2, me.y + 1.5, me.z - cyaw * 3.2);
     } else camera.position.lerp(wantPos.current, 1 - Math.exp(-total * (game.mode !== "play" ? 3 : game.cam.aim || fc ? 7 : 4)));
     camera.lookAt(look.current);
+    // local screenshots only: a fixed camera (never set on the store's domains)
+    const dbg = (game as unknown as { debugCam?: number[] }).debugCam;
+    if (dbg) {
+      camera.position.set(dbg[0], dbg[1], dbg[2]);
+      camera.lookAt(dbg[3], dbg[4], dbg[5]);
+    }
   });
   return (
     <group ref={group}>

@@ -66,8 +66,8 @@ export function walkTo(b: Brain, dt: number, speed: number, turn = 6): boolean {
 const CLIPS: Record<string, string[]> = {
   idle: ["idle", "rest", "breathe"],
   move: ["walk", "move", "swim", "fly", "crawl", "hop", "climb"],
-  feed: ["feed", "eat", "peck", "graze", "drink"],
-  special: ["special", "call", "bask", "flower", "display"],
+  feed: ["feed", "eat", "peck", "graze", "drink", "idle"],
+  special: ["special", "call", "bask", "flower", "display", "idle"],
   flee: ["flee", "run", "fly", "swim", "walk", "hop"],
   hide: ["hide", "idle"],
 };
@@ -134,9 +134,15 @@ export interface CreatureProps {
   paint?: (body: THREE.Object3D, b: Brain, time: number) => void;
   /** Extra objects drawn with it (an anemone, flowers...). */
   children?: React.ReactNode;
+  /** The net can catch it (it hides in the jar until it is let go). */
+  catchable?: boolean;
+  /** Every frame, after the model is ready: material effects (a firefly's glow). */
+  glow?: (body: THREE.Object3D, b: Brain, time: number) => void;
+  /** This model's own clip for a behaviour (the ant's "carry" for move). */
+  clipMap?: Record<string, string>;
 }
 
-export function Creature({ id, species, url, icon, scale, game, brain, think, animate, shy = "run", home, ground, fleeSpeed = 3.2, pitch = 0, paint, children }: CreatureProps) {
+export function Creature({ id, species, url, icon, scale, game, brain, think, animate, shy = "run", home, ground, fleeSpeed = 3.2, pitch = 0, paint, children, catchable, glow, clipMap }: CreatureProps) {
   const body = useRef<THREE.Group>(null);
   const group = useRef<THREE.Group>(null);
   const inner = useRef<THREE.Group>(null);
@@ -154,7 +160,7 @@ export function Creature({ id, species, url, icon, scale, game, brain, think, an
     fx: number;
     fz: number;
   }>({ mixer: null, actions: {}, cur: null, parts: {}, rest: {}, prev: { x: game.me.x, z: game.me.z }, seenAt: 0, shy: 0, hide: 0, fx: 0, fz: 0 });
-  const live = useMemo<LiveCreature>(() => ({ key: id, species, obj: new THREE.Object3D(), cy: 0.3 * scale, radius: 0.45 * scale, behaviour: "idle" }), [id, species, scale]);
+  const live = useMemo<LiveCreature>(() => ({ key: id, species, obj: new THREE.Object3D(), cy: 0.3 * scale, radius: 0.45 * scale, behaviour: "idle", catchable }), [id, species, scale, catchable]);
 
   useEffect(() => {
     if (group.current) live.obj = group.current;
@@ -200,6 +206,16 @@ export function Creature({ id, species, url, icon, scale, game, brain, think, an
     const b = brain;
     const s = st.current;
     const me = game.me;
+    // in the explorer's jar: gone from the world until it is let go (where it was caught)
+    const jar = useExp.getState().jar;
+    const inJar = !!jar && jar.key === id;
+    live.hidden = inJar;
+    if (group.current) group.current.visible = !inJar;
+    if (inJar) {
+      s.prev.x = me.x;
+      s.prev.z = me.z;
+      return;
+    }
     // shyness: the explorer rushing straight at it
     const vx = me.x - s.prev.x;
     const vz = me.z - s.prev.z;
@@ -261,7 +277,7 @@ export function Creature({ id, species, url, icon, scale, game, brain, think, an
     if (s.mixer) {
       const names = CLIPS[b.behaviour] || [b.behaviour];
       let next: THREE.AnimationAction | null = null;
-      for (const n of [b.behaviour].concat(names)) if (s.actions[n]) {
+      for (const n of (clipMap && clipMap[b.behaviour] ? [clipMap[b.behaviour]] : []).concat([b.behaviour], names)) if (s.actions[n]) {
         next = s.actions[n];
         break;
       }
@@ -273,6 +289,7 @@ export function Creature({ id, species, url, icon, scale, game, brain, think, an
       s.mixer.update(dt);
     } else if (animate && Object.keys(s.parts).length) animate(s.parts, s.rest, b, time);
     if (paint && body.current) paint(body.current, b, time);
+    if (glow && body.current) glow(body.current, b, time);
     // seen: close by and on screen
     if (time - s.seenAt > 0.6 && game.mode === "play" && dist < 10) {
       s.seenAt = time;

@@ -1,0 +1,104 @@
+/* The Bug Games panel: a parchment sheet at the bottom, the arena visible above it. */
+.bg-sheet {
+  position: absolute;
+  z-index: 17;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: max(10px, env(safe-area-inset-bottom));
+  width: min(660px, calc(100% - 20px));
+  max-height: 62%;
+  overflow-y: auto;
+  touch-action: pan-y;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  animation: ow-pop 0.25s ease-out;
+}
+.bg-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.bg-title { font-weight: 900; font-size: clamp(19px, 3.2vmin, 26px); }
+.bg-text { margin: 2px 0; font-weight: 700; font-size: clamp(15px, 2.3vmin, 18px); }
+.bg-text.strong { font-weight: 900; text-align: center; }
+.bg-events { display: flex; flex-wrap: wrap; gap: 6px; }
+.bg-ev-chip { background: #fffaf0; border: 2px solid #d9b682; border-radius: 999px; padding: 4px 10px; font-weight: 800; font-size: clamp(13px, 2vmin, 15px); }
+.bg-step { display: flex; align-items: center; justify-content: space-between; font-weight: 800; color: var(--ink-soft); font-size: clamp(13px, 2vmin, 15px); }
+.bg-dots { display: flex; gap: 5px; }
+.bg-dots i { width: 12px; height: 12px; border-radius: 50%; background: #e2cfa6; border: 2px solid #c7a874; }
+.bg-dots i.done { background: #6aa84f; border-color: #3f6d24; }
+.bg-dots i.now { background: #f0962f; border-color: #b5601a; }
+.bg-event { display: flex; gap: 12px; align-items: center; }
+.bg-ev-icon { font-size: clamp(40px, 8vmin, 56px); }
+.bg-ev-name { font-weight: 900; font-size: clamp(20px, 3.3vmin, 26px); line-height: 1.1; }
+.bg-label { font-weight: 900; font-size: clamp(15px, 2.3vmin, 18px); }
+.bg-team { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 8px; }
+.bg-athlete {
+  position: relative;
+  font: inherit;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 6px 4px 8px;
+  min-height: 112px;
+  border-radius: 16px;
+  border: 3px solid #d9b682;
+  background: linear-gradient(180deg, #fffdf6 0%, #f3e7cc 100%);
+  box-shadow: 0 4px 0 #c9a46b;
+  cursor: pointer;
+}
+.bg-athlete:active { transform: translateY(2px); box-shadow: 0 2px 0 #c9a46b; }
+.bg-athlete .ex-pic { width: 70px; height: 70px; }
+.bg-ath-name { font-weight: 900; font-size: clamp(12px, 1.8vmin, 14px); text-align: center; line-height: 1.1; }
+.bg-guest { position: absolute; top: 4px; right: 4px; background: #6a8fd6; color: #fff; font-size: 11px; font-weight: 900; border-radius: 999px; padding: 1px 6px; }
+.bg-picked { display: flex; align-items: center; gap: 8px; }
+.bg-picked .ex-pic { width: 52px; height: 52px; }
+.bg-times { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.bg-time-btn {
+  font: inherit;
+  font-weight: 900;
+  font-size: clamp(13px, 2vmin, 16px);
+  color: #2d1b0c;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  min-height: 84px;
+  padding: 6px;
+  border-radius: 16px;
+  border: 3px solid #b9874c;
+  cursor: pointer;
+  box-shadow: 0 4px 0 #8a5a2b;
+}
+.bg-time-icon { font-size: 30px; }
+.bg-tb-morning { background: linear-gradient(180deg, #e3eeff 0%, #ffe1c9 100%); }
+.bg-tb-noon { background: linear-gradient(180deg, #fff6c8 0%, #ffd27a 100%); }
+.bg-tb-night { background: linear-gradient(180deg, #3a4a8a 0%, #1f2650 100%); color: #f4f1ff; }
+.bg-banner {
+  position: absolute;
+  z-index: 17;
+  left: 50%;
+  transform: translateX(-50%);
+  top: calc(max(10px, env(safe-area-inset-top)) + 46px);
+  padding: 8px 18px;
+  font-weight: 900;
+  font-size: clamp(16px, 2.6vmin, 21px);
+  white-space: nowrap;
+  animation: ow-pop 0.25s ease-out;
+}
+.bg-time { position: absolute; inset: 0; z-index: 8; pointer-events: none; animation: ow-in 0.6s ease-out; }
+.bg-time-morning { background: radial-gradient(circle at 50% 40%, rgba(180, 205, 255, 0.05), rgba(150, 180, 240, 0.32)); }
+.bg-time-noon { background: radial-gradient(circle at 50% 30%, rgba(255, 240, 190, 0.12), rgba(255, 210, 120, 0.12)); }
+.bg-time-night { background: radial-gradient(circle at 50% 50%, rgba(20, 28, 70, 0.22) 0%, rgba(14, 18, 50, 0.6) 45%, rgba(8, 10, 35, 0.85) 100%); }
+.bg-result { display: flex; gap: 12px; align-items: center; }
+.bg-result .ex-pic.big { width: clamp(96px, 20vmin, 140px); height: clamp(96px, 20vmin, 140px); flex: none; }
+.bg-won { font-weight: 900; color: #3f6d24; font-size: clamp(18px, 3vmin, 24px); }
+.bg-score { font-weight: 900; font-size: clamp(17px, 2.8vmin, 22px); line-height: 1.2; }
+.bg-medal { font-size: 72px; text-align: center; animation: bg-swing 1.4s ease-in-out infinite; }
+@keyframes bg-swing { 0%, 100% { transform: rotate(-8deg); } 50% { transform: rotate(8deg); } }
+@media (max-height: 520px) {
+  .bg-sheet { max-height: 72%; width: min(720px, calc(100% - 150px)); left: calc(50% - 60px); }
+  .bg-athlete { min-height: 96px; }
+  .bg-athlete .ex-pic { width: 54px; height: 54px; }
+  .bg-time-btn { min-height: 64px; }
+}

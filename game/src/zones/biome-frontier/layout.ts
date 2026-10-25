@@ -89,6 +89,10 @@ export function regionWeights(x: number, z: number): [number, number, number] {
 export const STATION: Spot = { x: -1.5, z: 3.5, ry: 0.15 };
 export const PIER = { x: 14.2, z: 3.5, top: 0.55, len: 12, hw: 1.2 };
 export const DIG: Spot = { x: 8.5, z: -21, ry: -0.12 };
+/** The dig block (the real dig) stands in front of the fossil face, on the trail's end. */
+export const DIG_BLOCK: Spot = { x: DIG.x + Math.sin(DIG.ry) * 2.5, z: DIG.z + Math.cos(DIG.ry) * 2.5, ry: DIG.ry, s: 1.4 };
+/** Where the explorer stands to dig (in front of the block). */
+export const DIG_STAND = { x: DIG_BLOCK.x + Math.sin(DIG.ry) * 1.9, z: DIG_BLOCK.z + Math.cos(DIG.ry) * 1.9 };
 export const SIGNPOST: Spot = { x: 3.2, z: 9.5, ry: 0.4 };
 
 /** Area boards (icon signs) at the entrance of each area. */
@@ -268,6 +272,7 @@ export function colliders(): Circle[] {
     const sn = Math.sin(DIG.ry);
     for (const k of [-1.6, 0, 1.6]) out.push({ x: DIG.x + k * c, z: DIG.z - k * sn - 0.2, r: 0.85 });
   }
+  out.push({ x: DIG_BLOCK.x, z: DIG_BLOCK.z, r: 0.95 });
   {
     const c = Math.cos(STATION.ry);
     const sn = Math.sin(STATION.ry);

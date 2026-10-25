@@ -5,7 +5,7 @@ import type { BlockProps } from "../block";
 import type { Game } from "../game/state";
 import type { QualityPlan } from "../settings";
 import type { CardState } from "../ui/Cards";
-import { BOULDERS, FOREST, PLAZA_R, STALLS, TELESCOPE, TREE, colliders, stallPoint } from "../game/layout";
+import { ARENA, BOULDERS, FOREST, PLAZA_R, STALLS, TELESCOPE, TREE, colliders, stallPoint } from "../game/layout";
 import { addWind, glowTexture, useModel, useTiles, wind } from "./assets";
 
 // ------------------------------------------------------------------ helpers
@@ -47,6 +47,8 @@ export function pathMask(x: number, z: number): number {
   const r = Math.hypot(x, z);
   d = Math.min(d, Math.abs(r - (PLAZA_R + 0.75)) - 0.55 - Math.max(0, Math.sin(Math.atan2(x, z) * 3) * 0.35));
   d = Math.min(d, Math.hypot(x - TREE.x, z - TREE.z) - 5.2);
+  // the Bug Games arena: a trodden earth field in the west meadow
+  d = Math.min(d, (Math.hypot((x - ARENA.x) / ARENA.rx, (z - ARENA.z) / ARENA.rz) - 1) * Math.min(ARENA.rx, ARENA.rz) + 0.4);
   return Math.max(0, Math.min(1, 0.5 - (d + wob * 0.6) * 0.9));
 }
 

@@ -5,13 +5,16 @@
 // Picture mode for ages 4-6. No timer, no lives.
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useMexty } from "@mexty/sdk";
-import type { ExpeditionProps, T } from "../../block";
+import type { ExpeditionProps, Fossil, T } from "../../block";
+import type { Game } from "../../game/state";
 import { useExp } from "../../game/expedition";
-import { guideScore } from "../../game/quests";
+import { guideScore, guideTotal } from "../../game/quests";
 import { sound } from "../../audio";
 import type { BiomeFrontierProps } from "./types";
 import { KIND } from "./Scene";
-import { useSurvey } from "./store";
+import { DIG_LAYERS, digDone, digOrder, exposedFossil, useSurvey } from "./store";
+import { digStroke } from "./dig";
+import { DIG_BLOCK, DIG_STAND, landHeight } from "./layout";
 import "./activity.css";
 
 type Mexty = ReturnType<typeof useMexty>;
@@ -52,221 +55,210 @@ function Head({ icon, title, props, t, onClose }: { icon: string; title: string;
   );
 }
 
-// ------------------------------------------------------------------ 2. the fossil dig
-/** Drawn fossil pictures (no emoji exists for a trilobite or an ammonite); the prop icon is the fallback. */
-function FossilGlyph({ id, icon, x, y, r }: { id: string; icon: string; x: number; y: number; r: number }) {
-  const ink = "#6b4a2e";
-  const k = r / 10;
-  const T = (d: string) => <path d={d} fill="none" stroke={ink} strokeWidth={1.1 * k} strokeLinecap="round" strokeLinejoin="round" />;
-  if (id === "trilobite")
-    return (
-      <g transform={`translate(${x} ${y}) scale(${k})`}>
-        <ellipse cx="0" cy="0.5" rx="5.2" ry="6.8" fill="#9b8064" stroke={ink} strokeWidth="1" />
-        <path d="M-5 -3.5 Q0 -8.5 5 -3.5" fill="#b49a7c" stroke={ink} strokeWidth="1" />
-        {[-1.5, 0.5, 2.5, 4.5].map((yy) => (
-          <path key={yy} d={`M-4.6 ${yy} Q0 ${yy + 1} 4.6 ${yy}`} fill="none" stroke={ink} strokeWidth="0.8" />
-        ))}
-        <path d="M-1.6 -3 L-1.6 6.5 M1.6 -3 L1.6 6.5" stroke={ink} strokeWidth="0.8" />
-      </g>
-    );
-  if (id === "ammonite") {
-    const pts: string[] = [];
-    for (let i = 0; i <= 60; i++) {
-      const t = (i / 60) * Math.PI * 5;
-      const rr = 0.5 * Math.exp(t * 0.2);
-      pts.push(`${(Math.cos(t) * rr).toFixed(2)} ${(Math.sin(t) * rr).toFixed(2)}`);
-    }
-    return (
-      <g transform={`translate(${x} ${y}) scale(${k})`}>
-        <circle r="7" fill="#e6d2a8" stroke={ink} strokeWidth="1" />
-        <path d={"M" + pts.join(" L")} fill="none" stroke={ink} strokeWidth="1.1" />
-      </g>
-    );
-  }
-  if (id === "fern")
-    return (
-      <g transform={`translate(${x} ${y}) scale(${k})`}>
-        {T("M0 7 L0 -7")}
-        {[-5, -2.5, 0, 2.5, 5].map((yy, i) => (
-          <g key={yy}>
-            {T(`M0 ${yy} Q${-3 - i * 0.2} ${yy - 1.5} ${-4.5 + i * 0.6} ${yy - 3}`)}
-            {T(`M0 ${yy} Q${3 + i * 0.2} ${yy - 1.5} ${4.5 - i * 0.6} ${yy - 3}`)}
-          </g>
-        ))}
-      </g>
-    );
-  if (id === "shark-tooth")
-    return (
-      <g transform={`translate(${x} ${y}) scale(${k})`}>
-        <path d="M-5.5 5 Q0 3.5 5.5 5 L0 -7 Z" fill="#5d6470" stroke="#2f343c" strokeWidth="1" strokeLinejoin="round" />
-        <path d="M-5.5 5 Q0 7.5 5.5 5" fill="#8c7a62" stroke="#2f343c" strokeWidth="0.8" />
-      </g>
-    );
+// ------------------------------------------------------------------ 2. the real dig
+function Pic({ url, icon, cls }: { url: string; icon: string; cls?: string }) {
+  const [bad, setBad] = useState(false);
+  if (url && !bad) return <img className={cls} src={url} alt="" draggable={false} onError={() => setBad(true)} crossOrigin={/mexty\.ai|mext\.app/.test(url) ? "use-credentials" : undefined} />;
   return (
-    <text x={x} y={y + r * 0.4} className="bf-fossil-icon">
+    <span className={cls} aria-hidden>
       {icon}
-    </text>
+    </span>
   );
 }
 
-function FossilIcon({ id, icon }: { id: string; icon: string }) {
+/** The dig's timeline: today at the top, each fossil found placed by its age; the slots fill in as you dig down. */
+function Timeline({ props, t, fossils, found }: { props: BiomeFrontierProps; t: T; fossils: Fossil[]; found: string[] }) {
+  const ui = props.ui;
+  const max = Math.max(1, ...fossils.map((f) => f.ageMyr));
   return (
-    <svg viewBox="-9 -9 18 18" width="26" height="26" aria-hidden style={{ verticalAlign: "middle" }}>
-      <FossilGlyph id={id} icon={icon} x={0} y={0} r={8.5} />
-    </svg>
+    <div className="bf-timeline ow-card" aria-label={t(ui.timeline)}>
+      <div className="bf-tl-title">🕰️ {t(ui.timeline)}</div>
+      <div className="bf-tl-track">
+        <div className="bf-tl-line" aria-hidden />
+        <div className="bf-tl-now">{t(ui.timelineNow)}</div>
+        {fossils.map((f, i) => {
+          const on = found.indexOf(f.id) >= 0;
+          // spread by age (a square root keeps the young ones apart), never overlapping
+          const y = Math.max((i + 1) * 15, 12 + Math.sqrt(f.ageMyr / max) * 82);
+          return (
+            <div key={f.id} className={"bf-tl-item" + (on ? " on" : "")} style={{ top: Math.min(y, 96) + "%", ["--x" as string]: 12 + (i * 76) / Math.max(1, fossils.length - 1) + "%" } as React.CSSProperties}>
+              <span className="bf-tl-dot" aria-hidden />
+              {on ? (
+                <>
+                  <Pic url={f.iconUrl} icon={f.icon} cls="bf-tl-pic" />
+                  <span className="bf-tl-text">
+                    <b>{t(f.name)}</b>
+                    <small>{t(ui.mya, { n: f.ageMyr })}</small>
+                  </span>
+                </>
+              ) : (
+                <span className="bf-tl-text unknown">?</span>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </div>
   );
 }
 
-const LAYER_COLS = ["#5b4a63", "#8a6a3e", "#b5583a", "#e2b06a"];
-const FOSSIL_X = [0.3, 0.68, 0.42, 0.74];
-
-function Dig({ props, t, onDone, onClose }: { props: BiomeFrontierProps; t: T; onDone: () => void; onClose: () => void }) {
+function Dig({ props, exp, t, game, onClose }: { props: BiomeFrontierProps; exp?: ExpeditionProps; t: T; game?: Game; onClose: () => void }) {
   const mexty = useMexty();
   const ui = props.ui;
   const easy = useSurvey((s) => s.easy);
-  const round = useSurvey((s) => s.round);
-  const digAnswer = useSurvey((s) => s.digAnswer);
-  const fossils = useMemo(() => (props.fossils || []).slice().sort((a, b) => a.layer - b.layer), [props.fossils]);
-  const layers = Math.max(1, fossils.length);
-  const already = round.digAnswers >= 2;
-  const [step, setStep] = useState<"oldest" | "order" | "done">(already ? "done" : round.digAnswers === 1 ? "order" : "oldest");
-  const [msg, setMsg] = useState<"" | "oldWrong" | "oldRight" | "orderWrong" | "orderRight">("");
-  const [missA, setMissA] = useState(0);
-  const [missB, setMissB] = useState(0);
-  const [picked, setPicked] = useState<number[]>([]);
-  const [hint, setHint] = useState(false);
-  const tapLayer = (i: number) => {
-    if (step !== "oldest") return;
-    if (i === 0) {
-      answer(mexty, "biome-frontier:dig-oldest", t(ui.digOldest), missA === 0, missA + 1);
-      digAnswer(missA === 0);
-      setMsg("oldRight");
-      setStep("order");
-      sound.sfx("success", 0.7);
-    } else {
-      setMissA((m) => m + 1);
-      setMsg("oldWrong");
-      sound.sfx("pop", 0.5);
+  const dig = useSurvey((s) => s.dig);
+  const setDig = useSurvey((s) => s.setDig);
+  const newDig = useSurvey((s) => s.newDig);
+  const save = useExp((s) => s.save);
+  const fossils = useMemo(() => digOrder(props.fossils || []), [props.fossils]);
+  const hasTools = save.tools.indexOf("trowel") >= 0 && save.tools.indexOf("brush") >= 0;
+  const toolOf = (id: string) => ((exp && exp.tools) || []).find((x) => x.id === id);
+  // the camera comes close to the dig block, the explorer kneels in front of it
+  useEffect(() => {
+    if (!game) return;
+    game.walkTo = null;
+    game.me.x = DIG_STAND.x;
+    game.me.z = DIG_STAND.z;
+    game.me.ry = Math.atan2(DIG_BLOCK.x - DIG_STAND.x, DIG_BLOCK.z - DIG_STAND.z);
+    const s = DIG_BLOCK.s || 1;
+    game.cam.focus = { x: DIG_BLOCK.x, y: landHeight(DIG_BLOCK.x, DIG_BLOCK.z) + 0.75 * s, z: DIG_BLOCK.z, d: 2.2 * s };
+    return () => {
+      game.cam.focus = null;
+    };
+  }, [game]);
+  // the learning record: each fossil found (first try = no trowel on it), the round when all are out
+  const told = useRef<Set<string>>(new Set(dig.found));
+  const finished = useRef(digDone(dig, fossils));
+  useEffect(() => {
+    for (const id of dig.found) {
+      if (told.current.has(id)) continue;
+      told.current.add(id);
+      const f = fossils.find((x) => x.id === id);
+      const slips = dig.slips[id] || 0;
+      if (f) answer(mexty, "biome-frontier:dig:" + id, t(f.name) + " — " + t(f.age), slips === 0, slips + 1);
     }
-  };
-  // the taps so far live in a ref too, so quick double taps never read a stale list
-  const pickedRef = useRef<number[]>([]);
-  const tapFossil = (layer: number) => {
-    const cur = pickedRef.current;
-    if (step !== "order" || cur.indexOf(layer) >= 0) return;
-    const want = cur.length; // oldest first = layer 0, 1, 2 ...
-    if (layer !== want) {
-      setMissB((m) => m + 1);
-      pickedRef.current = [];
-      setPicked([]);
-      setMsg("orderWrong");
-      sound.sfx("pop", 0.5);
-      return;
+    if (!finished.current && digDone(dig, fossils)) {
+      finished.current = true;
+      const score = fossils.filter((f) => !(dig.slips[f.id] || 0)).length;
+      try {
+        mexty.progress.complete(score, fossils.length);
+      } catch {
+        /* outside EdVerse */
+      }
+      useExp.getState().emit({ kind: "dig", id: "fossils", zone: "biome-frontier" });
     }
-    const next = cur.concat(layer);
-    pickedRef.current = next;
-    setPicked(next);
-    sound.sfx("chime", 0.5);
-    if (next.length >= fossils.length) {
-      answer(mexty, "biome-frontier:dig-order", t(ui.digOrder), missB === 0, missB + 1);
-      digAnswer(missB === 0);
-      setMsg("orderRight");
-      setStep("done");
-      sound.sfx("success", 0.8);
-    } else setMsg("");
+  }, [dig, fossils, mexty, t]);
+  // Space: one stroke of the tool in hand (the same as rubbing)
+  useEffect(() => {
+    const k = (e: KeyboardEvent) => {
+      if (e.code !== "Space" || !hasTools) return;
+      e.preventDefault();
+      if (useSurvey.getState().dig.card) setDig({ card: null });
+      else digStroke(fossils, "auto", 0.34);
+    };
+    window.addEventListener("keydown", k);
+    return () => window.removeEventListener("keydown", k);
+  }, [fossils, hasTools, setDig]);
+  const ex = exposedFossil(dig, fossils);
+  const done = digDone(dig, fossils);
+  const card = dig.card ? fossils.find((f) => f.id === dig.card) : null;
+  const hint =
+    dig.msg === "useBrush" ? ui.useBrush : dig.msg === "useTrowel" ? ui.useTrowel : dig.msg === "brushFirst" ? ui.brushFirst : ex ? ui.brushHint : ui.trowelHint;
+  const kind = dig.msg === "useBrush" || dig.msg === "useTrowel" || dig.msg === "brushFirst";
+  const toolBtn = (id: "trowel" | "brush") => {
+    const tl = toolOf(id);
+    return (
+      <button key={id} className={"bf-tool" + (dig.tool === id ? " on" : "")} aria-pressed={dig.tool === id} onClick={() => setDig({ tool: id, msg: "" })}>
+        <Pic url={tl ? tl.iconUrl : ""} icon={id === "trowel" ? "🔨" : "🖌️"} cls="bf-tool-pic" />
+        <span>{t(id === "trowel" ? ui.trowel : ui.brush)}</span>
+      </button>
+    );
   };
-  const H = 100 / layers;
   return (
-    <div className="ow-card bf-panel bf-dig" role="dialog" aria-modal="true">
-      <Head icon="⛏️" title={t(ui.digTitle)} props={props} t={t} onClose={onClose} />
-      <div className="bf-dig-body">
-        <svg viewBox="0 0 100 100" className="bf-strata" role="img" aria-label={t(ui.digIntro)}>
-          {fossils.map((f, k) => {
-            const i = f.layer;
-            const y = 100 - (i + 1) * H;
-            const glow = (hint || missA >= 2) && step === "oldest" && i === 0;
-            return (
-              <g key={f.id}>
-                <rect
-                  x="0"
-                  y={y}
-                  width="100"
-                  height={H}
-                  fill={LAYER_COLS[i % LAYER_COLS.length]}
-                  className={"bf-layer" + (step === "oldest" ? " tap" : "") + (glow ? " glow" : "")}
-                  onPointerDown={() => tapLayer(i)}
-                />
-                <path d={`M0 ${y} Q 25 ${y - 1.5} 50 ${y} T 100 ${y}`} stroke="rgba(0,0,0,0.25)" strokeWidth="0.6" fill="none" />
-                <text x="3" y={y + H / 2 + 2} className="bf-layer-label">
-                  {t(ui.layerLabel, { n: layers - i })}
-                </text>
-                <g
-                  className={"bf-fossil" + (step === "order" ? " tap" : "") + (picked.indexOf(i) >= 0 ? " picked" : "") + (step === "order" && (hint || missB >= 2) && picked.length === i ? " glow" : "")}
-                  onPointerDown={() => tapFossil(i)}
-                >
-                  <circle cx={FOSSIL_X[k % 4] * 100} cy={y + H / 2} r={H * 0.36} fill="rgba(255,244,214,0.92)" />
-                  <FossilGlyph id={f.id} icon={f.icon} x={FOSSIL_X[k % 4] * 100} y={y + H / 2} r={H * 0.27} />
-                  {picked.indexOf(i) >= 0 && (
-                    <text x={FOSSIL_X[k % 4] * 100 + H * 0.38} y={y + H * 0.3} className="bf-order">
-                      {picked.indexOf(i) + 1}
-                    </text>
-                  )}
-                </g>
-              </g>
-            );
-          })}
-        </svg>
-        <div className="bf-dig-side">
-          {step === "oldest" && (
-            <>
-              <p className="bf-q">{t(ui.digIntro)}</p>
-              <p className="bf-q strong">{t(easy ? ui.digOldestEasy : ui.digOldest)}</p>
-            </>
-          )}
-          {step === "order" && <p className="bf-q strong">{t(ui.digOrder)}</p>}
-          {msg === "oldWrong" && <div className="bf-kind">{t(ui.digOldestWrong)}</div>}
-          {msg === "oldRight" && <div className="bf-good small">✅ {t(ui.digOldestRight)}</div>}
-          {msg === "orderWrong" && <div className="bf-kind">{t(ui.digOrderWrong)}</div>}
-          {step === "done" && (
-            <div className="bf-good">
-              <b>🏅 {msg === "orderRight" ? t(ui.digOrderRight) : t(ui.digDone)}</b>
-              <ol className="bf-ages">
-                {fossils.map((f) => (
-                  <li key={f.id}>
-                    <FossilIcon id={f.id} icon={f.icon} /> <b>{t(f.name)}</b> — {t(f.age)}
-                  </li>
-                ))}
-              </ol>
-              <p>{t(easy ? props.layersFactEasy : props.layersFact)}</p>
+    <>
+      <Timeline props={props} t={t} fossils={fossils} found={dig.found} />
+      <div className="ow-card bf-digbar" role="dialog" aria-label={t(ui.digTitle)}>
+        <Head icon="⛏️" title={t(ui.digTitle)} props={props} t={t} onClose={onClose} />
+        {!hasTools ? (
+          <p className="bf-q">{t(ui.digNeedTools)}</p>
+        ) : done && !card ? (
+          <div className="bf-good">
+            <b>🏅 {t(ui.digDone)}</b>
+            <p>{t(ui.deeperOlder)}</p>
+            <p>{t(easy ? props.layersFactEasy : props.layersFact)}</p>
+            <div className="ow-row">
+              <button
+                className="ow-btn ow-btn-small"
+                onClick={() => {
+                  newDig();
+                  sound.sfx("chime", 0.6);
+                }}
+              >
+                🔁 {t(ui.digAgain)}
+              </button>
+              <button className="ow-btn ow-btn-small" onClick={onClose} autoFocus>
+                {t(ui.close)}
+              </button>
             </div>
-          )}
-          <div className="ow-row">
-            {step !== "done" && (missA >= 2 || missB >= 2) && !hint && (
-              <button className="ow-btn ow-btn-small" onClick={() => setHint(true)}>
-                💡 {t(ui.showMe)}
+          </div>
+        ) : (
+          <>
+            <div className="bf-dig-row">
+              <div className="bf-tools" role="group">
+                {toolBtn("trowel")}
+                {toolBtn("brush")}
+              </div>
+              <button className="ow-btn bf-stroke" onClick={() => digStroke(fossils, "auto", 0.34)} aria-label={t(dig.tool === "trowel" ? ui.trowel : ui.brush)}>
+                {dig.tool === "trowel" ? "🔨" : "🖌️"}
               </button>
-            )}
-            {step === "done" && (
-              <button className="ow-btn ow-btn-go" onClick={onDone} autoFocus>
-                {t(ui.next)} ➜
-              </button>
-            )}
+            </div>
+            <div className={kind ? "bf-kind" : "bf-q strong"} aria-live="polite">
+              {dig.msg === "layerGone" && !ex ? t(ui.layerGone, { n: dig.removed }) + " " : ""}
+              {t(hint)}
+            </div>
+            <div className="bf-layers" aria-hidden>
+              {Array.from({ length: DIG_LAYERS }, (_, i) => (
+                <i key={i} className={i < dig.removed ? "gone" : i === dig.removed ? "now" : ""} style={{ ["--p" as string]: i === dig.removed ? dig.scrape : i < dig.removed ? 1 : 0 } as React.CSSProperties} />
+              ))}
+            </div>
+          </>
+        )}
+      </div>
+      {card && (
+        <div className="ow-modal bf-modal" onPointerDown={(e) => e.target === e.currentTarget && setDig({ card: null })}>
+          <div className="ow-card bf-panel bf-fossil-card" role="dialog" aria-modal="true">
+            <div className="bf-fossil-head">
+              <Pic url={card.iconUrl} icon={card.icon} cls="bf-fossil-pic" />
+              <div>
+                <div className="bf-q">✨ {t(ui.fossilFound)}</div>
+                <h2 className="bf-name">{t(card.name)}</h2>
+                <div className="bf-q strong">
+                  {t(card.age)} · {t(card.period)}
+                </div>
+              </div>
+            </div>
+            <p className="bf-about">{t(easy ? card.factEasy : card.fact)}</p>
+            <div className="ex-source">{exp ? t(exp.ui.source, { source: card.source }) : card.source}</div>
+            <button className="ow-btn ow-btn-go" autoFocus onClick={() => setDig({ card: null, msg: "" })}>
+              {t(ui.next)} ➜
+            </button>
           </div>
         </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 }
 
 // ------------------------------------------------------------------ 3. the field station board (dig, Field Guide)
 function Station({ props, exp, t, onClose }: { props: BiomeFrontierProps; exp: ExpeditionProps | undefined; t: T; onClose: () => void }) {
   const ui = props.ui;
-  const round = useSurvey((s) => s.round);
+  const dig = useSurvey((s) => s.dig);
   const newDig = useSurvey((s) => s.newDig);
   const save = useExp((s) => s.save);
   const hasGuide = save.tools.indexOf("guide") >= 0;
-  const dug = round.digAnswers >= 2;
-  const total = ((exp && exp.species) || []).length * 4;
+  const dug = digDone(dig, props.fossils || []);
+  const total = guideTotal(exp && exp.species);
+  const species = exp && exp.species;
   return (
     <div className="ow-card bf-panel" role="dialog" aria-modal="true">
       <Head icon="🏕️" title={t(ui.stationTitle)} props={props} t={t} onClose={onClose} />
@@ -286,7 +278,7 @@ function Station({ props, exp, t, onClose }: { props: BiomeFrontierProps; exp: E
             }}
           >
             <span className="bf-slot-icon">📖</span>
-            <span className="bf-slot-name">{t(exp.ui.guideChip, { n: guideScore(save), total })}</span>
+            <span className="bf-slot-name">{t(exp.ui.guideChip, { n: guideScore(save, species), total })}</span>
           </button>
         )}
       </div>
@@ -329,17 +321,20 @@ function Sign({ props, t, biome, onClose }: { props: BiomeFrontierProps; t: T; b
 }
 
 // ------------------------------------------------------------------ the overlay
-export function Activity({ props, expedition, t, paused, onBusy }: { props: BiomeFrontierProps; expedition?: ExpeditionProps; t: T; paused?: boolean; onBusy?: (busy: boolean) => void }) {
+export function Activity({ props, expedition, t, paused, onBusy, game }: { props: BiomeFrontierProps; expedition?: ExpeditionProps; t: T; paused?: boolean; onBusy?: (busy: boolean) => void; game?: Game }) {
   const mexty = useMexty();
   const view = useSurvey((s) => s.view);
   const open = useSurvey((s) => s.open);
   const close = useSurvey((s) => s.close);
-  const round = useSurvey((s) => s.round);
+  const dig = useSurvey((s) => s.dig);
   const easyChosen = useSurvey((s) => s.easyChosen);
   const setEasy = useSurvey((s) => s.setEasy);
   const save = useExp((s) => s.save);
   const hasGuide = save.tools.indexOf("guide") >= 0;
-  const total = ((expedition && expedition.species) || []).length * 4;
+  const total = guideTotal(expedition && expedition.species);
+  const dug = digDone(dig, props.fossils || []);
+  // local testing hook (never on the store's domains)
+  if (typeof window !== "undefined" && /^(localhost|127\.0\.0\.1)$/.test(window.location.hostname)) (window as unknown as Record<string, unknown>).__owSurvey = useSurvey;
 
   useEffect(() => onBusy && onBusy(!!view), [view, onBusy]);
 
@@ -390,12 +385,12 @@ export function Activity({ props, expedition, t, paused, onBusy }: { props: Biom
         onClick={() => (hasGuide ? useExp.setState({ mode: "guide", page: null }) : open({ kind: "station" }))}
         aria-label={expedition ? t(expedition.ui.guide) : t(props.ui.stationTitle)}
       >
-        {expedition && <span>📖 {t(expedition.ui.guideChip, { n: guideScore(save), total })}</span>}
-        <span className={round.digAnswers >= 2 ? "ok" : ""}>⛏️ {round.digAnswers >= 2 ? "✓" : "…"}</span>
+        {expedition && <span>📖 {t(expedition.ui.guideChip, { n: guideScore(save, expedition.species), total })}</span>}
+        <span className={dug ? "ok" : ""}>⛏️ {dug ? "✓" : "…"}</span>
       </button>
-      {view && !paused && (
+      {view && view.kind === "dig" && !paused && <Dig key={dig.id} props={props} exp={expedition} t={t} game={game} onClose={close} />}
+      {view && view.kind !== "dig" && !paused && (
         <div className="ow-modal bf-modal" onPointerDown={(e) => e.target === e.currentTarget && view.kind === "sign" && close()}>
-          {view.kind === "dig" && <Dig key={round.id} props={props} t={t} onDone={close} onClose={close} />}
           {view.kind === "station" && <Station props={props} exp={expedition} t={t} onClose={close} />}
           {view.kind === "sign" && <Sign props={props} t={t} biome={view.biome} onClose={close} />}
         </div>

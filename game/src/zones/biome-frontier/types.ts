@@ -3,7 +3,6 @@
 // The interfaces live in src/block.tsx (the props schema parser only reads that file).
 export type {
   Biome,
-  Species,
   Fossil,
   BiomeUi,
   BiomeModels,

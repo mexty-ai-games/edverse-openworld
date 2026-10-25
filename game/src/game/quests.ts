@@ -1,6 +1,6 @@
 // The quest engine: data-driven quests (props `quests[]`) run one after another. Pure functions over a
 // small save record (one cloud-save key), so the same rules run in the game and in tests.
-import type { Quest, QuestStep } from "../block";
+import type { GuideSpecies, Quest, QuestStep } from "../block";
 
 /** A photo is a record, never an image: the Field Guide redraws it. */
 export interface PhotoRecord {
@@ -13,7 +13,8 @@ export interface PhotoRecord {
   at: number;
 }
 
-/** Field Guide page progress: stage bits 1 seen · 2 photographed · 4 identified · 8 behaviour observed. */
+/** Field Guide page progress: stage bits 1 seen · 2 photographed · 4 identified · 8 behaviour observed ·
+ *  16 caught and released · 32 measured (tape); 64 = weighed on the scale (shown with the measured stage). */
 export interface GuidePage {
   st: number;
   ph?: PhotoRecord;
@@ -31,16 +32,34 @@ export interface ExpSave {
   tools: string[];
   /** Field Guide pages by species id. */
   g: Record<string, GuidePage>;
-  /** The learning record's complete() was sent. */
+  /** The learning record's complete() was sent (the first expedition, saves from before quests had `report`). */
   reported: boolean;
+  /** Quest ids whose complete() was sent. */
+  rp?: string[];
+  /** Bug Games: rounds played and the best score. */
+  bg?: { n: number; best: number };
 }
 
-export const EMPTY_EXP: ExpSave = { v: 1, started: false, q: 0, s: 0, p: [], tools: [], g: {}, reported: false };
+export const EMPTY_EXP: ExpSave = { v: 1, started: false, q: 0, s: 0, p: [], tools: [], g: {}, reported: false, rp: [], bg: { n: 0, best: 0 } };
 
-export const STAGE = { seen: 1, photo: 2, id: 4, behaviour: 8 } as const;
+export const STAGE = { seen: 1, photo: 2, id: 4, behaviour: 8, released: 16, measured: 32, weighed: 64 } as const;
+/** The first expedition's four stages (a page without its own list). */
 export const STAGES = [STAGE.seen, STAGE.photo, STAGE.id, STAGE.behaviour];
+const ALL_BITS = 127;
 
-export type QuestEventKind = "talk" | "find" | "tool" | "visit" | "photo" | "identify" | "observe";
+/** The stages of one species' page, in order (its facts follow the same order). */
+export function stagesOf(sp: GuideSpecies | undefined): number[] {
+  return sp && sp.stages && sp.stages.length ? sp.stages : STAGES;
+}
+
+/** How many stages the whole Field Guide has (derived from the content). */
+export function guideTotal(species: GuideSpecies[] | undefined): number {
+  let n = 0;
+  for (const s of species || []) n += stagesOf(s).length;
+  return n;
+}
+
+export type QuestEventKind = "talk" | "find" | "tool" | "visit" | "photo" | "identify" | "observe" | "release" | "measure" | "weigh" | "dig" | "games";
 
 export interface QuestEvent {
   kind: QuestEventKind;
@@ -57,8 +76,12 @@ export function cleanSave(x: unknown): ExpSave {
   if (o.g && typeof o.g === "object")
     for (const k of Object.keys(o.g)) {
       const pg = (o.g as Record<string, GuidePage>)[k];
-      if (pg && typeof pg.st === "number") g[k] = { st: pg.st & 15, ph: pg.ph && typeof pg.ph.stars === "number" ? pg.ph : undefined };
+      if (pg && typeof pg.st === "number") g[k] = { st: pg.st & ALL_BITS, ph: pg.ph && typeof pg.ph.stars === "number" ? pg.ph : undefined };
     }
+  const rp = Array.isArray(o.rp) ? o.rp.map(String).slice(0, 30) : [];
+  // a save from the first expedition: its complete() was the "Look closer" quest's
+  if (o.reported && rp.indexOf("look-closer") < 0) rp.push("look-closer");
+  const bg = o.bg && typeof o.bg === "object" ? { n: Math.max(0, Number(o.bg.n) || 0), best: Math.max(0, Number(o.bg.best) || 0) } : { n: 0, best: 0 };
   return {
     v: 1,
     started: !!o.started,
@@ -68,7 +91,17 @@ export function cleanSave(x: unknown): ExpSave {
     tools: Array.isArray(o.tools) ? o.tools.map(String) : [],
     g,
     reported: !!o.reported,
+    rp,
+    bg,
   };
+}
+
+/** A save made before new quests were added: the quest it now stands on gets the tools it starts with. */
+export function startTools(quests: Quest[], s: ExpSave): { save: ExpSave; given: string[] } {
+  const q = currentQuest(quests, s);
+  if (!q || s.s > 0) return { save: s, given: [] };
+  const r = addTools(s.tools, q.giveAtStart);
+  return r.given.length ? { save: { ...s, tools: r.tools }, given: r.given } : { save: s, given: [] };
 }
 
 export function currentQuest(quests: Quest[], s: ExpSave): Quest | null {
@@ -178,9 +211,16 @@ export function applyEvent(quests: Quest[], save: ExpSave, ev: QuestEvent): Outc
 }
 
 /** Field Guide stages filled (the learning record's score). */
-export function guideScore(save: ExpSave): number {
+export function guideScore(save: ExpSave, species?: GuideSpecies[]): number {
   let n = 0;
-  for (const k of Object.keys(save.g)) for (const b of STAGES) if (save.g[k].st & b) n++;
+  if (!species) {
+    for (const k of Object.keys(save.g)) for (const b of STAGES) if (save.g[k].st & b) n++;
+    return n;
+  }
+  for (const sp of species) {
+    const pg = save.g[sp.id];
+    if (pg) for (const b of stagesOf(sp)) if (pg.st & b) n++;
+  }
   return n;
 }
 

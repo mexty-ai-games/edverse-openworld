@@ -1,3 +1,4 @@
+import { useExp } from "../game/expedition";
 import React, { useEffect, useRef, useState } from "react";
 import type { BlockProps, T } from "../block";
 import type { Game, Target } from "../game/state";
@@ -156,7 +157,7 @@ export function Hud({ props, t, game, presence, roomInfo, blocked, onBack, found
         held.add(e.code);
         update();
         e.preventDefault();
-      } else if (e.code === "KeyE" || e.code === "Enter" || e.code === "Space") {
+      } else if (e.code === "KeyE" || e.code === "Enter" || (e.code === "Space" && useExp.getState().mode !== "net")) {
         act();
         e.preventDefault();
       } else if (/^Digit[1-8]$/.test(e.code)) {

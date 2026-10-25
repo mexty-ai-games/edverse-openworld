@@ -56,6 +56,31 @@ Learning by doing, no quizzes. Props `quests[]` (the quest engine, `src/game/que
 - `node dev/export_expedition.mjs` builds `dev/expedition.props.json` (the saved variant's `quests` / `expedition` / `voice`)
   from `src/expedition/content.ts` + `assets/manifest.voice.json` + `assets/manifest.expedition.json`, and refreshes `dev/props.local.json`.
 
+## Phase 2: catch, measure, dig, the Bug Games
+
+Four more quests after "Look closer" (props `quests[]`, content in `src/expedition/phase2.ts` and `src/expedition/bugGames.ts`):
+
+- **Catch and release** (net + jar, `ui/Catch.tsx`, `scene/HeldNet.tsx`): walk slowly up to an insect (a ring turns green when the
+  net reaches it) and sweep the net along its arc (drag, or hold Space). Too fast: "try again, slowly" — no fail state. In the jar the
+  explorer counts legs and body parts (insect or not: the garden snail is a mollusc), then lets it go within 4 m of where it was
+  caught. The jar is never saved (leaving the zone sends it home). Field Guide stage 16 = caught and released.
+- **Measure it** (tape + scale): the jar's picture lies along a real-size ruler; drag the tape from tail to head and the reading
+  snaps to the real length (±12 %). The pan balance (a small 3D bench) is levelled with 5 g / 1 g / 0.1 g weights (honeybee 0.1 g,
+  locust 2 g, snail 10 g). Stage 32 = measured (bit 64 = weighed). The guide's "Compare sizes" page sorts the measured creatures.
+- **A real dig** (trowel + brush, Biome Frontier `zones/biome-frontier/DigBlock.tsx`, `dig.ts`): rub the trowel over the dig block to
+  scrape its 4 layers away, rub the brush over each fossil to clean it; a fossil must be brushed out before digging deeper, so the
+  order found is the timeline (shark tooth 15 Myr, dinosaur bone 70, ammonite 150, fern 300, trilobite 500).
+- **The Bug Games** (`scene/BugGames3D.tsx`, `ui/BugGames.tsx`, west meadow of the Idea Grove): six events of real talents (long jump —
+  flea, weight pull — dung beetle, sprint — tiger beetle, hide and seek — stick insect, glow show — firefly, direction dance —
+  honeybee). Pick the athlete from the creatures you have found and the time of day; the scoreboard writes the result in chalk and the
+  podium's leaf medal swings at the end. Every pick -> `progress.answer`, the round -> `complete(first-try events, events played)`.
+- Insects live where they really do (`scene/Insects.tsx`): honeybee on lavender and monarch caterpillar on milkweed in the grove's
+  south-east meadow; dung beetle, locust and tiger beetle on the canyon's sand; leafcutter ant on the rainforest trail, snail by the
+  pool, firefly in deep shade (its lantern flashes every 5.5 s), camouflaged stick insect at the forest's edge. The cat flea is only a
+  guest jumper in the Bug Games (never on a person).
+- The save (`expedition` key) gains `rp` (quests whose complete() was sent) and `bg` (Bug Games rounds, best); old saves migrate:
+  a finished first expedition stands on "Catch and release" and gets its tools with the keeper's introduction.
+
 ## Props drive everything
 
 Every learner-facing word (`ui`, all `{ en, fr }`), the lanterns, districts, constellations,

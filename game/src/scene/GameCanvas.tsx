@@ -3,7 +3,7 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { EffectComposer, Bloom, Vignette, ToneMapping } from "@react-three/postprocessing";
 import { ToneMappingMode } from "postprocessing";
 import * as THREE from "three";
-import type { BlockProps } from "../block";
+import type { BlockProps, T } from "../block";
 import type { Game, Peer } from "../game/state";
 import { qualityPlan, Settings, TOUCH } from "../settings";
 import { World } from "./World";
@@ -15,6 +15,9 @@ import type { ZoneModule } from "../zones/registry";
 import { wind } from "./assets";
 import { GroveExpedition } from "./Expedition3D";
 import { defaultExpedition } from "../expedition/content";
+import { HeldNet } from "./HeldNet";
+import { BugGamesArena } from "./BugGames3D";
+import { defaultBugGames } from "../expedition/bugGames";
 
 /** Keeps the picture smooth on slower phones: when the frame rate stays low, fewer pixels are drawn. */
 function AdaptiveDpr({ active, min, dpr, onChange }: { active: boolean; min: number; dpr: number; onChange: (d: number) => void }) {
@@ -78,7 +81,7 @@ export interface ActiveZone {
 
 export const GROVE_ZONE: ActiveZone = { id: "idea-grove", mod: null, props: null, layout: GROVE_LAYOUT };
 
-export function GameCanvas({ props, game, settings, paused, zone, onZoneReady, onZoneError, onOpen, onDistrictOpen, onExit, onPeerTap }: {
+export function GameCanvas({ props, game, settings, paused, zone, onZoneReady, onZoneError, onOpen, onDistrictOpen, onExit, onPeerTap, t }: {
   props: BlockProps;
   game: Game;
   settings: Settings;
@@ -92,6 +95,7 @@ export function GameCanvas({ props, game, settings, paused, zone, onZoneReady, o
   onDistrictOpen: (o: { kind: string; ref?: string }) => void;
   onExit: () => void;
   onPeerTap: (p: Peer) => void;
+  t: T;
 }) {
   const plan = qualityPlan(settings.quality);
   const [dpr, setDpr] = useState(plan.dpr);
@@ -124,6 +128,9 @@ export function GameCanvas({ props, game, settings, paused, zone, onZoneReady, o
             <Suspense fallback={null}>
               <GroveExpedition props={props} exp={props.expedition || defaultExpedition} game={game} />
             </Suspense>
+            <Suspense fallback={null}>
+              <BugGamesArena games={props.bugGames || defaultBugGames} exp={props.expedition || defaultExpedition} game={game} t={t} />
+            </Suspense>
             <Loaded onLoaded={onZoneReady} />
           </Suspense>
         ) : (
@@ -135,6 +142,7 @@ export function GameCanvas({ props, game, settings, paused, zone, onZoneReady, o
           </ZoneGuard>
         )}
         <Players props={props} game={game} layout={zone.layout} onPeerTap={onPeerTap} />
+        <HeldNet url={((props.expedition || defaultExpedition).tools.find((x) => x.id === "net") || { modelUrl: "" }).modelUrl} game={game} />
       </Suspense>
       <AdaptiveDpr active={plan.adaptive && !paused} min={plan.minDpr} dpr={dpr} onChange={setDpr} />
       {post && (

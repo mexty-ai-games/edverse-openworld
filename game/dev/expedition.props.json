@@ -124,6 +124,7 @@
     "lens"
    ],
    "reward": [],
+   "report": true,
    "steps": [
     {
      "id": "identify-two",
@@ -137,6 +138,137 @@
       "fr": "Observe 2 créatures à la loupe {n}/{count}"
      },
      "line": "lensStep"
+    }
+   ]
+  },
+  {
+   "id": "catch-release",
+   "icon": "🦗",
+   "title": {
+    "en": "Catch and release",
+    "fr": "Attraper et relâcher"
+   },
+   "intro": "catch",
+   "done": "catchDone",
+   "giveAtStart": [
+    "net",
+    "jar"
+   ],
+   "reward": [],
+   "steps": [
+    {
+     "id": "release-two",
+     "kind": "release",
+     "target": "any",
+     "count": 2,
+     "zone": "",
+     "icon": "🫙",
+     "text": {
+      "en": "Catch, look at and release 2 different creatures {n}/{count}",
+      "fr": "Attrape, observe et relâche 2 créatures différentes {n}/{count}"
+     },
+     "line": "catchStep"
+    }
+   ]
+  },
+  {
+   "id": "measure-it",
+   "icon": "📏",
+   "title": {
+    "en": "Measure it",
+    "fr": "Mesure-la"
+   },
+   "intro": "measure",
+   "done": "measureDone",
+   "giveAtStart": [
+    "tape",
+    "scale"
+   ],
+   "reward": [],
+   "steps": [
+    {
+     "id": "measure-two",
+     "kind": "measure",
+     "target": "any",
+     "count": 2,
+     "zone": "",
+     "icon": "📏",
+     "text": {
+      "en": "Measure 2 different creatures with the tape {n}/{count}",
+      "fr": "Mesure 2 créatures différentes avec le mètre {n}/{count}"
+     },
+     "line": "measureStep"
+    },
+    {
+     "id": "weigh-one",
+     "kind": "weigh",
+     "target": "any",
+     "count": 1,
+     "zone": "",
+     "icon": "⚖️",
+     "text": {
+      "en": "Weigh a creature on the scale",
+      "fr": "Pèse une créature sur la balance"
+     },
+     "line": "weighStep"
+    }
+   ]
+  },
+  {
+   "id": "real-dig",
+   "icon": "⛏️",
+   "title": {
+    "en": "A real dig",
+    "fr": "Une vraie fouille"
+   },
+   "intro": "dig",
+   "done": "digDone",
+   "giveAtStart": [
+    "trowel",
+    "brush"
+   ],
+   "reward": [],
+   "steps": [
+    {
+     "id": "dig-block",
+     "kind": "dig",
+     "target": "fossils",
+     "count": 1,
+     "zone": "biome-frontier",
+     "icon": "⛏️",
+     "text": {
+      "en": "Dig up the 5 fossils in the Biome Frontier canyon",
+      "fr": "Déterre les 5 fossiles dans le canyon de la Frontière des biomes"
+     },
+     "line": "digStep"
+    }
+   ]
+  },
+  {
+   "id": "bug-games",
+   "icon": "🏅",
+   "title": {
+    "en": "The Bug Games",
+    "fr": "Les Jeux des insectes"
+   },
+   "intro": "games",
+   "done": "allDone2",
+   "giveAtStart": [],
+   "reward": [],
+   "report": true,
+   "steps": [
+    {
+     "id": "games-round",
+     "kind": "games",
+     "target": "any",
+     "count": 1,
+     "zone": "idea-grove",
+     "icon": "🏅",
+     "text": {
+      "en": "Play a round of the Bug Games (west of the Idea Tree)",
+      "fr": "Joue une manche des Jeux des insectes (à l'ouest de l'Arbre à idées)"
+     },
+     "line": "gamesStep"
     }
    ]
   }
@@ -374,6 +506,198 @@
    "stationIntro": {
     "en": "Find and photograph the creatures of the rainforest, the canyon and the coast, and dig for fossils in the canyon.",
     "fr": "Trouve et photographie les créatures de la forêt, du canyon et de la côte, et fouille les fossiles dans le canyon."
+   },
+   "net": {
+    "en": "Butterfly net",
+    "fr": "Filet à papillons"
+   },
+   "netHint": {
+    "en": "Walk slowly up to an insect. When the ring turns green, sweep the net.",
+    "fr": "Approche-toi doucement d'un insecte. Quand le cercle devient vert, balaie avec le filet."
+   },
+   "sweep": {
+    "en": "Sweep",
+    "fr": "Balayer"
+   },
+   "sweepHint": {
+    "en": "Drag the net gently from one side to the other.",
+    "fr": "Fais glisser le filet doucement d'un côté à l'autre."
+   },
+   "sweepKeys": {
+    "en": "Or hold Space, then let go.",
+    "fr": "Ou maintiens Espace, puis relâche."
+   },
+   "sweepFast": {
+    "en": "Too fast! It flew off. Try again, slowly and gently.",
+    "fr": "Trop vite ! Il s'est envolé. Recommence, doucement."
+   },
+   "sweepMiss": {
+    "en": "Almost! Sweep all the way across, slowly.",
+    "fr": "Presque ! Balaie jusqu'au bout, doucement."
+   },
+   "sweepNone": {
+    "en": "No insect close enough. Walk slowly up to one.",
+    "fr": "Aucun insecte assez près. Approche-toi doucement d'un insecte."
+   },
+   "caught": {
+    "en": "Caught gently! Look at it in the jar.",
+    "fr": "Attrapé en douceur ! Observe-le dans le bocal."
+   },
+   "jarFull": {
+    "en": "Let the creature in your jar go home first.",
+    "fr": "Relâche d'abord la créature de ton bocal."
+   },
+   "jar": {
+    "en": "Bug jar",
+    "fr": "Bocal à insectes"
+   },
+   "jarLook": {
+    "en": "Look closely",
+    "fr": "Regarde de près"
+   },
+   "jarCount": {
+    "en": "Count what you see, then check.",
+    "fr": "Compte ce que tu vois, puis vérifie."
+   },
+   "isInsect": {
+    "en": "6 legs and 3 body parts: it is an insect!",
+    "fr": "6 pattes et 3 parties du corps : c'est un insecte !"
+   },
+   "notInsect": {
+    "en": "No legs and a shell: it is not an insect. It is {group}.",
+    "fr": "Pas de pattes et une coquille : ce n'est pas un insecte. C'est {group}."
+   },
+   "release": {
+    "en": "Let it go",
+    "fr": "Relâcher"
+   },
+   "releaseHere": {
+    "en": "Let it go right here, where you found it.",
+    "fr": "Relâche-le ici, là où tu l'as trouvé."
+   },
+   "releaseFar": {
+    "en": "This is not its home. Carry it back to where you found it ({m} m).",
+    "fr": "Ce n'est pas chez lui. Ramène-le là où tu l'as trouvé ({m} m)."
+   },
+   "released": {
+    "en": "Back home, safe and sound!",
+    "fr": "De retour chez lui, sain et sauf !"
+   },
+   "releaseFirst": {
+    "en": "Look at it closely first, then let it go.",
+    "fr": "Observe-le d'abord de près, puis relâche-le."
+   },
+   "wentHome": {
+    "en": "The {name} crawled out of the jar and went home. Next time, let it go where you found it!",
+    "fr": "{name} est sorti du bocal et est rentré chez lui. La prochaine fois, relâche-le là où tu l'as trouvé !"
+   },
+   "lookFirst": {
+    "en": "Look closely first",
+    "fr": "Observe d'abord"
+   },
+   "measureTitle": {
+    "en": "Measure it",
+    "fr": "Mesure-le"
+   },
+   "measureHint": {
+    "en": "Drag the end of the tape to the other end of {what}.",
+    "fr": "Tire le bout du ruban jusqu'à l'autre bout de {what}."
+   },
+   "measureShort": {
+    "en": "A bit further: reach the very end.",
+    "fr": "Un peu plus loin : va jusqu'au bout."
+   },
+   "measureLong": {
+    "en": "Too far! Stop at the end of {what}.",
+    "fr": "Trop loin ! Arrête-toi au bout de {what}."
+   },
+   "measureRight": {
+    "en": "Measured: {value}!",
+    "fr": "Mesuré : {value} !"
+   },
+   "magnified": {
+    "en": "Picture magnified ×{n}: the tape shows real size",
+    "fr": "Image agrandie ×{n} : le ruban montre la vraie taille"
+   },
+   "weighTitle": {
+    "en": "Weigh it",
+    "fr": "Pèse-le"
+   },
+   "weighHint": {
+    "en": "Add weights to the other pan until the beam is level.",
+    "fr": "Ajoute des poids sur l'autre plateau jusqu'à ce que le fléau soit droit."
+   },
+   "weighHeavy": {
+    "en": "The weights are heavier: the beam tips their way. Take one off.",
+    "fr": "Les poids sont plus lourds : le fléau penche de leur côté. Enlèves-en un."
+   },
+   "weighLight": {
+    "en": "The creature is heavier: add more weight.",
+    "fr": "La créature est plus lourde : ajoute du poids."
+   },
+   "weighRight": {
+    "en": "Level! It weighs {value}.",
+    "fr": "Droit ! Elle pèse {value}."
+   },
+   "weighNone": {
+    "en": "This one is too light for our scale. Weigh a snail or a locust!",
+    "fr": "Celle-ci est trop légère pour notre balance. Pèse un escargot ou un criquet !"
+   },
+   "weighClear": {
+    "en": "Take the weights off",
+    "fr": "Enlever les poids"
+   },
+   "needTape": {
+    "en": "Catch a creature first: you measure it in the jar.",
+    "fr": "Attrape d'abord une créature : on la mesure dans le bocal."
+   },
+   "stageReleased": {
+    "en": "Caught and released",
+    "fr": "Attrapé et relâché"
+   },
+   "stageMeasured": {
+    "en": "Measured",
+    "fr": "Mesuré"
+   },
+   "lockedReleased": {
+    "en": "Catch it gently, look at it in the jar, then let it go where you found it.",
+    "fr": "Attrape-le doucement, observe-le dans le bocal, puis relâche-le là où tu l'as trouvé."
+   },
+   "lockedMeasured": {
+    "en": "Measure it with the tape while it is in the jar.",
+    "fr": "Mesure-le avec le mètre pendant qu'il est dans le bocal."
+   },
+   "where": {
+    "en": "Where to look",
+    "fr": "Où chercher"
+   },
+   "sizes": {
+    "en": "Compare sizes",
+    "fr": "Comparer les tailles"
+   },
+   "sizesHint": {
+    "en": "Real lengths of the creatures you measured, smallest first.",
+    "fr": "Vraies longueurs des créatures que tu as mesurées, de la plus petite à la plus grande."
+   },
+   "weights": {
+    "en": "Weights",
+    "fr": "Poids"
+   },
+   "measuredValue": {
+    "en": "Length: {value}",
+    "fr": "Longueur : {value}"
+   },
+   "weighedValue": {
+    "en": "Weight: {value}",
+    "fr": "Poids : {value}"
+   },
+   "guideAnimals": {
+    "en": "Animals and plants",
+    "fr": "Animaux et plantes"
+   },
+   "guideInsects": {
+    "en": "Insects and small creatures",
+    "fr": "Insectes et petites bêtes"
    }
   },
   "keeper": {
@@ -552,6 +876,174 @@
       "en": "https://future-api.mexty.ai/api/files/p/6addf56eca61b98af27f9ddd",
       "fr": "https://future-api.mexty.ai/api/files/p/6addf56eca61b98af27f9de8"
      }
+    },
+    {
+     "id": "catch1",
+     "anim": "wave",
+     "text": {
+      "en": "Now let's meet the insects! Here are a net and a jar.",
+      "fr": "Partons à la rencontre des insectes ! Voici un filet et un bocal."
+     },
+     "audio": {
+      "en": "https://future-api.mexty.ai/api/files/p/6ade13cfca61b98af27fbf96",
+      "fr": "https://future-api.mexty.ai/api/files/p/6ade13d0ca61b98af27fbfa1"
+     }
+    },
+    {
+     "id": "catch2",
+     "anim": "point",
+     "text": {
+      "en": "Sweep the net gently, look at your catch in the jar, then let it go right where you found it.",
+      "fr": "Balaie doucement avec le filet, observe ta prise dans le bocal, puis relâche-la là où tu l'as trouvée."
+     },
+     "audio": {
+      "en": "https://future-api.mexty.ai/api/files/p/6ade13d0ca61b98af27fbfac",
+      "fr": "https://future-api.mexty.ai/api/files/p/6ade13d1ca61b98af27fbfb7"
+     }
+    },
+    {
+     "id": "catchStep",
+     "anim": "talk",
+     "text": {
+      "en": "Catch two different creatures, look at them closely, and let them go where you found them.",
+      "fr": "Attrape deux créatures différentes, observe-les de près, et relâche-les là où tu les as trouvées."
+     },
+     "audio": {
+      "en": "https://future-api.mexty.ai/api/files/p/6ade13d2ca61b98af27fbfc2",
+      "fr": "https://future-api.mexty.ai/api/files/p/6ade13d3ca61b98af27fbfcd"
+     }
+    },
+    {
+     "id": "catchDone",
+     "anim": "wave",
+     "text": {
+      "en": "Well done! A good explorer always lets creatures go home.",
+      "fr": "Bravo ! Un bon explorateur laisse toujours les créatures rentrer chez elles."
+     },
+     "audio": {
+      "en": "https://future-api.mexty.ai/api/files/p/6ade13d4ca61b98af27fbfd8",
+      "fr": "https://future-api.mexty.ai/api/files/p/6ade13dfca61b98af27fbfe3"
+     }
+    },
+    {
+     "id": "measure1",
+     "anim": "talk",
+     "text": {
+      "en": "Scientists measure things. Here are a tape measure and a scale.",
+      "fr": "Les scientifiques mesurent les choses. Voici un mètre ruban et une balance."
+     },
+     "audio": {
+      "en": "https://future-api.mexty.ai/api/files/p/6ade13dfca61b98af27fbfee",
+      "fr": "https://future-api.mexty.ai/api/files/p/6ade13e0ca61b98af27fbff9"
+     }
+    },
+    {
+     "id": "measureStep",
+     "anim": "talk",
+     "text": {
+      "en": "Catch a creature, then measure it with the tape, head to tail. Measure two different ones.",
+      "fr": "Attrape une créature, puis mesure-la avec le mètre, de la tête à la queue. Mesures-en deux différentes."
+     },
+     "audio": {
+      "en": "https://future-api.mexty.ai/api/files/p/6ade13e1ca61b98af27fc004",
+      "fr": "https://future-api.mexty.ai/api/files/p/6ade13e1ca61b98af27fc00f"
+     }
+    },
+    {
+     "id": "weighStep",
+     "anim": "talk",
+     "text": {
+      "en": "Now weigh a creature: put weights on the scale until it is level.",
+      "fr": "Maintenant, pèse une créature : mets des poids sur la balance jusqu'à ce qu'elle soit droite."
+     },
+     "audio": {
+      "en": "https://future-api.mexty.ai/api/files/p/6ade13e2ca61b98af27fc01a",
+      "fr": "https://future-api.mexty.ai/api/files/p/6ade13e3ca61b98af27fc025"
+     }
+    },
+    {
+     "id": "measureDone",
+     "anim": "wave",
+     "text": {
+      "en": "Real numbers! Compare the sizes in your Field Guide.",
+      "fr": "De vrais nombres ! Compare les tailles dans ton Guide de terrain."
+     },
+     "audio": {
+      "en": "https://future-api.mexty.ai/api/files/p/6ade13eeca61b98af27fc031",
+      "fr": "https://future-api.mexty.ai/api/files/p/6ade13efca61b98af27fc03c"
+     }
+    },
+    {
+     "id": "dig1",
+     "anim": "point",
+     "text": {
+      "en": "In the Biome Frontier canyon, there is a dig. Take this trowel and this soft brush.",
+      "fr": "Dans le canyon de la Frontière des biomes, il y a une fouille. Prends cette truelle et cette brosse douce."
+     },
+     "audio": {
+      "en": "https://future-api.mexty.ai/api/files/p/6ade13efca61b98af27fc047",
+      "fr": "https://future-api.mexty.ai/api/files/p/6ade13f0ca61b98af27fc052"
+     }
+    },
+    {
+     "id": "digStep",
+     "anim": "talk",
+     "text": {
+      "en": "Dig away the layers with the trowel, then brush each fossil clean.",
+      "fr": "Retire les couches avec la truelle, puis nettoie chaque fossile avec la brosse."
+     },
+     "audio": {
+      "en": "https://future-api.mexty.ai/api/files/p/6ade13f1ca61b98af27fc05d",
+      "fr": "https://future-api.mexty.ai/api/files/p/6ade13f2ca61b98af27fc068"
+     }
+    },
+    {
+     "id": "digDone",
+     "anim": "wave",
+     "text": {
+      "en": "The deeper you dug, the older the fossils. You read the timeline of the Earth!",
+      "fr": "Plus tu creusais, plus les fossiles étaient anciens. Tu as lu la frise du temps de la Terre !"
+     },
+     "audio": {
+      "en": "https://future-api.mexty.ai/api/files/p/6ade13f2ca61b98af27fc073",
+      "fr": "https://future-api.mexty.ai/api/files/p/6ade13fdca61b98af27fc07e"
+     }
+    },
+    {
+     "id": "games1",
+     "anim": "wave",
+     "text": {
+      "en": "The Bug Games are on! The arena is in the meadow, west of the Idea Tree.",
+      "fr": "Les Jeux des insectes commencent ! L'arène est dans la prairie, à l'ouest de l'Arbre à idées."
+     },
+     "audio": {
+      "en": "https://future-api.mexty.ai/api/files/p/6ade13fdca61b98af27fc089",
+      "fr": "https://future-api.mexty.ai/api/files/p/6ade13feca61b98af27fc094"
+     }
+    },
+    {
+     "id": "gamesStep",
+     "anim": "point",
+     "text": {
+      "en": "Pick the right athlete for each event, and the right time of day.",
+      "fr": "Choisis le bon athlète pour chaque épreuve, et le bon moment de la journée."
+     },
+     "audio": {
+      "en": "https://future-api.mexty.ai/api/files/p/6ade13ffca61b98af27fc09f",
+      "fr": "https://future-api.mexty.ai/api/files/p/6ade13ffca61b98af27fc0aa"
+     }
+    },
+    {
+     "id": "allDone2",
+     "anim": "wave",
+     "text": {
+      "en": "What a champion team! Keep exploring and keep filling your Field Guide.",
+      "fr": "Quelle équipe de champions ! Continue d'explorer et de remplir ton Guide de terrain."
+     },
+     "audio": {
+      "en": "https://future-api.mexty.ai/api/files/p/6ade1400ca61b98af27fc0b5",
+      "fr": "https://future-api.mexty.ai/api/files/p/6ade1401ca61b98af27fc0c0"
+     }
     }
    ],
    "dialogues": [
@@ -599,6 +1091,58 @@
      "lines": [
       "allDone"
      ]
+    },
+    {
+     "id": "catch",
+     "lines": [
+      "catch1",
+      "catch2"
+     ]
+    },
+    {
+     "id": "catchDone",
+     "lines": [
+      "catchDone"
+     ]
+    },
+    {
+     "id": "measure",
+     "lines": [
+      "measure1",
+      "measureStep"
+     ]
+    },
+    {
+     "id": "measureDone",
+     "lines": [
+      "measureDone"
+     ]
+    },
+    {
+     "id": "dig",
+     "lines": [
+      "dig1",
+      "digStep"
+     ]
+    },
+    {
+     "id": "digDone",
+     "lines": [
+      "digDone"
+     ]
+    },
+    {
+     "id": "games",
+     "lines": [
+      "games1",
+      "gamesStep"
+     ]
+    },
+    {
+     "id": "allDone2",
+     "lines": [
+      "allDone2"
+     ]
     }
    ]
   },
@@ -643,6 +1187,90 @@
     "about": {
      "en": "Look closely and count legs, wings and arms to find out what a creature is.",
      "fr": "Regarde de près et compte les pattes, les ailes et les bras pour savoir ce qu'est une créature."
+    }
+   },
+   {
+    "id": "net",
+    "icon": "🥅",
+    "iconUrl": "https://future-api.mexty.ai/api/files/p/6addfc8bca61b98af27fabe8",
+    "modelUrl": "https://future-api.mexty.ai/api/files/p/6addfa73ca61b98af27fa61d",
+    "name": {
+     "en": "Butterfly net",
+     "fr": "Filet à papillons"
+    },
+    "about": {
+     "en": "Sweep it gently over an insect to catch it without hurting it.",
+     "fr": "Balaie-le doucement au-dessus d'un insecte pour l'attraper sans lui faire mal."
+    }
+   },
+   {
+    "id": "jar",
+    "icon": "🫙",
+    "iconUrl": "https://future-api.mexty.ai/api/files/p/6addfc89ca61b98af27fabd0",
+    "modelUrl": "https://future-api.mexty.ai/api/files/p/6addfab2ca61b98af27fa6cd",
+    "name": {
+     "en": "Bug jar",
+     "fr": "Bocal à insectes"
+    },
+    "about": {
+     "en": "A jar with air holes, to look at a creature for a moment before letting it go.",
+     "fr": "Un bocal percé de trous d'air, pour observer une créature un moment avant de la relâcher."
+    }
+   },
+   {
+    "id": "tape",
+    "icon": "📏",
+    "iconUrl": "https://future-api.mexty.ai/api/files/p/6addfd89ca61b98af27fb09f",
+    "modelUrl": "https://future-api.mexty.ai/api/files/p/6addfab4ca61b98af27fa6e5",
+    "name": {
+     "en": "Tape measure",
+     "fr": "Mètre ruban"
+    },
+    "about": {
+     "en": "Pull the tape from the tail to the head to measure a creature's real length.",
+     "fr": "Tire le ruban de la queue à la tête pour mesurer la vraie longueur d'une créature."
+    }
+   },
+   {
+    "id": "scale",
+    "icon": "⚖️",
+    "iconUrl": "https://future-api.mexty.ai/api/files/p/6addfd6cca61b98af27fb032",
+    "modelUrl": "https://future-api.mexty.ai/api/files/p/6addfab5ca61b98af27fa6f1",
+    "name": {
+     "en": "Pan balance",
+     "fr": "Balance à plateaux"
+    },
+    "about": {
+     "en": "Add weights until the beam is level: then both pans weigh the same.",
+     "fr": "Ajoute des poids jusqu'à ce que le fléau soit droit : les deux plateaux pèsent alors pareil."
+    }
+   },
+   {
+    "id": "trowel",
+    "icon": "🔨",
+    "iconUrl": "https://future-api.mexty.ai/api/files/p/6addfd8aca61b98af27fb0ad",
+    "modelUrl": "https://future-api.mexty.ai/api/files/p/6addfab7ca61b98af27fa71f",
+    "name": {
+     "en": "Trowel",
+     "fr": "Truelle"
+    },
+    "about": {
+     "en": "Scrape away one layer of soil or rock at a time.",
+     "fr": "Gratte une couche de terre ou de roche à la fois."
+    }
+   },
+   {
+    "id": "brush",
+    "icon": "🖌️",
+    "iconUrl": "https://future-api.mexty.ai/api/files/p/6addfc88ca61b98af27fabc4",
+    "modelUrl": "https://future-api.mexty.ai/api/files/p/6addfab6ca61b98af27fa6fd",
+    "name": {
+     "en": "Soft brush",
+     "fr": "Brosse douce"
+    },
+    "about": {
+     "en": "Brush the dust off a fossil gently, so it does not break.",
+     "fr": "Enlève doucement la poussière d'un fossile, pour qu'il ne se casse pas."
     }
    }
   ],
@@ -785,6 +1413,34 @@
     "tip": {
      "en": "Look at the top of its head.",
      "fr": "Regarde le haut de sa tête."
+    }
+   },
+   {
+    "id": "bodyParts",
+    "kind": "count",
+    "icon": "🧩",
+    "max": 5,
+    "question": {
+     "en": "How many body parts (sections)?",
+     "fr": "Combien de parties du corps ?"
+    },
+    "tip": {
+     "en": "Look for the head, then the middle part where the legs are, then the back part.",
+     "fr": "Cherche la tête, puis la partie du milieu où sont les pattes, puis la partie arrière."
+    }
+   },
+   {
+    "id": "trueLegs",
+    "kind": "count",
+    "icon": "🦵",
+    "max": 20,
+    "question": {
+     "en": "How many pointy true legs near its head?",
+     "fr": "Combien de vraies pattes pointues près de sa tête ?"
+    },
+    "tip": {
+     "en": "Only count the pointy legs near the head. The soft stubby ones further back are not true legs.",
+     "fr": "Compte seulement les pattes pointues près de la tête. Les petites pattes molles plus loin ne sont pas de vraies pattes."
     }
    }
   ],
@@ -1808,10 +2464,1268 @@
      "en": "https://future-api.mexty.ai/api/files/p/6addf58dca61b98af27f9ee6",
      "fr": "https://future-api.mexty.ai/api/files/p/6addf58eca61b98af27f9ef1"
     }
+   },
+   {
+    "id": "honeybee",
+    "biome": "meadow",
+    "icon": "🐝",
+    "name": {
+     "en": "Honeybee",
+     "fr": "Abeille domestique"
+    },
+    "group": {
+     "en": "an insect",
+     "fr": "un insecte"
+    },
+    "feed": {
+     "en": "drinking nectar",
+     "fr": "boit du nectar"
+    },
+    "special": {
+     "en": "dancing",
+     "fr": "danse"
+    },
+    "catchable": true,
+    "habitat": {
+     "en": "On the lavender in the Idea Grove meadow",
+     "fr": "Sur la lavande, dans la prairie du Bosquet des idées"
+    },
+    "facts": [
+     {
+      "text": {
+       "en": "Honeybees visit flowers to drink nectar and gather pollen. They live together in a hive of thousands of bees.",
+       "fr": "Les abeilles visitent les fleurs pour boire du nectar et récolter du pollen. Elles vivent ensemble dans une ruche de milliers d'abeilles."
+      },
+      "easy": {
+       "en": "It visits flowers.",
+       "fr": "Elle visite les fleurs."
+      },
+      "source": "Encyclopaedia Britannica, “Honeybee”"
+     },
+     {
+      "text": {
+       "en": "It carries pollen home in little “baskets” on its back legs: look for the orange balls!",
+       "fr": "Elle rapporte le pollen dans de petites « corbeilles » sur ses pattes arrière : cherche les boules orange !"
+      },
+      "easy": {
+       "en": "It carries pollen on its legs.",
+       "fr": "Elle porte du pollen sur ses pattes."
+      },
+      "source": "Encyclopaedia Britannica, “Honeybee”"
+     },
+     {
+      "text": {
+       "en": "It is an insect: six legs, three body parts (head, thorax, abdomen), two antennae and four wings.",
+       "fr": "C'est un insecte : six pattes, trois parties du corps (tête, thorax, abdomen), deux antennes et quatre ailes."
+      },
+      "easy": {
+       "en": "It is an insect: 6 legs, 3 body parts.",
+       "fr": "C'est un insecte : 6 pattes, 3 parties du corps."
+      },
+      "source": "Encyclopaedia Britannica, “Insect”"
+     },
+     {
+      "text": {
+       "en": "Back at the hive, a bee does a “waggle dance” to show the others which way, and how far, to fly for food.",
+       "fr": "De retour à la ruche, une abeille fait une « danse frétillante » pour montrer aux autres dans quelle direction, et à quelle distance, voler pour trouver à manger."
+      },
+      "easy": {
+       "en": "It dances to show where the flowers are.",
+       "fr": "Elle danse pour montrer où sont les fleurs."
+      },
+      "source": "The Nobel Prize, Karl von Frisch (1973)"
+     },
+     {
+      "text": {
+       "en": "A worker honeybee is about 1.3 cm long and weighs about 0.1 g: ten bees together weigh about one gram.",
+       "fr": "Une abeille ouvrière mesure environ 1,3 cm et pèse environ 0,1 g : dix abeilles ensemble pèsent environ un gramme."
+      },
+      "easy": {
+       "en": "It is about as long as your fingernail.",
+       "fr": "Elle est à peu près aussi longue que ton ongle."
+      },
+      "source": "PBS Nature, “Honeybee”"
+     }
+    ],
+    "lens": [
+     {
+      "feature": "legs",
+      "value": 6
+     },
+     {
+      "feature": "bodyParts",
+      "value": 3
+     }
+    ],
+    "measure": {
+     "lengthMm": 13,
+     "lengthText": {
+      "en": "about 1.3 cm (12 to 15 mm)",
+      "fr": "environ 1,3 cm (12 à 15 mm)"
+     },
+     "what": {
+      "en": "its body, head to tail (not the feelers)",
+      "fr": "son corps, de la tête au bout (pas les antennes)"
+     },
+     "massG": 0.1,
+     "massText": {
+      "en": "about 0.1 g",
+      "fr": "environ 0,1 g"
+     },
+     "source": "PBS Nature, “Honeybee”"
+    },
+    "iconAxis": [
+     0.101,
+     0.345,
+     0.78,
+     0.439
+    ],
+    "iconUrl": "https://future-api.mexty.ai/api/files/p/6addfc4fca61b98af27faa9c",
+    "silhouetteUrl": "https://future-api.mexty.ai/api/files/p/6addfc50ca61b98af27faaa8",
+    "modelUrl": "https://future-api.mexty.ai/api/files/p/6addfb00ca61b98af27fa86c",
+    "camoModelUrl": "",
+    "scale": 1.2,
+    "stages": [
+     1,
+     2,
+     4,
+     16,
+     32
+    ]
+   },
+   {
+    "id": "monarch-caterpillar",
+    "biome": "meadow",
+    "icon": "🐛",
+    "name": {
+     "en": "Monarch caterpillar",
+     "fr": "Chenille du monarque"
+    },
+    "group": {
+     "en": "an insect (a young butterfly)",
+     "fr": "un insecte (un jeune papillon)"
+    },
+    "feed": {
+     "en": "munching milkweed",
+     "fr": "grignote de l'asclépiade"
+    },
+    "special": {
+     "en": "munching milkweed",
+     "fr": "grignote de l'asclépiade"
+    },
+    "catchable": true,
+    "habitat": {
+     "en": "On the milkweed in the Idea Grove meadow",
+     "fr": "Sur l'asclépiade, dans la prairie du Bosquet des idées"
+    },
+    "facts": [
+     {
+      "text": {
+       "en": "Monarch caterpillars eat only milkweed leaves. A monarch butterfly lays its eggs on milkweed and nowhere else.",
+       "fr": "Les chenilles du monarque ne mangent que des feuilles d'asclépiade. Le papillon monarque pond ses œufs sur l'asclépiade, et nulle part ailleurs."
+      },
+      "easy": {
+       "en": "It eats only milkweed.",
+       "fr": "Elle ne mange que de l'asclépiade."
+      },
+      "source": "Monarch Joint Venture, “Monarch life cycle”"
+     },
+     {
+      "text": {
+       "en": "Its yellow, black and white stripes warn birds: the milkweed it eats makes it taste bad.",
+       "fr": "Ses rayures jaunes, noires et blanches préviennent les oiseaux : l'asclépiade qu'elle mange lui donne mauvais goût."
+      },
+      "easy": {
+       "en": "Its stripes say: do not eat me!",
+       "fr": "Ses rayures disent : ne me mange pas !"
+      },
+      "source": "Monarch Joint Venture, “Monarch biology”"
+     },
+     {
+      "text": {
+       "en": "It is an insect, the young (larva) of a butterfly: six pointy true legs near its head, plus soft stubby prolegs to hold on.",
+       "fr": "C'est un insecte, le petit (la larve) d'un papillon : six vraies pattes pointues près de la tête, et de petites fausses pattes molles pour s'accrocher."
+      },
+      "easy": {
+       "en": "It is a baby butterfly with 6 true legs.",
+       "fr": "C'est un bébé papillon avec 6 vraies pattes."
+      },
+      "source": "Encyclopaedia Britannica, “Caterpillar”"
+     },
+     {
+      "text": {
+       "en": "When it is big enough, it hangs upside down and becomes a green chrysalis. About two weeks later, a butterfly comes out.",
+       "fr": "Quand elle est assez grande, elle se pend la tête en bas et devient une chrysalide verte. Environ deux semaines plus tard, un papillon en sort."
+      },
+      "easy": {
+       "en": "It turns into a butterfly!",
+       "fr": "Elle se transforme en papillon !"
+      },
+      "source": "Monarch Joint Venture, “Monarch life cycle”"
+     },
+     {
+      "text": {
+       "en": "Fully grown, it is about 4.5 cm long. It grows about 2,000 times heavier than when it hatched!",
+       "fr": "Adulte, elle mesure environ 4,5 cm. Elle devient environ 2 000 fois plus lourde qu'à sa naissance !"
+      },
+      "easy": {
+       "en": "It grows very fast.",
+       "fr": "Elle grandit très vite."
+      },
+      "source": "Monarch Joint Venture, “Monarch life cycle”"
+     }
+    ],
+    "lens": [
+     {
+      "feature": "trueLegs",
+      "value": 6
+     },
+     {
+      "feature": "bodyParts",
+      "value": 3
+     }
+    ],
+    "measure": {
+     "lengthMm": 45,
+     "lengthText": {
+      "en": "up to about 4.5 cm when fully grown",
+      "fr": "jusqu'à environ 4,5 cm, adulte"
+     },
+     "what": {
+      "en": "its body, head to tail (not the feelers)",
+      "fr": "son corps, de la tête au bout (pas les filaments)"
+     },
+     "massG": 0,
+     "massText": {
+      "en": "",
+      "fr": ""
+     },
+     "source": "Monarch Joint Venture, “Monarch life cycle”"
+    },
+    "iconAxis": [
+     0.153,
+     0.351,
+     0.945,
+     0.742
+    ],
+    "iconUrl": "https://future-api.mexty.ai/api/files/p/6addfc51ca61b98af27faab4",
+    "silhouetteUrl": "https://future-api.mexty.ai/api/files/p/6addfc52ca61b98af27faac0",
+    "modelUrl": "https://future-api.mexty.ai/api/files/p/6addfb01ca61b98af27fa878",
+    "camoModelUrl": "",
+    "scale": 1.2,
+    "stages": [
+     1,
+     2,
+     4,
+     16,
+     32
+    ]
+   },
+   {
+    "id": "dung-beetle",
+    "biome": "canyon",
+    "icon": "🪲",
+    "name": {
+     "en": "Dung beetle",
+     "fr": "Bousier"
+    },
+    "group": {
+     "en": "an insect (a beetle)",
+     "fr": "un insecte (un coléoptère)"
+    },
+    "feed": {
+     "en": "",
+     "fr": ""
+    },
+    "special": {
+     "en": "rolling its ball",
+     "fr": "roule sa boule"
+    },
+    "catchable": true,
+    "habitat": {
+     "en": "On the sandy ground of the Biome Frontier canyon",
+     "fr": "Sur le sol sableux du canyon de la Frontière des biomes"
+    },
+    "facts": [
+     {
+      "text": {
+       "en": "Dung beetles live where big animals graze. They make balls of dung and roll them away, to eat or to lay their eggs in.",
+       "fr": "Les bousiers vivent là où broutent de grands animaux. Ils font des boules de bouse et les roulent plus loin, pour les manger ou y pondre leurs œufs."
+      },
+      "easy": {
+       "en": "It rolls balls of dung.",
+       "fr": "Il roule des boules de bouse."
+      },
+      "source": "Encyclopaedia Britannica, “Dung beetle”"
+     },
+     {
+      "text": {
+       "en": "It rolls its ball backwards: head down, pushing with its back legs.",
+       "fr": "Il roule sa boule à reculons : la tête en bas, il pousse avec ses pattes arrière."
+      },
+      "easy": {
+       "en": "It pushes its ball with its back legs.",
+       "fr": "Il pousse sa boule avec ses pattes arrière."
+      },
+      "source": "National Geographic, “Dung beetles watch the galaxy” (2013)"
+     },
+     {
+      "text": {
+       "en": "It is an insect: six legs and three body parts. Like all beetles, its hard front wings cover and protect its flying wings.",
+       "fr": "C'est un insecte : six pattes et trois parties du corps. Comme tous les coléoptères, ses ailes avant dures couvrent et protègent ses ailes pour voler."
+      },
+      "easy": {
+       "en": "It is an insect: 6 legs, 3 body parts.",
+       "fr": "C'est un insecte : 6 pattes, 3 parties du corps."
+      },
+      "source": "Encyclopaedia Britannica, “Insect”"
+     },
+     {
+      "text": {
+       "en": "Dung beetles clean up the land: buried dung feeds the soil. Some even roll in a straight line at night by watching the Milky Way!",
+       "fr": "Les bousiers nettoient la terre : la bouse enterrée nourrit le sol. Certains roulent même tout droit la nuit en regardant la Voie lactée !"
+      },
+      "easy": {
+       "en": "It cleans up and feeds the soil.",
+       "fr": "Il nettoie et nourrit le sol."
+      },
+      "source": "Dacke et al., Current Biology (2013)"
+     },
+     {
+      "text": {
+       "en": "This ball-roller is about 2.5 cm long. A cousin, the bull-headed dung beetle, can pull 1,141 times its own weight!",
+       "fr": "Ce rouleur de boule mesure environ 2,5 cm. Un cousin, le bousier taureau, peut tirer 1 141 fois son propre poids !"
+      },
+      "easy": {
+       "en": "It is very, very strong.",
+       "fr": "Il est très, très fort."
+      },
+      "source": "Knell & Simmons, Proceedings of the Royal Society B (2010)"
+     }
+    ],
+    "lens": [
+     {
+      "feature": "legs",
+      "value": 6
+     },
+     {
+      "feature": "bodyParts",
+      "value": 3
+     }
+    ],
+    "measure": {
+     "lengthMm": 25,
+     "lengthText": {
+      "en": "about 2.5 cm (dung beetles range from a few millimetres to about 3 cm)",
+      "fr": "environ 2,5 cm (les bousiers vont de quelques millimètres à environ 3 cm)"
+     },
+     "what": {
+      "en": "its body, head to tail (not the ball!)",
+      "fr": "son corps, de la tête au bout (pas la boule !)"
+     },
+     "massG": 0,
+     "massText": {
+      "en": "",
+      "fr": ""
+     },
+     "source": "Encyclopaedia Britannica, “Dung beetle”"
+    },
+    "iconAxis": [
+     0.38,
+     0.37,
+     0.88,
+     0.66
+    ],
+    "iconUrl": "https://future-api.mexty.ai/api/files/p/6addfc06ca61b98af27fa9f0",
+    "silhouetteUrl": "https://future-api.mexty.ai/api/files/p/6addfc07ca61b98af27fa9fc",
+    "modelUrl": "https://future-api.mexty.ai/api/files/p/6addfae0ca61b98af27fa7f1",
+    "camoModelUrl": "",
+    "scale": 1.2,
+    "stages": [
+     1,
+     2,
+     4,
+     16,
+     32
+    ]
+   },
+   {
+    "id": "locust",
+    "biome": "canyon",
+    "icon": "🦗",
+    "name": {
+     "en": "Desert locust",
+     "fr": "Criquet pèlerin"
+    },
+    "group": {
+     "en": "an insect",
+     "fr": "un insecte"
+    },
+    "feed": {
+     "en": "eating plants",
+     "fr": "mange des plantes"
+    },
+    "special": {
+     "en": "jumping",
+     "fr": "saute"
+    },
+    "catchable": true,
+    "habitat": {
+     "en": "In the dry canyon of the Biome Frontier",
+     "fr": "Dans le canyon sec de la Frontière des biomes"
+    },
+    "facts": [
+     {
+      "text": {
+       "en": "Desert locusts live in the dry lands of Africa, the Middle East and south-west Asia.",
+       "fr": "Les criquets pèlerins vivent dans les terres sèches d'Afrique, du Moyen-Orient et d'Asie du Sud-Ouest."
+      },
+      "easy": {
+       "en": "It lives in dry lands.",
+       "fr": "Il vit dans les terres sèches."
+      },
+      "source": "FAO Locust Watch, “Desert Locust”"
+     },
+     {
+      "text": {
+       "en": "Its long, strong back legs work like a catapult: a desert locust can jump about 1 metre.",
+       "fr": "Ses longues pattes arrière, très fortes, marchent comme une catapulte : un criquet pèlerin peut sauter environ 1 mètre."
+      },
+      "easy": {
+       "en": "It jumps with its long back legs.",
+       "fr": "Il saute avec ses longues pattes arrière."
+      },
+      "source": "Bennet-Clark, Journal of Experimental Biology (1975)"
+     },
+     {
+      "text": {
+       "en": "It is an insect: six legs, three body parts, two antennae and four wings.",
+       "fr": "C'est un insecte : six pattes, trois parties du corps, deux antennes et quatre ailes."
+      },
+      "easy": {
+       "en": "It is an insect: 6 legs, 3 body parts.",
+       "fr": "C'est un insecte : 6 pattes, 3 parties du corps."
+      },
+      "source": "Encyclopaedia Britannica, “Insect”"
+     },
+     {
+      "text": {
+       "en": "When many locusts crowd together, they change colour and fly in huge swarms that can travel up to 150 km in a day.",
+       "fr": "Quand beaucoup de criquets se serrent, ils changent de couleur et volent en énormes essaims qui peuvent parcourir jusqu'à 150 km en un jour."
+      },
+      "easy": {
+       "en": "Many of them fly together in swarms.",
+       "fr": "Ils volent ensemble en essaims."
+      },
+      "source": "FAO Locust Watch, “FAQs about locusts”"
+     },
+     {
+      "text": {
+       "en": "An adult is about 5.5 cm long and weighs about 2 g. Each day it can eat about its own weight in fresh plants!",
+       "fr": "Un adulte mesure environ 5,5 cm et pèse environ 2 g. Chaque jour, il peut manger à peu près son poids en plantes fraîches !"
+      },
+      "easy": {
+       "en": "It eats its own weight every day.",
+       "fr": "Il mange son poids chaque jour."
+      },
+      "source": "FAO Locust Watch, “FAQs about locusts”"
+     }
+    ],
+    "lens": [
+     {
+      "feature": "legs",
+      "value": 6
+     },
+     {
+      "feature": "bodyParts",
+      "value": 3
+     }
+    ],
+    "measure": {
+     "lengthMm": 55,
+     "lengthText": {
+      "en": "about 5.5 cm (4.5 to 6 cm)",
+      "fr": "environ 5,5 cm (4,5 à 6 cm)"
+     },
+     "what": {
+      "en": "its body, head to the wing tips (not the feelers)",
+      "fr": "son corps, de la tête au bout des ailes (pas les antennes)"
+     },
+     "massG": 2,
+     "massText": {
+      "en": "about 2 g",
+      "fr": "environ 2 g"
+     },
+     "source": "FAO Locust Watch (weight); Wikipedia, “Desert locust” (length)"
+    },
+    "iconAxis": [
+     0.087,
+     0.232,
+     0.794,
+     0.562
+    ],
+    "iconUrl": "https://future-api.mexty.ai/api/files/p/6addfc53ca61b98af27faacc",
+    "silhouetteUrl": "https://future-api.mexty.ai/api/files/p/6addfc54ca61b98af27faad8",
+    "modelUrl": "https://future-api.mexty.ai/api/files/p/6addfae1ca61b98af27fa7fd",
+    "camoModelUrl": "",
+    "scale": 1.2,
+    "stages": [
+     1,
+     2,
+     4,
+     16,
+     32
+    ]
+   },
+   {
+    "id": "tiger-beetle",
+    "biome": "canyon",
+    "icon": "🪲",
+    "name": {
+     "en": "Green tiger beetle",
+     "fr": "Cicindèle champêtre"
+    },
+    "group": {
+     "en": "an insect (a beetle)",
+     "fr": "un insecte (un coléoptère)"
+    },
+    "feed": {
+     "en": "hunting",
+     "fr": "chasse"
+    },
+    "special": {
+     "en": "sprinting",
+     "fr": "sprinte"
+    },
+    "catchable": true,
+    "habitat": {
+     "en": "On bare sand near the canyon bridge, in the sun",
+     "fr": "Sur le sable nu près du pont du canyon, au soleil"
+    },
+    "facts": [
+     {
+      "text": {
+       "en": "Green tiger beetles hunt on bare, sandy ground on warm, sunny days.",
+       "fr": "Les cicindèles chassent sur le sol nu et sableux, les jours chauds et ensoleillés."
+      },
+      "easy": {
+       "en": "It loves warm, sunny sand.",
+       "fr": "Elle aime le sable chaud et ensoleillé."
+      },
+      "source": "The Wildlife Trusts, “Green tiger beetle”"
+     },
+     {
+      "text": {
+       "en": "It has big eyes and long legs. It chases small insects and grabs them with its large jaws.",
+       "fr": "Elle a de grands yeux et de longues pattes. Elle poursuit de petits insectes et les attrape avec ses grandes mandibules."
+      },
+      "easy": {
+       "en": "It chases other bugs.",
+       "fr": "Elle chasse d'autres petites bêtes."
+      },
+      "source": "The Wildlife Trusts, “Green tiger beetle”"
+     },
+     {
+      "text": {
+       "en": "It is an insect: six legs and three body parts, with shiny hard wing cases like all beetles.",
+       "fr": "C'est un insecte : six pattes et trois parties du corps, avec des étuis d'ailes durs et brillants comme tous les coléoptères."
+      },
+      "easy": {
+       "en": "It is an insect: 6 legs, 3 body parts.",
+       "fr": "C'est un insecte : 6 pattes, 3 parties du corps."
+      },
+      "source": "Encyclopaedia Britannica, “Insect”"
+     },
+     {
+      "text": {
+       "en": "Tiger beetles run so fast that their eyes cannot keep up: they stop for a moment to look again, then run on.",
+       "fr": "Les cicindèles courent si vite que leurs yeux ne suivent plus : elles s'arrêtent un instant pour regarder, puis repartent."
+      },
+      "easy": {
+       "en": "It runs so fast it must stop to look.",
+       "fr": "Elle court si vite qu'elle doit s'arrêter pour regarder."
+      },
+      "source": "Cornell University, Zurek & Gilbert (2014)"
+     },
+     {
+      "text": {
+       "en": "It is only about 1.3 cm long. One Australian tiger beetle was timed at 2.5 metres per second: about 120 body lengths every second!",
+       "fr": "Elle ne mesure qu'environ 1,3 cm. Une cicindèle australienne a été chronométrée à 2,5 mètres par seconde : environ 120 fois sa longueur chaque seconde !"
+      },
+      "easy": {
+       "en": "It is a super-fast runner.",
+       "fr": "C'est une coureuse super rapide."
+      },
+      "source": "University of Florida Book of Insect Records, “Fastest runner”"
+     }
+    ],
+    "lens": [
+     {
+      "feature": "legs",
+      "value": 6
+     },
+     {
+      "feature": "bodyParts",
+      "value": 3
+     }
+    ],
+    "measure": {
+     "lengthMm": 13,
+     "lengthText": {
+      "en": "about 1.3 cm (10 to 15 mm)",
+      "fr": "environ 1,3 cm (10 à 15 mm)"
+     },
+     "what": {
+      "en": "its body, head to tail (not the feelers)",
+      "fr": "son corps, de la tête au bout (pas les antennes)"
+     },
+     "massG": 0,
+     "massText": {
+      "en": "",
+      "fr": ""
+     },
+     "source": "The Wildlife Trusts, “Green tiger beetle”"
+    },
+    "iconAxis": [
+     0.223,
+     0.305,
+     0.756,
+     0.431
+    ],
+    "iconUrl": "https://future-api.mexty.ai/api/files/p/6addfc86ca61b98af27fabac",
+    "silhouetteUrl": "https://future-api.mexty.ai/api/files/p/6addfc87ca61b98af27fabb8",
+    "modelUrl": "https://future-api.mexty.ai/api/files/p/6addfae2ca61b98af27fa809",
+    "camoModelUrl": "",
+    "scale": 1.2,
+    "stages": [
+     1,
+     2,
+     4,
+     16,
+     32
+    ]
+   },
+   {
+    "id": "firefly",
+    "biome": "rainforest",
+    "icon": "✨",
+    "name": {
+     "en": "Firefly",
+     "fr": "Luciole"
+    },
+    "group": {
+     "en": "an insect (a beetle)",
+     "fr": "un insecte (un coléoptère)"
+    },
+    "feed": {
+     "en": "",
+     "fr": ""
+    },
+    "special": {
+     "en": "flashing its light",
+     "fr": "fait clignoter sa lumière"
+    },
+    "catchable": true,
+    "habitat": {
+     "en": "In deep shade under the big rainforest trees",
+     "fr": "Dans l'ombre profonde, sous les grands arbres de la forêt"
+    },
+    "facts": [
+     {
+      "text": {
+       "en": "Fireflies come out at dusk in warm, damp places. By day they rest in shady grass and leaves.",
+       "fr": "Les lucioles sortent au crépuscule dans les endroits chauds et humides. Le jour, elles se reposent dans l'herbe et les feuilles à l'ombre."
+      },
+      "easy": {
+       "en": "It glows at dusk.",
+       "fr": "Elle brille au crépuscule."
+      },
+      "source": "Animal Diversity Web, “Photinus pyralis”"
+     },
+     {
+      "text": {
+       "en": "Its light comes from the end of its body: a chemical reaction makes light with almost no heat. This is called bioluminescence.",
+       "fr": "Sa lumière vient du bout de son corps : une réaction chimique fait de la lumière presque sans chaleur. On appelle cela la bioluminescence."
+      },
+      "easy": {
+       "en": "Its tail makes light.",
+       "fr": "Le bout de son corps fait de la lumière."
+      },
+      "source": "Encyclopaedia Britannica, “Firefly”"
+     },
+     {
+      "text": {
+       "en": "It is not a fly but a beetle, so an insect: six legs, three body parts, two antennae and hard wing cases.",
+       "fr": "Ce n'est pas une mouche mais un coléoptère, donc un insecte : six pattes, trois parties du corps, deux antennes et des étuis d'ailes durs."
+      },
+      "easy": {
+       "en": "It is an insect: 6 legs, 3 body parts.",
+       "fr": "C'est un insecte : 6 pattes, 3 parties du corps."
+      },
+      "source": "Encyclopaedia Britannica, “Insect”"
+     },
+     {
+      "text": {
+       "en": "Males fly at dusk and flash a “J” about every 5.5 seconds; females answer from the grass. Each kind of firefly has its own flash code.",
+       "fr": "Les mâles volent au crépuscule et dessinent un « J » lumineux environ toutes les 5,5 secondes ; les femelles répondent depuis l'herbe. Chaque espèce a son propre code."
+      },
+      "easy": {
+       "en": "It talks with flashes of light.",
+       "fr": "Elle parle avec des éclairs de lumière."
+      },
+      "source": "Animal Diversity Web, “Photinus pyralis”"
+     },
+     {
+      "text": {
+       "en": "This firefly is about 1.2 cm long (10 to 14 mm).",
+       "fr": "Cette luciole mesure environ 1,2 cm (10 à 14 mm)."
+      },
+      "easy": {
+       "en": "It is small: about 1 cm.",
+       "fr": "Elle est petite : environ 1 cm."
+      },
+      "source": "BugGuide, “Photinus pyralis”"
+     }
+    ],
+    "lens": [
+     {
+      "feature": "legs",
+      "value": 6
+     },
+     {
+      "feature": "bodyParts",
+      "value": 3
+     }
+    ],
+    "measure": {
+     "lengthMm": 12,
+     "lengthText": {
+      "en": "about 1.2 cm (10 to 14 mm)",
+      "fr": "environ 1,2 cm (10 à 14 mm)"
+     },
+     "what": {
+      "en": "its body, head to tail (not the feelers)",
+      "fr": "son corps, de la tête au bout (pas les antennes)"
+     },
+     "massG": 0,
+     "massText": {
+      "en": "",
+      "fr": ""
+     },
+     "source": "BugGuide, “Photinus pyralis”"
+    },
+    "iconAxis": [
+     0.086,
+     0.263,
+     0.862,
+     0.477
+    ],
+    "iconUrl": "https://future-api.mexty.ai/api/files/p/6addfc08ca61b98af27faa08",
+    "silhouetteUrl": "https://future-api.mexty.ai/api/files/p/6addfc09ca61b98af27faa14",
+    "modelUrl": "https://future-api.mexty.ai/api/files/p/6addfae3ca61b98af27fa815",
+    "camoModelUrl": "",
+    "scale": 1.2,
+    "stages": [
+     1,
+     2,
+     4,
+     16,
+     32
+    ]
+   },
+   {
+    "id": "leafcutter-ant",
+    "biome": "rainforest",
+    "icon": "🐜",
+    "name": {
+     "en": "Leafcutter ant",
+     "fr": "Fourmi coupe-feuille"
+    },
+    "group": {
+     "en": "an insect",
+     "fr": "un insecte"
+    },
+    "feed": {
+     "en": "cutting a leaf",
+     "fr": "découpe une feuille"
+    },
+    "special": {
+     "en": "cutting a leaf",
+     "fr": "découpe une feuille"
+    },
+    "catchable": true,
+    "habitat": {
+     "en": "On the rainforest trail, carrying leaves",
+     "fr": "Sur le sentier de la forêt, en portant des feuilles"
+    },
+    "facts": [
+     {
+      "text": {
+       "en": "Leafcutter ants live in the rainforests of Central and South America, in huge underground nests.",
+       "fr": "Les fourmis coupe-feuille vivent dans les forêts tropicales d'Amérique centrale et du Sud, dans d'immenses nids sous la terre."
+      },
+      "easy": {
+       "en": "It lives in the rainforest.",
+       "fr": "Elle vit dans la forêt tropicale."
+      },
+      "source": "Smithsonian Tropical Research Institute, “Leafcutter ants”"
+     },
+     {
+      "text": {
+       "en": "It cuts a piece of leaf with its jaws and carries it home, held high like a flag.",
+       "fr": "Elle découpe un morceau de feuille avec ses mandibules et le rapporte au nid, levé comme un drapeau."
+      },
+      "easy": {
+       "en": "It carries leaves like a flag.",
+       "fr": "Elle porte des feuilles comme un drapeau."
+      },
+      "source": "Smithsonian Tropical Research Institute, “Leafcutter ants”"
+     },
+     {
+      "text": {
+       "en": "It is an insect: six legs, three body parts and two bent (elbowed) antennae.",
+       "fr": "C'est un insecte : six pattes, trois parties du corps et deux antennes coudées."
+      },
+      "easy": {
+       "en": "It is an insect: 6 legs, 3 body parts.",
+       "fr": "C'est un insecte : 6 pattes, 3 parties du corps."
+      },
+      "source": "Encyclopaedia Britannica, “Insect”"
+     },
+     {
+      "text": {
+       "en": "The ants do not eat the leaves! They feed them to a fungus garden in their nest, and they eat the fungus.",
+       "fr": "Les fourmis ne mangent pas les feuilles ! Elles en nourrissent un jardin de champignons dans leur nid, et mangent le champignon."
+      },
+      "easy": {
+       "en": "It grows a fungus garden.",
+       "fr": "Elle cultive un jardin de champignons."
+      },
+      "source": "Encyclopaedia Britannica, “Leaf-cutter ant”"
+     },
+     {
+      "text": {
+       "en": "A leaf-carrying worker is about 1 cm long, and can carry a leaf piece up to about 8 times its own weight.",
+       "fr": "Une ouvrière qui porte des feuilles mesure environ 1 cm, et peut porter un morceau de feuille d'environ 8 fois son poids."
+      },
+      "easy": {
+       "en": "It carries 8 times its weight.",
+       "fr": "Elle porte 8 fois son poids."
+      },
+      "source": "Smithsonian Tropical Research Institute (8 × its weight)"
+     }
+    ],
+    "lens": [
+     {
+      "feature": "legs",
+      "value": 6
+     },
+     {
+      "feature": "bodyParts",
+      "value": 3
+     }
+    ],
+    "measure": {
+     "lengthMm": 10,
+     "lengthText": {
+      "en": "about 1 cm (workers range from about 2 mm to 1.6 cm)",
+      "fr": "environ 1 cm (les ouvrières vont d'environ 2 mm à 1,6 cm)"
+     },
+     "what": {
+      "en": "its body, head to tail (not the leaf!)",
+      "fr": "son corps, de la tête au bout (pas la feuille !)"
+     },
+     "massG": 0,
+     "massText": {
+      "en": "",
+      "fr": ""
+     },
+     "source": "Wikipedia, “Leafcutter ant” (worker sizes)"
+    },
+    "iconAxis": [
+     0.25,
+     0.27,
+     0.744,
+     0.6
+    ],
+    "iconUrl": "https://future-api.mexty.ai/api/files/p/6addfc0cca61b98af27faa38",
+    "silhouetteUrl": "https://future-api.mexty.ai/api/files/p/6addfc0cca61b98af27faa44",
+    "modelUrl": "https://future-api.mexty.ai/api/files/p/6addfae3ca61b98af27fa821",
+    "camoModelUrl": "",
+    "scale": 1.2,
+    "stages": [
+     1,
+     2,
+     4,
+     16,
+     32
+    ]
+   },
+   {
+    "id": "stick-insect",
+    "biome": "rainforest",
+    "icon": "🌿",
+    "name": {
+     "en": "Indian stick insect",
+     "fr": "Phasme indien"
+    },
+    "group": {
+     "en": "an insect",
+     "fr": "un insecte"
+    },
+    "feed": {
+     "en": "eating a leaf",
+     "fr": "mange une feuille"
+    },
+    "special": {
+     "en": "keeping still like a twig",
+     "fr": "reste immobile comme une brindille"
+    },
+    "catchable": true,
+    "camoModelUrl": "https://future-api.mexty.ai/api/files/p/6addfafeca61b98af27fa854",
+    "habitat": {
+     "en": "Among the plants at the rainforest's edge: look very closely!",
+     "fr": "Parmi les plantes, à l'orée de la forêt : regarde très attentivement !"
+    },
+    "facts": [
+     {
+      "text": {
+       "en": "Stick insects live among bushes and trees. The Indian stick insect eats leaves such as bramble and privet.",
+       "fr": "Les phasmes vivent dans les buissons et les arbres. Le phasme indien mange des feuilles comme celles de la ronce et du troène."
+      },
+      "easy": {
+       "en": "It lives in bushes and eats leaves.",
+       "fr": "Il vit dans les buissons et mange des feuilles."
+      },
+      "source": "Phasmid Study Group, “Carausius morosus”"
+     },
+     {
+      "text": {
+       "en": "By day it stays very still and looks just like a twig. That is camouflage!",
+       "fr": "Le jour, il reste immobile et ressemble à une brindille. C'est du camouflage !"
+      },
+      "easy": {
+       "en": "It hides by looking like a twig.",
+       "fr": "Il se cache en ressemblant à une brindille."
+      },
+      "source": "Phasmid Study Group, “Carausius morosus”"
+     },
+     {
+      "text": {
+       "en": "It is an insect: six long legs, three body parts and two antennae. This kind has no wings.",
+       "fr": "C'est un insecte : six longues pattes, trois parties du corps et deux antennes. Cette espèce n'a pas d'ailes."
+      },
+      "easy": {
+       "en": "It is an insect: 6 legs, 3 body parts.",
+       "fr": "C'est un insecte : 6 pattes, 3 parties du corps."
+      },
+      "source": "Encyclopaedia Britannica, “Insect”"
+     },
+     {
+      "text": {
+       "en": "It wakes up at night to eat. If a young one loses a leg, it can grow a new one when it moults.",
+       "fr": "Il se réveille la nuit pour manger. Si un jeune perd une patte, une nouvelle peut repousser quand il mue."
+      },
+      "easy": {
+       "en": "It eats at night.",
+       "fr": "Il mange la nuit."
+      },
+      "source": "Encyclopaedia Britannica, “Walking stick”"
+     },
+     {
+      "text": {
+       "en": "A grown-up female is about 8 cm long. Males are smaller, and very rare.",
+       "fr": "Une femelle adulte mesure environ 8 cm. Les mâles sont plus petits, et très rares."
+      },
+      "easy": {
+       "en": "It is as long as a finger.",
+       "fr": "Il est long comme un doigt."
+      },
+      "source": "Phasmid Study Group, “Carausius morosus”"
+     }
+    ],
+    "lens": [
+     {
+      "feature": "legs",
+      "value": 6
+     },
+     {
+      "feature": "bodyParts",
+      "value": 3
+     }
+    ],
+    "measure": {
+     "lengthMm": 80,
+     "lengthText": {
+      "en": "about 8 cm (adult female)",
+      "fr": "environ 8 cm (femelle adulte)"
+     },
+     "what": {
+      "en": "its body, head to tail (not the legs or feelers)",
+      "fr": "son corps, de la tête au bout (pas les pattes ni les antennes)"
+     },
+     "massG": 0,
+     "massText": {
+      "en": "",
+      "fr": ""
+     },
+     "source": "Phasmid Study Group, “Carausius morosus”"
+    },
+    "iconAxis": [
+     0.054,
+     0.191,
+     0.72,
+     0.6
+    ],
+    "iconUrl": "https://future-api.mexty.ai/api/files/p/6addfc84ca61b98af27fab94",
+    "silhouetteUrl": "https://future-api.mexty.ai/api/files/p/6addfc85ca61b98af27faba0",
+    "modelUrl": "https://future-api.mexty.ai/api/files/p/6addfafdca61b98af27fa847",
+    "scale": 1.2,
+    "stages": [
+     1,
+     2,
+     4,
+     16,
+     32
+    ]
+   },
+   {
+    "id": "snail",
+    "biome": "rainforest",
+    "icon": "🐌",
+    "name": {
+     "en": "Garden snail",
+     "fr": "Escargot petit-gris"
+    },
+    "group": {
+     "en": "a mollusc, not an insect",
+     "fr": "un mollusque, pas un insecte"
+    },
+    "feed": {
+     "en": "",
+     "fr": ""
+    },
+    "special": {
+     "en": "tucking in its eyes",
+     "fr": "rentre ses yeux"
+    },
+    "catchable": true,
+    "habitat": {
+     "en": "In the damp shade by the waterfall pool",
+     "fr": "Dans l'ombre humide, près du bassin de la cascade"
+    },
+    "facts": [
+     {
+      "text": {
+       "en": "Garden snails like damp, shady places. They come out after rain and at night.",
+       "fr": "Les escargots aiment les endroits humides et ombragés. Ils sortent après la pluie et la nuit."
+      },
+      "easy": {
+       "en": "It likes wet, shady places.",
+       "fr": "Il aime les endroits humides et à l'ombre."
+      },
+      "source": "Canadian Food Inspection Agency, “European brown garden snail”"
+     },
+     {
+      "text": {
+       "en": "It glides on one big muscular foot, over a trail of slime that protects it.",
+       "fr": "Il glisse sur un seul grand pied musclé, sur une trace de bave qui le protège."
+      },
+      "easy": {
+       "en": "It glides on slime.",
+       "fr": "Il glisse sur de la bave."
+      },
+      "source": "Encyclopaedia Britannica, “Snail”"
+     },
+     {
+      "text": {
+       "en": "It is NOT an insect! No legs at all, and a shell: it is a mollusc, a cousin of the octopus.",
+       "fr": "Ce n'est PAS un insecte ! Pas de pattes du tout, et une coquille : c'est un mollusque, un cousin de la pieuvre."
+      },
+      "easy": {
+       "en": "Not an insect: no legs, a shell.",
+       "fr": "Pas un insecte : pas de pattes, une coquille."
+      },
+      "source": "Encyclopaedia Britannica, “Gastropod”"
+     },
+     {
+      "text": {
+       "en": "Its eyes are at the tips of its long tentacles. It can pull them in when something touches them.",
+       "fr": "Ses yeux sont au bout de ses longues cornes. Il peut les rentrer quand on les touche."
+      },
+      "easy": {
+       "en": "Its eyes are on its long horns.",
+       "fr": "Ses yeux sont au bout de ses cornes."
+      },
+      "source": "Encyclopaedia Britannica, “Snail”"
+     },
+     {
+      "text": {
+       "en": "Its shell is about 3.5 cm across (2.5 to 4 cm) and an adult weighs about 10 g.",
+       "fr": "Sa coquille mesure environ 3,5 cm de large (2,5 à 4 cm) et un adulte pèse environ 10 g."
+      },
+      "easy": {
+       "en": "It weighs about 10 g.",
+       "fr": "Il pèse environ 10 g."
+      },
+      "source": "Canadian Food Inspection Agency (size); Sinop University snail study, 2018 (weight)"
+     }
+    ],
+    "lens": [
+     {
+      "feature": "legs",
+      "value": 0
+     },
+     {
+      "feature": "shell",
+      "value": 1
+     }
+    ],
+    "measure": {
+     "lengthMm": 35,
+     "lengthText": {
+      "en": "about 3.5 cm across its shell (2.5 to 4 cm)",
+      "fr": "environ 3,5 cm de large pour sa coquille (2,5 à 4 cm)"
+     },
+     "what": {
+      "en": "across its shell",
+      "fr": "la largeur de sa coquille"
+     },
+     "massG": 10,
+     "massText": {
+      "en": "about 10 g",
+      "fr": "environ 10 g"
+     },
+     "source": "Canadian Food Inspection Agency; Sinop University snail study (2018)"
+    },
+    "iconAxis": [
+     0.155,
+     0.4,
+     0.53,
+     0.4
+    ],
+    "iconUrl": "https://future-api.mexty.ai/api/files/p/6addfd69ca61b98af27fb002",
+    "silhouetteUrl": "https://future-api.mexty.ai/api/files/p/6addfd6aca61b98af27fb00e",
+    "modelUrl": "https://future-api.mexty.ai/api/files/p/6addfaffca61b98af27fa860",
+    "camoModelUrl": "",
+    "scale": 1.2,
+    "stages": [
+     1,
+     2,
+     4,
+     16,
+     32
+    ]
+   },
+   {
+    "id": "flea",
+    "biome": "arena",
+    "icon": "🦟",
+    "name": {
+     "en": "Cat flea",
+     "fr": "Puce du chat"
+    },
+    "group": {
+     "en": "an insect",
+     "fr": "un insecte"
+    },
+    "feed": {
+     "en": "",
+     "fr": ""
+    },
+    "special": {
+     "en": "jumping",
+     "fr": "saute"
+    },
+    "catchable": false,
+    "stages": [
+     1,
+     2,
+     4
+    ],
+    "scale": 1,
+    "habitat": {
+     "en": "The famous jumper of the Bug Games (in real life: in the fur of cats and dogs)",
+     "fr": "La célèbre sauteuse des Jeux des insectes (dans la vie : dans le pelage des chats et des chiens)"
+    },
+    "facts": [
+     {
+      "text": {
+       "en": "Cat fleas live in the fur of cats and dogs and drink a little of their blood. A vet can help pets get rid of them.",
+       "fr": "Les puces du chat vivent dans le pelage des chats et des chiens et boivent un peu de leur sang. Un vétérinaire peut aider à en débarrasser les animaux."
+      },
+      "easy": {
+       "en": "It lives in cat and dog fur.",
+       "fr": "Elle vit dans le pelage des chats et des chiens."
+      },
+      "source": "University of Florida IFAS, “Cat flea”"
+     },
+     {
+      "text": {
+       "en": "Its body is flat from side to side, so it slips easily between hairs. It is only 2 to 3 mm long.",
+       "fr": "Son corps est plat sur les côtés : elle se faufile facilement entre les poils. Elle ne mesure que 2 à 3 mm."
+      },
+      "easy": {
+       "en": "It is tiny and flat.",
+       "fr": "Elle est minuscule et plate."
+      },
+      "source": "University of Florida IFAS, “Cat flea”"
+     },
+     {
+      "text": {
+       "en": "It is an insect without wings: six legs and three body parts. Its long back legs are made for jumping.",
+       "fr": "C'est un insecte sans ailes : six pattes et trois parties du corps. Ses longues pattes arrière sont faites pour sauter."
+      },
+      "easy": {
+       "en": "It is an insect: 6 legs, 3 body parts.",
+       "fr": "C'est un insecte : 6 pattes, 3 parties du corps."
+      },
+      "source": "Encyclopaedia Britannica, “Insect”"
+     }
+    ],
+    "lens": [
+     {
+      "feature": "legs",
+      "value": 6
+     },
+     {
+      "feature": "bodyParts",
+      "value": 3
+     }
+    ],
+    "measure": {
+     "lengthMm": 2.5,
+     "lengthText": {
+      "en": "2 to 3 mm",
+      "fr": "2 à 3 mm"
+     },
+     "what": {
+      "en": "its body",
+      "fr": "son corps"
+     },
+     "massG": 0,
+     "massText": {
+      "en": "",
+      "fr": ""
+     },
+     "source": "University of Florida IFAS, “Cat flea”"
+    },
+    "iconAxis": [
+     0.14,
+     0.26,
+     0.87,
+     0.6
+    ],
+    "iconUrl": "https://future-api.mexty.ai/api/files/p/6addfc0aca61b98af27faa20",
+    "silhouetteUrl": "https://future-api.mexty.ai/api/files/p/6addfc0bca61b98af27faa2c",
+    "modelUrl": "https://future-api.mexty.ai/api/files/p/6addfadfca61b98af27fa7e5",
+    "camoModelUrl": ""
    }
   ],
   "models": {
-   "spark": "https://future-api.mexty.ai/api/files/p/6addfc61ca61b98af27fab0b"
+   "spark": "https://future-api.mexty.ai/api/files/p/6addfc61ca61b98af27fab0b",
+   "milkweed": "https://future-api.mexty.ai/api/files/p/6addf950ca61b98af27fa22d",
+   "lavender": "https://future-api.mexty.ai/api/files/p/6addf94fca61b98af27fa21f"
   },
   "sounds": {
    "shutter": ""
@@ -1821,6 +3735,927 @@
   "biomeFrontier": {
    "en": "https://future-api.mexty.ai/api/files/p/6addf58fca61b98af27f9efc",
    "fr": "https://future-api.mexty.ai/api/files/p/6addf590ca61b98af27f9f07"
+  }
+ },
+ "bugGames": {
+  "ui": {
+   "title": {
+    "en": "The Bug Games",
+    "fr": "Les Jeux des insectes"
+   },
+   "intro": {
+    "en": "Six events, six real talents! For each one, choose the athlete from your team that is the true champion, and the time of day when it is at its best. Insects are cold-blooded: warmth and light matter.",
+    "fr": "Six épreuves, six vrais talents ! Pour chacune, choisis dans ton équipe l'athlète qui est le vrai champion, et le moment de la journée où il est le meilleur. Les insectes ont le sang froid : la chaleur et la lumière comptent."
+   },
+   "introEasy": {
+    "en": "Pick the right bug for each game!",
+    "fr": "Choisis la bonne petite bête pour chaque jeu !"
+   },
+   "start": {
+    "en": "Start the games",
+    "fr": "Commencer les jeux"
+   },
+   "again": {
+    "en": "Play again",
+    "fr": "Rejouer"
+   },
+   "event": {
+    "en": "Event {n} of {total}",
+    "fr": "Épreuve {n} sur {total}"
+   },
+   "pickAthlete": {
+    "en": "Choose your athlete",
+    "fr": "Choisis ton athlète"
+   },
+   "pickTime": {
+    "en": "When should it compete?",
+    "fr": "À quel moment doit-il concourir ?"
+   },
+   "go": {
+    "en": "Go!",
+    "fr": "Partez !"
+   },
+   "team": {
+    "en": "Your team: creatures you have found",
+    "fr": "Ton équipe : les créatures que tu as trouvées"
+   },
+   "guest": {
+    "en": "guest",
+    "fr": "invitée"
+   },
+   "notYet": {
+    "en": "None of your team is the star of this event yet. Find the {name} first! ({where})",
+    "fr": "Personne dans ton équipe n'est encore la vedette de cette épreuve. Trouve d'abord : {name} ! ({where})"
+   },
+   "skip": {
+    "en": "Next event",
+    "fr": "Épreuve suivante"
+   },
+   "wrongCreature": {
+    "en": "{a} is {talent}, not {needs}. Try again!",
+    "fr": "{a} est {talent}, pas {needs}. Essaie encore !"
+   },
+   "rightCreature": {
+    "en": "Yes! Now, when?",
+    "fr": "Oui ! Maintenant, quand ?"
+   },
+   "won": {
+    "en": "Champion!",
+    "fr": "Champion !"
+   },
+   "roundDone": {
+    "en": "The Bug Games are over! Your team won {n} of {total} events on the first try.",
+    "fr": "Les Jeux sont finis ! Ton équipe a gagné {n} épreuves sur {total} du premier coup."
+   },
+   "score": {
+    "en": "{n} of {total} first try",
+    "fr": "{n} sur {total} du premier coup"
+   },
+   "medalGold": {
+    "en": "Gold leaf medal for your team!",
+    "fr": "Médaille de la feuille d'or pour ton équipe !"
+   },
+   "medalSilver": {
+    "en": "Silver leaf medal for your team!",
+    "fr": "Médaille de la feuille d'argent pour ton équipe !"
+   },
+   "medalBronze": {
+    "en": "Bronze leaf medal for your team!",
+    "fr": "Médaille de la feuille de bronze pour ton équipe !"
+   },
+   "fleaGuest": {
+    "en": "The cat flea is our guest jumper today (fleas live on pets, not in the meadow).",
+    "fr": "La puce du chat est notre sauteuse invitée (les puces vivent sur les animaux, pas dans la prairie)."
+   },
+   "needGuide": {
+    "en": "Find creatures with your Field Guide first, then come back to the games!",
+    "fr": "Trouve d'abord des créatures avec ton Guide de terrain, puis reviens aux jeux !"
+   },
+   "next": {
+    "en": "Next",
+    "fr": "Suivant"
+   },
+   "close": {
+    "en": "Close",
+    "fr": "Fermer"
+   },
+   "watch": {
+    "en": "Watch!",
+    "fr": "Regarde !"
+   },
+   "board": {
+    "en": "Bug Games",
+    "fr": "Jeux des insectes"
+   },
+   "enter": {
+    "en": "The Bug Games",
+    "fr": "Les Jeux des insectes"
+   }
+  },
+  "times": [
+   {
+    "id": "morning",
+    "icon": "🌅",
+    "name": {
+     "en": "Cool morning",
+     "fr": "Matin frais"
+    },
+    "light": "#bcd3ff",
+    "intensity": 0.75
+   },
+   {
+    "id": "noon",
+    "icon": "☀️",
+    "name": {
+     "en": "Warm, sunny afternoon",
+     "fr": "Après-midi chaud et ensoleillé"
+    },
+    "light": "#fff2c8",
+    "intensity": 1.15
+   },
+   {
+    "id": "night",
+    "icon": "🌙",
+    "name": {
+     "en": "Night",
+     "fr": "Nuit"
+    },
+    "light": "#5a6fc0",
+    "intensity": 0.3
+   }
+  ],
+  "events": [
+   {
+    "id": "long-jump",
+    "icon": "🦘",
+    "piece": "long_jump",
+    "winner": "flea",
+    "times": [
+     "morning",
+     "noon"
+    ],
+    "name": {
+     "en": "Long jump",
+     "fr": "Saut en longueur"
+    },
+    "goal": {
+     "en": "Who jumps farthest for its size?",
+     "fr": "Qui saute le plus loin pour sa taille ?"
+    },
+    "score": {
+     "en": "Flea: up to 48 cm, over 100 × its length!",
+     "fr": "Puce : jusqu'à 48 cm, plus de 100 × sa longueur !"
+    },
+    "fact": {
+     "en": "A cat flea is only 2 to 3 mm long, yet it jumps about 20 cm on average and up to 48 cm: well over 100 times its own length. A springy protein in its body, resilin, stores the energy like a catapult.",
+     "fr": "Une puce du chat ne mesure que 2 à 3 mm, mais elle saute en moyenne 20 cm, et jusqu'à 48 cm : bien plus de 100 fois sa longueur. Une protéine élastique, la résiline, stocke l'énergie comme une catapulte."
+    },
+    "factEasy": {
+     "en": "A tiny flea jumps more than 100 times its size!",
+     "fr": "Une toute petite puce saute plus de 100 fois sa taille !"
+    },
+    "source": "Cadiergues et al. (2000), in Parasite (2004); Bennet-Clark & Lucey, J. Exp. Biol. (1967)",
+    "wrongTime": {
+     "en": "At night nobody can see the jump! Pick a time with daylight.",
+     "fr": "La nuit, personne ne voit le saut ! Choisis un moment où il fait jour."
+    },
+    "needs": {
+     "en": "a jumper",
+     "fr": "un sauteur"
+    },
+    "almostSpecies": [
+     "locust"
+    ],
+    "almost": {
+     "en": "A locust is a great jumper too: about 1 m, some 20 times its length. But for its size, a flea jumps much farther. Try again!",
+     "fr": "Le criquet saute très bien aussi : environ 1 m, à peu près 20 fois sa longueur. Mais pour sa taille, la puce saute bien plus loin. Essaie encore !"
+    }
+   },
+   {
+    "id": "weight-pull",
+    "icon": "🏋️",
+    "piece": "weight_pull",
+    "winner": "dung-beetle",
+    "times": [
+     "morning",
+     "noon"
+    ],
+    "name": {
+     "en": "Weight pull",
+     "fr": "Tir de poids"
+    },
+    "goal": {
+     "en": "Who pulls the most for its own weight?",
+     "fr": "Qui tire le plus lourd pour son propre poids ?"
+    },
+    "score": {
+     "en": "Dung beetle: 1,141 × its own weight!",
+     "fr": "Bousier : 1 141 × son propre poids !"
+    },
+    "fact": {
+     "en": "In a test, a bull-headed dung beetle pulled 1,141 times its own body weight: like a person pulling six double-decker buses!",
+     "fr": "Lors d'un test, un bousier taureau a tiré 1 141 fois son propre poids : comme une personne qui tirerait six bus à deux étages !"
+    },
+    "factEasy": {
+     "en": "A dung beetle is super strong!",
+     "fr": "Le bousier est super fort !"
+    },
+    "source": "Knell & Simmons, Proceedings of the Royal Society B (2010); Queen Mary University of London",
+    "wrongTime": {
+     "en": "This ball-roller works by day. Pick a daytime! (Some cousins roll at night by the light of the Milky Way.)",
+     "fr": "Ce rouleur de boule travaille le jour. Choisis un moment de jour ! (Certains cousins roulent la nuit à la lumière de la Voie lactée.)"
+    },
+    "needs": {
+     "en": "a puller",
+     "fr": "un costaud"
+    },
+    "almostSpecies": [
+     "leafcutter-ant"
+    ],
+    "almost": {
+     "en": "A leafcutter ant is strong too: it carries leaf pieces up to about 8 times its weight. But a dung beetle pulls over 1,000 times its weight! Try again!",
+     "fr": "La fourmi coupe-feuille est forte aussi : elle porte des morceaux de feuille d'environ 8 fois son poids. Mais le bousier tire plus de 1 000 fois son poids ! Essaie encore !"
+    }
+   },
+   {
+    "id": "sprint",
+    "icon": "🏃",
+    "piece": "race_lane",
+    "winner": "tiger-beetle",
+    "times": [
+     "noon"
+    ],
+    "name": {
+     "en": "Sprint",
+     "fr": "Sprint"
+    },
+    "goal": {
+     "en": "Who runs fastest for its size?",
+     "fr": "Qui court le plus vite pour sa taille ?"
+    },
+    "score": {
+     "en": "Tiger beetle: 2.5 m/s, 120 body lengths a second!",
+     "fr": "Cicindèle : 2,5 m/s, 120 fois sa longueur par seconde !"
+    },
+    "fact": {
+     "en": "An Australian tiger beetle was timed at 2.5 metres per second: about 120 of its own body lengths every second. Tiger beetles run so fast that they stop for a moment to look again!",
+     "fr": "Une cicindèle australienne a été chronométrée à 2,5 mètres par seconde : environ 120 fois sa longueur chaque seconde. Les cicindèles courent si vite qu'elles s'arrêtent un instant pour regarder !"
+    },
+    "factEasy": {
+     "en": "The tiger beetle is a super-fast runner!",
+     "fr": "La cicindèle est une coureuse super rapide !"
+    },
+    "source": "University of Florida Book of Insect Records, “Fastest runner”; Cornell University (2014)",
+    "wrongTime": {
+     "en": "Brr! Insects are cold-blooded: on a cool morning or at night they are slow. Tiger beetles race on warm, sunny days.",
+     "fr": "Brr ! Les insectes ont le sang froid : un matin frais ou la nuit, ils sont lents. Les cicindèles courent les jours chauds et ensoleillés."
+    },
+    "needs": {
+     "en": "a runner",
+     "fr": "un coureur"
+    },
+    "almostSpecies": [],
+    "almost": {
+     "en": "",
+     "fr": ""
+    }
+   },
+   {
+    "id": "hide-and-seek",
+    "icon": "🫣",
+    "piece": "hide_board",
+    "winner": "stick-insect",
+    "times": [
+     "morning",
+     "noon"
+    ],
+    "name": {
+     "en": "Hide and seek",
+     "fr": "Cache-cache"
+    },
+    "goal": {
+     "en": "Who is the hardest to spot?",
+     "fr": "Qui est le plus difficile à repérer ?"
+    },
+    "score": {
+     "en": "Stick insect: invisible as a twig!",
+     "fr": "Phasme : invisible comme une brindille !"
+    },
+    "fact": {
+     "en": "By day, a stick insect keeps very still among the twigs and looks just like one. Hungry birds look right past it. That is camouflage.",
+     "fr": "Le jour, le phasme reste immobile parmi les brindilles et leur ressemble tout à fait. Les oiseaux affamés ne le voient pas. C'est le camouflage."
+    },
+    "factEasy": {
+     "en": "The stick insect looks like a twig!",
+     "fr": "Le phasme ressemble à une brindille !"
+    },
+    "source": "Phasmid Study Group, “Carausius morosus”",
+    "wrongTime": {
+     "en": "At night the stick insect walks about to eat. By day it stays as still as a twig: that is when it hides best.",
+     "fr": "La nuit, le phasme se promène pour manger. Le jour, il reste immobile comme une brindille : c'est là qu'il se cache le mieux."
+    },
+    "needs": {
+     "en": "a hider",
+     "fr": "un champion du camouflage"
+    },
+    "almostSpecies": [],
+    "almost": {
+     "en": "",
+     "fr": ""
+    }
+   },
+   {
+    "id": "glow",
+    "icon": "💡",
+    "piece": "night_box",
+    "winner": "firefly",
+    "times": [
+     "night"
+    ],
+    "name": {
+     "en": "Glow show",
+     "fr": "Spectacle lumineux"
+    },
+    "goal": {
+     "en": "Who can make its own light?",
+     "fr": "Qui fabrique sa propre lumière ?"
+    },
+    "score": {
+     "en": "Firefly: a flash every 5.5 seconds!",
+     "fr": "Luciole : un éclair toutes les 5,5 secondes !"
+    },
+    "fact": {
+     "en": "A firefly makes light with a chemical reaction in its tail, with almost no heat. Male common eastern fireflies flash a “J” about every 5.5 seconds at dusk.",
+     "fr": "La luciole fabrique de la lumière par une réaction chimique au bout de son corps, presque sans chaleur. Les mâles de la luciole commune dessinent un « J » environ toutes les 5,5 secondes au crépuscule."
+    },
+    "factEasy": {
+     "en": "A firefly makes its own light!",
+     "fr": "La luciole fait sa propre lumière !"
+    },
+    "source": "Animal Diversity Web, “Photinus pyralis”; Encyclopaedia Britannica, “Firefly”",
+    "wrongTime": {
+     "en": "In daylight you can hardly see its glow. Fireflies flash at dusk and at night.",
+     "fr": "En plein jour, on voit à peine sa lumière. Les lucioles brillent au crépuscule et la nuit."
+    },
+    "needs": {
+     "en": "a light-maker",
+     "fr": "une lanterne vivante"
+    },
+    "almostSpecies": [],
+    "almost": {
+     "en": "",
+     "fr": ""
+    }
+   },
+   {
+    "id": "dance",
+    "icon": "💃",
+    "piece": "dance",
+    "winner": "honeybee",
+    "times": [
+     "noon"
+    ],
+    "name": {
+     "en": "Direction dance",
+     "fr": "Danse des directions"
+    },
+    "goal": {
+     "en": "Who can dance a map to the flowers?",
+     "fr": "Qui sait danser le chemin vers les fleurs ?"
+    },
+    "score": {
+     "en": "Honeybee: dances the way to the flowers!",
+     "fr": "Abeille : elle danse le chemin vers les fleurs !"
+    },
+    "fact": {
+     "en": "In the waggle dance, the angle of the bee's wiggly run shows the direction to fly, compared with the sun, and how long it waggles shows how far. Karl von Frisch won a Nobel Prize for finding this out.",
+     "fr": "Dans la danse frétillante, l'angle de la course de l'abeille montre la direction à prendre par rapport au soleil, et la durée du frétillement montre la distance. Karl von Frisch a reçu un prix Nobel pour l'avoir découvert."
+    },
+    "factEasy": {
+     "en": "A bee dances to show the way to the flowers!",
+     "fr": "L'abeille danse pour montrer le chemin des fleurs !"
+    },
+    "source": "The Nobel Prize, Karl von Frisch (1973)",
+    "wrongTime": {
+     "en": "Honeybees hardly fly when it is cold or dark. On a warm, sunny day they visit flowers, then dance in the hive.",
+     "fr": "Les abeilles ne volent presque pas quand il fait froid ou nuit. Par une journée chaude et ensoleillée, elles visitent les fleurs, puis dansent dans la ruche."
+    },
+    "needs": {
+     "en": "a dancer",
+     "fr": "un danseur"
+    },
+    "almostSpecies": [],
+    "almost": {
+     "en": "",
+     "fr": ""
+    }
+   }
+  ],
+  "talents": [
+   {
+    "species": "flea",
+    "a": {
+     "en": "A flea",
+     "fr": "Une puce"
+    },
+    "talent": {
+     "en": "a jumper",
+     "fr": "une sauteuse"
+    }
+   },
+   {
+    "species": "locust",
+    "a": {
+     "en": "A locust",
+     "fr": "Un criquet"
+    },
+    "talent": {
+     "en": "a jumper",
+     "fr": "un sauteur"
+    }
+   },
+   {
+    "species": "dung-beetle",
+    "a": {
+     "en": "A dung beetle",
+     "fr": "Un bousier"
+    },
+    "talent": {
+     "en": "a puller",
+     "fr": "un costaud"
+    }
+   },
+   {
+    "species": "leafcutter-ant",
+    "a": {
+     "en": "A leafcutter ant",
+     "fr": "Une fourmi coupe-feuille"
+    },
+    "talent": {
+     "en": "a carrier",
+     "fr": "une porteuse"
+    }
+   },
+   {
+    "species": "tiger-beetle",
+    "a": {
+     "en": "A tiger beetle",
+     "fr": "Une cicindèle"
+    },
+    "talent": {
+     "en": "a runner",
+     "fr": "une coureuse"
+    }
+   },
+   {
+    "species": "stick-insect",
+    "a": {
+     "en": "A stick insect",
+     "fr": "Un phasme"
+    },
+    "talent": {
+     "en": "a hider",
+     "fr": "un champion du camouflage"
+    }
+   },
+   {
+    "species": "firefly",
+    "a": {
+     "en": "A firefly",
+     "fr": "Une luciole"
+    },
+    "talent": {
+     "en": "a light-maker",
+     "fr": "une lanterne vivante"
+    }
+   },
+   {
+    "species": "honeybee",
+    "a": {
+     "en": "A honeybee",
+     "fr": "Une abeille"
+    },
+    "talent": {
+     "en": "a dancer",
+     "fr": "une danseuse"
+    }
+   },
+   {
+    "species": "snail",
+    "a": {
+     "en": "A snail",
+     "fr": "Un escargot"
+    },
+    "talent": {
+     "en": "a slow, steady glider",
+     "fr": "un glisseur tranquille"
+    }
+   },
+   {
+    "species": "monarch-caterpillar",
+    "a": {
+     "en": "A monarch caterpillar",
+     "fr": "Une chenille du monarque"
+    },
+    "talent": {
+     "en": "a big eater of milkweed",
+     "fr": "une gourmande d'asclépiade"
+    }
+   }
+  ],
+  "models": {
+   "grandstand": "https://future-api.mexty.ai/api/files/p/6addfb21ca61b98af27fa8f3",
+   "longJump": "https://future-api.mexty.ai/api/files/p/6addfd66ca61b98af27fafde",
+   "weightPull": "https://future-api.mexty.ai/api/files/p/6addfd67ca61b98af27fafea",
+   "raceLane": "https://future-api.mexty.ai/api/files/p/6addfd68ca61b98af27faff6",
+   "hideBoard": "https://future-api.mexty.ai/api/files/p/6addfb22ca61b98af27fa8ff",
+   "nightBox": "https://future-api.mexty.ai/api/files/p/6addfd65ca61b98af27fafd2",
+   "podium": "https://future-api.mexty.ai/api/files/p/6addfb24ca61b98af27fa923",
+   "scoreboard": "https://future-api.mexty.ai/api/files/p/6addfb26ca61b98af27fa93b"
+  }
+ },
+ "biomeFrontier": {
+  "ui": {
+   "title": {
+    "en": "Biome Frontier",
+    "fr": "La Frontière des biomes"
+   },
+   "showMe": {
+    "en": "Show me",
+    "fr": "Montre-moi"
+   },
+   "next": {
+    "en": "Next",
+    "fr": "Suivant"
+   },
+   "close": {
+    "en": "Close",
+    "fr": "Fermer"
+   },
+   "digTitle": {
+    "en": "Fossil dig",
+    "fr": "Fouille de fossiles"
+   },
+   "digIntro": {
+    "en": "This dig block has 4 layers of soil and rock. Scrape them away one at a time with the trowel, and brush each fossil clean.",
+    "fr": "Ce bloc de fouille a 4 couches de terre et de roche. Retire-les une par une avec la truelle, et nettoie chaque fossile avec la brosse."
+   },
+   "digDone": {
+    "en": "Dig finished!",
+    "fr": "Fouille terminée !"
+   },
+   "layerLabel": {
+    "en": "Layer {n}",
+    "fr": "Couche {n}"
+   },
+   "stationTitle": {
+    "en": "Field station",
+    "fr": "Station de terrain"
+   },
+   "playAgain": {
+    "en": "New survey",
+    "fr": "Nouvelle exploration"
+   },
+   "easyMode": {
+    "en": "Pictures",
+    "fr": "Images"
+   },
+   "explorerMode": {
+    "en": "Explorer",
+    "fr": "Explorateur"
+   },
+   "modeLabel": {
+    "en": "Mode",
+    "fr": "Mode"
+   },
+   "backToGrove": {
+    "en": "Back to the Idea Grove",
+    "fr": "Retour au Bosquet des idées"
+   },
+   "look": {
+    "en": "Look",
+    "fr": "Regarder"
+   },
+   "digWaiting": {
+    "en": "Waiting in the canyon",
+    "fr": "T'attend dans le canyon"
+   },
+   "digNeedTools": {
+    "en": "You need a trowel and a brush to dig. The Grove Keeper will give them to you.",
+    "fr": "Il te faut une truelle et une brosse pour fouiller. Le Gardien du bosquet te les donnera."
+   },
+   "trowel": {
+    "en": "Trowel",
+    "fr": "Truelle"
+   },
+   "brush": {
+    "en": "Brush",
+    "fr": "Brosse"
+   },
+   "trowelHint": {
+    "en": "Rub the trowel back and forth over the top layer to scrape it away.",
+    "fr": "Frotte la truelle d'avant en arrière sur la couche du dessus pour la retirer."
+   },
+   "brushHint": {
+    "en": "A fossil! Rub the soft brush over it, gently, to clean it.",
+    "fr": "Un fossile ! Passe doucement la brosse dessus pour le nettoyer."
+   },
+   "useBrush": {
+    "en": "Careful! A fossil is fragile: use the soft brush.",
+    "fr": "Attention ! Un fossile est fragile : utilise la brosse douce."
+   },
+   "useTrowel": {
+    "en": "The brush is too soft for soil. Use the trowel.",
+    "fr": "La brosse est trop douce pour la terre. Utilise la truelle."
+   },
+   "brushFirst": {
+    "en": "Brush the fossil out first, before you dig deeper.",
+    "fr": "Dégage d'abord le fossile avec la brosse, avant de creuser plus profond."
+   },
+   "layerGone": {
+    "en": "Layer {n} is gone. Deeper means older!",
+    "fr": "La couche {n} est enlevée. Plus profond, c'est plus ancien !"
+   },
+   "fossilFound": {
+    "en": "Fossil found!",
+    "fr": "Fossile trouvé !"
+   },
+   "timeline": {
+    "en": "Your timeline",
+    "fr": "Ta frise du temps"
+   },
+   "timelineNow": {
+    "en": "Today",
+    "fr": "Aujourd'hui"
+   },
+   "deeperOlder": {
+    "en": "The deeper you dig, the older it is: the order you found them is a timeline!",
+    "fr": "Plus on creuse, plus c'est ancien : l'ordre où tu les as trouvés est une frise du temps !"
+   },
+   "mya": {
+    "en": "{n} million years ago",
+    "fr": "il y a {n} millions d'années"
+   },
+   "digAgain": {
+    "en": "Fill it in and dig again",
+    "fr": "Reboucher et refouiller"
+   }
+  },
+  "biomes": [
+   {
+    "id": "rainforest",
+    "name": {
+     "en": "rainforest",
+     "fr": "la forêt tropicale"
+    },
+    "icon": "🌿",
+    "color": "#3f9a4c",
+    "about": {
+     "en": "A tropical rainforest is warm and wet: it rains on most days. Trees grow very tall to reach the light, and many plants have giant leaves.",
+     "fr": "La forêt tropicale est chaude et humide : il pleut presque tous les jours. Les arbres poussent très haut vers la lumière, et beaucoup de plantes ont des feuilles géantes."
+    }
+   },
+   {
+    "id": "canyon",
+    "name": {
+     "en": "desert canyon",
+     "fr": "le canyon du désert"
+    },
+    "icon": "🏜️",
+    "color": "#c8643a",
+    "about": {
+     "en": "A canyon is a deep valley that a river carved into the rock over millions of years. This one is dry and sunny, so its plants and animals save every drop of water.",
+     "fr": "Un canyon est une vallée profonde creusée dans la roche par une rivière pendant des millions d'années. Celui-ci est sec et ensoleillé : ses plantes et ses animaux gardent chaque goutte d'eau."
+    }
+   },
+   {
+    "id": "coast",
+    "name": {
+     "en": "coral coast",
+     "fr": "la côte de corail"
+    },
+    "icon": "🐠",
+    "color": "#2a9fb8",
+    "about": {
+     "en": "Coral reefs grow in warm, clear, shallow sea water. Corals are tiny animals that build rocky homes, and lots of fish live among them.",
+     "fr": "Les récifs de corail poussent dans une mer chaude, claire et peu profonde. Les coraux sont de tout petits animaux qui construisent des maisons de roche, où vivent beaucoup de poissons."
+    }
+   }
+  ],
+  "fossils": [
+   {
+    "id": "shark-tooth",
+    "layer": 0,
+    "icon": "🦈",
+    "ageMyr": 15,
+    "name": {
+     "en": "Shark tooth",
+     "fr": "Dent de requin"
+    },
+    "age": {
+     "en": "about 15 million years old",
+     "fr": "environ 15 millions d'années"
+    },
+    "period": {
+     "en": "Miocene",
+     "fr": "Miocène"
+    },
+    "fact": {
+     "en": "Sharks lose and replace their teeth all their lives, so fossil shark teeth are among the most common fossils. Giant megalodon sharks lived from about 23 to 3.6 million years ago.",
+     "fr": "Les requins perdent et remplacent leurs dents toute leur vie : les dents de requin fossiles sont parmi les fossiles les plus courants. Le requin géant mégalodon a vécu il y a environ 23 à 3,6 millions d'années."
+    },
+    "factEasy": {
+     "en": "Sharks grow new teeth all their lives!",
+     "fr": "Les requins ont de nouvelles dents toute leur vie !"
+    },
+    "source": "Smithsonian Ocean, “Megalodon”; Florida Museum of Natural History, “Fossil shark teeth”",
+    "modelUrl": "https://future-api.mexty.ai/api/files/p/6addfb49ca61b98af27fa9c0",
+    "iconUrl": "https://future-api.mexty.ai/api/files/p/6addfdb1ca61b98af27fb1d2",
+    "spot": [
+     -0.22,
+     0.752,
+     -0.12
+    ]
+   },
+   {
+    "id": "dino-bone",
+    "layer": 1,
+    "icon": "🦴",
+    "ageMyr": 70,
+    "name": {
+     "en": "Dinosaur bone",
+     "fr": "Os de dinosaure"
+    },
+    "age": {
+     "en": "about 70 million years old",
+     "fr": "environ 70 millions d'années"
+    },
+    "period": {
+     "en": "Late Cretaceous",
+     "fr": "Crétacé supérieur"
+    },
+    "fact": {
+     "en": "Dinosaurs (all but the birds!) died out about 66 million years ago, so this bone is older than that. Over a very long time, minerals in the ground slowly turned it into stone.",
+     "fr": "Les dinosaures (sauf les oiseaux !) ont disparu il y a environ 66 millions d'années : cet os est donc plus ancien. Pendant très longtemps, les minéraux du sol l'ont lentement changé en pierre."
+    },
+    "factEasy": {
+     "en": "A real dinosaur bone, turned to stone!",
+     "fr": "Un vrai os de dinosaure, changé en pierre !"
+    },
+    "source": "Natural History Museum, London, “How do fossils form?”; Encyclopaedia Britannica, “Dinosaur”",
+    "modelUrl": "https://future-api.mexty.ai/api/files/p/6addfb4aca61b98af27fa9cc",
+    "iconUrl": "https://future-api.mexty.ai/api/files/p/6addfdafca61b98af27fb1ba",
+    "spot": [
+     0.1,
+     0.59,
+     0.1
+    ]
+   },
+   {
+    "id": "ammonite",
+    "layer": 2,
+    "icon": "🐚",
+    "ageMyr": 150,
+    "name": {
+     "en": "Ammonite",
+     "fr": "Ammonite"
+    },
+    "age": {
+     "en": "about 150 million years old",
+     "fr": "environ 150 millions d'années"
+    },
+    "period": {
+     "en": "Jurassic",
+     "fr": "Jurassique"
+    },
+    "fact": {
+     "en": "Ammonites were sea animals with coiled shells, cousins of today's octopus and nautilus. They swam in the seas for millions of years and died out 66 million years ago, with the dinosaurs.",
+     "fr": "Les ammonites étaient des animaux marins à coquille enroulée, cousins de la pieuvre et du nautile. Elles ont nagé dans les mers pendant des millions d'années et ont disparu il y a 66 millions d'années, avec les dinosaures."
+    },
+    "factEasy": {
+     "en": "A sea animal with a curly shell.",
+     "fr": "Un animal de la mer à coquille enroulée."
+    },
+    "source": "Natural History Museum, London, “Ammonites”",
+    "modelUrl": "https://future-api.mexty.ai/api/files/p/6addfb48ca61b98af27fa9b4",
+    "iconUrl": "https://future-api.mexty.ai/api/files/p/6addfdaeca61b98af27fb1ae",
+    "spot": [
+     -0.15,
+     0.4,
+     -0.2
+    ]
+   },
+   {
+    "id": "fern",
+    "layer": 3,
+    "icon": "🌿",
+    "ageMyr": 300,
+    "name": {
+     "en": "Fern leaf",
+     "fr": "Feuille de fougère"
+    },
+    "age": {
+     "en": "about 300 million years old",
+     "fr": "environ 300 millions d'années"
+    },
+    "period": {
+     "en": "Carboniferous",
+     "fr": "Carbonifère"
+    },
+    "fact": {
+     "en": "About 300 million years ago, in the Carboniferous period, huge swampy forests of ferns and giant plants grew. Their remains slowly became coal.",
+     "fr": "Il y a environ 300 millions d'années, au Carbonifère, d'immenses forêts marécageuses de fougères et de plantes géantes poussaient. Leurs restes sont lentement devenus du charbon."
+    },
+    "factEasy": {
+     "en": "A fern from a very old forest.",
+     "fr": "Une fougère d'une très vieille forêt."
+    },
+    "source": "Encyclopaedia Britannica, “Carboniferous Period”",
+    "modelUrl": "https://future-api.mexty.ai/api/files/p/6addfb47ca61b98af27fa9a8",
+    "iconUrl": "https://future-api.mexty.ai/api/files/p/6addfdb0ca61b98af27fb1c6",
+    "spot": [
+     0.2,
+     0.212,
+     -0.18
+    ]
+   },
+   {
+    "id": "trilobite",
+    "layer": 4,
+    "icon": "🪨",
+    "ageMyr": 500,
+    "name": {
+     "en": "Trilobite",
+     "fr": "Trilobite"
+    },
+    "age": {
+     "en": "about 500 million years old",
+     "fr": "environ 500 millions d'années"
+    },
+    "period": {
+     "en": "Cambrian",
+     "fr": "Cambrien"
+    },
+    "fact": {
+     "en": "Trilobites were sea animals with jointed legs, distant cousins of today's insects and crabs. They first appeared about 521 million years ago and lived for nearly 300 million years.",
+     "fr": "Les trilobites étaient des animaux marins aux pattes articulées, lointains cousins des insectes et des crabes. Ils sont apparus il y a environ 521 millions d'années et ont vécu près de 300 millions d'années."
+    },
+    "factEasy": {
+     "en": "A very, very old sea animal.",
+     "fr": "Un très, très vieil animal marin."
+    },
+    "source": "Natural History Museum, London, “Trilobites”",
+    "modelUrl": "https://future-api.mexty.ai/api/files/p/6addfb46ca61b98af27fa99c",
+    "iconUrl": "https://future-api.mexty.ai/api/files/p/6addfdb2ca61b98af27fb1de",
+    "spot": [
+     -0.2,
+     0.17,
+     0.18
+    ]
+   }
+  ],
+  "layersFact": {
+   "en": "Mud and sand settle in layers, one on top of another, over a very long time. So the deeper you dig, the older the layer: the order you found the fossils is a timeline. Trilobites and ammonites lived in the sea, so this canyon was under the sea long ago!",
+   "fr": "La boue et le sable se déposent en couches, les unes sur les autres, pendant très longtemps. Plus on creuse, plus la couche est ancienne : l'ordre dans lequel tu as trouvé les fossiles est une frise du temps. Les trilobites et les ammonites vivaient dans la mer : ce canyon était sous la mer il y a très longtemps !"
+  },
+  "layersFactEasy": {
+   "en": "New layers go on top. The deeper, the older!",
+   "fr": "Les nouvelles couches vont dessus. Plus c'est profond, plus c'est ancien !"
+  },
+  "models": {
+   "jungleTree": "https://future-api.mexty.ai/api/files/p/6add3c35ca61b98af27f6b66",
+   "palm": "https://future-api.mexty.ai/api/files/p/6add3c36ca61b98af27f6b72",
+   "giantLeaves": "https://future-api.mexty.ai/api/files/p/6add3c37ca61b98af27f6b87",
+   "waterfallCliff": "https://future-api.mexty.ai/api/files/p/6add3ae9ca61b98af27f69b6",
+   "canyonRocks": "https://future-api.mexty.ai/api/files/p/6add3aeaca61b98af27f69c2",
+   "digSite": "https://future-api.mexty.ai/api/files/p/6add3aebca61b98af27f69ce",
+   "digBlock": "https://future-api.mexty.ai/api/files/p/6addfb01ca61b98af27fa884",
+   "corals": "https://future-api.mexty.ai/api/files/p/6add3b00ca61b98af27f69e0",
+   "pier": "https://future-api.mexty.ai/api/files/p/6add3b01ca61b98af27f69ec",
+   "fieldStation": "https://future-api.mexty.ai/api/files/p/6add3b02ca61b98af27f69fa",
+   "ropeBridge": "https://future-api.mexty.ai/api/files/p/6add3b1cca61b98af27f6a0d",
+   "signposts": "https://future-api.mexty.ai/api/files/p/6add3b1eca61b98af27f6a19",
+   "trailGate": "https://future-api.mexty.ai/api/files/p/6add3b1fca61b98af27f6a25",
+   "toucan": "https://future-api.mexty.ai/api/files/p/6add3bccca61b98af27f6acc",
+   "treeFrog": "https://future-api.mexty.ai/api/files/p/6add3becca61b98af27f6b31",
+   "morpho": "https://future-api.mexty.ai/api/files/p/6add3beeca61b98af27f6b49",
+   "tortoise": "https://future-api.mexty.ai/api/files/p/6add3bedca61b98af27f6b3d",
+   "hornedLizard": "https://future-api.mexty.ai/api/files/p/6add3bcdca61b98af27f6adc",
+   "saguaro": "https://future-api.mexty.ai/api/files/p/6add3bcfca61b98af27f6aee",
+   "seaTurtle": "https://future-api.mexty.ai/api/files/p/6add3bd0ca61b98af27f6afc",
+   "clownfish": "https://future-api.mexty.ai/api/files/p/6add3be9ca61b98af27f6b19",
+   "seaStar": "https://future-api.mexty.ai/api/files/p/6add3beaca61b98af27f6b25",
+   "fern": "https://future-api.mexty.ai/api/files/p/6adc9142f7668f50f9400831",
+   "grassTuft": "https://future-api.mexty.ai/api/files/p/6adc9156f7668f50f9400855"
+  },
+  "textures": {
+   "jungleFloor": "https://future-api.mexty.ai/api/files/p/6add3a8aca61b98af27f6968",
+   "sand": "https://future-api.mexty.ai/api/files/p/6add3ab5ca61b98af27f697d",
+   "canyonFloor": "https://future-api.mexty.ai/api/files/p/6add3ab6ca61b98af27f6989",
+   "waterNormal": "https://future-api.mexty.ai/api/files/p/6add3ab7ca61b98af27f6995"
+  },
+  "sounds": {
+   "ambience": "https://future-api.mexty.ai/api/files/p/6add3ab8ca61b98af27f69a1"
   }
  }
 }

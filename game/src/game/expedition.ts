@@ -5,7 +5,22 @@ import { create } from "zustand";
 import type { KeeperLine, Quest } from "../block";
 import { EMPTY_EXP, ExpSave, PhotoRecord, QuestEvent } from "./quests";
 
-export type ToolMode = null | "camera" | "lens" | "guide";
+export type ToolMode = null | "camera" | "lens" | "guide" | "net";
+
+/** The creature in the catch-and-release jar (this visit only: it can never be kept). */
+export interface JarState {
+  /** LiveCreature key (the creature hides in the world while it is in the jar). */
+  key: string;
+  species: string;
+  zone: string;
+  /** Where it was caught: it must be let go here. */
+  x: number;
+  z: number;
+  /** Looked at closely (counted legs and body parts) / measured / weighed this time. */
+  looked: boolean;
+  measured: boolean;
+  weighed: boolean;
+}
 
 export interface DialogueState {
   lines: KeeperLine[];
@@ -40,6 +55,15 @@ export interface ExpState {
   toast: { icon: string; text: string; at: number } | null;
   /** The keeper is talking (his animation). */
   talking: boolean;
+  jar: JarState | null;
+  /** The jar card is open, on this tab. */
+  jarTab: null | "look" | "measure" | "weigh";
+  /** The net's last sweep (performance.now()), for its swing in the world. */
+  sweepAt: number;
+  /** The net sweep's progress while the explorer drags or holds the key (0..1), -1 = at rest. */
+  sweepK: number;
+  /** A creature was just let go (its key): it comes back into the world. */
+  releasedAt: number;
   setSave: (s: ExpSave) => void;
   say: (d: DialogueState) => void;
   nextLine: () => void;
@@ -65,6 +89,11 @@ export const useExp = create<ExpState>((set, get) => ({
   page: null,
   toast: null,
   talking: false,
+  jar: null,
+  jarTab: null,
+  sweepAt: 0,
+  sweepK: -1,
+  releasedAt: 0,
   setSave: (s) => set({ save: s }),
   say: (d) => {
     if (!d.lines.length) {
@@ -85,7 +114,7 @@ export const useExp = create<ExpState>((set, get) => ({
     set({ dialogue: next ? { ...next, index: 0 } : null, queue: rest, talking: !!next });
     if (d.onDone) d.onDone();
   },
-  setMode: (m) => set({ mode: m, lensOn: m === "lens" ? get().lensOn : null, photo: null, page: m === "guide" ? get().page : null }),
+  setMode: (m) => set({ mode: m, lensOn: m === "lens" ? get().lensOn : null, photo: null, page: m === "guide" ? get().page : null, sweepK: -1 }),
   emit: () => undefined,
   seen: () => undefined,
   tapCreature: () => undefined,
