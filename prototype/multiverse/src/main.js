@@ -154,7 +154,7 @@ async function main() {
 	let stillFrames = Number(params.get('still')) || 2;
 	renderer.setAnimationLoop(() => {
 		clock.update();
-		const dt = still ? 1 / 60 : Math.min(clock.getDelta(), 0.1);
+		const dt = still ? Number(params.get('dt')) || 1 / 60 : Math.min(clock.getDelta(), 0.1);
 		if (still && stillFrames-- <= 0) { renderer.setAnimationLoop(null); document.body.dataset.done = '1'; return; }
 
 		player.update(dt);
