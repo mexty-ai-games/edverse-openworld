@@ -22,19 +22,25 @@ export class Player {
 	}
 
 	_bind(dom) {
-		addEventListener('keydown', (e) => { this.keys.add(e.code); });
-		addEventListener('keyup', (e) => { this.keys.delete(e.code); });
-		addEventListener('blur', () => this.keys.clear());
+		const on = (t, type, fn, o) => { t.addEventListener(type, fn, o); this._off.push(() => t.removeEventListener(type, fn, o)); };
+		this._off = [];
+		on(window, 'keydown', (e) => { this.keys.add(e.code); });
+		on(window, 'keyup', (e) => { this.keys.delete(e.code); });
+		on(window, 'blur', () => this.keys.clear());
 		let drag = null;
-		dom.addEventListener('pointerdown', (e) => { drag = { x: e.clientX, y: e.clientY, id: e.pointerId }; dom.setPointerCapture(e.pointerId); });
-		dom.addEventListener('pointermove', (e) => {
+		on(dom, 'pointerdown', (e) => { drag = { x: e.clientX, y: e.clientY, id: e.pointerId }; dom.setPointerCapture(e.pointerId); });
+		on(dom, 'pointermove', (e) => {
 			if (!drag || drag.id !== e.pointerId) return;
 			this.yaw -= (e.clientX - drag.x) * 0.005;
 			this.pitch = THREE.MathUtils.clamp(this.pitch + (e.clientY - drag.y) * 0.004, -0.05, 1.1);
 			drag.x = e.clientX; drag.y = e.clientY;
 		});
-		dom.addEventListener('pointerup', () => { drag = null; });
-		dom.addEventListener('wheel', (e) => { this.dist = THREE.MathUtils.clamp(this.dist * (1 + e.deltaY * 0.001), 3.5, 60); }, { passive: true });
+		on(dom, 'pointerup', () => { drag = null; });
+		on(dom, 'wheel', (e) => { this.dist = THREE.MathUtils.clamp(this.dist * (1 + e.deltaY * 0.001), 3.5, 60); }, { passive: true });
+	}
+
+	dispose() {
+		for (const off of this._off) off();
 	}
 
 	/** Touch / on-screen stick input in [-1, 1]. */
