@@ -46,7 +46,8 @@ other universe in the same frame.
 
 ## Assets
 
-`public/assets/props.glb` and `heightfield.i16.bin` come from the concept scene:
+`public/assets/heightfield.i16.bin` and `public/assets/props.glb` come from the concept scene. The GLB is not
+committed (the repo never stores models, see ART.md): build it once before `npm run dev`:
 
 ```bash
 blender -b --factory-startup -P tools/export_scene.py -- tools/concept_scene.py /tmp/out
