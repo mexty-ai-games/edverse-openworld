@@ -176,8 +176,20 @@ export function startMultiverse(container, o) {
 		if (debug.conceptCam) conceptCam();
 		forest.update(camera);
 		grass.update(camera);
+		// compile everything up front, including what only some universes show (glacier, dead trees, the
+		// lighthouse), and the rift's own render target, so the first crossing never stalls on shaders
+		const hidden = [];
+		scene.traverse((obj) => { if (!obj.visible) { hidden.push(obj); obj.visible = true; } });
 		await renderer.compileAsync(scene, camera);
 		if (state.disposed) return;
+		portalRT.setSize(64, 36);
+		props.windowMesh.visible = false;
+		renderer.setRenderTarget(portalRT);
+		renderer.render(scene, camera);
+		renderer.setRenderTarget(null);
+		props.windowMesh.visible = true;
+		for (const obj of hidden) obj.visible = false;
+		applyMain();
 		ui.ready();
 		o.onReady && o.onReady();
 
@@ -188,6 +200,7 @@ export function startMultiverse(container, o) {
 		const tmpV = new THREE.Vector3(), buf = new THREE.Vector2();
 		let still = debug.still || 0;
 		renderer.setAnimationLoop(() => {
+			const tFrame = performance.now();
 			clock.update();
 			if (state.paused) return;
 			const dt = debug.still ? debug.dt || 1 / 60 : Math.min(clock.getDelta(), 0.1);
@@ -222,23 +235,29 @@ export function startMultiverse(container, o) {
 				if (t > 1.25) { transition = null; flash.value = 0; }
 			}
 
-			// the destination universe, seen through the rift (only when the ring is on screen and near)
+			applyMain();
+			if (off.has('post')) renderer.render(scene, camera); else pipeline.render();
+
+			// then the destination universe, seen through the rift next frame (only when the ring is on screen
+			// and near). Rendered after the main view so it reuses this frame's shadow maps and water
+			// reflection instead of rendering them again; a frame of latency is invisible in the window.
 			tmpV.copy(rc).project(camera);
 			const ringOnScreen = tmpV.z < 1 && Math.abs(tmpV.x) < 1.3 && Math.abs(tmpV.y) < 1.3 && camera.position.distanceTo(rc) < 220;
 			if (ringOnScreen && !off.has('portal')) {
 				renderer.getDrawingBufferSize(buf);
-				const w = Math.max(2, Math.floor(buf.x * 0.5)), h = Math.max(2, Math.floor(buf.y * 0.5));
+				const w = Math.max(2, Math.floor(buf.x * 0.4)), h = Math.max(2, Math.floor(buf.y * 0.4));
 				if (portalRT.width !== w || portalRT.height !== h) portalRT.setSize(w, h);
 				world.apply(target);
-				sun.position.copy(player.pos).addScaledVector(U.sunDir.value, 1500);
 				props.windowMesh.visible = false;
+				grass.group.visible = false;
 				renderer.setRenderTarget(portalRT);
 				renderer.render(scene, camera);
 				renderer.setRenderTarget(null);
 				props.windowMesh.visible = true;
+				grass.group.visible = !off.has('grass');
+				applyMain();
 			}
-			applyMain();
-			if (off.has('post')) renderer.render(scene, camera); else pipeline.render();
+			if (debug.timing) console.info('frame', Math.round(performance.now() - tFrame), 'ms', transition ? 't=' + transition.t.toFixed(2) : '', current.id);
 
 			// dynamic resolution: hold ~50 fps
 			frames++; acc += dt;

@@ -26,6 +26,7 @@ const mv = startMultiverse(document.getElementById('app'), {
 		dt: Number(params.get('dt')) || 0,
 		conceptCam: params.get('cam') === 'concept',
 		atRift: params.get('at') === 'rift',
+		timing: params.has('timing'),
 		onStill: () => { document.body.dataset.done = '1'; },
 	},
 	onError: () => { document.body.dataset.done = '1'; },

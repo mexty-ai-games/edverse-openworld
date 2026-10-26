@@ -1,7 +1,7 @@
 // Universe state shared by every material: one set of uniforms, switched as a whole. Rendering a second
 // universe (through the rift) is: apply(B), render to a target, apply(A).
 import * as THREE from 'three/webgpu';
-import { uniform, texture } from 'three/tsl';
+import { uniform, texture, pmremTexture } from 'three/tsl';
 import { computeSky, sunDirection } from './atmosphere.js';
 import { UNIVERSES } from './universes.js';
 
@@ -57,6 +57,11 @@ export class World {
 			onProgress && onProgress((i + 1) / UNIVERSES.length);
 		});
 		pmrem.dispose();
+		// one environment node for the whole session: swapping scene.environment changes the scene's cache key
+		// and rebuilds every material, twice a frame while the rift renders the other universe. Swapping this
+		// node's texture is only a uniform change.
+		this.envNode = pmremTexture(this.envs.get(UNIVERSES[0].id));
+		this.scene.environmentNode = this.envNode;
 	}
 
 	/** A sky panorama lookup at uv (equirect) that follows the current universe. */
@@ -92,7 +97,7 @@ export class World {
 		U.glacier.value = u.glacier ? 1 : 0;
 		this.hf.setMtn(u.mtn);
 		for (const n of this.skyNodes) n.value = sky.texture;
-		this.scene.environment = this.envs.get(u.id);
+		this.envNode.value = this.envs.get(u.id);
 		// the key light: the sun's colour through the air, a little less saturated than the raw transmittance
 		this.sun.color.copy(sky.sunColor).multiplyScalar(1 / Math.max(sky.sunColor.r, sky.sunColor.g, sky.sunColor.b)).lerp(new THREE.Color(1, 0.97, 0.92), 0.35);
 		this.sun.intensity = Math.max(sky.sunColor.r, sky.sunColor.g, sky.sunColor.b) * 3.2;

@@ -10,7 +10,8 @@ import {
 import { U } from './world.js';
 
 export function createWater(world, { size = [1400, 2200], center = [0, -850] } = {}) {
-	const reflection = reflector({ resolutionScale: 0.5 });
+	// one reflection per frame (bounces: false): the rift's render of the other universe reuses it
+	const reflection = reflector({ resolutionScale: 0.5, bounces: false });
 	reflection.target.rotateX(-Math.PI / 2);
 
 	// wave height field: three scrolling noise octaves, finite-difference normal
