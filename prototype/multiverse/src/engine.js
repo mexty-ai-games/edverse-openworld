@@ -184,6 +184,8 @@ export function startMultiverse(container, o) {
 		scene.traverse((obj) => { if (!obj.visible) { hidden.push(obj); obj.visible = true; } });
 		await renderer.compileAsync(scene, camera);
 		if (state.disposed) return;
+		// the screen renders through the post pipeline (its own shader context): warm that up too
+		if (!off.has('post')) pipeline.render();
 		portalRT.setSize(64, 36);
 		props.windowMesh.visible = false;
 		renderer.setRenderTarget(portalRT);
