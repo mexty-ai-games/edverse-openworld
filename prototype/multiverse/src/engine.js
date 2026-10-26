@@ -18,6 +18,8 @@ import { createUI } from './ui.js';
 
 const CLIFF = [-150, 30]; // Blender xy of the promontory
 const tick = () => new Promise((r) => setTimeout(r, 30));
+// the rift crossing: flash in (the universe swaps at its peak), then fade out, in seconds
+const IN = 0.2, OUT = 0.5;
 
 /**
  * @param {HTMLElement} container
@@ -203,7 +205,8 @@ export function startMultiverse(container, o) {
 			const tFrame = performance.now();
 			clock.update();
 			if (state.paused) return;
-			const dt = debug.still ? debug.dt || 1 / 60 : Math.min(clock.getDelta(), 0.1);
+			const raw = clock.getDelta();
+			const dt = debug.still ? debug.dt || 1 / 60 : Math.min(raw, 0.1);
 			if (debug.still && still-- <= 0) { renderer.setAnimationLoop(null); debug.onStill && debug.onStill(); return; }
 
 			player.update(dt);
@@ -219,10 +222,12 @@ export function startMultiverse(container, o) {
 			if (nearRift > 3) player._inRift = false;
 
 			if (transition) {
-				transition.t += dt;
+				// real elapsed time (not the per-frame step, which is capped): the crossing never drags on a
+				// device that drops frames
+				transition.t += debug.still ? dt : Math.min(raw, 0.25);
 				const t = transition.t;
-				flash.value = t < 0.35 ? t / 0.35 : Math.max(0, 1 - (t - 0.35) / 0.9);
-				if (!transition.swapped && t >= 0.35) {
+				flash.value = t < IN ? t / IN : Math.max(0, 1 - (t - IN) / OUT);
+				if (!transition.swapped && t >= IN) {
 					const from = current;
 					current = transition.to;
 					if (target === current) target = from;
@@ -232,7 +237,7 @@ export function startMultiverse(container, o) {
 					ui.setTarget(target);
 					o.onTravel && o.onTravel(current, visited.size);
 				}
-				if (t > 1.25) { transition = null; flash.value = 0; }
+				if (t > IN + OUT) { transition = null; flash.value = 0; }
 			}
 
 			applyMain();
