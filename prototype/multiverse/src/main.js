@@ -41,7 +41,9 @@ async function main() {
 	const camera = new THREE.PerspectiveCamera(55, innerWidth / innerHeight, 0.2, 9500);
 
 	ui.progress(0.08, 'Loading the fjord');
-	const hf = await Heightfield.load(BASE + 'assets/heightfield.i16.bin');
+	// ?pack=json: the artifact build ships binaries as base64 JSON
+	const ext = params.get('pack') === 'json' || window.__MV_PACK === 'json' ? '.json' : '';
+	const hf = await Heightfield.load(BASE + 'assets/heightfield.i16.bin' + ext);
 	const world = new World(renderer, scene, hf);
 
 	ui.progress(0.15, 'Scattering light through four skies');
@@ -71,7 +73,7 @@ async function main() {
 	// the rift: its window shows the destination universe, rendered into this target every frame
 	const portalRT = new THREE.RenderTarget(1, 1, { type: THREE.HalfFloatType, depthBuffer: true });
 	ui.progress(0.6, 'Placing the stones');
-	const props = await loadProps(BASE + 'assets/props.glb', world, portalRT.texture);
+	const props = await loadProps(BASE + 'assets/props.glb' + ext, world, portalRT.texture);
 	scene.add(props.root);
 
 	const CLIFF = [-150, 30]; // Blender xy of the promontory

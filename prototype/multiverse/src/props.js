@@ -6,6 +6,7 @@ import {
 	Fn, vec2, vec3, vec4, float, positionWorld, positionLocal, normalWorld, cameraPosition, normalize, dot, max, pow,
 	mix, smoothstep, time, sin, length, screenUV, texture, mx_fractal_noise_float, mx_noise_float, uniform, clamp, abs, bumpMap,
 } from 'three/tsl';
+import { loadBinary } from './binary.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { U } from './world.js';
 
@@ -21,7 +22,7 @@ function stoneMaterial() {
 }
 
 export async function loadProps(url, world, portalTexture) {
-	const gltf = await new GLTFLoader().loadAsync(url);
+	const gltf = await new GLTFLoader().parseAsync(await loadBinary(url), '');
 	const root = gltf.scene;
 	const byName = {};
 	root.traverse((o) => { if (o.name) byName[o.name] = o; });

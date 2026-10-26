@@ -2,12 +2,12 @@
 // M (mountains), P (promontory + islet); height = max(A + mtn * M, P), so a universe can raise the
 // mountains (half gravity) without new data. Blender (x, y, z) is three.js (x, z, -y).
 import * as THREE from 'three/webgpu';
+import { loadBinary } from './binary.js';
 import { Fn, float, int, ivec2, vec2, vec3, vec4, textureLoad, max, clamp, floor, fract, mix, normalize, uniform } from 'three/tsl';
 
 export class Heightfield {
 	static async load(url) {
-		const buf = await (await fetch(url)).arrayBuffer();
-		return new Heightfield(buf);
+		return new Heightfield(await loadBinary(url));
 	}
 
 	constructor(buf) {
